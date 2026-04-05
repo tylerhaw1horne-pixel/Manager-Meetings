@@ -87,10 +87,10 @@ function buildSaleRows() {
   const c = gi('saleRows'); if (!c) return;
   c.innerHTML = SALE_C.map(({ id, l }) => {
     const isBHB = id === 'bhb_sale';
-    const style = isBHB ? 'style="background:linear-gradient(90deg,#fff8f0,transparent);border-radius:5px;padding:2px 4px"' : '';
+    const bhbExtra = isBHB ? 'background:linear-gradient(90deg,#fff8f0,transparent);border-radius:5px;padding:2px 4px;' : '';
     const labelStyle = isBHB ? 'style="font-size:11px;color:#7a3e00;font-weight:600"' : 'style="font-size:11px"';
     const inputStyle = isBHB ? 'style="border-color:#e8c49a"' : '';
-    return `<div ${style} style="display:grid;grid-template-columns:136px 1fr 1fr 1fr 78px 8px 1fr 1fr 78px;gap:4px;align-items:center;margin-bottom:4px">
+    return `<div style="${bhbExtra}display:grid;grid-template-columns:136px 1fr 1fr 1fr 78px 8px 1fr 1fr 78px;gap:4px;align-items:center;margin-bottom:4px">
       <div ${labelStyle}>${isBHB ? '🌴 ' : ''}${l}</div>
       <input type="number" id="${id}_proj" ${inputStyle} oninput="calcSales()"/>
       <input type="number" id="${id}_ly" ${inputStyle} oninput="calcSales()"/>
@@ -419,7 +419,7 @@ function viewMeet(idx) {
     const d2 = pct && proj ? (+pct - +proj).toFixed(2) : null;
     return `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)">
       <span style="font-size:10px;color:var(--text2)">${l}</span>
-      <div><span style="font-size:11px;font-weight:600">${pct}%</span>${d2 !== null ? `<span style="font-size:10px;margin-left:4px;color:${+d2 > 0 ? '#c0392b' : 'var(--green)}'>${+d2 > 0 ? '+' : ''}${d2}pp</span>` : ''}</div>
+      <div><span style="font-size:11px;font-weight:600">${pct}%</span>${d2 !== null ? `<span style="font-size:10px;margin-left:4px;color:${+d2 > 0 ? '#c0392b' : 'var(--green)'}>${+d2 > 0 ? '+' : ''}${d2}pp</span>` : ''}</div>
     </div>`;
   }).join('');
 

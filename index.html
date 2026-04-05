@@ -1028,7 +1028,7 @@ function viewMeet(idx) {
     const d2 = pct && proj ? (+pct - +proj).toFixed(2) : null;
     return `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)">
       <span style="font-size:10px;color:var(--text2)">${l}</span>
-      <div><span style="font-size:11px;font-weight:600">${pct}%</span>${d2 !== null ? `<span style="font-size:10px;margin-left:4px;color:${+d2 > 0 ? '#c0392b' : 'var(--green)}'>${+d2 > 0 ? '+' : ''}${d2}pp</span>` : ''}</div>
+      <div><span style="font-size:11px;font-weight:600">${pct}%</span>${d2 !== null ? `<span style="font-size:10px;margin-left:4px;color:${+d2 > 0 ? '#c0392b' : 'var(--green)'}>${+d2 > 0 ? '+' : ''}${d2}pp</span>` : ''}</div>
     </div>`;
   }).join('');
 

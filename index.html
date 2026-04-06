@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -32,16 +33,16 @@
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .app{max-width:1120px;margin:0 auto;padding:1rem}
 
-.hdr{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
-.logo{font-size:19px;font-weight:700;letter-spacing:-.3px}.logo span{color:var(--accent)}
+.hdr{background:var(–bg2);border:1px solid var(–border);border-radius:var(–radius);padding:1rem 1.25rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.logo{font-size:19px;font-weight:700;letter-spacing:-.3px}.logo span{color:var(–accent)}
 .hdr-right{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.tabs{display:flex;gap:3px;background:var(--bg3);border-radius:8px;padding:3px;border:1px solid var(--border)}
-.tab{padding:5px 14px;border-radius:6px;border:none;background:transparent;color:var(--text2);font-size:12px;cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s}
-.tab.active{background:var(--bg2);color:var(--text);border:1px solid var(--border2);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tabs{display:flex;gap:3px;background:var(–bg3);border-radius:8px;padding:3px;border:1px solid var(–border)}
+.tab{padding:5px 14px;border-radius:6px;border:none;background:transparent;color:var(–text2);font-size:12px;cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s}
+.tab.active{background:var(–bg2);color:var(–text);border:1px solid var(–border2);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .sec{display:none}.sec.active{display:block}
 
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:.75rem}
-.ct{font-size:10.5px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+.card{background:var(–bg2);border:1px solid var(–border);border-radius:var(–radius);padding:1rem;margin-bottom:.75rem}
+.ct{font-size:10.5px;font-weight:600;color:var(–text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:1px solid var(–border)}
 
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
@@ -51,252 +52,254 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 @media(max-width:440px){.g4,.g5{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr}}
 
 .fg{display:flex;flex-direction:column;gap:3px;margin-bottom:5px}
-.fg label{font-size:10px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.fg label{font-size:10px;color:var(–text2);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
 .frow{display:flex;gap:4px}
 input[type=text],input[type=number],input[type=date],textarea,select{
-  font-family:inherit;font-size:12px;padding:5px 8px;
-  border:1px solid var(--border2);border-radius:var(--radius-sm);
-  background:var(--bg2);color:var(--text);width:100%;
-  transition:border-color .15s,box-shadow .15s;
+font-family:inherit;font-size:12px;padding:5px 8px;
+border:1px solid var(–border2);border-radius:var(–radius-sm);
+background:var(–bg2);color:var(–text);width:100%;
+transition:border-color .15s,box-shadow .15s;
 }
-input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(184,92,0,.12)}
+input:focus,textarea:focus{outline:none;border-color:var(–accent);box-shadow:0 0 0 2px rgba(184,92,0,.12)}
 textarea{resize:vertical;min-height:65px}
-input.synced{border-color:var(--green)!important;background:var(--green-bg)!important}
+input.synced{border-color:var(–green)!important;background:var(–green-bg)!important}
 
-.btn{padding:6px 13px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:var(--bg2);color:var(--text);font-size:12px;cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s}
-.btn:hover{background:var(--bg3);border-color:var(--border2)}
-.btn.pr{background:var(--accent);border-color:var(--accent);color:#fff}.btn.pr:hover{background:var(--accent2)}
-.btn.gr{background:var(--green);border-color:var(--green);color:#fff}.btn.gr:hover{background:var(--green2)}
+.btn{padding:6px 13px;border-radius:var(–radius-sm);border:1px solid var(–border2);background:var(–bg2);color:var(–text);font-size:12px;cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s}
+.btn:hover{background:var(–bg3);border-color:var(–border2)}
+.btn.pr{background:var(–accent);border-color:var(–accent);color:#fff}.btn.pr:hover{background:var(–accent2)}
+.btn.gr{background:var(–green);border-color:var(–green);color:#fff}.btn.gr:hover{background:var(–green2)}
 .btn.sm{padding:4px 9px;font-size:11px}
 .brow{display:flex;gap:6px;margin-top:.75rem;flex-wrap:wrap;align-items:center}
 
-.chip{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--bg3);border:1px solid var(--border)}
-.chip.pos{color:var(--green);border-color:#c8e6aa;background:var(--green-bg)}
+.chip{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(–bg3);border:1px solid var(–border)}
+.chip.pos{color:var(–green);border-color:#c8e6aa;background:var(–green-bg)}
 .chip.neg{color:#c0392b;border-color:#f5c6c6;background:#fdf0f0}
-.pos{color:var(--green)}.neg{color:#c0392b}
-.ab{font-size:8px;padding:1px 5px;border-radius:8px;background:var(--warn-bg);color:var(--warn);margin-left:4px;vertical-align:middle;font-weight:600;border:1px solid #e8d090}
-.sb{font-size:8px;padding:1px 5px;border-radius:8px;background:var(--green-bg);color:var(--green);margin-left:4px;vertical-align:middle;border:1px solid #b8dfa8;font-weight:600}
+.pos{color:var(–green)}.neg{color:#c0392b}
+.ab{font-size:8px;padding:1px 5px;border-radius:8px;background:var(–warn-bg);color:var(–warn);margin-left:4px;vertical-align:middle;font-weight:600;border:1px solid #e8d090}
+.sb{font-size:8px;padding:1px 5px;border-radius:8px;background:var(–green-bg);color:var(–green);margin-left:4px;vertical-align:middle;border:1px solid #b8dfa8;font-weight:600}
 
-.notice{border-radius:var(--radius-sm);padding:.5rem .85rem;font-size:11px;margin-top:.4rem;display:none;font-weight:500}
-.notice.info{background:var(--blue-bg);color:var(--blue)}
-.notice.green{background:var(--green-bg);color:var(--green);border:1px solid #b8dfa8}
+.notice{border-radius:var(–radius-sm);padding:.5rem .85rem;font-size:11px;margin-top:.4rem;display:none;font-weight:500}
+.notice.info{background:var(–blue-bg);color:var(–blue)}
+.notice.green{background:var(–green-bg);color:var(–green);border:1px solid #b8dfa8}
 
-.div{border:none;border-top:1px solid var(--border);margin:.65rem 0}
-.sl{font-size:12px;font-weight:600;margin:.6rem 0 .3rem;color:var(--text)}
+.div{border:none;border-top:1px solid var(–border);margin:.65rem 0}
+.sl{font-size:12px;font-weight:600;margin:.6rem 0 .3rem;color:var(–text)}
 
-.lbox{background:var(--warn-bg);border:1px solid #e8d090;border-radius:var(--radius-sm);padding:.7rem .9rem}
+.lbox{background:var(–warn-bg);border:1px solid #e8d090;border-radius:var(–radius-sm);padding:.7rem .9rem}
 .lres{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:.6rem}
-.lri{background:var(--bg2);border-radius:var(--radius-sm);padding:.45rem .65rem;border:1px solid var(--border)}
-.ll{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;font-weight:600}
+.lri{background:var(–bg2);border-radius:var(–radius-sm);padding:.45rem .65rem;border:1px solid var(–border)}
+.ll{font-size:9px;color:var(–text3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;font-weight:600}
 .lv{font-size:15px;font-weight:700}
-.ls{font-size:9px;color:var(--text2);margin-top:1px}
+.ls{font-size:9px;color:var(–text2);margin-top:1px}
 
-.ccb{background:var(--bg3);border-radius:var(--radius-sm);border:1px solid var(--border);padding:.65rem .85rem;margin-bottom:.5rem}
+.ccb{background:var(–bg3);border-radius:var(–radius-sm);border:1px solid var(–border);padding:.65rem .85rem;margin-bottom:.5rem}
 .ccr{display:grid;grid-template-columns:1fr 1fr 1fr 85px 85px;gap:8px;align-items:end}
-.crp{display:inline-flex;flex-direction:column;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px 9px;min-width:78px}
-.crp .cl{font-size:8px;color:var(--text3);text-transform:uppercase;font-weight:600}
+.crp{display:inline-flex;flex-direction:column;align-items:center;background:var(–bg2);border:1px solid var(–border);border-radius:var(–radius-sm);padding:4px 9px;min-width:78px}
+.crp .cl{font-size:8px;color:var(–text3);text-transform:uppercase;font-weight:600}
 .crp .cv{font-size:14px;font-weight:700;margin-top:1px}
 
-.bhb{background:linear-gradient(135deg,#fff8f0,#fff3e5);border:1px solid #e8c49a;border-radius:var(--radius);padding:.85rem 1rem;margin-bottom:.6rem}
+.bhb{background:linear-gradient(135deg,#fff8f0,#fff3e5);border:1px solid #e8c49a;border-radius:var(–radius);padding:.85rem 1rem;margin-bottom:.6rem}
 .bhbt{font-size:11px;font-weight:700;color:#7a3e00;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.6rem}
 .bhbi{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
-.bhbi-item{background:#fff;border:1px solid #e8c49a;border-radius:var(--radius-sm);padding:.4rem .5rem;text-align:center}
+.bhbi-item{background:#fff;border:1px solid #e8c49a;border-radius:var(–radius-sm);padding:.4rem .5rem;text-align:center}
 .bhbi-item label{font-size:9px;color:#7a3e00;font-weight:600;display:block;margin-bottom:3px;line-height:1.2}
 .bhbi-item input{text-align:center;border-color:#e8c49a;font-size:12px}
 @media(max-width:600px){.bhbi{grid-template-columns:1fr 1fr 1fr}}
-.bhb-sm{background:linear-gradient(135deg,#fff8f0,#fff3e5);border:1px solid #e8c49a;border-radius:var(--radius-sm);padding:.55rem .75rem;margin-top:.5rem}
+.bhb-sm{background:linear-gradient(135deg,#fff8f0,#fff3e5);border:1px solid #e8c49a;border-radius:var(–radius-sm);padding:.55rem .75rem;margin-top:.5rem}
 .bhb-sm-title{font-size:9px;font-weight:700;color:#7a3e00;text-transform:uppercase;letter-spacing:.4px;margin-bottom:.35rem}
 .bhb-sm-items{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:.3rem}
 .bhb-sm-item{background:#fff;border:1px solid #e8c49a;border-radius:4px;padding:.3rem .35rem;text-align:center}
 .bhb-sm-item .bl{font-size:8px;color:#7a3e00;font-weight:600;display:block;line-height:1.2;margin-bottom:2px}
-.bhb-sm-item .bv{font-size:13px;font-weight:700;color:var(--accent)}
+.bhb-sm-item .bv{font-size:13px;font-weight:700;color:var(–accent)}
 
-.wkpill{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:2px 9px;font-size:9px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;display:inline-block;margin-bottom:4px}
+.wkpill{background:var(–bg3);border:1px solid var(–border);border-radius:20px;padding:2px 9px;font-size:9px;font-weight:600;color:var(–text2);text-transform:uppercase;letter-spacing:.4px;display:inline-block;margin-bottom:4px}
 
 .stbl{width:100%;border-collapse:collapse;font-size:12px}
-.stbl th{padding:5px 7px;text-align:left;font-size:10px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--border);background:var(--bg3)}
-.stbl td{padding:5px 7px;border-bottom:1px solid var(--border)}
-.stbl tr:hover td{background:var(--bg3)}
-.vsep{width:1px;background:var(--border);padding:0!important}
+.stbl th{padding:5px 7px;text-align:left;font-size:10px;font-weight:600;color:var(–text2);text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(–border);background:var(–bg3)}
+.stbl td{padding:5px 7px;border-bottom:1px solid var(–border)}
+.stbl tr:hover td{background:var(–bg3)}
+.vsep{width:1px;background:var(–border);padding:0!important}
 
-.mi{border:1px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .85rem;cursor:pointer;transition:all .15s;margin-bottom:5px}
-.mi:hover{background:var(--bg3);border-color:var(--border2)}
-.bb{background:none;border:none;color:var(--blue);cursor:pointer;font-size:12px;margin-bottom:.65rem;font-family:inherit;font-weight:600;padding:0}
-.nb{background:var(--bg3);border-radius:var(--radius-sm);padding:.5rem .7rem;margin-bottom:.4rem}
+.mi{border:1px solid var(–border);border-radius:var(–radius-sm);padding:.65rem .85rem;cursor:pointer;transition:all .15s;margin-bottom:5px}
+.mi:hover{background:var(–bg3);border-color:var(–border2)}
+.bb{background:none;border:none;color:var(–blue);cursor:pointer;font-size:12px;margin-bottom:.65rem;font-family:inherit;font-weight:600;padding:0}
+.nb{background:var(–bg3);border-radius:var(–radius-sm);padding:.5rem .7rem;margin-bottom:.4rem}
 .nb p{font-size:12px;line-height:1.65}
-.met{background:var(--bg3);border-radius:var(--radius-sm);border:1px solid var(--border);padding:.4rem .6rem}
-.met label{font-size:9px;color:var(--text3);display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.2px;font-weight:600}
+.met{background:var(–bg3);border-radius:var(–radius-sm);border:1px solid var(–border);padding:.4rem .6rem}
+.met label{font-size:9px;color:var(–text3);display:block;margin-bottom:2px;text-transform:uppercase;letter-spacing:.2px;font-weight:600}
 .met .mv{font-size:16px;font-weight:700}
-.met .ms{font-size:10px;color:var(--text2);margin-top:1px}
+.met .ms{font-size:10px;color:var(–text2);margin-top:1px}
 
 .wgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:.4rem}
-.wd{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px;text-align:center}
-.wd .wdn{font-size:9px;font-weight:700;color:var(--text2);margin-bottom:2px}
+.wd{background:var(–bg3);border:1px solid var(–border);border-radius:var(–radius-sm);padding:7px;text-align:center}
+.wd .wdn{font-size:9px;font-weight:700;color:var(–text2);margin-bottom:2px}
 .wd .wdi{font-size:16px;margin-bottom:2px}
 .wd .wdt{font-size:9px;font-weight:600}
-.wd .wdc{font-size:8px;color:var(--text3);margin-top:1px}
-.wd .wdit{font-size:8px;color:var(--blue);margin-top:3px;text-align:left;line-height:1.3}
+.wd .wdc{font-size:8px;color:var(–text3);margin-top:1px}
+.wd .wdit{font-size:8px;color:var(–blue);margin-top:3px;text-align:left;line-height:1.3}
 @media(max-width:600px){.wgrid{grid-template-columns:repeat(4,1fr)}}
 
 .ht{width:100%;border-collapse:collapse;font-size:11px}
-.ht th{text-align:left;padding:5px 7px;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600;font-size:10px;white-space:nowrap;background:var(--bg3)}
-.ht td{padding:5px 7px;border-bottom:1px solid var(--border);white-space:nowrap}
-.ht tr:hover td{background:var(--bg3)}
+.ht th{text-align:left;padding:5px 7px;border-bottom:1px solid var(–border);color:var(–text2);font-weight:600;font-size:10px;white-space:nowrap;background:var(–bg3)}
+.ht td{padding:5px 7px;border-bottom:1px solid var(–border);white-space:nowrap}
+.ht tr:hover td{background:var(–bg3)}
 
-.sync-banner{background:var(--green-bg);border:1px solid #b8dfa8;border-radius:var(--radius-sm);padding:.45rem .7rem;font-size:11px;color:var(--green);margin-top:.4rem;font-weight:500;display:none}
+.sync-banner{background:var(–green-bg);border:1px solid #b8dfa8;border-radius:var(–radius-sm);padding:.45rem .7rem;font-size:11px;color:var(–green);margin-top:.4rem;font-weight:500;display:none}
 
 /* ── EXPORT/IMPORT BAR ── */
-.data-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.6rem 1rem;margin-bottom:.75rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.data-bar span{font-size:11px;color:var(--text2);font-weight:600}
+.data-bar{background:var(–bg2);border:1px solid var(–border);border-radius:var(–radius);padding:.6rem 1rem;margin-bottom:.75rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.data-bar span{font-size:11px;color:var(–text2);font-weight:600}
 
 /* ══════════════════════════════════
-   PRINT STYLES — FIXED
-   ══════════════════════════════════ */
+PRINT STYLES — FIXED
+══════════════════════════════════ */
 @media print {
-  @page { size: letter portrait; margin: .35in .4in; }
+@page { size: letter portrait; margin: .35in .4in; }
 
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+- { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
-  /* Hide everything by default */
-  body { background: #fff !important; font-family: Arial, Helvetica, sans-serif; font-size: 7pt; color: #000; margin: 0; padding: 0; }
+/* Hide everything by default */
+body { background: #fff !important; font-family: Arial, Helvetica, sans-serif; font-size: 7pt; color: #000; margin: 0; padding: 0; }
 
-  /* Hide all screen UI */
-  .hdr, .tabs, .tab, .brow, .btn, .bb, .ab, .sb,
-  .notice, .sync-banner, .wkpill, .data-bar,
-  .no-print, #sec-hist { display: none !important; }
+/* Hide all screen UI */
+.hdr, .tabs, .tab, .brow, .btn, .bb, .ab, .sb,
+.notice, .sync-banner, .wkpill, .data-bar,
+.no-print, #sec-hist { display: none !important; }
 
-  /* Hide all sections by default */
-  #sec-ops, #sec-meet { display: none !important; }
+/* Hide all sections by default */
+#sec-ops, #sec-meet { display: none !important; }
 
-  /* Show only what's being printed via body class */
-  body.print-ops #sec-ops { display: block !important; }
-  body.print-meet #sec-meet { display: block !important; }
+/* Show only what’s being printed via body class */
+body.print-ops #sec-ops { display: block !important; }
+body.print-meet #sec-meet { display: block !important; }
 
-  /* When printing ops — hide meeting sub-views */
-  body.print-ops #meeting-list-view,
-  body.print-ops #meeting-detail-view,
-  body.print-ops #meeting-form-view { display: none !important; }
+/* When printing ops — hide meeting sub-views */
+body.print-ops #meeting-list-view,
+body.print-ops #meeting-detail-view,
+body.print-ops #meeting-form-view { display: none !important; }
 
-  /* When printing meeting — show only detail view */
-  body.print-meet #meeting-list-view,
-  body.print-meet #meeting-form-view { display: none !important; }
-  body.print-meet #meeting-detail-view { display: block !important; }
+/* When printing meeting — show only detail view */
+body.print-meet #meeting-list-view,
+body.print-meet #meeting-form-view { display: none !important; }
+body.print-meet #meeting-detail-view { display: block !important; }
 
-  .app { max-width: 100%; padding: 0; margin: 0; }
+.app { max-width: 100%; padding: 0; margin: 0; }
 
-  /* ── SHARED CARD RESET ── */
-  .card { border: none !important; padding: 0 !important; margin: 0 !important; background: #fff !important; border-radius: 0 !important; box-shadow: none !important; }
-  .ct { font-size: 6.5pt !important; font-weight: bold !important; text-transform: uppercase !important; letter-spacing: .3px !important; border-bottom: .5pt solid #aaa !important; margin-bottom: 3pt !important; padding-bottom: 2pt !important; color: #333 !important; background: none !important; border-radius: 0 !important; border-top: none !important; border-left: none !important; border-right: none !important; }
-  input, textarea { border: .5pt solid #bbb !important; border-radius: 1pt !important; padding: 1.5pt 2.5pt !important; font-size: 6.5pt !important; background: #fff !important; color: #000 !important; width: 100% !important; height: 13pt !important; }
-  textarea { height: auto !important; min-height: 26pt !important; }
-  .div { border-top: .5pt solid #ddd !important; margin: 4pt 0 !important; }
-  .chip { display: none !important; }
-  .g2, .g3, .g4, .g5 { gap: 3pt !important; }
-  .fg { margin-bottom: 3pt !important; }
-  .fg label { font-size: 6pt !important; }
-  .sl { font-size: 7pt !important; margin: 4pt 0 2pt !important; font-weight: bold !important; }
+/* ── SHARED CARD RESET ── */
+.card { border: none !important; padding: 0 !important; margin: 0 !important; background: #fff !important; border-radius: 0 !important; box-shadow: none !important; }
+.ct { font-size: 6.5pt !important; font-weight: bold !important; text-transform: uppercase !important; letter-spacing: .3px !important; border-bottom: .5pt solid #aaa !important; margin-bottom: 3pt !important; padding-bottom: 2pt !important; color: #333 !important; background: none !important; border-radius: 0 !important; border-top: none !important; border-left: none !important; border-right: none !important; }
+input, textarea { border: .5pt solid #bbb !important; border-radius: 1pt !important; padding: 1.5pt 2.5pt !important; font-size: 6.5pt !important; background: #fff !important; color: #000 !important; width: 100% !important; height: 13pt !important; }
+textarea { height: auto !important; min-height: 26pt !important; }
+.div { border-top: .5pt solid #ddd !important; margin: 4pt 0 !important; }
+.chip { display: none !important; }
+.g2, .g3, .g4, .g5 { gap: 3pt !important; }
+.fg { margin-bottom: 3pt !important; }
+.fg label { font-size: 6pt !important; }
+.sl { font-size: 7pt !important; margin: 4pt 0 2pt !important; font-weight: bold !important; }
 
-  /* ── OPS PRINT ── */
-  body.print-ops #ops-p1 {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 7pt !important;
-    page-break-after: always !important;
-  }
-  body.print-ops #ops-p1::before {
-    content: "Huey Luey's Acworth — Weekly Operations Chart";
-    display: block !important;
-    grid-column: 1 / -1 !important;
-    font-size: 10pt !important;
-    font-weight: bold !important;
-    color: #B85C00 !important;
-    border-bottom: 1pt solid #B85C00 !important;
-    padding-bottom: 2pt !important;
-    margin-bottom: 5pt !important;
-  }
-  body.print-ops #ops-p2 {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 7pt !important;
-  }
-  body.print-ops #ops-p2::before {
-    content: "Huey Luey's Acworth — Weekly Operations (continued)";
-    display: block !important;
-    grid-column: 1 / -1 !important;
-    font-size: 9pt !important;
-    font-weight: bold !important;
-    color: #B85C00 !important;
-    border-bottom: 1pt solid #B85C00 !important;
-    padding-bottom: 2pt !important;
-    margin-bottom: 5pt !important;
-  }
-  body.print-ops .stbl { font-size: 6pt !important; }
-  body.print-ops .stbl th { font-size: 5.5pt !important; padding: 1.5pt 2pt !important; background: #f0ece5 !important; border: .5pt solid #bbb !important; }
-  body.print-ops .stbl td { padding: 1.5pt 2pt !important; border: .5pt solid #ddd !important; }
-  body.print-ops .vsep { width: .5pt !important; background: #bbb !important; }
-  body.print-ops .lbox { background: #fff8f0 !important; border: .5pt solid #c8a070 !important; padding: 3pt 4pt !important; border-radius: 1pt !important; }
-  body.print-ops .lres { gap: 3pt !important; margin-top: 2pt !important; display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; }
-  body.print-ops .lri { padding: 2pt !important; background: #fff !important; border: .5pt solid #ddd !important; border-radius: 1pt !important; }
-  body.print-ops .ccb { background: #fafafa !important; border: .5pt solid #ccc !important; padding: 2pt 4pt !important; margin-bottom: 2pt !important; border-radius: 1pt !important; }
-  body.print-ops .ccr { grid-template-columns: 1fr 1fr 1fr 44pt 44pt !important; gap: 2pt !important; }
-  body.print-ops .crp { min-width: 40pt !important; padding: 1.5pt 3pt !important; border: .5pt solid #ccc !important; border-radius: 1pt !important; }
-  body.print-ops .bhb { background: #fff8f0 !important; border: .5pt solid #e8c49a !important; padding: 3pt 5pt !important; border-radius: 2pt !important; }
-  body.print-ops .bhbi { gap: 2pt !important; }
-  body.print-ops .bhbi-item { padding: 2pt !important; border: .5pt solid #e8c49a !important; border-radius: 1pt !important; }
-  body.print-ops .bhbi-item label { font-size: 5.5pt !important; }
+/* ── OPS PRINT ── */
+body.print-ops #ops-p1 {
+display: grid !important;
+grid-template-columns: 1fr 1fr !important;
+gap: 7pt !important;
+page-break-after: always !important;
+}
+body.print-ops #ops-p1::before {
+content: “Huey Luey’s Acworth — Weekly Operations Chart”;
+display: block !important;
+grid-column: 1 / -1 !important;
+font-size: 10pt !important;
+font-weight: bold !important;
+color: #B85C00 !important;
+border-bottom: 1pt solid #B85C00 !important;
+padding-bottom: 2pt !important;
+margin-bottom: 5pt !important;
+}
+body.print-ops #ops-p2 {
+display: grid !important;
+grid-template-columns: 1fr 1fr !important;
+gap: 7pt !important;
+}
+body.print-ops #ops-p2::before {
+content: “Huey Luey’s Acworth — Weekly Operations (continued)”;
+display: block !important;
+grid-column: 1 / -1 !important;
+font-size: 9pt !important;
+font-weight: bold !important;
+color: #B85C00 !important;
+border-bottom: 1pt solid #B85C00 !important;
+padding-bottom: 2pt !important;
+margin-bottom: 5pt !important;
+}
+body.print-ops .stbl { font-size: 6pt !important; }
+body.print-ops .stbl th { font-size: 5.5pt !important; padding: 1.5pt 2pt !important; background: #f0ece5 !important; border: .5pt solid #bbb !important; }
+body.print-ops .stbl td { padding: 1.5pt 2pt !important; border: .5pt solid #ddd !important; }
+body.print-ops .vsep { width: .5pt !important; background: #bbb !important; }
+body.print-ops .lbox { background: #fff8f0 !important; border: .5pt solid #c8a070 !important; padding: 3pt 4pt !important; border-radius: 1pt !important; }
+body.print-ops .lres { gap: 3pt !important; margin-top: 2pt !important; display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; }
+body.print-ops .lri { padding: 2pt !important; background: #fff !important; border: .5pt solid #ddd !important; border-radius: 1pt !important; }
+body.print-ops .ccb { background: #fafafa !important; border: .5pt solid #ccc !important; padding: 2pt 4pt !important; margin-bottom: 2pt !important; border-radius: 1pt !important; }
+body.print-ops .ccr { grid-template-columns: 1fr 1fr 1fr 44pt 44pt !important; gap: 2pt !important; }
+body.print-ops .crp { min-width: 40pt !important; padding: 1.5pt 3pt !important; border: .5pt solid #ccc !important; border-radius: 1pt !important; }
+body.print-ops .bhb { background: #fff8f0 !important; border: .5pt solid #e8c49a !important; padding: 3pt 5pt !important; border-radius: 2pt !important; }
+body.print-ops .bhbi { gap: 2pt !important; }
+body.print-ops .bhbi-item { padding: 2pt !important; border: .5pt solid #e8c49a !important; border-radius: 1pt !important; }
+body.print-ops .bhbi-item label { font-size: 5.5pt !important; }
 
-  /* ── MEETING PRINT ── */
-  body.print-meet #meet-p1 { page-break-after: always !important; }
-  body.print-meet #meet-p1::before {
-    content: "Huey Luey's Acworth — Manager Meeting Notes";
-    display: block !important;
-    font-size: 10pt !important;
-    font-weight: bold !important;
-    color: #B85C00 !important;
-    border-bottom: 1pt solid #B85C00 !important;
-    padding-bottom: 2pt !important;
-    margin-bottom: 4pt !important;
-  }
-  body.print-meet #meet-p2::before {
-    content: "Huey Luey's Acworth — Manager Meeting (continued)";
-    display: block !important;
-    font-size: 9pt !important;
-    font-weight: bold !important;
-    color: #B85C00 !important;
-    border-bottom: 1pt solid #B85C00 !important;
-    padding-bottom: 2pt !important;
-    margin-bottom: 4pt !important;
-  }
-  body.print-meet #meet-p1-cols { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 6pt !important; margin-top: 3pt !important; }
-  body.print-meet .wgrid { gap: 2pt !important; display: grid !important; grid-template-columns: repeat(7,1fr) !important; }
-  body.print-meet .wd { background: #fafafa !important; border: .5pt solid #ddd !important; padding: 2.5pt !important; border-radius: 2pt !important; }
-  body.print-meet .wd .wdn { font-size: 6pt !important; }
-  body.print-meet .wd .wdi { font-size: 11pt !important; }
-  body.print-meet .wd .wdt { font-size: 6pt !important; }
-  /* compact BHB print */
-  body.print-meet .bhb-sm { background: #fff8f0 !important; border: .5pt solid #e8c49a !important; padding: 2pt 4pt !important; border-radius: 2pt !important; }
-  body.print-meet .bhb-sm-items { gap: 2pt !important; display: grid !important; grid-template-columns: repeat(5,1fr) !important; }
-  body.print-meet .bhb-sm-item { padding: 2pt !important; border: .5pt solid #e8c49a !important; border-radius: 1pt !important; }
-  /* labor display boxes */
-  body.print-meet .lri { padding: 2pt !important; background: #fff !important; border: .5pt solid #ddd !important; border-radius: 1pt !important; }
-  body.print-meet .lbox { display: none !important; }
-  body.print-meet .met { background: #fafafa !important; border: .5pt solid #ddd !important; border-radius: 2pt !important; padding: 2pt 3pt !important; }
-  body.print-meet .nb { background: #fafafa !important; border: .5pt solid #ddd !important; padding: 2pt 4pt !important; border-radius: 2pt !important; margin-bottom: 2pt !important; }
-  body.print-meet .nb p { font-size: 7pt !important; line-height: 1.4 !important; }
-  body.print-meet .note-line { display: block !important; border-bottom: .5pt solid #ccc !important; height: 13pt !important; margin-bottom: 2pt !important; }
-  body.print-meet .g2 { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 3pt !important; }
-  body.print-meet .g3 { display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; gap: 3pt !important; }
-  body.print-meet .g4 { display: grid !important; grid-template-columns: repeat(4,1fr) !important; gap: 3pt !important; }
-  body.print-meet .ccb { background: #fafafa !important; border: .5pt solid #ccc !important; padding: 2pt 4pt !important; margin-bottom: 2pt !important; }
-  body.print-meet .ccr { grid-template-columns: 1fr 1fr 1fr 44pt 44pt !important; gap: 2pt !important; }
-  /* hide hidden labor inputs from print */
-  body.print-meet #mLaborRes { display: none !important; }
+/* ── MEETING PRINT ── */
+body.print-meet #meet-p1 { page-break-after: always !important; }
+body.print-meet #meet-p1::before {
+content: “Huey Luey’s Acworth — Manager Meeting Notes”;
+display: block !important;
+font-size: 10pt !important;
+font-weight: bold !important;
+color: #B85C00 !important;
+border-bottom: 1pt solid #B85C00 !important;
+padding-bottom: 2pt !important;
+margin-bottom: 4pt !important;
+}
+body.print-meet #meet-p2::before {
+content: “Huey Luey’s Acworth — Manager Meeting (continued)”;
+display: block !important;
+font-size: 9pt !important;
+font-weight: bold !important;
+color: #B85C00 !important;
+border-bottom: 1pt solid #B85C00 !important;
+padding-bottom: 2pt !important;
+margin-bottom: 4pt !important;
+}
+body.print-meet #meet-p1-cols { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 6pt !important; margin-top: 3pt !important; }
+body.print-meet .wgrid { gap: 2pt !important; display: grid !important; grid-template-columns: repeat(7,1fr) !important; }
+body.print-meet .wd { background: #fafafa !important; border: .5pt solid #ddd !important; padding: 2.5pt !important; border-radius: 2pt !important; }
+body.print-meet .wd .wdn { font-size: 6pt !important; }
+body.print-meet .wd .wdi { font-size: 11pt !important; }
+body.print-meet .wd .wdt { font-size: 6pt !important; }
+/* compact BHB print */
+body.print-meet .bhb-sm { background: #fff8f0 !important; border: .5pt solid #e8c49a !important; padding: 2pt 4pt !important; border-radius: 2pt !important; }
+body.print-meet .bhb-sm-items { gap: 2pt !important; display: grid !important; grid-template-columns: repeat(5,1fr) !important; }
+body.print-meet .bhb-sm-item { padding: 2pt !important; border: .5pt solid #e8c49a !important; border-radius: 1pt !important; }
+/* labor display boxes */
+body.print-meet .lri { padding: 2pt !important; background: #fff !important; border: .5pt solid #ddd !important; border-radius: 1pt !important; }
+body.print-meet .lbox { display: none !important; }
+body.print-meet .met { background: #fafafa !important; border: .5pt solid #ddd !important; border-radius: 2pt !important; padding: 2pt 3pt !important; }
+body.print-meet .nb { background: #fafafa !important; border: .5pt solid #ddd !important; padding: 2pt 4pt !important; border-radius: 2pt !important; margin-bottom: 2pt !important; }
+body.print-meet .nb p { font-size: 7pt !important; line-height: 1.4 !important; }
+body.print-meet .note-line { display: block !important; border-bottom: .5pt solid #ccc !important; height: 13pt !important; margin-bottom: 2pt !important; }
+body.print-meet .g2 { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 3pt !important; }
+body.print-meet .g3 { display: grid !important; grid-template-columns: 1fr 1fr 1fr !important; gap: 3pt !important; }
+body.print-meet .g4 { display: grid !important; grid-template-columns: repeat(4,1fr) !important; gap: 3pt !important; }
+body.print-meet .ccb { background: #fafafa !important; border: .5pt solid #ccc !important; padding: 2pt 4pt !important; margin-bottom: 2pt !important; }
+body.print-meet .ccr { grid-template-columns: 1fr 1fr 1fr 44pt 44pt !important; gap: 2pt !important; }
+/* hide hidden labor inputs from print */
+body.print-meet #mLaborRes { display: none !important; }
 }</style>
+
 </head>
 <body>
 <div class="app">
 
 <!-- HEADER -->
+
 <div class="hdr no-print">
   <div class="logo"><span>Huey Luey's</span> Acworth — Ops Dashboard</div>
   <div class="hdr-right">
@@ -308,11 +311,14 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
     <button class="btn sm pr no-print" onclick="saveWeek()">💾 Save</button>
     <button class="btn sm gr no-print" onclick="syncToMeet()">→ Meeting</button>
     <button class="btn sm no-print" onclick="doPrint('ops')">🖨 Print Ops</button>
+    <button class="btn sm no-print" onclick="saveAsFile('ops')">💾 Save Ops File</button>
     <button class="btn sm no-print" onclick="doPrint('meet')">🖨 Print Meeting</button>
+    <button class="btn sm no-print" onclick="saveAsFile('meet')">💾 Save Meeting File</button>
   </div>
 </div>
 
 <!-- DATA BAR -->
+
 <div class="data-bar no-print">
   <span>Data:</span>
   <button class="btn sm" onclick="exportData()">⬇ Export Backup</button>
@@ -321,6 +327,7 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
 </div>
 
 <!-- ══════════════ OPERATIONS ══════════════ -->
+
 <div id="sec-ops" class="sec active">
   <div id="ops-p1">
   <!-- Week bar -->
@@ -338,6 +345,7 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
   </div>
 
   <!-- SALES SUMMARY -->
+
   <div class="card" style="grid-column:1/-1">
     <div class="ct">Sales Summary — All Revenue Centers <span class="ab">% auto-calc</span><span class="sb">→ syncs to meeting</span></div>
     <div style="display:grid;grid-template-columns:136px 1fr 1fr 1fr 78px 8px 1fr 1fr 78px;gap:4px;align-items:center;margin-bottom:3px">
@@ -361,6 +369,7 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
   </div>
 
   <!-- LEFT COLUMN -->
+
   <div>
     <!-- GUEST / PPA -->
     <div class="card">
@@ -381,37 +390,41 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
       </div>
     </div>
 
-    <!-- DISCOUNTS -->
-    <div class="card">
-      <div class="ct">Discounts <span class="sb">→ syncs</span></div>
-      <div class="g4">
-        <div class="fg"><label>Rewards ($)</label><input type="number" id="disc_r" step="0.01" oninput="calcDisc()"/></div>
-        <div class="fg"><label>Ez Cater ($)</label><input type="number" id="disc_e" step="0.01" oninput="calcDisc()"/></div>
-        <div class="fg"><label>Other ($)</label><input type="number" id="disc_o" step="0.01" oninput="calcDisc()"/></div>
-        <div class="fg"><label>Total</label><div id="disc_t" class="chip">—</div></div>
-      </div>
-    </div>
+```
+<!-- DISCOUNTS -->
+<div class="card">
+  <div class="ct">Discounts <span class="sb">→ syncs</span></div>
+  <div class="g4">
+    <div class="fg"><label>Rewards ($)</label><input type="number" id="disc_r" step="0.01" oninput="calcDisc()"/></div>
+    <div class="fg"><label>Ez Cater ($)</label><input type="number" id="disc_e" step="0.01" oninput="calcDisc()"/></div>
+    <div class="fg"><label>Other ($)</label><input type="number" id="disc_o" step="0.01" oninput="calcDisc()"/></div>
+    <div class="fg"><label>Total</label><div id="disc_t" class="chip">—</div></div>
+  </div>
+</div>
 
-    <!-- GM OPERATIONS -->
-    <div class="card">
-      <div class="ct">GM Operations &amp; Guest Experience <span class="sb">→ syncs</span></div>
-      <div class="g4">
-        <div class="fg"><label>GM Total Hours</label><input type="text" id="gm_hrs"/></div>
-        <div class="fg"><label>Q&amp;A Walkthroughs</label><input type="text" id="walkthroughs"/></div>
-        <div class="fg"><label>Loyalty Signups</label><input type="number" id="loyalty"/></div>
-        <div class="fg"><label>Marketing Plan</label><input type="text" id="marketing"/></div>
-      </div>
-      <div class="g3" style="margin-top:4px">
-        <div class="fg"><label>Google 5★ / 4★</label><div class="frow"><input type="number" id="rev5"/><input type="number" id="rev4"/></div></div>
-        <div class="fg"><label>Review Winner / Count</label><div class="frow"><input type="text" id="rev_win"/><input type="number" id="rev_wct"/></div></div>
-        <div class="fg"><label>1st Place Emp / Wk / Total</label><div class="frow"><input type="text" id="emp_name"/><input type="number" id="emp_wk"/><input type="number" id="emp_tot"/></div></div>
-      </div>
-      <div class="fg" style="margin-top:4px"><label>Training / Podcasts</label><input type="text" id="training"/></div>
-      <div class="fg" style="margin-top:4px"><label>Projects Completed</label><textarea id="projects"></textarea></div>
-    </div>
+<!-- GM OPERATIONS -->
+<div class="card">
+  <div class="ct">GM Operations &amp; Guest Experience <span class="sb">→ syncs</span></div>
+  <div class="g4">
+    <div class="fg"><label>GM Total Hours</label><input type="text" id="gm_hrs"/></div>
+    <div class="fg"><label>Q&amp;A Walkthroughs</label><input type="text" id="walkthroughs"/></div>
+    <div class="fg"><label>Loyalty Signups</label><input type="number" id="loyalty"/></div>
+    <div class="fg"><label>Marketing Plan</label><input type="text" id="marketing"/></div>
+  </div>
+  <div class="g3" style="margin-top:4px">
+    <div class="fg"><label>Google 5★ / 4★</label><div class="frow"><input type="number" id="rev5"/><input type="number" id="rev4"/></div></div>
+    <div class="fg"><label>Review Winner / Count</label><div class="frow"><input type="text" id="rev_win"/><input type="number" id="rev_wct"/></div></div>
+    <div class="fg"><label>1st Place Emp / Wk / Total</label><div class="frow"><input type="text" id="emp_name"/><input type="number" id="emp_wk"/><input type="number" id="emp_tot"/></div></div>
+  </div>
+  <div class="fg" style="margin-top:4px"><label>Training / Podcasts</label><input type="text" id="training"/></div>
+  <div class="fg" style="margin-top:4px"><label>Projects Completed</label><textarea id="projects"></textarea></div>
+</div>
+```
+
   </div>
 
   <!-- RIGHT COLUMN -->
+
   <div>
     <!-- COSTS -->
     <div class="card">
@@ -496,6 +509,7 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
   </div>
 
   <!-- BHB -->
+
   <div>
     <div class="card">
       <div class="ct">Beach House Bar <span class="sb">→ syncs</span></div>
@@ -526,10 +540,12 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
     <button class="btn gr" onclick="syncToMeet()">→ Push to Manager Meeting</button>
     <button class="btn" onclick="clearOps()">Clear Form</button>
     <button class="btn" onclick="doPrint('ops')">🖨 Print Operations</button>
+    <button class="btn" onclick="saveAsFile('ops')">⬇ Save as File</button>
   </div>
 </div>
 
 <!-- ══════════════ MEETINGS ══════════════ -->
+
 <div id="sec-meet" class="sec">
   <div class="card no-print">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px">
@@ -556,7 +572,10 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
       </div>
     </div>
     <div id="meet-p2"><div id="meetNotes"></div></div>
-    <div class="brow no-print"><button class="btn" onclick="doPrint('meet')">🖨 Print This Meeting</button></div>
+    <div class="brow no-print">
+      <button class="btn" onclick="doPrint('meet')">🖨 Print This Meeting</button>
+      <button class="btn" onclick="saveAsFile('meet')">⬇ Save as File</button>
+    </div>
   </div>
   <div id="meeting-form-view" style="display:none">
     <div class="card">
@@ -576,110 +595,113 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
     </div>
     <div class="card">
       <div class="ct">Last Week Sales <span class="sb">← synced from ops</span></div>
-      <!-- Sales rows: name | actual $ | LY $ | vs LY % -->
-      <div style="display:grid;grid-template-columns:140px 1fr 1fr 70px;gap:4px;align-items:center;margin-bottom:4px;border-bottom:1px solid var(--border);padding-bottom:3px">
+      <!-- Sales rows: name | actual $ | % vs LY -->
+      <div style="display:grid;grid-template-columns:140px 1fr 70px;gap:4px;align-items:center;margin-bottom:4px;border-bottom:1px solid var(--border);padding-bottom:3px">
         <div style="font-size:8px;font-weight:700;color:var(--text3);text-transform:uppercase">Revenue Center</div>
         <div style="font-size:8px;color:var(--text3)">This Week ($)</div>
-        <div style="font-size:8px;color:var(--text3)">Last Year ($)</div>
         <div style="font-size:8px;color:var(--text3)">vs LY</div>
       </div>
       <div id="mMetRows"></div>
       <div class="div"></div>
 
-      <!-- Labor: only show the two percentages -->
-      <div class="ct">Labor <span class="sb">← synced</span></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:.4rem">
-        <div class="lri"><div class="ll">Labor % (No Tax)</div><div class="lv" id="ml_base">—</div></div>
-        <div class="lri"><div class="ll">Labor % WITH Tax (14.53%)</div><div class="lv" id="ml_tax" style="color:var(--accent)">—</div></div>
-        <div class="lri"><div class="ll">vs Projection</div><div class="lv" id="ml_proj">—</div><div class="ls" id="ml_ps"></div></div>
-      </div>
-      <!-- Hidden inputs for labor sync — not shown but needed for calcMLab -->
-      <div style="display:none">
-        <input id="m_lab_s"/><input id="m_lab_d"/><input id="m_labor" oninput="calcMLab()"/><input id="m_labor_p" oninput="calcMLab()"/>
-        <div id="mLaborRes"><div id="ml_bs"></div></div>
-      </div>
+```
+  <!-- Labor: only show the two percentages -->
+  <div class="ct">Labor <span class="sb">← synced</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:.4rem">
+    <div class="lri"><div class="ll">Labor % (No Tax)</div><div class="lv" id="ml_base">—</div></div>
+    <div class="lri"><div class="ll">Labor % WITH Tax (14.53%)</div><div class="lv" id="ml_tax" style="color:var(--accent)">—</div></div>
+    <div class="lri"><div class="ll">vs Projection</div><div class="lv" id="ml_proj">—</div><div class="ls" id="ml_ps"></div></div>
+  </div>
+  <!-- Hidden inputs for labor sync — not shown but needed for calcMLab -->
+  <div style="display:none">
+    <input id="m_lab_s"/><input id="m_lab_d"/><input id="m_labor" oninput="calcMLab()"/><input id="m_labor_p" oninput="calcMLab()"/>
+    <div id="mLaborRes"><div id="ml_bs"></div></div>
+  </div>
 
-      <div class="div"></div>
-      <div class="ct">Cost %s <span class="sb">← synced</span></div>
-      <div id="mCostBoxes"></div>
+  <div class="div"></div>
+  <div class="ct">Cost %s <span class="sb">← synced</span></div>
+  <div id="mCostBoxes"></div>
 
-      <div class="div"></div>
-      <div class="g3" style="margin-top:.3rem">
-        <div class="fg"><label>PPA Actual ($)</label><input type="number" id="m_ppa" step="0.01" oninput="calcMPcts()"/></div>
-        <div class="fg"><label>PPA LY ($)</label><input type="number" id="m_ppa_ly" step="0.01" oninput="calcMPcts()"/></div>
-        <div class="fg"><label>PPA vs LY</label><div id="m_ppa_pct" class="chip" style="margin-top:6px">—</div></div>
-      </div>
+  <div class="div"></div>
+  <div class="g3" style="margin-top:.3rem">
+    <div class="fg"><label>PPA Actual ($)</label><input type="number" id="m_ppa" step="0.01" oninput="calcMPcts()"/></div>
+    <div class="fg"><label>PPA LY ($)</label><input type="number" id="m_ppa_ly" step="0.01" oninput="calcMPcts()"/></div>
+    <div class="fg"><label>PPA vs LY</label><div id="m_ppa_pct" class="chip" style="margin-top:6px">—</div></div>
+  </div>
 
-      <div class="div"></div>
-      <div class="ct">Guest &amp; Product Mix <span class="sb">← synced</span></div>
-      <div class="g4">
-        <div class="fg"><label>Google 5★ / 4★</label><div class="frow"><input type="number" id="m_rev5"/><input type="number" id="m_rev4"/></div></div>
-        <div class="fg"><label>Loyalty Signups</label><input type="number" id="m_loyalty"/></div>
-        <div class="fg"><label>Employee Winner / QTY</label><div class="frow"><input type="text" id="m_emp"/><input type="number" id="m_emp_q"/></div></div>
-      </div>
-      <div class="g4" style="margin-top:4px">
-        <div class="fg"><label>MoM Marg Name</label><input type="text" id="m_mom"/></div>
-        <div class="fg"><label>MoM Wk / Total</label><div class="frow"><input type="number" id="m_mom_wk"/><input type="number" id="m_mom_t"/></div></div>
-        <div class="fg"><label>MoM Winner / Wk / Total</label><div class="frow"><input type="text" id="m_mom_win"/><input type="number" id="m_mwwk"/><input type="number" id="m_mwtot"/></div></div>
-        <div class="fg"><label>Huey's Tequila Floats Wk / Total</label><div class="frow"><input type="number" id="m_flt_wk"/><input type="number" id="m_flt_t"/></div></div>
-      </div>
-      <div class="g4" style="margin-top:4px">
-        <div class="fg"><label>ToGo Margs</label><input type="number" id="m_togo_m"/></div>
-        <div class="fg"><label>Top Sold Margarita</label><div class="frow"><input type="text" id="m_marg_name" placeholder="Name"/><input type="number" id="m_marg_house" placeholder="QTY" style="max-width:70px"/></div></div>
-        <div class="fg"><label>Top Sold Food Item</label><div class="frow"><input type="text" id="m_food_name" placeholder="Name"/><input type="number" id="m_food_item" placeholder="QTY" style="max-width:70px"/></div></div>
-        <div class="fg"><label>Desserts</label><input type="number" id="m_desserts"/></div>
-        <div class="fg"><label>Steak &amp; Blue Wk / Total</label><div class="frow"><input type="number" id="m_sl_wk"/><input type="number" id="m_sl_t"/></div></div>
-      </div>
+  <div class="div"></div>
+  <div class="ct">Guest &amp; Product Mix <span class="sb">← synced</span></div>
+  <div class="g4">
+    <div class="fg"><label>Google 5★ / 4★</label><div class="frow"><input type="number" id="m_rev5"/><input type="number" id="m_rev4"/></div></div>
+    <div class="fg"><label>Loyalty Signups</label><input type="number" id="m_loyalty"/></div>
+    <div class="fg"><label>Employee Winner / QTY</label><div class="frow"><input type="text" id="m_emp"/><input type="number" id="m_emp_q"/></div></div>
+  </div>
+  <div class="g4" style="margin-top:4px">
+    <div class="fg"><label>MoM Marg Name</label><input type="text" id="m_mom"/></div>
+    <div class="fg"><label>MoM Wk / Total</label><div class="frow"><input type="number" id="m_mom_wk"/><input type="number" id="m_mom_t"/></div></div>
+    <div class="fg"><label>MoM Winner / Wk / Total</label><div class="frow"><input type="text" id="m_mom_win"/><input type="number" id="m_mwwk"/><input type="number" id="m_mwtot"/></div></div>
+    <div class="fg"><label>Huey's Tequila Floats Wk / Total</label><div class="frow"><input type="number" id="m_flt_wk"/><input type="number" id="m_flt_t"/></div></div>
+  </div>
+  <div class="g4" style="margin-top:4px">
+    <div class="fg"><label>ToGo Margs</label><input type="number" id="m_togo_m"/></div>
+    <div class="fg"><label>Top Sold Margarita</label><div class="frow"><input type="text" id="m_marg_name" placeholder="Name"/><input type="number" id="m_marg_house" placeholder="QTY" style="max-width:70px"/></div></div>
+    <div class="fg"><label>Top Sold Food Item</label><div class="frow"><input type="text" id="m_food_name" placeholder="Name"/><input type="number" id="m_food_item" placeholder="QTY" style="max-width:70px"/></div></div>
+    <div class="fg"><label>Desserts</label><input type="number" id="m_desserts"/></div>
+    <div class="fg"><label>Steak &amp; Blue Wk / Total</label><div class="frow"><input type="number" id="m_sl_wk"/><input type="number" id="m_sl_t"/></div></div>
+  </div>
 
-      <div class="div"></div>
-      <div class="ct">Discounts <span class="sb">← synced</span></div>
-      <div class="g4">
-        <div class="fg"><label>Rewards ($)</label><input type="number" id="m_disc_r" step="0.01"/></div>
-        <div class="fg"><label>Ez Cater ($)</label><input type="number" id="m_disc_e" step="0.01"/></div>
-        <div class="fg"><label>Other ($)</label><input type="number" id="m_disc_o" step="0.01"/></div>
-        <div class="fg"><label>Total</label><div id="m_disc_t" class="chip">—</div></div>
-      </div>
+  <div class="div"></div>
+  <div class="ct">Discounts <span class="sb">← synced</span></div>
+  <div class="g4">
+    <div class="fg"><label>Rewards ($)</label><input type="number" id="m_disc_r" step="0.01"/></div>
+    <div class="fg"><label>Ez Cater ($)</label><input type="number" id="m_disc_e" step="0.01"/></div>
+    <div class="fg"><label>Other ($)</label><input type="number" id="m_disc_o" step="0.01"/></div>
+    <div class="fg"><label>Total</label><div id="m_disc_t" class="chip">—</div></div>
+  </div>
 
-      <div class="div"></div>
-      <div class="ct">Beach House Bar <span class="sb">← synced</span></div>
-      <div style="background:linear-gradient(135deg,#fff8f0,#fff3e5);border:1px solid #e8c49a;border-radius:var(--radius-sm);padding:.5rem .7rem">
-        <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;margin-bottom:.35rem">
-          <div class="fg" style="margin-bottom:0"><label style="color:#7a3e00">BHB Sales ($)</label><input type="number" id="m_bhb_s" step="0.01" style="border-color:#e8c49a;font-size:11px;padding:3px 6px" oninput="calcMBHB()"/></div>
-          <div class="fg" style="margin-bottom:0"><label style="color:#7a3e00">BHB Proj ($)</label><input type="number" id="m_bhb_proj" step="0.01" style="border-color:#e8c49a;font-size:11px;padding:3px 6px"/></div>
-          <div id="m_bhb_vsly" class="chip" style="margin-top:14px;font-size:10px">—</div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
-          <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Mai Tai</div><input type="number" id="m_bhb_mt" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
-          <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Piña Colada</div><input type="number" id="m_bhb_pc" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
-          <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Lemon Drop</div><input type="number" id="m_bhb_ld" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
-          <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Blueberry</div><input type="number" id="m_bhb_br" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
-          <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Front Porch</div><input type="number" id="m_bhb_fp" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
-        </div>
-      </div>
+  <div class="div"></div>
+  <div class="ct">Beach House Bar <span class="sb">← synced</span></div>
+  <div style="background:linear-gradient(135deg,#fff8f0,#fff3e5);border:1px solid #e8c49a;border-radius:var(--radius-sm);padding:.5rem .7rem">
+    <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;margin-bottom:.35rem">
+      <div class="fg" style="margin-bottom:0"><label style="color:#7a3e00">BHB Sales ($)</label><input type="number" id="m_bhb_s" step="0.01" style="border-color:#e8c49a;font-size:11px;padding:3px 6px" oninput="calcMBHB()"/></div>
+      <div class="fg" style="margin-bottom:0"><label style="color:#7a3e00">BHB Proj ($)</label><input type="number" id="m_bhb_proj" step="0.01" style="border-color:#e8c49a;font-size:11px;padding:3px 6px"/></div>
+      <div id="m_bhb_vsly" class="chip" style="margin-top:14px;font-size:10px">—</div>
     </div>
-    <div class="card">
-      <div class="ct">Focus &amp; Manager Notes</div>
-      <div class="fg"><label>BOH Focus</label><textarea id="m_boh"></textarea></div>
-      <div class="fg" style="margin-top:5px"><label>FOH Focus</label><textarea id="m_foh"></textarea></div>
-      <div class="fg" style="margin-top:5px"><label>Manager Notes / Shoutouts</label><textarea id="m_mgr"></textarea></div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
+      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Mai Tai</div><input type="number" id="m_bhb_mt" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
+      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Piña Colada</div><input type="number" id="m_bhb_pc" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
+      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Lemon Drop</div><input type="number" id="m_bhb_ld" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
+      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Blueberry</div><input type="number" id="m_bhb_br" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
+      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:600;margin-bottom:2px">Front Porch</div><input type="number" id="m_bhb_fp" style="text-align:center;border-color:#e8c49a;font-size:11px;padding:2px 4px"/></div>
     </div>
-    <div class="card" style="background:var(--bg3)">
-      <div class="ct">Manager Feedback</div>
-      <div class="g2" style="gap:8px">
-        <div class="fg" style="margin-bottom:0"><label>What went well this week?</label><textarea id="m_fb_well" style="min-height:48px"></textarea></div>
-        <div class="fg" style="margin-bottom:0"><label>What needs improvement?</label><textarea id="m_fb_imp" style="min-height:48px"></textarea></div>
-      </div>
-      <div class="fg" style="margin-top:6px;margin-bottom:0"><label>Action Items / Follow-Up</label><textarea id="m_fb_action" style="min-height:40px"></textarea></div>
-    </div>
-    <div class="brow no-print">
-      <button class="btn pr" onclick="saveMeet()">💾 Save Meeting</button>
-      <button class="btn gr" onclick="syncToMeet()">↺ Re-sync from Ops</button>
-      <button class="btn" onclick="closeMeetForm()">Cancel</button>
-    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="ct">Focus &amp; Manager Notes</div>
+  <div class="fg"><label>BOH Focus</label><textarea id="m_boh"></textarea></div>
+  <div class="fg" style="margin-top:5px"><label>FOH Focus</label><textarea id="m_foh"></textarea></div>
+  <div class="fg" style="margin-top:5px"><label>Manager Notes / Shoutouts</label><textarea id="m_mgr"></textarea></div>
+</div>
+<div class="card" style="background:var(--bg3)">
+  <div class="ct">Manager Feedback</div>
+  <div class="g2" style="gap:8px">
+    <div class="fg" style="margin-bottom:0"><label>What went well this week?</label><textarea id="m_fb_well" style="min-height:48px"></textarea></div>
+    <div class="fg" style="margin-bottom:0"><label>What needs improvement?</label><textarea id="m_fb_imp" style="min-height:48px"></textarea></div>
+  </div>
+  <div class="fg" style="margin-top:6px;margin-bottom:0"><label>Action Items / Follow-Up</label><textarea id="m_fb_action" style="min-height:40px"></textarea></div>
+</div>
+<div class="brow no-print">
+  <button class="btn pr" onclick="saveMeet()">💾 Save Meeting</button>
+  <button class="btn gr" onclick="syncToMeet()">↺ Re-sync from Ops</button>
+  <button class="btn" onclick="closeMeetForm()">Cancel</button>
+</div>
+```
+
   </div>
 </div>
 
 <!-- ══════════════ HISTORY ══════════════ -->
+
 <div id="sec-hist" class="sec">
   <div class="card">
     <div class="ct">Week-over-Week History</div>
@@ -711,9 +733,9 @@ const MEET_C = [
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const ICONS = {'sunny':'☀️','partly cloudy':'⛅','cloudy':'☁️','rain':'🌧️','stormy':'⛈️','small rain':'🌦️','closed':'🚫'};
 const SMAP = {
-  s_actual:'ms_act',s_ly:'ms_ly',cat_actual:'mcat_act',cat_ly:'mcat_ly',
-  rft_actual:'mrft_act',rft_ly:'mrft_ly',togo_actual:'mtogo_act',togo_ly:'mtogo_ly',
-  patio_actual:'mpat_act',patio_ly:'mpat_ly',bhb_sale_actual:'mbhb_act',
+  s_actual:'ms_act',cat_actual:'mcat_act',
+  rft_actual:'mrft_act',togo_actual:'mtogo_act',
+  patio_actual:'mpat_act',bhb_sale_actual:'mbhb_act',
   lab_sales:'m_lab_s',lab_dollars:'m_lab_d',lab_actual:'m_labor',lab_proj:'m_labor_p',
   food_sales:'m_food_sales',food_spent:'m_food_spent',food_proj:'m_food_proj',
   lbw_sales:'m_lbw_sales',lbw_spent:'m_lbw_spent',lbw_proj:'m_lbw_proj',
@@ -731,61 +753,54 @@ const SMAP = {
 };
 
 const gi=id=>document.getElementById(id);
-const gv=id=>gi(id)?.value||'';
-const fD=n=>(!n&&n!==0)?'—':'$'+Number(n).toLocaleString('en-US',{maximumFractionDigits:0});
-const fP=(a,b)=>{if(!a||!b||+b===0)return null;const p=((+a-+b)/+b*100);return(p>=0?'+':'')+p.toFixed(1)+'%';};
-const pC=s=>s?(s.startsWith('+')?'pos':'neg'):'';
-const gIcon=c=>{if(!c)return'🌤️';const k=c.toLowerCase();for(const[n,v]of Object.entries(ICONS))if(k.includes(n))return v;return'🌤️';};
+const gv=id=>gi(id)?.value||’’;
+const fD=n=>(!n&&n!==0)?’—’:’$’+Number(n).toLocaleString(‘en-US’,{maximumFractionDigits:0});
+const fP=(a,b)=>{if(!a||!b||+b===0)return null;const p=((+a-+b)/+b*100);return(p>=0?’+’:’’)+p.toFixed(1)+’%’;};
+const pC=s=>s?(s.startsWith(’+’)?‘pos’:‘neg’):’’;
+const gIcon=c=>{if(!c)return’🌤️’;const k=c.toLowerCase();for(const[n,v]of Object.entries(ICONS))if(k.includes(n))return v;return’🌤️’;};
 
 function buildSaleRows(){
-  const c=gi('saleRows');if(!c)return;
-  c.innerHTML=SALE_C.map(({id,l})=>{
-    const isBHB=id==='bhb_sale';
-    const bhbExtra=isBHB?'background:linear-gradient(90deg,#fff8f0,transparent);border-radius:5px;padding:2px 4px;':'';
-    const ls=isBHB?'style="font-size:11px;color:#7a3e00;font-weight:600"':'style="font-size:11px"';
-    const is=isBHB?'style="border-color:#e8c49a"':'';
-    return`<div style="${bhbExtra}display:grid;grid-template-columns:136px 1fr 1fr 1fr 78px 8px 1fr 1fr 78px;gap:4px;align-items:center;margin-bottom:4px">
-      <div ${ls}>${isBHB?'🌴 ':''}${l}</div>
-      <input type="number" id="${id}_proj" ${is} oninput="calcSales()"/>
-      <input type="number" id="${id}_ly" ${is} oninput="calcSales()"/>
-      <input type="number" id="${id}_actual" ${is} oninput="calcSales();${isBHB?'syncBHBSales()':'syncLabSales()'}"/>
-      <div id="${id}_pct" class="chip">—</div>
-      <div class="vsep"></div>
-      <input type="number" id="${id}_cproj" ${is}/>
-      <input type="number" id="${id}_cly" ${is}/>
-      <div id="${id}_cpct" class="chip">—</div>
-    </div>`;
-  }).join('');
+const c=gi(‘saleRows’);if(!c)return;
+c.innerHTML=SALE_C.map(({id,l})=>{
+const isBHB=id===‘bhb_sale’;
+const bhbExtra=isBHB?‘background:linear-gradient(90deg,#fff8f0,transparent);border-radius:5px;padding:2px 4px;’:’’;
+const ls=isBHB?‘style=“font-size:11px;color:#7a3e00;font-weight:600”’:‘style=“font-size:11px”’;
+const is=isBHB?‘style=“border-color:#e8c49a”’:’’;
+return`<div style="${bhbExtra}display:grid;grid-template-columns:136px 1fr 1fr 1fr 78px 8px 1fr 1fr 78px;gap:4px;align-items:center;margin-bottom:4px"> <div ${ls}>${isBHB?'🌴 ':''}${l}</div> <input type="number" id="${id}_proj" ${is} oninput="calcSales()"/> <input type="number" id="${id}_ly" ${is} oninput="calcSales()"/> <input type="number" id="${id}_actual" ${is} oninput="calcSales();${isBHB?'syncBHBSales()':'syncLabSales()'}"/> <div id="${id}_pct" class="chip">—</div> <div class="vsep"></div> <input type="number" id="${id}_cproj" ${is}/> <input type="number" id="${id}_cly" ${is}/> <div id="${id}_cpct" class="chip">—</div> </div>`;
+}).join(’’);
 }
 
 function buildCostBoxes(cid,pfx){
-  const c=gi(cid);if(!c)return;
-  c.innerHTML=COST_C.map(({id,l})=>`
-    <div class="ccb">
-      <div style="font-size:10px;font-weight:600;margin-bottom:.4rem;color:var(--text)">${l} <span class="ab">$ ÷ sales = %</span>${pfx?'<span class="sb">← synced</span>':''}</div>
-      <div class="ccr">
-        <div class="fg" style="margin-bottom:0"><label>Total Sales ($)</label><input type="number" id="${pfx}${id}_sales" oninput="calcCost('${pfx}${id}')"/></div>
-        <div class="fg" style="margin-bottom:0"><label>$ Spent</label><input type="number" id="${pfx}${id}_spent" step="0.01" oninput="calcCost('${pfx}${id}')"/></div>
-        <div class="fg" style="margin-bottom:0"><label>% Proj</label><input type="number" id="${pfx}${id}_proj" step="0.1" oninput="calcCost('${pfx}${id}')"/></div>
-        <div class="crp"><div class="cl">Actual %</div><div class="cv" id="${pfx}${id}_po">—</div></div>
-        <div class="crp"><div class="cl">vs Proj</div><div class="cv" id="${pfx}${id}_do" style="font-size:12px">—</div></div>
-      </div>
-    </div>`).join('');
+const c=gi(cid);if(!c)return;
+// Ops version — full inputs
+if(!pfx){
+c.innerHTML=COST_C.map(({id,l})=>` <div class="ccb"> <div style="font-size:10px;font-weight:600;margin-bottom:.4rem;color:var(--text)">${l} <span class="ab">$ ÷ sales = %</span></div> <div class="ccr"> <div class="fg" style="margin-bottom:0"><label>Total Sales ($)</label><input type="number" id="${id}_sales" oninput="calcCost('${id}')"/></div> <div class="fg" style="margin-bottom:0"><label>$ Spent</label><input type="number" id="${id}_spent" step="0.01" oninput="calcCost('${id}')"/></div> <div class="fg" style="margin-bottom:0"><label>% Proj</label><input type="number" id="${id}_proj" step="0.1" oninput="calcCost('${id}')"/></div> <div class="crp"><div class="cl">Actual %</div><div class="cv" id="${id}_po">—</div></div> <div class="crp"><div class="cl">vs Proj</div><div class="cv" id="${id}_do" style="font-size:12px">—</div></div> </div> </div>`).join(’’);
+return;
+}
+// Meeting version — % only, compact
+c.innerHTML=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:.3rem"> ${COST_C.map(({id,l})=>`
+<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.4rem .5rem">
+<div style="font-size:9px;font-weight:600;color:var(--text2);margin-bottom:3px">${l}</div>
+<div style="display:flex;gap:4px;align-items:center">
+<div class="fg" style="margin-bottom:0;flex:1"><label>Actual %</label><input type="number" id="${pfx}${id}_pct_in" step="0.1" placeholder="%" oninput="calcMCostPct('${pfx}${id}')"/></div>
+<div class="fg" style="margin-bottom:0;flex:1"><label>Proj %</label><input type="number" id="${pfx}${id}_proj" step="0.1" placeholder="%"/></div>
+</div>
+<div style="margin-top:3px;font-size:10px;font-weight:600" id="${pfx}${id}_diff">—</div>
+</div>`).join(’’)}
+
+  </div>
+  <!-- hidden fields for saving -->
+  <div style="display:none">${COST_C.map(({id})=>`<input id="${pfx}${id}_sales"/><input id="${pfx}${id}_spent"/><input id="${pfx}${id}_po_val"/>`).join('')}</div>`;
 }
 
 function buildMeetRows(){
-  const c=gi('mMetRows');if(!c)return;
-  c.innerHTML=MEET_C.map(({id,l})=>{
-    const isBHB=id==='mbhb';
-    const rowStyle=isBHB?'background:linear-gradient(90deg,#fff8f0,transparent);border-radius:3px;padding:2px 3px;':'';
-    const ls=isBHB?'style="font-size:11px;color:#7a3e00;font-weight:600"':'style="font-size:11px"';
-    return`<div style="${rowStyle}display:grid;grid-template-columns:140px 1fr 1fr 70px;gap:4px;align-items:center;margin-bottom:4px">
-      <div ${ls}>${isBHB?'🌴 ':''}${l}</div>
-      <input type="number" id="${id}_act" placeholder="This wk $" oninput="calcMPcts()"/>
-      <input type="number" id="${id}_ly" placeholder="Last yr $" oninput="calcMPcts()"/>
-      <div id="${id}_pct" class="chip" style="text-align:center;font-size:11px">—</div>
-    </div>`;
-  }).join('');
+const c=gi(‘mMetRows’);if(!c)return;
+c.innerHTML=MEET_C.map(({id,l})=>{
+const isBHB=id===‘mbhb’;
+const rowStyle=isBHB?‘background:linear-gradient(90deg,#fff8f0,transparent);border-radius:3px;padding:2px 3px;’:’’;
+const ls=isBHB?‘style=“font-size:11px;color:#7a3e00;font-weight:600”’:‘style=“font-size:11px”’;
+return`<div style="${rowStyle}display:grid;grid-template-columns:140px 1fr 70px;gap:4px;align-items:center;margin-bottom:4px"> <div ${ls}>${isBHB?'🌴 ':''}${l}</div> <input type="number" id="${id}_act" placeholder="This wk $" oninput="calcMPcts()"/> <div id="${id}_pct" class="chip" style="text-align:center;font-size:11px">—</div> </div>`;
+}).join(’’);
 }
 
 // ── WEATHER — Acworth GA 30101 ────────────────────────
@@ -794,199 +809,222 @@ const WX_LAT = 34.0659, WX_LNG = -84.6588;
 
 // WMO weather code → friendly condition string
 function wmoToCondition(code){
-  if(code===0)return'Sunny';
-  if(code<=2)return'Partly Cloudy';
-  if(code===3)return'Cloudy';
-  if(code<=49)return'Foggy';
-  if(code<=59)return'Light Rain';
-  if(code<=69)return'Rain';
-  if(code<=79)return'Snow';
-  if(code<=82)return'Rain Showers';
-  if(code<=84)return'Heavy Showers';
-  if(code<=99)return'Stormy';
-  return'Mixed';
+if(code===0)return’Sunny’;
+if(code<=2)return’Partly Cloudy’;
+if(code===3)return’Cloudy’;
+if(code<=49)return’Foggy’;
+if(code<=59)return’Light Rain’;
+if(code<=69)return’Rain’;
+if(code<=79)return’Snow’;
+if(code<=82)return’Rain Showers’;
+if(code<=84)return’Heavy Showers’;
+if(code<=99)return’Stormy’;
+return’Mixed’;
 }
 
 // Build the 7 dates for the current meeting week (Mon–Sun)
-// Uses the weekDate ops field if set, otherwise today's Monday
+// Uses the weekDate ops field if set, otherwise today’s Monday
 function getMeetingWeekDates(){
-  const ref = gv('weekDate') ? new Date(gv('weekDate')+'T12:00:00') : new Date();
-  // find Monday of that week
-  const day = ref.getDay(); // 0=Sun
-  const mon = new Date(ref);
-  mon.setDate(ref.getDate() - (day===0 ? 6 : day-1));
-  return Array.from({length:7},(_,i)=>{
-    const d=new Date(mon);d.setDate(mon.getDate()+i);return d;
-  });
+const ref = gv(‘weekDate’) ? new Date(gv(‘weekDate’)+‘T12:00:00’) : new Date();
+// find Monday of that week
+const day = ref.getDay(); // 0=Sun
+const mon = new Date(ref);
+mon.setDate(ref.getDate() - (day===0 ? 6 : day-1));
+return Array.from({length:7},(_,i)=>{
+const d=new Date(mon);d.setDate(mon.getDate()+i);return d;
+});
 }
 
 function fmtDayLabel(date){
-  const names=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const m=date.getMonth()+1, d=date.getDate();
-  return `${names[date.getDay()]} ${m}/${d}`;
+const names=[‘Sunday’,‘Monday’,‘Tuesday’,‘Wednesday’,‘Thursday’,‘Friday’,‘Saturday’];
+const m=date.getMonth()+1, d=date.getDate();
+return `${names[date.getDay()]} ${m}/${d}`;
 }
 
 async function buildWeather(){
-  const g=gi('wInputs');if(!g)return;
-  const dates=getMeetingWeekDates();
+const g=gi(‘wInputs’);if(!g)return;
+const dates=getMeetingWeekDates();
 
-  // Render skeleton immediately with dates so it feels fast
-  g.innerHTML='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">'+
-    DAYS.map((day,i)=>{
-      const label=fmtDayLabel(dates[i]);
-      return`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px">
-        <div style="font-size:9px;font-weight:700;margin-bottom:1px;color:var(--text)">${label}</div>
-        <div id="wx_loading_${day}" style="font-size:8px;color:var(--text3);margin-bottom:2px">fetching…</div>
-        <input type="text" id="w_c_${day}" placeholder="Condition" style="margin-bottom:2px;font-size:10px"/>
-        <div style="display:flex;gap:2px;margin-bottom:2px">
-          <input type="number" id="w_h_${day}" placeholder="H°F" style="width:50%;font-size:10px"/>
-          <input type="number" id="w_l_${day}" placeholder="L°F" style="width:50%;font-size:10px"/>
-        </div>
-        <textarea id="w_i_${day}" placeholder="Notes…" style="min-height:32px;font-size:9px"></textarea>
-      </div>`;
-    }).join('')+'</div>';
+// Render skeleton immediately with dates so it feels fast
+g.innerHTML=’<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">’+
+DAYS.map((day,i)=>{
+const label=fmtDayLabel(dates[i]);
+return`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px"> <div style="font-size:9px;font-weight:700;margin-bottom:1px;color:var(--text)">${label}</div> <div id="wx_loading_${day}" style="font-size:8px;color:var(--text3);margin-bottom:2px">fetching…</div> <input type="text" id="w_c_${day}" placeholder="Condition" style="margin-bottom:2px;font-size:10px"/> <div style="display:flex;gap:2px;margin-bottom:2px"> <input type="number" id="w_h_${day}" placeholder="H°F" style="width:50%;font-size:10px"/> <input type="number" id="w_l_${day}" placeholder="L°F" style="width:50%;font-size:10px"/> </div> <textarea id="w_i_${day}" placeholder="Notes…" style="min-height:32px;font-size:9px"></textarea> </div>`;
+}).join(’’)+’</div>’;
 
-  // Fetch 7-day forecast from Open-Meteo (free, no key)
-  try{
-    const startDate=dates[0].toISOString().split('T')[0];
-    const endDate=dates[6].toISOString().split('T')[0];
-    const url=`https://api.open-meteo.com/v1/forecast?latitude=${WX_LAT}&longitude=${WX_LNG}&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America%2FNew_York&start_date=${startDate}&end_date=${endDate}`;
-    const resp=await fetch(url);
-    const data=await resp.json();
-    const {weathercode,temperature_2m_max,temperature_2m_min}=data.daily;
+// Fetch 7-day forecast from Open-Meteo (free, no key)
+try{
+const startDate=dates[0].toISOString().split(‘T’)[0];
+const endDate=dates[6].toISOString().split(‘T’)[0];
+const url=`https://api.open-meteo.com/v1/forecast?latitude=${WX_LAT}&longitude=${WX_LNG}&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America%2FNew_York&start_date=${startDate}&end_date=${endDate}`;
+const resp=await fetch(url);
+const data=await resp.json();
+const {weathercode,temperature_2m_max,temperature_2m_min}=data.daily;
 
-    DAYS.forEach((day,i)=>{
-      const cond=wmoToCondition(weathercode[i]||0);
-      const hi=Math.round(temperature_2m_max[i]||0);
-      const lo=Math.round(temperature_2m_min[i]||0);
-      const condEl=gi('w_c_'+day),hiEl=gi('w_h_'+day),loEl=gi('w_l_'+day),ldEl=gi('wx_loading_'+day);
-      if(condEl&&!condEl.value)condEl.value=cond;
-      if(hiEl&&!hiEl.value)hiEl.value=hi;
-      if(loEl&&!loEl.value)loEl.value=lo;
-      if(ldEl)ldEl.textContent='';
-    });
-  }catch(e){
-    DAYS.forEach(day=>{const ld=gi('wx_loading_'+day);if(ld)ld.textContent='(enter manually)';});
-  }
+```
+DAYS.forEach((day,i)=>{
+  const cond=wmoToCondition(weathercode[i]||0);
+  const hi=Math.round(temperature_2m_max[i]||0);
+  const lo=Math.round(temperature_2m_min[i]||0);
+  const condEl=gi('w_c_'+day),hiEl=gi('w_h_'+day),loEl=gi('w_l_'+day),ldEl=gi('wx_loading_'+day);
+  if(condEl&&!condEl.value)condEl.value=cond;
+  if(hiEl&&!hiEl.value)hiEl.value=hi;
+  if(loEl&&!loEl.value)loEl.value=lo;
+  if(ldEl)ldEl.textContent='';
+});
+```
+
+}catch(e){
+DAYS.forEach(day=>{const ld=gi(‘wx_loading_’+day);if(ld)ld.textContent=’(enter manually)’;});
+}
 }
 
 function calcCost(fid){
-  const s=+gi(fid+'_sales')?.value||0,sp=+gi(fid+'_spent')?.value||0,pr=+gi(fid+'_proj')?.value||0;
-  const po=gi(fid+'_po'),dout=gi(fid+'_do');
-  if(!s||!sp){if(po)po.textContent='—';if(dout){dout.textContent='—';dout.style.color='';}return;}
-  const pct=(sp/s)*100;if(po)po.textContent=pct.toFixed(2)+'%';
-  if(pr&&dout){const d=pct-pr;dout.textContent=(d>0?'+':'')+d.toFixed(2)+'pp';dout.style.color=d>0?'#c0392b':'var(--green)';}
-  else if(dout){dout.textContent='—';dout.style.color='';}
+const s=+gi(fid+’_sales’)?.value||0,sp=+gi(fid+’_spent’)?.value||0,pr=+gi(fid+’_proj’)?.value||0;
+const po=gi(fid+’_po’),dout=gi(fid+’_do’);
+if(!s||!sp){if(po)po.textContent=’—’;if(dout){dout.textContent=’—’;dout.style.color=’’;}return;}
+const pct=(sp/s)*100;if(po)po.textContent=pct.toFixed(2)+’%’;
+if(pr&&dout){const d=pct-pr;dout.textContent=(d>0?’+’:’’)+d.toFixed(2)+‘pp’;dout.style.color=d>0?’#c0392b’:‘var(–green)’;}
+else if(dout){dout.textContent=’—’;dout.style.color=’’;}
 }
 
 function syncLabSales(){
-  const v=gv('s_actual');
-  const e=gi('lab_sales');if(e&&v){e.value=v;calcLabor();}
-  COST_C.forEach(({id})=>{const el=gi(id+'_sales');if(el&&!el.dataset.m)el.value=v||'';calcCost(id);});
+const v=gv(‘s_actual’);
+const e=gi(‘lab_sales’);if(e&&v){e.value=v;calcLabor();}
+COST_C.forEach(({id})=>{const el=gi(id+’_sales’);if(el&&!el.dataset.m)el.value=v||’’;calcCost(id);});
 }
-function syncBHBSales(){const v=gv('bhb_sale_actual');const bs=gi('bhb_s');if(bs&&v&&!bs.value){bs.value=v;calcBHB();}}
+function syncBHBSales(){const v=gv(‘bhb_sale_actual’);const bs=gi(‘bhb_s’);if(bs&&v&&!bs.value){bs.value=v;calcBHB();}}
 
 function calcLabor(){
-  const s=+gv('lab_sales'),d=+gv('lab_dollars'),p=+gv('lab_actual'),pr=+gv('lab_proj');
-  let base=0,src='';
-  if(d&&s){base=(d/s)*100;src=fD(d)+'÷'+fD(s);}else if(p){base=p;src='from % entered';}
-  const res=gi('laborRes');if(!base){if(res)res.style.display='none';return;}
-  if(res)res.style.display='grid';
-  if(d&&s&&!p){const el=gi('lab_actual');if(el)el.value=base.toFixed(2);}
-  const wt=base*(1+TAX);
-  gi('lr_base').textContent=base.toFixed(2)+'%';gi('lr_bs').textContent=src;gi('lr_tax').textContent=wt.toFixed(2)+'%';
-  const e3=gi('lr_proj');
-  if(pr&&e3){const dv=wt-pr;e3.textContent=(dv>0?'+':'')+dv.toFixed(2)+'pp';e3.className='lv '+(dv>0?'neg':'pos');gi('lr_ps').textContent='vs proj '+pr+'%';}
-  else if(e3){e3.textContent='—';e3.className='lv';}
+const s=+gv(‘lab_sales’),d=+gv(‘lab_dollars’),p=+gv(‘lab_actual’),pr=+gv(‘lab_proj’);
+let base=0,src=’’;
+if(d&&s){base=(d/s)*100;src=fD(d)+‘÷’+fD(s);}else if(p){base=p;src=‘from % entered’;}
+const res=gi(‘laborRes’);if(!base){if(res)res.style.display=‘none’;return;}
+if(res)res.style.display=‘grid’;
+if(d&&s&&!p){const el=gi(‘lab_actual’);if(el)el.value=base.toFixed(2);}
+const wt=base*(1+TAX);
+gi(‘lr_base’).textContent=base.toFixed(2)+’%’;gi(‘lr_bs’).textContent=src;gi(‘lr_tax’).textContent=wt.toFixed(2)+’%’;
+const e3=gi(‘lr_proj’);
+if(pr&&e3){const dv=wt-pr;e3.textContent=(dv>0?’+’:’’)+dv.toFixed(2)+‘pp’;e3.className=‘lv ‘+(dv>0?‘neg’:‘pos’);gi(‘lr_ps’).textContent=‘vs proj ‘+pr+’%’;}
+else if(e3){e3.textContent=’—’;e3.className=‘lv’;}
 }
 
 function calcMLab(){
-  const s=+gv('m_lab_s'),d=+gv('m_lab_d'),p=+gv('m_labor'),pr=+gv('m_labor_p');
-  let base=0,src='';
-  if(d&&s){base=(d/s)*100;src=fD(d)+'÷'+fD(s);}else if(p){base=p;src='from % entered';}
-  const baseEl=gi('ml_base'),taxEl=gi('ml_tax'),projEl=gi('ml_proj'),psEl=gi('ml_ps');
-  if(!base){
-    if(baseEl)baseEl.textContent='—';if(taxEl)taxEl.textContent='—';
-    if(projEl){projEl.textContent='—';projEl.className='lv';}
-    return;
-  }
-  const wt=base*(1+TAX);
-  if(baseEl)baseEl.textContent=base.toFixed(2)+'%';
-  if(taxEl)taxEl.textContent=wt.toFixed(2)+'%';
-  if(pr&&projEl){const dv=wt-pr;projEl.textContent=(dv>0?'+':'')+dv.toFixed(2)+'pp';projEl.className='lv '+(dv>0?'neg':'pos');if(psEl)psEl.textContent='vs proj '+pr+'%';}
-  else if(projEl){projEl.textContent='—';projEl.className='lv';}
+const s=+gv(‘m_lab_s’),d=+gv(‘m_lab_d’),p=+gv(‘m_labor’),pr=+gv(‘m_labor_p’);
+let base=0,src=’’;
+if(d&&s){base=(d/s)*100;src=fD(d)+‘÷’+fD(s);}else if(p){base=p;src=‘from % entered’;}
+const baseEl=gi(‘ml_base’),taxEl=gi(‘ml_tax’),projEl=gi(‘ml_proj’),psEl=gi(‘ml_ps’);
+if(!base){
+if(baseEl)baseEl.textContent=’—’;if(taxEl)taxEl.textContent=’—’;
+if(projEl){projEl.textContent=’—’;projEl.className=‘lv’;}
+return;
+}
+const wt=base*(1+TAX);
+if(baseEl)baseEl.textContent=base.toFixed(2)+’%’;
+if(taxEl)taxEl.textContent=wt.toFixed(2)+’%’;
+if(pr&&projEl){const dv=wt-pr;projEl.textContent=(dv>0?’+’:’’)+dv.toFixed(2)+‘pp’;projEl.className=‘lv ‘+(dv>0?‘neg’:‘pos’);if(psEl)psEl.textContent=‘vs proj ‘+pr+’%’;}
+else if(projEl){projEl.textContent=’—’;projEl.className=‘lv’;}
 }
 
 function calcSales(){
-  SALE_C.forEach(({id})=>{const p=fP(gv(id+'_actual'),gv(id+'_ly'));const e=gi(id+'_pct');if(e){e.textContent=p||'—';e.className='chip '+(p?pC(p):'');}});
-  const gcp=fP(gv('gc_actual'),gv('gc_ly'));const gce=gi('gc_pct');if(gce){gce.textContent=gcp||'—';gce.className='chip '+(gcp?pC(gcp):'');}
-  const pp=fP(gv('ppa_actual'),gv('ppa_ly'));const ppe=gi('ppa_pct');if(ppe){ppe.textContent=pp||'—';ppe.className='chip '+(pp?pC(pp):'');}
+SALE_C.forEach(({id})=>{const p=fP(gv(id+’_actual’),gv(id+’_ly’));const e=gi(id+’_pct’);if(e){e.textContent=p||’—’;e.className=‘chip ‘+(p?pC(p):’’);}});
+const gcp=fP(gv(‘gc_actual’),gv(‘gc_ly’));const gce=gi(‘gc_pct’);if(gce){gce.textContent=gcp||’—’;gce.className=‘chip ‘+(gcp?pC(gcp):’’);}
+const pp=fP(gv(‘ppa_actual’),gv(‘ppa_ly’));const ppe=gi(‘ppa_pct’);if(ppe){ppe.textContent=pp||’—’;ppe.className=‘chip ‘+(pp?pC(pp):’’);}
 }
 
 function calcMPcts(){
-  MEET_C.forEach(({id})=>{
-    const a=+gv(id+'_act'),ly=+gv(id+'_ly');
-    const e=gi(id+'_pct');if(!e)return;
-    if(a&&ly&&ly!==0){
-      const p=((a-ly)/ly*100);
-      e.textContent=(p>=0?'+':'')+p.toFixed(1)+'%';
-      e.className='chip '+(p>=0?'pos':'neg');
-    }else{e.textContent='—';e.className='chip';}
-  });
-  const pa=+gv('m_ppa'),ply=+gv('m_ppa_ly');
-  const pe=gi('m_ppa_pct');
-  if(pe){
-    if(pa&&ply){const p=((pa-ply)/ply*100);pe.textContent=(p>=0?'+':'')+p.toFixed(1)+'%';pe.className='chip '+(p>=0?'pos':'neg');}
-    else{pe.textContent='—';pe.className='chip';}
-  }
-  const r=+gv('m_disc_r'),ez=+gv('m_disc_e'),o=+gv('m_disc_o'),t=r+ez+o;
-  const dt=gi('m_disc_t');if(dt)dt.textContent=t>0?fD(t):'—';
+// % chips are pre-populated via SMAP from ops calcSales results — just recalc discount total
+const r=+gv(‘m_disc_r’),ez=+gv(‘m_disc_e’),o=+gv(‘m_disc_o’),t=r+ez+o;
+const dt=gi(‘m_disc_t’);if(dt)dt.textContent=t>0?fD(t):’—’;
+const pa=+gv(‘m_ppa’),ply=+gv(‘m_ppa_ly’);
+const pe=gi(‘m_ppa_pct’);
+if(pe){
+if(pa&&ply){const p=((pa-ply)/ply*100);pe.textContent=(p>=0?’+’:’’)+p.toFixed(1)+’%’;pe.className=‘chip ‘+(p>=0?‘pos’:‘neg’);}
+else{pe.textContent=’—’;pe.className=‘chip’;}
+}
 }
 
-function calcDisc(){const t=(+gv('disc_r'))+(+gv('disc_e'))+(+gv('disc_o'));const e=gi('disc_t');if(e)e.textContent=t>0?fD(t):'—';}
+function calcDisc(){const t=(+gv(‘disc_r’))+(+gv(‘disc_e’))+(+gv(‘disc_o’));const e=gi(‘disc_t’);if(e)e.textContent=t>0?fD(t):’—’;}
 
 function calcBHB(){
-  const ids=['bhb_mt','bhb_pc','bhb_ld','bhb_br','bhb_fp'];
-  const tot=ids.reduce((s,id)=>s+(+gv(id)||0),0);
-  const tc=gi('bhb_tot');if(tc){tc.style.display=tot>0?'inline-block':'none';tc.textContent=tot+' items sold';}
-  const s=+gv('bhb_s'),pr=+gv('bhb_proj');
-  const vc=gi('bhb_vsly');
-  if(vc){
-    if(s&&pr){const diff=s-pr;const pct=(diff/pr*100);vc.textContent=(pct>=0?'+':'')+pct.toFixed(1)+'% vs Proj';vc.className='chip '+(pct>=0?'pos':'neg');}
-    else{vc.textContent='—';vc.className='chip';}
-  }
-  const sa=gi('bhb_sale_actual');if(sa&&gv('bhb_s')&&!sa.value){sa.value=gv('bhb_s');calcSales();}
+const ids=[‘bhb_mt’,‘bhb_pc’,‘bhb_ld’,‘bhb_br’,‘bhb_fp’];
+const tot=ids.reduce((s,id)=>s+(+gv(id)||0),0);
+const tc=gi(‘bhb_tot’);if(tc){tc.style.display=tot>0?‘inline-block’:‘none’;tc.textContent=tot+’ items sold’;}
+const s=+gv(‘bhb_s’),pr=+gv(‘bhb_proj’);
+const vc=gi(‘bhb_vsly’);
+if(vc){
+if(s&&pr){const diff=s-pr;const pct=(diff/pr*100);vc.textContent=(pct>=0?’+’:’’)+pct.toFixed(1)+’% vs Proj’;vc.className=‘chip ‘+(pct>=0?‘pos’:‘neg’);}
+else{vc.textContent=’—’;vc.className=‘chip’;}
+}
+const sa=gi(‘bhb_sale_actual’);if(sa&&gv(‘bhb_s’)&&!sa.value){sa.value=gv(‘bhb_s’);calcSales();}
 }
 
 function calcMBHB(){
-  const s=+gv('m_bhb_s'),pr=+gv('m_bhb_proj');
-  const e=gi('m_bhb_vsly');
-  if(e&&s&&pr){const diff=((s-pr)/pr*100);const p=(diff>=0?'+':'')+diff.toFixed(1)+'%';e.textContent=p;e.className='chip '+(diff>=0?'pos':'neg');}
-  else if(e){e.textContent='—';e.className='chip';}
-  const ma=gi('mbhb_act');if(ma&&gv('m_bhb_s')&&!ma.value){ma.value=gv('m_bhb_s');calcMPcts();}
+const s=+gv(‘m_bhb_s’),pr=+gv(‘m_bhb_proj’);
+const e=gi(‘m_bhb_vsly’);
+if(e&&s&&pr){const diff=((s-pr)/pr*100);const p=(diff>=0?’+’:’’)+diff.toFixed(1)+’%’;e.textContent=p;e.className=‘chip ‘+(diff>=0?‘pos’:‘neg’);}
+else if(e){e.textContent=’—’;e.className=‘chip’;}
+const ma=gi(‘mbhb_act’);if(ma&&gv(‘m_bhb_s’)&&!ma.value){ma.value=gv(‘m_bhb_s’);calcMPcts();}
+}
+
+function calcMCostPct(fid){
+const actual=+gi(fid+’_pct_in’)?.value||0;
+const proj=+gi(fid+’_proj’)?.value||0;
+const diffEl=gi(fid+’_diff’);
+if(!diffEl)return;
+if(actual&&proj){
+const d=actual-proj;
+diffEl.textContent=(d>0?’+’:’’)+d.toFixed(1)+‘pp vs proj’;
+diffEl.style.color=d>0?’#c0392b’:‘var(–green)’;
+}else if(actual){
+diffEl.textContent=actual.toFixed(1)+’%’;
+diffEl.style.color=‘var(–text)’;
+}else{diffEl.textContent=’—’;diffEl.style.color=’’;}
 }
 
 function syncToMeet(){
-  if(gi('meeting-form-view').style.display==='none')showNewMeet();
-  document.querySelectorAll('input.synced').forEach(e=>e.classList.remove('synced'));
-  let n=0;
-  Object.entries(SMAP).forEach(([s,d])=>{const se=gi(s),de=gi(d);if(se&&de&&se.value){de.value=se.value;de.classList.add('synced');n++;}});
-  // Push labor with-tax calculated value to meeting display
-  const labBase=+gv('lab_actual');
-  if(labBase){
-    const withTax=(labBase*(1+TAX)).toFixed(2);
-    const mwt=gi('m_labor_wtax');if(mwt){mwt.textContent=withTax+'%';}
-  }
-  calcMPcts();calcMLab();calcMBHB();COST_C.forEach(({id})=>calcCost('m_'+id));
-  const b=gi('m_sync_banner');if(b)b.style.display='block';
-  const sn=gi('syncNote');if(sn){sn.style.display='block';sn.textContent=`✓ ${n} fields synced to Manager Meeting.`;}
-  showTab('meet',null);
-  gi('meeting-list-view').style.display='none';gi('meeting-detail-view').style.display='none';gi('meeting-form-view').style.display='block';
+if(gi(‘meeting-form-view’).style.display===‘none’)showNewMeet();
+document.querySelectorAll(‘input.synced’).forEach(e=>e.classList.remove(‘synced’));
+let n=0;
+Object.entries(SMAP).forEach(([s,d])=>{const se=gi(s),de=gi(d);if(se&&de&&se.value){de.value=se.value;de.classList.add(‘synced’);n++;}});
+// Push labor with-tax
+const labBase=+gv(‘lab_actual’);
+if(labBase){const withTax=(labBase*(1+TAX)).toFixed(2);const mwt=gi(‘m_labor_wtax’);if(mwt)mwt.textContent=withTax+’%’;}
+// Push sales actuals and % chips from ops into meeting
+MEET_C.forEach(({id})=>{
+// Map ops id to meeting id (e.g. ‘s’ → ‘ms’, ‘cat’ → ‘mcat’)
+const opsActId=id===‘ms’?‘s_actual’:id===‘mcat’?‘cat_actual’:id===‘mrft’?‘rft_actual’:id===‘mtogo’?‘togo_actual’:id===‘mpat’?‘patio_actual’:id===‘mbhb’?‘bhb_sale_actual’:null;
+const opsPctId=id===‘ms’?‘s_pct’:id===‘mcat’?‘cat_pct’:id===‘mrft’?‘rft_pct’:id===‘mtogo’?‘togo_pct’:id===‘mpat’?‘patio_pct’:id===‘mbhb’?‘bhb_sale_pct’:null;
+if(opsActId){const ae=gi(opsActId),me=gi(id+’_act’);if(ae&&me&&ae.value){me.value=ae.value;me.classList.add(‘synced’);}}
+if(opsPctId){
+const pe=gi(opsPctId),mpe=gi(id+’_pct’);
+if(pe&&mpe&&pe.textContent&&pe.textContent!==’—’){
+mpe.textContent=pe.textContent;
+mpe.className=‘chip ‘+(pe.classList.contains(‘pos’)?‘pos’:pe.classList.contains(‘neg’)?‘neg’:’’);
+}
+}
+});
+// Push cost %s from ops into meeting compact inputs
+COST_C.forEach(({id})=>{
+const pctEl=gi(id+’_po’);
+const projVal=gv(id+’*proj’);
+const mIn=gi(’m*’+id+’*pct_in’);const mPrj=gi(’m*’+id+’*proj’);
+if(pctEl&&pctEl.textContent&&pctEl.textContent!==’—’&&mIn){
+mIn.value=parseFloat(pctEl.textContent).toFixed(1);mIn.classList.add(‘synced’);
+}
+if(projVal&&mPrj){mPrj.value=projVal;mPrj.classList.add(‘synced’);}
+calcMCostPct(’m*’+id);
+});
+calcMPcts();calcMLab();calcMBHB();
+const b=gi(‘m_sync_banner’);if(b)b.style.display=‘block’;
+const sn=gi(‘syncNote’);if(sn){sn.style.display=‘block’;sn.textContent=`✓ ${n} fields synced to Manager Meeting.`;}
+showTab(‘meet’,null);
+gi(‘meeting-list-view’).style.display=‘none’;gi(‘meeting-detail-view’).style.display=‘none’;gi(‘meeting-form-view’).style.display=‘block’;
 }
 
 // ── DATA PERSISTENCE ─────────────────────────────────
-const KEY='hl_ops_v1';
-function getData(){try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch{return{};}}
+const KEY=‘hl_ops_v1’;
+function getData(){try{return JSON.parse(localStorage.getItem(KEY)||’{}’);}catch{return{};}}
 function setData(d){localStorage.setItem(KEY,JSON.stringify(d));}
 function getWeeks(){return getData().weeks||[];}
 function getMeets(){return getData().meets||[];}
@@ -995,280 +1033,392 @@ function saveMts(m){const d=getData();d.meets=m;setData(d);}
 
 // ── EXPORT / IMPORT ───────────────────────────────────
 function exportData(){
-  const data=getData();
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download='hueylueys-ops-backup-'+new Date().toISOString().split('T')[0]+'.json';
-  a.click();URL.revokeObjectURL(url);
+const data=getData();
+const blob=new Blob([JSON.stringify(data,null,2)],{type:‘application/json’});
+const url=URL.createObjectURL(blob);
+const a=document.createElement(‘a’);
+a.href=url;a.download=‘hueylueys-ops-backup-’+new Date().toISOString().split(‘T’)[0]+’.json’;
+a.click();URL.revokeObjectURL(url);
 }
 function importData(evt){
-  const file=evt.target.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const data=JSON.parse(e.target.result);
-      setData(data);renderHist();renderMeetList();
-      alert('✓ Data imported successfully! '+((data.weeks||[]).length)+' weeks and '+((data.meets||[]).length)+' meetings loaded.');
-    }catch{alert('Error reading file. Make sure it\'s a valid backup JSON.');}
-  };
-  reader.readAsText(file);
+const file=evt.target.files[0];if(!file)return;
+const reader=new FileReader();
+reader.onload=e=>{
+try{
+const data=JSON.parse(e.target.result);
+setData(data);renderHist();renderMeetList();
+alert(‘✓ Data imported successfully! ‘+((data.weeks||[]).length)+’ weeks and ‘+((data.meets||[]).length)+’ meetings loaded.’);
+}catch{alert(‘Error reading file. Make sure it's a valid backup JSON.’);}
+};
+reader.readAsText(file);
 }
 
-const ONUMS=['s_proj','s_ly','s_actual','s_cproj','s_cly','cat_proj','cat_ly','cat_actual','cat_cproj','cat_cly','rft_proj','rft_ly','rft_actual','rft_cproj','rft_cly','togo_proj','togo_ly','togo_actual','togo_cproj','togo_cly','patio_proj','patio_ly','patio_actual','patio_cproj','patio_cly','bhb_sale_proj','bhb_sale_ly','bhb_sale_actual','bhb_sale_cproj','bhb_sale_cly','gc_proj','gc_ly','gc_actual','ppa_proj','ppa_ly','ppa_actual','lab_sales','lab_dollars','lab_actual','lab_proj','food_sales','food_spent','food_proj','lbw_sales','lbw_spent','lbw_proj','pcc_sales','pcc_spent','pcc_proj','nab_sales','nab_spent','nab_proj','splh_proj','splh_actual','splh_cproj','ot_sched','ot_actual','ot_curr','disc_r','disc_e','disc_o','marg_house','marg16','marg22','marg32','pitchers','togo_margs','float_wk','float_total','mom_wk','mom_total','mom_ewk','mom_etot','bhb_s','bhb_proj','bhb_mt','bhb_pc','bhb_ld','bhb_br','bhb_fp','mimosas','mim_fl','brunch','tacos','fajitas','faj_dur','faj_hue','faj_bac','bighuey','sl_wk','sl_tot','desserts','kids','rev5','rev4','rev_wct','loyalty','emp_wk','emp_tot'];
-const OTXTS=['gm_hrs','walkthroughs','marketing','training','projects','mom_name','mom_emp','rev_win','emp_name','marg_house_name','tacos_name'];
+const ONUMS=[‘s_proj’,‘s_ly’,‘s_actual’,‘s_cproj’,‘s_cly’,‘cat_proj’,‘cat_ly’,‘cat_actual’,‘cat_cproj’,‘cat_cly’,‘rft_proj’,‘rft_ly’,‘rft_actual’,‘rft_cproj’,‘rft_cly’,‘togo_proj’,‘togo_ly’,‘togo_actual’,‘togo_cproj’,‘togo_cly’,‘patio_proj’,‘patio_ly’,‘patio_actual’,‘patio_cproj’,‘patio_cly’,‘bhb_sale_proj’,‘bhb_sale_ly’,‘bhb_sale_actual’,‘bhb_sale_cproj’,‘bhb_sale_cly’,‘gc_proj’,‘gc_ly’,‘gc_actual’,‘ppa_proj’,‘ppa_ly’,‘ppa_actual’,‘lab_sales’,‘lab_dollars’,‘lab_actual’,‘lab_proj’,‘food_sales’,‘food_spent’,‘food_proj’,‘lbw_sales’,‘lbw_spent’,‘lbw_proj’,‘pcc_sales’,‘pcc_spent’,‘pcc_proj’,‘nab_sales’,‘nab_spent’,‘nab_proj’,‘splh_proj’,‘splh_actual’,‘splh_cproj’,‘ot_sched’,‘ot_actual’,‘ot_curr’,‘disc_r’,‘disc_e’,‘disc_o’,‘marg_house’,‘marg16’,‘marg22’,‘marg32’,‘pitchers’,‘togo_margs’,‘float_wk’,‘float_total’,‘mom_wk’,‘mom_total’,‘mom_ewk’,‘mom_etot’,‘bhb_s’,‘bhb_proj’,‘bhb_mt’,‘bhb_pc’,‘bhb_ld’,‘bhb_br’,‘bhb_fp’,‘mimosas’,‘mim_fl’,‘brunch’,‘tacos’,‘fajitas’,‘faj_dur’,‘faj_hue’,‘faj_bac’,‘bighuey’,‘sl_wk’,‘sl_tot’,‘desserts’,‘kids’,‘rev5’,‘rev4’,‘rev_wct’,‘loyalty’,‘emp_wk’,‘emp_tot’];
+const OTXTS=[‘gm_hrs’,‘walkthroughs’,‘marketing’,‘training’,‘projects’,‘mom_name’,‘mom_emp’,‘rev_win’,‘emp_name’,‘marg_house_name’,‘tacos_name’];
 
 function getOpsData(){
-  const d={};
-  ONUMS.forEach(f=>{const e=gi(f);if(e)d[f]=e.value;});
-  OTXTS.forEach(f=>{const e=gi(f);if(e)d[f]=e.value;});
-  const b=+gv('lab_actual');if(b)d.lab_wtax=(b*(1+TAX)).toFixed(2);
-  COST_C.forEach(({id})=>{const sp=+gv(id+'_spent'),sa=+gv(id+'_sales');if(sp&&sa)d[id+'_pct']=((sp/sa)*100).toFixed(2);});
-  return d;
+const d={};
+ONUMS.forEach(f=>{const e=gi(f);if(e)d[f]=e.value;});
+OTXTS.forEach(f=>{const e=gi(f);if(e)d[f]=e.value;});
+const b=+gv(‘lab_actual’);if(b)d.lab_wtax=(b*(1+TAX)).toFixed(2);
+COST_C.forEach(({id})=>{const sp=+gv(id+’_spent’),sa=+gv(id+’_sales’);if(sp&&sa)d[id+’_pct’]=((sp/sa)*100).toFixed(2);});
+return d;
 }
 function setOpsData(data){
-  ONUMS.forEach(f=>{const e=gi(f);if(e)e.value=data[f]||'';});
-  OTXTS.forEach(f=>{const e=gi(f);if(e)e.value=data[f]||'';});
-  calcSales();calcDisc();calcLabor();calcBHB();COST_C.forEach(({id})=>calcCost(id));
+ONUMS.forEach(f=>{const e=gi(f);if(e)e.value=data[f]||’’;});
+OTXTS.forEach(f=>{const e=gi(f);if(e)e.value=data[f]||’’;});
+calcSales();calcDisc();calcLabor();calcBHB();COST_C.forEach(({id})=>calcCost(id));
 }
 
 function saveWeek(){
-  const date=gv('weekDate');if(!date){alert('Select a week date.');return;}
-  const wks=getWeeks();const idx=wks.findIndex(w=>w.date===date);
-  const entry={date,...getOpsData(),savedAt:new Date().toISOString()};
-  if(idx>=0)wks[idx]=entry;else wks.push(entry);
-  wks.sort((a,b)=>new Date(b.date)-new Date(a.date));
-  saveWks(wks);renderHist();
-  const sl=gi('weekLabel');if(sl)sl.textContent='✓ Saved';
-  setTimeout(()=>{if(sl)sl.textContent='';},2000);
+const date=gv(‘weekDate’);if(!date){alert(‘Select a week date.’);return;}
+const wks=getWeeks();const idx=wks.findIndex(w=>w.date===date);
+const entry={date,…getOpsData(),savedAt:new Date().toISOString()};
+if(idx>=0)wks[idx]=entry;else wks.push(entry);
+wks.sort((a,b)=>new Date(b.date)-new Date(a.date));
+saveWks(wks);renderHist();
+const sl=gi(‘weekLabel’);if(sl)sl.textContent=‘✓ Saved’;
+setTimeout(()=>{if(sl)sl.textContent=’’;},2000);
 }
-function loadWeek(){const date=gv('weekDate');if(!date){alert('Select a date.');return;}const w=getWeeks().find(w=>w.date===date);if(w)setOpsData(w);else alert('No data saved for that week.');}
+function loadWeek(){const date=gv(‘weekDate’);if(!date){alert(‘Select a date.’);return;}const w=getWeeks().find(w=>w.date===date);if(w)setOpsData(w);else alert(‘No data saved for that week.’);}
 
 function checkCarry(){
-  const date=gv('weekDate');if(!date)return;
-  const wks=getWeeks();if(!wks.length)return;
-  const prev=wks[0];
-  const map={s_actual:'s_ly',cat_actual:'cat_ly',rft_actual:'rft_ly',togo_actual:'togo_ly',patio_actual:'patio_ly',bhb_sale_actual:'bhb_sale_ly'};
-  let carried=false;
-  Object.entries(map).forEach(([a,l])=>{const le=gi(l);if(prev[a]&&le&&!le.value){le.value=prev[a];carried=true;}});
-  const n=gi('carryNote');if(n)n.style.display=carried?'block':'none';
-  if(carried)calcSales();
+const date=gv(‘weekDate’);if(!date)return;
+const wks=getWeeks();if(!wks.length)return;
+const prev=wks[0];
+const map={s_actual:‘s_ly’,cat_actual:‘cat_ly’,rft_actual:‘rft_ly’,togo_actual:‘togo_ly’,patio_actual:‘patio_ly’,bhb_sale_actual:‘bhb_sale_ly’};
+let carried=false;
+Object.entries(map).forEach(([a,l])=>{const le=gi(l);if(prev[a]&&le&&!le.value){le.value=prev[a];carried=true;}});
+const n=gi(‘carryNote’);if(n)n.style.display=carried?‘block’:‘none’;
+if(carried)calcSales();
 }
 
 function clearOps(){
-  ONUMS.concat(OTXTS).forEach(f=>{const e=gi(f);if(e)e.value='';});
-  calcSales();calcDisc();
-  const r=gi('laborRes');if(r)r.style.display='none';
-  gi('carryNote').style.display='none';gi('syncNote').style.display='none';
+ONUMS.concat(OTXTS).forEach(f=>{const e=gi(f);if(e)e.value=’’;});
+calcSales();calcDisc();
+const r=gi(‘laborRes’);if(r)r.style.display=‘none’;
+gi(‘carryNote’).style.display=‘none’;gi(‘syncNote’).style.display=‘none’;
 }
 
 function showTab(t,btn){
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  gi('sec-'+t).classList.add('active');
-  if(btn)btn.classList.add('active');
-  else{const m={ops:0,meet:1,hist:2};document.querySelectorAll('.tab')[m[t]]?.classList.add('active');}
-  if(t==='hist')renderHist();
-  if(t==='meet')renderMeetList();
+document.querySelectorAll(’.sec’).forEach(s=>s.classList.remove(‘active’));
+document.querySelectorAll(’.tab’).forEach(b=>b.classList.remove(‘active’));
+gi(‘sec-’+t).classList.add(‘active’);
+if(btn)btn.classList.add(‘active’);
+else{const m={ops:0,meet:1,hist:2};document.querySelectorAll(’.tab’)[m[t]]?.classList.add(‘active’);}
+if(t===‘hist’)renderHist();
+if(t===‘meet’)renderMeetList();
 }
 
 // ── MEETING ───────────────────────────────────────────
-const MNUMS=['ms_act','ms_ly','mcat_act','mcat_ly','mrft_act','mrft_ly','mtogo_act','mtogo_ly','mpat_act','mpat_ly','mbhb_act','m_lab_s','m_lab_d','m_labor','m_labor_p','m_ppa','m_ppa_ly','m_rev5','m_rev4','m_loyalty','m_emp_q','m_mom_wk','m_mom_t','m_mwwk','m_mwtot','m_flt_wk','m_flt_t','m_cat_rev','m_togo_m','m_desserts','m_sl_wk','m_sl_t','m_disc_r','m_disc_e','m_disc_o','m_bhb_s','m_bhb_proj','m_bhb_mt','m_bhb_pc','m_bhb_ld','m_bhb_br','m_bhb_fp','m_marg_house','m_food_item'];
-COST_C.forEach(({id})=>MNUMS.push('m_'+id+'_sales','m_'+id+'_spent','m_'+id+'_proj'));
-const MTXTS=['m_week','m_date','m_boh','m_foh','m_mgr','m_emp','m_mom','m_cat_notes','m_mom_win','m_fb_well','m_fb_imp','m_fb_action','m_marg_name','m_food_name'];
+const MNUMS=[‘ms_act’,‘mcat_act’,‘mrft_act’,‘mtogo_act’,‘mpat_act’,‘mbhb_act’,‘m_lab_s’,‘m_lab_d’,‘m_labor’,‘m_labor_p’,‘m_ppa’,‘m_ppa_ly’,‘m_rev5’,‘m_rev4’,‘m_loyalty’,‘m_emp_q’,‘m_mom_wk’,‘m_mom_t’,‘m_mwwk’,‘m_mwtot’,‘m_flt_wk’,‘m_flt_t’,‘m_cat_rev’,‘m_togo_m’,‘m_desserts’,‘m_sl_wk’,‘m_sl_t’,‘m_disc_r’,‘m_disc_e’,‘m_disc_o’,‘m_bhb_s’,‘m_bhb_proj’,‘m_bhb_mt’,‘m_bhb_pc’,‘m_bhb_ld’,‘m_bhb_br’,‘m_bhb_fp’,‘m_marg_house’,‘m_food_item’];
+COST_C.forEach(({id})=>MNUMS.push(‘m_’+id+’*sales’,’m*’+id+’*spent’,’m*’+id+’_proj’));
+const MTXTS=[‘m_week’,‘m_date’,‘m_boh’,‘m_foh’,‘m_mgr’,‘m_emp’,‘m_mom’,‘m_cat_notes’,‘m_mom_win’,‘m_fb_well’,‘m_fb_imp’,‘m_fb_action’,‘m_marg_name’,‘m_food_name’];
 
 function getMeetData(){
-  const d={};
-  MNUMS.forEach(f=>{const e=gi(f);if(e)d[f]=e.value;});
-  MTXTS.forEach(f=>{const e=gi(f);if(e)d[f]=e.value;});
-  const b=+gv('m_labor');if(b)d.m_wtax=(b*(1+TAX)).toFixed(2);
-  COST_C.forEach(({id})=>{const sp=+gv('m_'+id+'_spent'),sa=+gv('m_'+id+'_sales');if(sp&&sa)d['m_'+id+'_pct']=((sp/sa)*100).toFixed(2);});
-  const weather={};
-  DAYS.forEach(day=>{weather[day]={cond:gv('w_c_'+day),hi:gv('w_h_'+day),lo:gv('w_l_'+day),itin:gv('w_i_'+day)};});
-  d.weather=weather;return d;
+const d={};
+MNUMS.forEach(f=>{const e=gi(f);if(e)d[f]=e.value;});
+MTXTS.forEach(f=>{const e=gi(f);if(e)d[f]=e.value;});
+const b=+gv(‘m_labor’);if(b)d.m_wtax=(b*(1+TAX)).toFixed(2);
+// Save % chips from meeting sales rows
+MEET_C.forEach(({id})=>{
+const chip=gi(id+’*pct’);
+if(chip&&chip.textContent&&chip.textContent!==’—’)d[id+’*pct’]=chip.textContent;
+});
+// Save cost % inputs
+COST_C.forEach(({id})=>{
+const pctIn=gi(’m*’+id+’*pct_in’);const projIn=gi(’m*’+id+’*proj’);
+if(pctIn?.value)d[’m*’+id+’*pct’]=pctIn.value;
+if(projIn?.value)d[’m*’+id+’*proj_val’]=projIn.value;
+});
+const weather={};
+DAYS.forEach(day=>{weather[day]={cond:gv(’w_c*’+day),hi:gv(’w_h*’+day),lo:gv(‘w_l_’+day),itin:gv(‘w_i_’+day)};});
+d.weather=weather;return d;
 }
 
 function showNewMeet(){
-  gi('meeting-list-view').style.display='none';gi('meeting-detail-view').style.display='none';gi('meeting-form-view').style.display='block';
-  buildWeather();buildMeetRows();buildCostBoxes('mCostBoxes','m_');
-  gi('m_date').value=new Date().toISOString().split('T')[0];
-  // Auto-fill week range from ops weekDate if not already set
-  const wkEl=gi('m_week');
-  if(wkEl&&!wkEl.value){
-    const wd=gv('weekDate');
-    if(wd){
-      const mon=new Date(wd+'T00:00:00');
-      const sun=new Date(mon);sun.setDate(mon.getDate()+6);
-      const fmt=d=>`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
-      wkEl.value=`${fmt(mon)} – ${fmt(sun)}`;
-    }
-  }
+gi(‘meeting-list-view’).style.display=‘none’;gi(‘meeting-detail-view’).style.display=‘none’;gi(‘meeting-form-view’).style.display=‘block’;
+buildWeather();buildMeetRows();buildCostBoxes(‘mCostBoxes’,‘m_’);
+gi(‘m_date’).value=new Date().toISOString().split(‘T’)[0];
+// Auto-fill week range from ops weekDate if not already set
+const wkEl=gi(‘m_week’);
+if(wkEl&&!wkEl.value){
+const wd=gv(‘weekDate’);
+if(wd){
+const mon=new Date(wd+‘T00:00:00’);
+const sun=new Date(mon);sun.setDate(mon.getDate()+6);
+const fmt=d=>`${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
+wkEl.value=`${fmt(mon)} – ${fmt(sun)}`;
 }
-function closeMeetForm(){gi('meeting-form-view').style.display='none';gi('meeting-list-view').style.display='block';}
-function closeDetail(){gi('meeting-detail-view').style.display='none';gi('meeting-list-view').style.display='block';}
+}
+}
+function closeMeetForm(){gi(‘meeting-form-view’).style.display=‘none’;gi(‘meeting-list-view’).style.display=‘block’;}
+function closeDetail(){gi(‘meeting-detail-view’).style.display=‘none’;gi(‘meeting-list-view’).style.display=‘block’;}
 
 function saveMeet(){
-  const data=getMeetData();if(!data.m_date){alert('Set a meeting date.');return;}
-  const mts=getMeets();mts.push({...data,savedAt:new Date().toISOString()});
-  mts.sort((a,b)=>new Date(b.m_date)-new Date(a.m_date));
-  saveMts(mts);closeMeetForm();renderMeetList();alert('Meeting saved!');
+const data=getMeetData();if(!data.m_date){alert(‘Set a meeting date.’);return;}
+const mts=getMeets();mts.push({…data,savedAt:new Date().toISOString()});
+mts.sort((a,b)=>new Date(b.m_date)-new Date(a.m_date));
+saveMts(mts);closeMeetForm();renderMeetList();alert(‘Meeting saved!’);
 }
 
 function renderMeetList(){
-  const mts=getMeets();const le=gi('meetList');const ne=gi('noMeet');if(!le)return;
-  if(!mts.length){le.innerHTML='';ne.style.display='block';return;}ne.style.display='none';
-  le.innerHTML=mts.map((m,i)=>{
-    const p=fP(m.ms_act,m.ms_ly);
-    return`<div class="mi" onclick="viewMeet(${i})">
-      <div style="font-size:13px;font-weight:600">${m.m_week||m.m_date}</div>
-      <div style="font-size:11px;color:var(--text2);margin-top:2px">Sales: ${fD(m.ms_act)}${p?` <span class="${pC(p)}">${p} vs LY</span>`:''} &nbsp;|&nbsp; ${m.m_date}</div>
-    </div>`;
-  }).join('');
+const mts=getMeets();const le=gi(‘meetList’);const ne=gi(‘noMeet’);if(!le)return;
+if(!mts.length){le.innerHTML=’’;ne.style.display=‘block’;return;}ne.style.display=‘none’;
+le.innerHTML=mts.map((m,i)=>{
+const pct=m.ms_pct;
+return`<div class="mi" onclick="viewMeet(${i})"> <div style="font-size:13px;font-weight:600">${m.m_week||m.m_date}</div> <div style="font-size:11px;color:var(--text2);margin-top:2px">Sales: ${fD(m.ms_act)}${pct&&pct!=='—'?` <span class="${pct.startsWith('+')?'pos':'neg'}">${pct}</span>`:''} &nbsp;|&nbsp; ${m.m_date}</div> </div>`;
+}).join(’’);
 }
 
 function viewMeet(idx){
-  const m=getMeets()[idx];if(!m)return;
-  gi('meeting-list-view').style.display='none';gi('meeting-detail-view').style.display='block';
-  gi('meetHdr').innerHTML=`<div style="font-size:18px;font-weight:700;margin-bottom:3px">${m.m_week||m.m_date}</div><div style="font-size:12px;color:var(--text2)">Meeting: ${m.m_date}</div>`;
-  let wHtml='<div class="ct">Weather + Itinerary</div>';
-  if(m.weather&&DAYS.some(d=>m.weather[d]&&(m.weather[d].cond||m.weather[d].hi))){
-    // Reconstruct dates from saved meeting date
-    const meetRef=m.m_date?new Date(m.m_date+'T12:00:00'):new Date();
-    const meetDay=meetRef.getDay();
-    const meetMon=new Date(meetRef);meetMon.setDate(meetRef.getDate()-(meetDay===0?6:meetDay-1));
-    const meetDates=Array.from({length:7},(_,i)=>{const d=new Date(meetMon);d.setDate(meetMon.getDate()+i);return d;});
-    wHtml+='<div class="wgrid">';
-    DAYS.forEach((day,i)=>{
-      const w=m.weather[day]||{};
-      const mo=meetDates[i].getMonth()+1,dt=meetDates[i].getDate();
-      const lbl=`${day.substring(0,3)} ${mo}/${dt}`;
-      wHtml+=`<div class="wd"><div class="wdn">${lbl}</div><div class="wdi">${gIcon(w.cond)}</div><div class="wdt">H${w.hi||'—'}/L${w.lo||'—'}</div><div class="wdc">${w.cond||''}</div>${w.itin?`<div class="wdit">${w.itin}</div>`:''}</div>`;
-    });
-    wHtml+='</div>';
-    if(m.m_cat_rev)wHtml+=`<div style="margin-top:.4rem;font-size:12px;font-weight:600">Total Catering: ${fD(m.m_cat_rev)}</div>`;
-    if(m.m_cat_notes)wHtml+=`<div style="font-size:11px;color:var(--text2)">${m.m_cat_notes}</div>`;
-  }
-  gi('meetWeather').innerHTML=wHtml;
-  const metR=MEET_C.map(({id,l})=>{const p=fP(m[id+'_act'],m[id+'_ly']);const isBHB=id==='mbhb';return`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border)${isBHB?';background:linear-gradient(90deg,#fff8f0,transparent);border-radius:3px;padding:4px 5px':''}"><span style="font-size:11px;color:${isBHB?'#7a3e00':'var(--text2)'}">${isBHB?'🌴 ':''}${l}</span><div><span style="font-size:12px;font-weight:600">${fD(m[id+'_act'])}</span>${p?`<span style="font-size:10px;margin-left:5px" class="${pC(p)}">${p} vs LY</span>`:''}</div></div>`;}).join('');
-  const costR=COST_C.map(({id,l})=>{const pct=m['m_'+id+'_pct'],proj=m['m_'+id+'_proj'];if(!pct)return'';const d2=pct&&proj?(+pct-+proj).toFixed(2):null;return`<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)"><span style="font-size:10px;color:var(--text2)">${l}</span><div><span style="font-size:11px;font-weight:600">${pct}%</span>${d2!==null?`<span style="font-size:10px;margin-left:4px;color:${+d2>0?'#c0392b':'var(--green)'}>${+d2>0?'+':''}${d2}pp</span>`:''}</div></div>`;}).join('');
-  const bhbItems=[['m_bhb_mt','Mai Tai'],['m_bhb_pc','Piña Colada'],['m_bhb_ld','Lemon Drop'],['m_bhb_br','Blueberry'],['m_bhb_fp','Front Porch']];
-  const bhbTot=bhbItems.reduce((s,[id])=>s+(+m[id]||0),0);
-  const bhbPct=m.m_bhb_proj?(((+m.m_bhb_s-+m.m_bhb_proj)/+m.m_bhb_proj*100).toFixed(1)+'%'):null;
-  const bhbPctClass=bhbPct?(+m.m_bhb_s>=+m.m_bhb_proj?'pos':'neg'):'';
-  const bhbHtml=`<div class="bhb-sm"><div class="bhb-sm-title">🌴 Beach House Bar</div><div class="g3" style="gap:5px;margin-bottom:.4rem"><div class="met"><label>BHB Sales</label><div class="mv" style="font-size:14px">${fD(m.m_bhb_s)}</div>${bhbPct?`<div class="ms ${bhbPctClass}">${(+m.m_bhb_s>=+m.m_bhb_proj?'+':'')}${bhbPct} vs Proj</div>`:''}</div><div class="met"><label>BHB Proj</label><div class="mv" style="font-size:14px">${fD(m.m_bhb_proj)}</div></div><div class="met"><label>Total Items</label><div class="mv" style="font-size:14px">${bhbTot}</div></div></div><div class="bhb-sm-items">${bhbItems.map(([id,name])=>`<div class="bhb-sm-item"><span class="bl">${name}</span><span class="bv">${m[id]||'0'}</span></div>`).join('')}</div></div>`;
-  const ppaPct=fP(m.m_ppa,m.m_ppa_ly);
-  gi('meet-p1-left').innerHTML=`<div class="card"><div class="ct">Sales Metrics</div>${metR}<div class="div"></div><div class="ct">Labor</div><div class="g2" style="gap:5px"><div class="met"><label>Labor % (no tax)</label><div class="mv">${m.m_labor||'—'}%</div></div><div class="met"><label>Labor % WITH Tax</label><div class="mv" style="color:var(--accent)">${m.m_wtax?m.m_wtax+'%':'—'}</div></div></div><div class="div"></div><div class="ct">Cost %s</div>${costR||'<div style="font-size:11px;color:var(--text3)">No cost data</div>'}<div class="div"></div><div class="ct">Discounts</div><div style="font-size:11px">Rewards: ${fD(m.m_disc_r)} | EzCater: ${fD(m.m_disc_e)} | <strong>Total: ${fD((+m.m_disc_r||0)+(+m.m_disc_e||0)+(+m.m_disc_o||0))}</strong></div></div>`;
-  gi('meet-p1-right').innerHTML=`<div class="card"><div class="ct">Guest Metrics</div><div class="g2" style="gap:5px"><div class="met"><label>PPA</label><div class="mv">${m.m_ppa?fD(m.m_ppa):'—'}</div><div class="ms ${pC(ppaPct)}">${ppaPct||''} vs LY</div></div><div class="met"><label>Loyalty Signups</label><div class="mv">${m.m_loyalty||'—'}</div></div><div class="met"><label>Google Reviews</label><div class="mv">5★ ${m.m_rev5||0} &nbsp; 4★ ${m.m_rev4||0}</div></div><div class="met"><label>Employee Winner</label><div class="mv">${m.m_emp||'—'} (${m.m_emp_q||'—'})</div></div></div><div class="div"></div><div class="ct">Product Mix</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;line-height:1.8">${m.m_mom?`<div style="color:var(--text2)">MoM Marg:</div><div><strong>${m.m_mom}</strong> — Wk ${m.m_mom_wk||'—'} / Tot ${m.m_mom_t||'—'}</div>`:''} ${m.m_mom_win?`<div style="color:var(--text2)">MoM Winner:</div><div>${m.m_mom_win} — Wk ${m.m_mwwk||'—'} / Tot ${m.m_mwtot||'—'}</div>`:''} ${m.m_flt_wk?`<div style="color:var(--text2)">Floaters:</div><div>Wk ${m.m_flt_wk} / Tot ${m.m_flt_t||'—'}</div>`:''} ${m.m_togo_m?`<div style="color:var(--text2)">ToGo Margs:</div><div>${m.m_togo_m}</div>`:''} ${m.m_desserts?`<div style="color:var(--text2)">Desserts:</div><div>${m.m_desserts}</div>`:''} ${m.m_sl_wk?`<div style="color:var(--text2)">Steak &amp; Blue:</div><div>Wk ${m.m_sl_wk} / Tot ${m.m_sl_t||'—'}</div>`:''}</div>${bhbHtml}</div>`;
-  const lines=n=>Array(n).fill('<span class="note-line"></span>').join('');
-  gi('meetNotes').innerHTML=`<div class="card">
-    <div class="ct">BOH Focus</div>
-    ${m.m_boh?`<div class="nb"><p>${m.m_boh}</p></div>`:lines(5)}
-    <div class="ct" style="margin-top:.5rem">FOH Focus</div>
-    ${m.m_foh?`<div class="nb"><p>${m.m_foh}</p></div>`:lines(5)}
-    <div class="ct" style="margin-top:.5rem">Manager Notes / Shoutouts</div>
-    ${m.m_mgr?`<div class="nb"><p>${m.m_mgr}</p></div>`:lines(5)}
-    <div class="div"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8pt">
-      <div>
-        <div class="ct">What Went Well</div>
-        ${m.m_fb_well?`<div class="nb"><p>${m.m_fb_well}</p></div>`:lines(3)}
-      </div>
-      <div>
-        <div class="ct">Needs Improvement</div>
-        ${m.m_fb_imp?`<div class="nb"><p>${m.m_fb_imp}</p></div>`:lines(3)}
-      </div>
-    </div>
-    <div class="ct" style="margin-top:.5rem">Action Items / Follow-Up</div>
-    ${m.m_fb_action?`<div class="nb"><p>${m.m_fb_action}</p></div>`:lines(3)}
-    <div style="margin-top:.75rem;border-top:1px solid var(--border);padding-top:.4rem;font-size:10px;color:var(--text3);text-align:center">Huey Luey's Acworth — Confidential</div>
+const m=getMeets()[idx];if(!m)return;
+gi(‘meeting-list-view’).style.display=‘none’;gi(‘meeting-detail-view’).style.display=‘block’;
+gi(‘meetHdr’).innerHTML=`<div style="font-size:18px;font-weight:700;margin-bottom:3px">${m.m_week||m.m_date}</div><div style="font-size:12px;color:var(--text2)">Meeting: ${m.m_date}</div>`;
+let wHtml=’<div class="ct">Weather + Itinerary</div>’;
+if(m.weather&&DAYS.some(d=>m.weather[d]&&(m.weather[d].cond||m.weather[d].hi))){
+// Reconstruct dates from saved meeting date
+const meetRef=m.m_date?new Date(m.m_date+‘T12:00:00’):new Date();
+const meetDay=meetRef.getDay();
+const meetMon=new Date(meetRef);meetMon.setDate(meetRef.getDate()-(meetDay===0?6:meetDay-1));
+const meetDates=Array.from({length:7},(_,i)=>{const d=new Date(meetMon);d.setDate(meetMon.getDate()+i);return d;});
+wHtml+=’<div class="wgrid">’;
+DAYS.forEach((day,i)=>{
+const w=m.weather[day]||{};
+const mo=meetDates[i].getMonth()+1,dt=meetDates[i].getDate();
+const lbl=`${day.substring(0,3)} ${mo}/${dt}`;
+wHtml+=`<div class="wd"><div class="wdn">${lbl}</div><div class="wdi">${gIcon(w.cond)}</div><div class="wdt">H${w.hi||'—'}/L${w.lo||'—'}</div><div class="wdc">${w.cond||''}</div>${w.itin?`<div class="wdit">${w.itin}</div>`:''}</div>`;
+});
+wHtml+=’</div>’;
+if(m.m_cat_rev)wHtml+=`<div style="margin-top:.4rem;font-size:12px;font-weight:600">Total Catering: ${fD(m.m_cat_rev)}</div>`;
+if(m.m_cat_notes)wHtml+=`<div style="font-size:11px;color:var(--text2)">${m.m_cat_notes}</div>`;
+}
+gi(‘meetWeather’).innerHTML=wHtml;
+const metR=MEET_C.map(({id,l})=>{
+const act=m[id+’_act’];
+const pct=m[id+’*pct’];
+const isBHB=id===‘mbhb’;
+return`<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border)${isBHB?';background:linear-gradient(90deg,#fff8f0,transparent);border-radius:3px;padding:4px 5px':''}"> <span style="font-size:11px;color:${isBHB?'#7a3e00':'var(--text2)'}">${isBHB?'🌴 ':''}${l}</span> <div style="display:flex;align-items:center;gap:8px"> <span style="font-size:13px;font-weight:700">${fD(act)}</span> ${pct&&pct!=='—'?`<span class="chip ${pct.startsWith('+')?'pos':'neg'}" style="font-size:11px">${pct}</span>`:''} </div> </div>`;
+}).join(’’);
+const costR=COST_C.map(({id,l})=>{
+const pct=m[’m*’+id+’*pct’]||m[’m*’+id+’*pct_in’];
+const proj=m[’m*’+id+’*proj_val’]||m[’m*’+id+’_proj’];
+if(!pct)return’’;
+const d2=(pct&&proj)?(+pct-+proj).toFixed(1):null;
+return`<div style="display:flex;justify-content:space-between;align-items:center;padding:2px 0;border-bottom:1px solid var(--border)"> <span style="font-size:10px;color:var(--text2)">${l}</span> <div style="text-align:right"><span style="font-size:12px;font-weight:700">${(+pct).toFixed(1)}%</span>${d2!==null?`<span style="font-size:10px;margin-left:5px;color:${+d2>0?'#c0392b':'var(--green)'}"> (${+d2>0?’+’:’’}${d2}pp)</span>`:''}</div> </div>`;
+}).join(’’);
+const bhbItems=[[‘m_bhb_mt’,‘Mai Tai’],[‘m_bhb_pc’,‘Piña Colada’],[‘m_bhb_ld’,‘Lemon Drop’],[‘m_bhb_br’,‘Blueberry’],[‘m_bhb_fp’,‘Front Porch’]];
+const bhbTot=bhbItems.reduce((s,[id])=>s+(+m[id]||0),0);
+const bhbPct=m.m_bhb_proj?(((+m.m_bhb_s-+m.m_bhb_proj)/+m.m_bhb_proj*100).toFixed(1)+’%’):null;
+const bhbPctClass=bhbPct?(+m.m_bhb_s>=+m.m_bhb_proj?‘pos’:‘neg’):’’;
+const bhbHtml=`<div class="bhb-sm"><div class="bhb-sm-title">🌴 Beach House Bar</div><div class="g3" style="gap:5px;margin-bottom:.4rem"><div class="met"><label>BHB Sales</label><div class="mv" style="font-size:14px">${fD(m.m_bhb_s)}</div>${bhbPct?`<div class="ms ${bhbPctClass}">${(+m.m_bhb_s>=+m.m_bhb_proj?’+’:’’)}${bhbPct} vs Proj</div>`:''}</div><div class="met"><label>BHB Proj</label><div class="mv" style="font-size:14px">${fD(m.m_bhb_proj)}</div></div><div class="met"><label>Total Items</label><div class="mv" style="font-size:14px">${bhbTot}</div></div></div><div class="bhb-sm-items">${bhbItems.map(([id,name])=>`<div class="bhb-sm-item"><span class="bl">${name}</span><span class="bv">${m[id]||‘0’}</span></div>`).join('')}</div></div>`;
+const ppaPct=fP(m.m_ppa,m.m_ppa_ly);
+gi(‘meet-p1-left’).innerHTML=`<div class="card"><div class="ct">Sales Metrics</div>${metR}<div class="div"></div><div class="ct">Labor</div><div class="g2" style="gap:5px"><div class="met"><label>Labor % (no tax)</label><div class="mv">${m.m_labor||'—'}%</div></div><div class="met"><label>Labor % WITH Tax</label><div class="mv" style="color:var(--accent)">${m.m_wtax?m.m_wtax+'%':'—'}</div></div></div><div class="div"></div><div class="ct">Cost %s</div>${costR||'<div style="font-size:11px;color:var(--text3)">No cost data</div>'}<div class="div"></div><div class="ct">Discounts</div><div style="font-size:11px">Rewards: ${fD(m.m_disc_r)} | EzCater: ${fD(m.m_disc_e)} | <strong>Total: ${fD((+m.m_disc_r||0)+(+m.m_disc_e||0)+(+m.m_disc_o||0))}</strong></div></div>`;
+gi(‘meet-p1-right’).innerHTML=`<div class="card"><div class="ct">Guest Metrics</div><div class="g2" style="gap:5px"><div class="met"><label>PPA</label><div class="mv">${m.m_ppa?fD(m.m_ppa):'—'}</div><div class="ms ${pC(ppaPct)}">${ppaPct||''} vs LY</div></div><div class="met"><label>Loyalty Signups</label><div class="mv">${m.m_loyalty||'—'}</div></div><div class="met"><label>Google Reviews</label><div class="mv">5★ ${m.m_rev5||0} &nbsp; 4★ ${m.m_rev4||0}</div></div><div class="met"><label>Employee Winner</label><div class="mv">${m.m_emp||'—'} (${m.m_emp_q||'—'})</div></div></div><div class="div"></div><div class="ct">Product Mix</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;line-height:1.8">${m.m_mom?`<div style="color:var(--text2)">MoM Marg:</div><div><strong>${m.m_mom}</strong> — Wk ${m.m_mom_wk||’—’} / Tot ${m.m_mom_t||’—’}</div>`:''} ${m.m_mom_win?`<div style="color:var(--text2)">MoM Winner:</div><div>${m.m_mom_win} — Wk ${m.m_mwwk||’—’} / Tot ${m.m_mwtot||’—’}</div>`:''} ${m.m_flt_wk?`<div style="color:var(--text2)">Floaters:</div><div>Wk ${m.m_flt_wk} / Tot ${m.m_flt_t||’—’}</div>`:''} ${m.m_togo_m?`<div style="color:var(--text2)">ToGo Margs:</div><div>${m.m_togo_m}</div>`:''} ${m.m_desserts?`<div style="color:var(--text2)">Desserts:</div><div>${m.m_desserts}</div>`:''} ${m.m_sl_wk?`<div style="color:var(--text2)">Steak & Blue:</div><div>Wk ${m.m_sl_wk} / Tot ${m.m_sl_t||’—’}</div>`:''}</div>${bhbHtml}</div>`;
+const lines=n=>Array(n).fill(’<span class="note-line"></span>’).join(’’);
+const mgrs=[‘Tyler’,‘Nash’,‘Marlon’,‘Veronica’,‘Liz’];
+const goalsHtml=`<div class="ct" style="margin-top:.5rem">What are 2 things each manager wants to accomplish this week?</div> <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:.3rem"> ${mgrs.map(name=>`<div style="background:var(--bg3);border-radius:4px;padding:.35rem .5rem">
+<div style="font-size:10px;font-weight:700;margin-bottom:3px">${name}</div>
+<div style="font-size:9px;color:var(--text2);margin-bottom:2px">1. ${lines(1)}</div>
+<div style="font-size:9px;color:var(--text2)">2. ${lines(1)}</div>
+</div>`).join('')} </div>`;
+gi(‘meetNotes’).innerHTML=`<div class="card"> <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"> <div> <div class="ct">BOH Focus</div> ${m.m_boh?`<div class="nb"><p>${m.m_boh}</p></div>`:lines(6)} </div> <div> <div class="ct">FOH Focus</div> ${m.m_foh?`<div class="nb"><p>${m.m_foh}</p></div>`:lines(6)} </div> </div> <div class="ct" style="margin-top:.5rem">Manager Notes / Shoutouts</div> ${m.m_mgr?`<div class="nb"><p>${m.m_mgr}</p></div>`:lines(4)} <div class="div"></div> <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"> <div> <div class="ct">What Went Well</div> ${m.m_fb_well?`<div class="nb"><p>${m.m_fb_well}</p></div>`:lines(3)} </div> <div> <div class="ct">Needs Improvement</div> ${m.m_fb_imp?`<div class="nb"><p>${m.m_fb_imp}</p></div>`:lines(3)} </div> </div> <div class="ct" style="margin-top:.5rem">Action Items / Follow-Up</div> ${m.m_fb_action?`<div class="nb"><p>${m.m_fb_action}</p></div>`:lines(2)}
+<div class="div"></div>
+${goalsHtml}
+<div style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.35rem;font-size:9px;color:var(--text3);text-align:center">Huey Luey’s Acworth — Confidential — ${m.m_week||m.m_date}</div>
+
   </div>`;
 }
 
 function renderHist(){
-  const wks=getWeeks();const tb=gi('histBody');const ne=gi('noHist');if(!tb)return;
-  if(!wks.length){tb.innerHTML='';ne.style.display='block';return;}ne.style.display='none';
-  tb.innerHTML=wks.map(w=>{const p=fP(w.s_actual,w.s_ly);return`<tr><td>${w.date}</td><td>${fD(w.s_actual)}</td><td class="${pC(p)}">${p||'—'}</td><td>${fD(w.cat_actual)}</td><td>${fD(w.rft_actual)}</td><td>${fD(w.togo_actual)}</td><td>${fD(w.patio_actual)}</td><td>${fD(w.bhb_sale_actual)}</td><td>${w.lab_actual?w.lab_actual+'%':'—'}</td><td>${w.lab_wtax?w.lab_wtax+'%':'—'}</td><td>${w.food_pct?w.food_pct+'%':'—'}</td><td>${w.lbw_pct?w.lbw_pct+'%':'—'}</td><td>${w.gc_actual?Number(w.gc_actual).toLocaleString():'—'}</td><td>${w.ppa_actual?fD(w.ppa_actual):'—'}</td><td>${w.loyalty||'—'}</td></tr>`;}).join('');
+const wks=getWeeks();const tb=gi(‘histBody’);const ne=gi(‘noHist’);if(!tb)return;
+if(!wks.length){tb.innerHTML=’’;ne.style.display=‘block’;return;}ne.style.display=‘none’;
+tb.innerHTML=wks.map(w=>{const p=fP(w.s_actual,w.s_ly);return`<tr><td>${w.date}</td><td>${fD(w.s_actual)}</td><td class="${pC(p)}">${p||'—'}</td><td>${fD(w.cat_actual)}</td><td>${fD(w.rft_actual)}</td><td>${fD(w.togo_actual)}</td><td>${fD(w.patio_actual)}</td><td>${fD(w.bhb_sale_actual)}</td><td>${w.lab_actual?w.lab_actual+'%':'—'}</td><td>${w.lab_wtax?w.lab_wtax+'%':'—'}</td><td>${w.food_pct?w.food_pct+'%':'—'}</td><td>${w.lbw_pct?w.lbw_pct+'%':'—'}</td><td>${w.gc_actual?Number(w.gc_actual).toLocaleString():'—'}</td><td>${w.ppa_actual?fD(w.ppa_actual):'—'}</td><td>${w.loyalty||'—'}</td></tr>`;}).join(’’);
 }
 
-// ── PRINT — BULLETPROOF ───────────────────────────────
-let _printType='';
-function doPrint(type){
-  _printType=type;
-  document.body.classList.remove('print-ops','print-meet');
-  document.body.classList.add(type==='ops'?'print-ops':'print-meet');
-  // Force a reflow so class applies before print dialog
-  void document.body.offsetHeight;
-  window.print();
+// ── SAVE AS FILE ──────────────────────────────────────
+function saveAsFile(type){
+if(type===‘meet’){
+// Ensure meeting detail is populated
+const dv=gi(‘meeting-detail-view’);
+if(dv.style.display===‘none’||!gi(‘meetHdr’).innerHTML.trim()){
+const mts=getMeets();
+if(!mts.length){alert(‘No meetings saved yet. Save a meeting first.’);return;}
+viewMeet(0);
 }
-window.addEventListener('afterprint',()=>{
-  document.body.classList.remove('print-ops','print-meet');
-  _printType='';
+}
+
+// Grab the section we want to snapshot
+const secId=type===‘ops’?‘sec-ops’:‘sec-meet’;
+const sec=gi(secId);
+if(!sec)return;
+
+// Hide sub-views we don’t want (for meeting, only show detail)
+let savedDisplays={};
+if(type===‘meet’){
+[‘meeting-list-view’,‘meeting-form-view’].forEach(id=>{
+const el=gi(id);if(el){savedDisplays[id]=el.style.display;el.style.display=‘none’;}
 });
-// Belt-and-suspenders: also handle via beforeprint event
-window.addEventListener('beforeprint',()=>{
-  if(_printType){
-    document.body.classList.remove('print-ops','print-meet');
-    document.body.classList.add(_printType==='ops'?'print-ops':'print-meet');
-  }
+const dv=gi(‘meeting-detail-view’);if(dv){savedDisplays[‘meeting-detail-view’]=dv.style.display;dv.style.display=‘block’;}
+}
+
+// Clone the section
+const clone=sec.cloneNode(true);
+
+// Restore displays
+Object.entries(savedDisplays).forEach(([id,d])=>{const el=gi(id);if(el)el.style.display=d;});
+
+// Remove no-print elements from clone
+clone.querySelectorAll(’.no-print,.brow,.btn,.bb,.data-bar’).forEach(el=>el.remove());
+
+// Get current stylesheet
+const styles=Array.from(document.styleSheets).map(ss=>{
+try{return Array.from(ss.cssRules).map(r=>r.cssText).join(’\n’);}catch{return ‘’;}
+}).join(’\n’);
+
+const weekDate=gv(‘weekDate’)||new Date().toISOString().split(‘T’)[0];
+const title=type===‘ops’
+? `Huey Luey's Acworth — Operations ${weekDate}`
+: `Huey Luey's Acworth — Manager Meeting`;
+
+const html=`<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>${title}</title>
+<style>
+${styles}
+/* Print overrides for standalone file */
+body{background:#fff;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+.app{max-width:100%;padding:.5rem;}
+.sec{display:block!important;}
+#ops-p1{display:grid;grid-template-columns:1fr 1fr;gap:10pt;page-break-after:always;}
+#ops-p1::before{content:"Huey Luey's Acworth — Weekly Operations";display:block;grid-column:1/-1;font-size:11pt;font-weight:bold;color:#B85C00;border-bottom:1pt solid #B85C00;padding-bottom:3pt;margin-bottom:6pt;}
+#ops-p2{display:grid;grid-template-columns:1fr 1fr;gap:10pt;}
+#meet-p1{page-break-after:always;}
+#meet-p1::before{content:"Huey Luey's Acworth — Manager Meeting";display:block;font-size:11pt;font-weight:bold;color:#B85C00;border-bottom:1pt solid #B85C00;padding-bottom:3pt;margin-bottom:6pt;}
+#meet-p1-cols{display:grid;grid-template-columns:1fr 1fr;gap:10pt;}
+#meeting-list-view,#meeting-form-view{display:none!important;}
+#meeting-detail-view{display:block!important;}
+.wgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4pt;}
+.chip.pos{color:#3B6D11;border-color:#c8e6aa;background:#e8f5e0;}
+.chip.neg{color:#c0392b;border-color:#f5c6c6;background:#fdf0f0;}
+@media print{
+  @page{size:letter portrait;margin:.35in .4in;}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+${clone.outerHTML}
+</div>
+<scr'+'ipt>
+// Auto-print on open
+window.addEventListener('load',()=>{
+  setTimeout(()=>window.print(),400);
+});
+</scr'+'ipt>
+</body>
+</html>`;
+
+const blob=new Blob([html],{type:‘text/html’});
+const url=URL.createObjectURL(blob);
+const a=document.createElement(‘a’);
+a.href=url;
+a.download=type===‘ops’
+? `HL-Operations-${weekDate}.html`
+: `HL-Meeting-${(gv('m_week')||gv('m_date')||weekDate).replace(/[\/\s–]/g,'-')}.html`;
+a.click();
+URL.revokeObjectURL(url);
+}
+let _printType=’’;
+function doPrint(type){
+_printType=type;
+if(type===‘meet’){
+// If no detail view open, load the most recent saved meeting
+const dv=gi(‘meeting-detail-view’);
+if(dv.style.display===‘none’||!dv.style.display){
+const mts=getMeets();
+if(mts.length){viewMeet(0);}
+else{alert(‘No meetings saved yet. Save a meeting first, then print.’);return;}
+}
+}
+document.body.classList.remove(‘print-ops’,‘print-meet’);
+document.body.classList.add(type===‘ops’?‘print-ops’:‘print-meet’);
+void document.body.offsetHeight;
+window.print();
+}
+window.addEventListener(‘afterprint’,()=>{
+document.body.classList.remove(‘print-ops’,‘print-meet’);
+_printType=’’;
+});
+window.addEventListener(‘beforeprint’,()=>{
+if(_printType){
+document.body.classList.remove(‘print-ops’,‘print-meet’);
+document.body.classList.add(_printType===‘ops’?‘print-ops’:‘print-meet’);
+}
 });
 
 // ── AUTO-SAVE current ops form on every input change ──
-const AUTOSAVE_KEY='hl_ops_current';
+const AUTOSAVE_KEY=‘hl_ops_current’;
 function autoSave(){
-  try{localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(getOpsData()));}catch(e){}
+try{localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(getOpsData()));}catch(e){}
 }
 function autoLoad(){
-  try{
-    const raw=localStorage.getItem(AUTOSAVE_KEY);
-    if(!raw)return;
-    const data=JSON.parse(raw);
-    setOpsData(data);
-    // Restore week date if saved
-    if(data._weekDate){const e=gi('weekDate');if(e)e.value=data._weekDate;}
-  }catch(e){}
+try{
+const raw=localStorage.getItem(AUTOSAVE_KEY);
+if(!raw)return;
+const data=JSON.parse(raw);
+setOpsData(data);
+// Restore week date if saved
+if(data._weekDate){const e=gi(‘weekDate’);if(e)e.value=data._weekDate;}
+}catch(e){}
 }
 
 // Extended getOpsData that also saves the weekDate
 const _origGetOpsData=getOpsData;
 function getOpsDataFull(){
-  const d=_origGetOpsData();
-  d._weekDate=gv('weekDate');
-  return d;
+const d=_origGetOpsData();
+d._weekDate=gv(‘weekDate’);
+return d;
 }
 
-window.addEventListener('DOMContentLoaded',()=>{
-  buildSaleRows();
-  buildCostBoxes('costBoxes','');
+window.addEventListener(‘DOMContentLoaded’,()=>{
+buildSaleRows();
+buildCostBoxes(‘costBoxes’,’’);
 
-  // Set default week date to this Monday
-  const today=new Date(),mon=new Date(today);
-  mon.setDate(today.getDate()-(today.getDay()===0?6:today.getDay()-1));
-  const defaultDate=mon.toISOString().split('T')[0];
-  gi('weekDate').value=defaultDate;
+// Set default week date to this Monday
+const today=new Date(),mon=new Date(today);
+mon.setDate(today.getDate()-(today.getDay()===0?6:today.getDay()-1));
+const defaultDate=mon.toISOString().split(‘T’)[0];
+gi(‘weekDate’).value=defaultDate;
 
-  // Auto-load saved current session data
-  try{
-    const raw=localStorage.getItem(AUTOSAVE_KEY);
-    if(raw){
-      const data=JSON.parse(raw);
-      setOpsData(data);
-      if(data._weekDate){gi('weekDate').value=data._weekDate;}
-    }
-  }catch(e){}
+// Auto-load saved current session data
+try{
+const raw=localStorage.getItem(AUTOSAVE_KEY);
+if(raw){
+const data=JSON.parse(raw);
+setOpsData(data);
+if(data._weekDate){gi(‘weekDate’).value=data._weekDate;}
+}
+}catch(e){}
 
-  // Wire up auto-save on every input/change in the ops section
-  document.getElementById('sec-ops').addEventListener('input',()=>{
-    const d=getOpsData();d._weekDate=gv('weekDate');
-    try{localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(d));}catch(e){}
-  });
-  document.getElementById('weekDate').addEventListener('change',()=>{
-    const d=getOpsData();d._weekDate=gv('weekDate');
-    try{localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(d));}catch(e){}
-  });
+// Wire up auto-save on every input/change in the ops section
+document.getElementById(‘sec-ops’).addEventListener(‘input’,()=>{
+const d=getOpsData();d._weekDate=gv(‘weekDate’);
+try{localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(d));}catch(e){}
+});
+document.getElementById(‘weekDate’).addEventListener(‘change’,()=>{
+const d=getOpsData();d._weekDate=gv(‘weekDate’);
+try{localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(d));}catch(e){}
+});
 
-  renderMeetList();
-  renderHist();
+renderMeetList();
+renderHist();
 });
 </script>
+
 </body>
 </html>

@@ -379,7 +379,7 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
       <div class="fg"><label>ToGo Margs</label><input type="number" id="togo_margs"/></div>
       <div class="fg"><label>Floaters Wk</label><input type="number" id="float_wk"/></div>
       <div class="fg"><label>Floaters Total</label><input type="number" id="float_total"/></div>
-      <div class="fg"><label>MoM Marg Name</label><input type="text" id="mom_name"/></div>
+      <div class="fg"><label>MoM Marg Name</label><input type="text" id="mom_name" placeholder="Blood Orange"/></div>
       <div class="fg"><label>MoM QTY Wk / Total</label><div class="frow"><input type="number" id="mom_wk"/><input type="number" id="mom_total"/></div></div>
     </div>
     <div class="g3" style="margin-top:3px">
@@ -423,8 +423,8 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
     </div>
     <div class="g5" style="margin-top:3px">
       <div class="fg"><label>The Big Huey</label><input type="number" id="bighuey"/></div>
-      <div class="fg"><label>Fajita Sliders Wk</label><input type="number" id="sl_wk"/></div>
-      <div class="fg"><label>Fajita Sliders Total</label><input type="number" id="sl_tot"/></div>
+      <div class="fg"><label>Steak &amp; Blue Quesadilla Wk</label><input type="number" id="sl_wk"/></div>
+      <div class="fg"><label>Steak &amp; Blue Quesadilla Total</label><input type="number" id="sl_tot"/></div>
       <div class="fg"><label>Desserts</label><input type="number" id="desserts"/></div>
       <div class="fg"><label>Kids Menu</label><input type="number" id="kids"/></div>
     </div>
@@ -540,7 +540,7 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
         <div class="fg"><label>Employee Winner / QTY</label><div class="frow"><input type="text" id="m_emp"/><input type="number" id="m_emp_q"/></div></div>
       </div>
       <div class="g4" style="margin-top:4px">
-        <div class="fg"><label>MoM Marg Name</label><input type="text" id="m_mom"/></div>
+        <div class="fg"><label>MoM Marg Name</label><input type="text" id="m_mom" placeholder="Blood Orange"/></div>
         <div class="fg"><label>MoM QTY Wk / Total</label><div class="frow"><input type="number" id="m_mom_wk"/><input type="number" id="m_mom_t"/></div></div>
         <div class="fg"><label>MoM Winner / Wk / Total</label><div class="frow"><input type="text" id="m_mom_win"/><input type="number" id="m_mwwk"/><input type="number" id="m_mwtot"/></div></div>
         <div class="fg"><label>Floaters Wk / Total</label><div class="frow"><input type="number" id="m_flt_wk"/><input type="number" id="m_flt_t"/></div></div>
@@ -548,7 +548,7 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
       <div class="g4" style="margin-top:4px">
         <div class="fg"><label>ToGo Margs</label><input type="number" id="m_togo_m"/></div>
         <div class="fg"><label>Desserts</label><input type="number" id="m_desserts"/></div>
-        <div class="fg"><label>Fajita Sliders Wk / Total</label><div class="frow"><input type="number" id="m_sl_wk"/><input type="number" id="m_sl_t"/></div></div>
+        <div class="fg"><label>Steak &amp; Blue Quesadilla Wk / Total</label><div class="frow"><input type="number" id="m_sl_wk"/><input type="number" id="m_sl_t"/></div></div>
       </div>
       <div class="div"></div>
       <div class="ct" style="margin-top:.2rem">Discounts <span class="sb">← synced</span></div>
@@ -1076,7 +1076,7 @@ function viewMeet(idx) {
       ${m.m_flt_wk ? `<div style="color:var(--text2)">Floaters:</div><div>Wk ${m.m_flt_wk} / Tot ${m.m_flt_t || '—'}</div>` : ''}
       ${m.m_togo_m ? `<div style="color:var(--text2)">ToGo Margs:</div><div>${m.m_togo_m}</div>` : ''}
       ${m.m_desserts ? `<div style="color:var(--text2)">Desserts:</div><div>${m.m_desserts}</div>` : ''}
-      ${m.m_sl_wk ? `<div style="color:var(--text2)">Fajita Sliders:</div><div>Wk ${m.m_sl_wk} / Tot ${m.m_sl_t || '—'}</div>` : ''}
+      ${m.m_sl_wk ? `<div style="color:var(--text2)">Steak &amp; Blue Quesadilla:</div><div>Wk ${m.m_sl_wk} / Tot ${m.m_sl_t || '—'}</div>` : ''}
     </div>
     ${bhbHtml}
   </div>`;

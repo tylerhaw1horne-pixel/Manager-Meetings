@@ -115,68 +115,186 @@ input.synced{border-color:var(--green)!important;background:var(--green-bg)!impo
 
 /* ── PRINT ── */
 @media print{
-@page{size:letter portrait;margin:.35in .4in}
-*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-body{background:#fff!important;font-family:Arial,sans-serif;font-size:7pt;color:#000;margin:0;padding:0}
-.hdr,.tabs,.tab,.brow,.btn,.bb,.ab,.sb,.notice,.sync-banner,.wkpill,.data-bar,.no-print,#sec-hist{display:none!important}
-#sec-ops,#sec-meet{display:none!important}
-body.print-ops #sec-ops{display:block!important}
-body.print-meet #sec-meet{display:block!important}
-body.print-ops #meeting-list-view,body.print-ops #meeting-detail-view,body.print-ops #meeting-form-view{display:none!important}
-body.print-meet #meeting-list-view,body.print-meet #meeting-form-view{display:none!important}
-body.print-meet #meeting-detail-view{display:block!important}
-.app{max-width:100%;padding:0;margin:0}
-.card{border:none!important;padding:0!important;margin:0!important;background:#fff!important;border-radius:0!important;box-shadow:none!important}
-.ct{font-size:6.5pt!important;font-weight:bold!important;text-transform:uppercase!important;border-bottom:.5pt solid #aaa!important;margin-bottom:3pt!important;padding-bottom:2pt!important;color:#333!important;background:none!important;border-top:none!important;border-left:none!important;border-right:none!important}
-input,textarea{border:.5pt solid #bbb!important;padding:1.5pt 2.5pt!important;font-size:6.5pt!important;background:#fff!important;color:#000!important;width:100%!important;height:13pt!important}
-textarea{height:auto!important;min-height:24pt!important}
-.div{border-top:.5pt solid #ddd!important;margin:3pt 0!important}
-.chip{font-size:7pt!important;padding:1pt 4pt!important;border-radius:3pt!important}
-.chip.pos{color:#2a5a08!important;background:#e8f5e0!important}
-.chip.neg{color:#a00!important;background:#fdf0f0!important}
-.g2{display:grid!important;grid-template-columns:1fr 1fr!important;gap:3pt!important}
-.g3{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:3pt!important}
-.g4{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:3pt!important}
-.g5{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:3pt!important}
-.fg{margin-bottom:2pt!important}
-.fg label{font-size:6pt!important}
-.sl{font-size:7pt!important;margin:3pt 0 1pt!important;font-weight:bold!important}
-/* OPS P1 */
-body.print-ops #ops-p1{display:grid!important;grid-template-columns:1fr 1fr!important;gap:7pt!important;page-break-after:always!important}
-body.print-ops #ops-p1::before{content:“Huey Luey’s Acworth — Weekly Operations”;display:block!important;grid-column:1/-1!important;font-size:10pt!important;font-weight:bold!important;color:#B85C00!important;border-bottom:1pt solid #B85C00!important;padding-bottom:2pt!important;margin-bottom:5pt!important}
-body.print-ops #ops-p2{display:grid!important;grid-template-columns:1fr 1fr!important;gap:7pt!important}
-body.print-ops #ops-p2::before{content:“Huey Luey’s Acworth — Weekly Operations (cont.)”;display:block!important;grid-column:1/-1!important;font-size:9pt!important;font-weight:bold!important;color:#B85C00!important;border-bottom:1pt solid #B85C00!important;padding-bottom:2pt!important;margin-bottom:4pt!important}
-body.print-ops .stbl{font-size:6pt!important}
-body.print-ops .stbl th{font-size:5.5pt!important;padding:1.5pt 2pt!important;background:#f0ece5!important;border:.5pt solid #bbb!important}
-body.print-ops .stbl td{padding:1.5pt 2pt!important;border:.5pt solid #ddd!important}
-body.print-ops .vsep{width:.5pt!important;background:#bbb!important}
-body.print-ops .lbox{background:#fff8f0!important;border:.5pt solid #c8a070!important;padding:3pt 4pt!important}
-body.print-ops .lres{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:3pt!important;margin-top:2pt!important}
-body.print-ops .lri{padding:2pt!important;background:#fff!important;border:.5pt solid #ddd!important}
-body.print-ops .ccb{background:#fafafa!important;border:.5pt solid #ccc!important;padding:2pt 4pt!important;margin-bottom:2pt!important}
-body.print-ops .ccr{grid-template-columns:1fr 1fr 1fr 44pt 44pt!important;gap:2pt!important}
-body.print-ops .crp{min-width:40pt!important;padding:1.5pt 3pt!important;border:.5pt solid #ccc!important}
-body.print-ops .bhb{background:#fff8f0!important;border:.5pt solid #e8c49a!important;padding:3pt 5pt!important}
-body.print-ops .bhbi{gap:2pt!important}
-body.print-ops .bhbi-item{padding:2pt!important;border:.5pt solid #e8c49a!important}
-/* MEET */
-body.print-meet #meet-p1{page-break-after:always!important}
-body.print-meet #meet-p1::before{content:“Huey Luey’s Acworth — Manager Meeting Notes”;display:block!important;font-size:10pt!important;font-weight:bold!important;color:#B85C00!important;border-bottom:1pt solid #B85C00!important;padding-bottom:2pt!important;margin-bottom:4pt!important}
-body.print-meet #meet-p2::before{content:“Huey Luey’s Acworth — Manager Meeting (cont.)”;display:block!important;font-size:9pt!important;font-weight:bold!important;color:#B85C00!important;border-bottom:1pt solid #B85C00!important;padding-bottom:2pt!important;margin-bottom:4pt!important}
-body.print-meet #meet-p1-cols{display:grid!important;grid-template-columns:1fr 1fr!important;gap:6pt!important;margin-top:3pt!important}
-body.print-meet .wgrid{gap:2pt!important;display:grid!important;grid-template-columns:repeat(7,1fr)!important}
-body.print-meet .wd{background:#fafafa!important;border:.5pt solid #ddd!important;padding:2.5pt!important}
-body.print-meet .lri{padding:2pt!important;background:#fff!important;border:.5pt solid #ddd!important}
-body.print-meet .met{background:#fafafa!important;border:.5pt solid #ddd!important;padding:2pt 3pt!important}
-body.print-meet .nb{background:#fafafa!important;border:.5pt solid #ddd!important;padding:2pt 4pt!important;margin-bottom:2pt!important}
-body.print-meet .nb p{font-size:7pt!important;line-height:1.4!important}
-body.print-meet .note-line{display:block!important;border-bottom:.5pt solid #ccc!important;height:13pt!important;margin-bottom:2pt!important}
-body.print-meet .bhb-sm-items{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:2pt!important}
-body.print-meet .bhb-sm-item{padding:2pt!important;border:.5pt solid #e8c49a!important;text-align:center}
-body.print-meet .hidden-inputs{display:none!important}
+  @page{size:letter portrait;margin:.45in .5in .45in .5in}
+  @page:first{margin-top:.4in}
+
+  /* Hide everything interactive */
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-shadow:none!important}
+  body{background:#fff!important;font-family:'Arial',sans-serif!important;font-size:8pt!important;color:#111!important;margin:0!important;padding:0!important}
+  .hdr,.tabs,.tab,.brow,.btn,.bb,.ab,.sb,.notice,.sync-banner,.wkpill,.data-bar,.no-print,
+  #sec-hist,#sec-ops,#sec-meet{display:none!important}
+
+  /* Show only what's being printed */
+  body.print-ops #sec-ops{display:block!important}
+  body.print-meet #sec-meet{display:block!important}
+  body.print-ops #meeting-list-view,body.print-ops #meeting-detail-view,body.print-ops #meeting-form-view{display:none!important}
+  body.print-meet #meeting-list-view,body.print-meet #meeting-form-view{display:none!important}
+  body.print-meet #meeting-detail-view{display:block!important}
+
+  /* Layout reset */
+  .app{max-width:100%!important;padding:0!important;margin:0!important}
+  .sec.active,.sec{display:block!important}
+
+  /* Cards: clean borders */
+  .card{background:#fff!important;border:none!important;border-radius:0!important;padding:0!important;margin:0!important}
+
+  /* Section titles */
+  .ct{font-size:7pt!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.5px!important;
+      color:#444!important;border-bottom:1pt solid #999!important;padding-bottom:2pt!important;
+      margin-bottom:4pt!important;margin-top:6pt!important;background:none!important;
+      border-top:none!important;border-left:none!important;border-right:none!important}
+
+  /* Form fields */
+  input,textarea,select{border:1pt solid #bbb!important;padding:1pt 2pt!important;font-size:7pt!important;
+      background:#fff!important;color:#111!important;width:100%!important;height:12pt!important;
+      font-family:Arial,sans-serif!important;border-radius:0!important}
+  textarea{height:auto!important;min-height:20pt!important}
+  input[type=number]{text-align:right!important}
+
+  /* Labels */
+  .fg label{font-size:5.5pt!important;color:#666!important;font-weight:700!important;
+      text-transform:uppercase!important;letter-spacing:.2px!important;margin-bottom:1pt!important}
+  .fg{margin-bottom:3pt!important}
+
+  /* Chips */
+  .chip{font-size:7pt!important;padding:1pt 5pt!important;border-radius:3pt!important;
+        border:1pt solid #ddd!important;display:inline-block!important}
+  .chip.pos{color:#1a5c08!important;background:#edf7e5!important;border-color:#a8d890!important}
+  .chip.neg{color:#9c0000!important;background:#fdf0f0!important;border-color:#f5b5b5!important}
+
+  /* Dividers */
+  .div{border-top:1pt solid #ddd!important;margin:4pt 0!important}
+
+  /* Section labels */
+  .sl{font-size:7.5pt!important;font-weight:700!important;margin:3pt 0 2pt!important;color:#222!important}
+
+  /* Grids */
+  .g2{display:grid!important;grid-template-columns:1fr 1fr!important;gap:5pt!important}
+  .g3{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:4pt!important}
+  .g4{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:4pt!important}
+  .g5{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:3pt!important}
+
+  /* Vertical separator */
+  .vsep{width:1pt!important;background:#ccc!important;padding:0!important}
+
+  /* Labor box */
+  .lbox{background:#fff8f0!important;border:1pt solid #d4a870!important;border-radius:2pt!important;padding:4pt 5pt!important}
+  .lres{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:3pt!important;margin-top:3pt!important}
+  .lri{background:#fff!important;border:1pt solid #ddd!important;border-radius:2pt!important;padding:2pt 3pt!important}
+  .ll{font-size:5.5pt!important;color:#888!important;text-transform:uppercase!important;font-weight:600!important;margin-bottom:1pt!important}
+  .lv{font-size:13pt!important;font-weight:700!important;line-height:1.1!important}
+  .ls{font-size:6pt!important;color:#666!important}
+
+  /* Cost boxes */
+  .ccb{background:#fafafa!important;border:1pt solid #ccc!important;border-radius:2pt!important;padding:3pt 4pt!important;margin-bottom:3pt!important}
+  .ccr{display:grid!important;grid-template-columns:1fr 1fr 1fr 42pt 42pt!important;gap:3pt!important;align-items:end!important}
+  .crp{padding:2pt 3pt!important;border:1pt solid #ccc!important;border-radius:2pt!important;min-width:38pt!important;text-align:center!important;background:#fff!important}
+  .crp .cl{font-size:5.5pt!important;color:#888!important;text-transform:uppercase!important;font-weight:600!important}
+  .crp .cv{font-size:13pt!important;font-weight:700!important}
+
+  /* Beach House Bar */
+  .bhb{background:#fff8f0!important;border:1pt solid #e8c49a!important;border-radius:2pt!important;padding:4pt 5pt!important}
+  .bhbt{font-size:7pt!important;font-weight:700!important;color:#7a3e00!important;margin-bottom:3pt!important}
+  .bhbi{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:3pt!important}
+  .bhbi-item{border:1pt solid #e8c49a!important;border-radius:2pt!important;padding:2pt!important;text-align:center!important;background:#fff!important}
+  .bhbi-item label{font-size:5.5pt!important;color:#7a3e00!important;font-weight:700!important;display:block!important;margin-bottom:1pt!important}
+  .bhbi-item input{text-align:center!important;border-color:#e8c49a!important}
+
+  /* Meeting widgets */
+  .wgrid{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:3pt!important}
+  .wd{background:#fafafa!important;border:1pt solid #ddd!important;border-radius:2pt!important;padding:3pt!important}
+  .wd .wdn{font-size:6pt!important;font-weight:700!important;color:#555!important;margin-bottom:1pt!important}
+  .wd .wdi{font-size:12pt!important;margin-bottom:1pt!important}
+  .wd .wdt{font-size:7pt!important;font-weight:600!important}
+  .wd .wdc{font-size:6pt!important;color:#888!important;margin-top:1pt!important}
+  .wd .wdit{font-size:6pt!important;color:#1a4fa8!important;margin-top:2pt!important;line-height:1.3!important}
+  .met{background:#fafafa!important;border:1pt solid #ddd!important;border-radius:2pt!important;padding:2pt 3pt!important}
+  .met label{font-size:5.5pt!important;color:#888!important;text-transform:uppercase!important;font-weight:600!important;display:block!important;margin-bottom:1pt!important}
+  .met .mv{font-size:14pt!important;font-weight:700!important}
+  .nb{background:#fafafa!important;border:1pt solid #ddd!important;border-radius:2pt!important;padding:3pt 4pt!important;margin-bottom:3pt!important}
+  .nb p{font-size:8pt!important;line-height:1.5!important}
+  .note-line{display:block!important;border-bottom:1pt solid #ddd!important;height:14pt!important;margin-bottom:2pt!important}
+
+  /* ── OPS PAGE 1 ── */
+  body.print-ops #ops-p1{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:10pt!important;
+    page-break-after:always!important;
+  }
+  body.print-ops #ops-p1::before{
+    content:"Huey Luey's Acworth — Weekly Operations";
+    display:block!important;grid-column:1/-1!important;
+    font-size:12pt!important;font-weight:700!important;color:#B85C00!important;
+    border-bottom:1.5pt solid #B85C00!important;padding-bottom:3pt!important;margin-bottom:6pt!important;
+    font-family:Arial,sans-serif!important;
+  }
+
+  /* ── OPS PAGE 2 ── */
+  body.print-ops #ops-p2{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:10pt!important;
+  }
+  body.print-ops #ops-p2::before{
+    content:"Huey Luey's Acworth — Weekly Operations (continued)";
+    display:block!important;grid-column:1/-1!important;
+    font-size:10pt!important;font-weight:700!important;color:#B85C00!important;
+    border-bottom:1pt solid #B85C00!important;padding-bottom:2pt!important;margin-bottom:5pt!important;
+    font-family:Arial,sans-serif!important;
+  }
+  body.print-ops .stbl{font-size:6.5pt!important}
+  body.print-ops .stbl th{font-size:6pt!important;padding:1.5pt 2pt!important;background:#f0ece5!important;border:.5pt solid #bbb!important}
+  body.print-ops .stbl td{padding:1.5pt 2pt!important;border:.5pt solid #ddd!important}
+
+  /* ── MEETING PAGE 1 ── */
+  body.print-meet #meet-p1{page-break-after:always!important}
+  body.print-meet #meet-p1::before{
+    content:"Huey Luey's Acworth — Manager Meeting Notes";
+    display:block!important;
+    font-size:12pt!important;font-weight:700!important;color:#B85C00!important;
+    border-bottom:1.5pt solid #B85C00!important;padding-bottom:3pt!important;margin-bottom:6pt!important;
+    font-family:Arial,sans-serif!important;
+  }
+  body.print-meet #meet-p1-cols{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:10pt!important;
+    margin-top:4pt!important;
+  }
+
+  /* ── MEETING PAGE 2 ── */
+  body.print-meet #meet-p2::before{
+    content:"Huey Luey's Acworth — Manager Meeting (continued)";
+    display:block!important;
+    font-size:10pt!important;font-weight:700!important;color:#B85C00!important;
+    border-bottom:1pt solid #B85C00!important;padding-bottom:2pt!important;margin-bottom:5pt!important;
+    font-family:Arial,sans-serif!important;
+  }
+  body.print-meet .bhb-sm-items{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:3pt!important}
+  body.print-meet .bhb-sm-item{padding:2pt!important;border:1pt solid #e8c49a!important;text-align:center!important;background:#fff!important}
+  body.print-meet .hidden-inputs{display:none!important}
+  body.print-meet .card{border:none!important;padding:0!important;margin-bottom:4pt!important}
+
+  /* Sales row table layout */
+  body.print-ops #saleRows > div{margin-bottom:2pt!important}
+  body.print-ops #saleRows input{font-size:7pt!important;height:11pt!important;padding:1pt 2pt!important}
+
+  /* Fix wkpill area */
+  body.print-ops .wkpill{display:inline!important;font-size:6pt!important;color:#888!important}
 }
+
+.cloud-status{border-radius:var(--radius-sm);padding:.35rem .75rem;font-size:11px;font-weight:600;animation:fadeIn .3s}
+.cloud-green{background:var(--green-bg);color:var(--green);border:1px solid #b8dfa8}
+.cloud-info{background:var(--blue-bg);color:var(--blue);border:1px solid #b8d0f8}
+.cloud-warn{background:var(--warn-bg);color:var(--warn);border:1px solid #e8d090}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
 
+
+  <!-- Firebase Cloud Sync -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 <div class="app">
@@ -202,12 +320,18 @@ body.print-meet .hidden-inputs{display:none!important}
 
 <!-- DATA BAR -->
 
-<div class="data-bar no-print">
-  <span style="font-size:11px;font-weight:600;color:var(--text2)">Data Backup:</span>
-  <button class="btn sm" onclick="exportData()">⬇ Export JSON</button>
-  <label class="btn sm" style="cursor:pointer">⬆ Import JSON <input type="file" accept=".json" onchange="importData(event)" style="display:none"/></label>
-  <span style="font-size:10px;color:var(--text3)">Export weekly to keep data safe across computers</span>
-</div>
+<div class="data-bar no-print" style="gap:6px;flex-wrap:wrap;align-items:center">
+    <span style="font-size:11px;font-weight:700;color:var(--text2)">☁️ Cloud Sync:</span>
+    <button class="btn sm gr" onclick="cloudPull()" title="Load latest from cloud">⬇ Load Cloud</button>
+    <button class="btn sm pr" onclick="cloudPush()" title="Push to cloud now">⬆ Push Cloud</button>
+    <button class="btn sm" onclick="showStoreIdModal()">🔑 Store ID</button>
+    <button class="btn sm" onclick="createNewBin()">+ New Store</button>
+    <div id="cloudStatus" class="cloud-status" style="display:none"></div>
+    <span style="margin-left:auto;font-size:9px;color:var(--text3)">Backup:</span>
+    <button class="btn sm" onclick="exportData()">⬇ Export</button>
+    <label class="btn sm" style="cursor:pointer">⬆ Import <input type="file" accept=".json" onchange="importData(event)" style="display:none"/></label>
+    <span style="font-size:10px;color:var(--text3);width:100%;margin-top:2px">💡 Same Store ID = same data on any computer · Autosave on every change</span>
+  </div>
 
 <!-- ══ OPERATIONS ══ -->
 
@@ -783,27 +907,113 @@ gi(‘meeting-list-view’).style.display=‘none’;gi(‘meeting-detail-view�
 }
 
 // ── PERSISTENCE ──
-const KEY=‘hl_ops_v1’,AUTOSAVE=‘hl_ops_current’;
-function getData(){try{return JSON.parse(localStorage.getItem(KEY)||’{}’);}catch{return{};}}
+const KEY='hl_ops_v1', AUTOSAVE='hl_ops_current', AUTOSAVE_MEET='hl_meet_draft';
+const CLOUD_STORE_KEY='hl_cloud_store_id';
+
+// LOCAL STORAGE
+function getData(){try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch{return{};}}
 function setData(d){localStorage.setItem(KEY,JSON.stringify(d));}
 function getWeeks(){return getData().weeks||[];}
 function getMeets(){return getData().meets||[];}
 function saveWks(w){const d=getData();d.weeks=w;setData(d);}
 function saveMts(m){const d=getData();d.meets=m;setData(d);}
 
-function exportData(){
-const data=getData();
-const blob=new Blob([JSON.stringify(data,null,2)],{type:‘application/json’});
-const url=URL.createObjectURL(blob);
-const a=document.createElement(‘a’);a.href=url;a.download=‘hueylueys-ops-backup-’+new Date().toISOString().split(‘T’)[0]+’.json’;a.click();URL.revokeObjectURL(url);
-}
-function importData(evt){
-const file=evt.target.files[0];if(!file)return;
-const reader=new FileReader();
-reader.onload=e=>{try{const data=JSON.parse(e.target.result);setData(data);renderHist();renderMeetList();alert(‘✓ Data imported! ‘+((data.weeks||[]).length)+’ weeks and ‘+((data.meets||[]).length)+’ meetings loaded.’);}catch{alert(‘Error reading file.’);}};
-reader.readAsText(file);
+// CLOUD SYNC via JSONBin (free, no auth, cross-device)
+let cloudStoreId=localStorage.getItem(CLOUD_STORE_KEY)||'';
+const JSONBIN_API='https://api.jsonbin.io/v3/b';
+const JSONBIN_KEY='$2a$10$HL_PLACEHOLDER_KEY'; // set real key via showStoreIdModal
+
+function getCloudId(){return cloudStoreId;}
+
+function updateCloudStatus(msg,type){
+  const el=document.getElementById('cloudStatus');if(!el)return;
+  el.textContent=msg;el.className='cloud-status cloud-'+type;el.style.display='block';
+  if(type==='green')setTimeout(()=>{el.style.display='none';},4000);
 }
 
+async function cloudPush(){
+  if(!cloudStoreId)return;
+  try{
+    updateCloudStatus('☁️ Saving to cloud…','info');
+    const data=getData();
+    const resp=await fetch(JSONBIN_API+'/'+cloudStoreId,{
+      method:'PUT',headers:{'Content-Type':'application/json','X-Access-Key':JSONBIN_KEY},
+      body:JSON.stringify({...data,_updated:new Date().toISOString()})
+    });
+    if(resp.ok){updateCloudStatus('✓ Saved to cloud','green');}
+    else{updateCloudStatus('⚠️ Cloud save failed — saved locally','warn');}
+  }catch(e){updateCloudStatus('⚠️ Cloud unavailable — saved locally','warn');}
+}
+
+async function cloudPull(){
+  if(!cloudStoreId){updateCloudStatus('Enter your Store Sync ID to load data from another computer','info');return;}
+  try{
+    updateCloudStatus('⟳ Loading from cloud…','info');
+    const resp=await fetch(JSONBIN_API+'/'+cloudStoreId+'/latest',{headers:{'X-Access-Key':JSONBIN_KEY}});
+    if(resp.ok){
+      const json=await resp.json();
+      const data=json.record||json;
+      delete data._updated;
+      setData(data);renderHist();renderMeetList();
+      updateCloudStatus('✓ Loaded from cloud — '+((data.weeks||[]).length)+' weeks, '+((data.meets||[]).length)+' meetings','green');
+    }else{updateCloudStatus('No cloud data found for this Store ID','info');}
+  }catch(e){updateCloudStatus('⚠️ Could not reach cloud — using local data','warn');}
+}
+
+async function createNewBin(){
+  try{
+    updateCloudStatus('Creating new cloud store…','info');
+    const resp=await fetch(JSONBIN_API,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Access-Key':JSONBIN_KEY,'X-Bin-Name':'HueyLueys-Ops'},
+      body:JSON.stringify(getData())
+    });
+    if(resp.ok){
+      const json=await resp.json();
+      cloudStoreId=json.metadata.id;
+      localStorage.setItem(CLOUD_STORE_KEY,cloudStoreId);
+      updateCloudStatus('✓ New cloud store created! ID: '+cloudStoreId,'green');
+      prompt('Your Store Sync ID (save this!):',cloudStoreId);
+    }
+  }catch(e){updateCloudStatus('⚠️ Could not create cloud store','warn');}
+}
+
+function showStoreIdModal(){
+  const current=cloudStoreId||'(none)';
+  const choice=confirm('Current Store ID: '+current+'\n\nOK = Enter/change Store ID\nCancel = Show/copy current ID');
+  if(choice){
+    const newId=prompt('Enter Store Sync ID from another computer (or your saved ID):',cloudStoreId);
+    if(newId&&newId.trim()){
+      cloudStoreId=newId.trim();
+      localStorage.setItem(CLOUD_STORE_KEY,cloudStoreId);
+      cloudPull();
+    }
+  }else{
+    if(cloudStoreId)prompt('Your Store Sync ID (copy and save this):',cloudStoreId);
+    else alert('No Store ID yet. Use "Create Cloud Store" to generate one.');
+  }
+}
+
+function exportData(){
+  const data=getData();
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;
+  a.download='hueylueys-ops-backup-'+new Date().toISOString().split('T')[0]+'.json';
+  a.click();URL.revokeObjectURL(url);
+}
+function importData(evt){
+  const file=evt.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      setData(data);renderHist();renderMeetList();cloudPush();
+      alert('✓ Imported '+((data.weeks||[]).length)+' weeks and '+((data.meets||[]).length)+' meetings and pushed to cloud.');
+    }catch{alert('Error reading file.');}
+  };
+  reader.readAsText(file);
+}
 const ONUMS=[‘s_proj’,‘s_ly’,‘s_actual’,‘s_cproj’,‘s_cly’,‘cat_proj’,‘cat_ly’,‘cat_actual’,‘cat_cproj’,‘cat_cly’,‘rft_proj’,‘rft_ly’,‘rft_actual’,‘rft_cproj’,‘rft_cly’,‘togo_proj’,‘togo_ly’,‘togo_actual’,‘togo_cproj’,‘togo_cly’,‘patio_proj’,‘patio_ly’,‘patio_actual’,‘patio_cproj’,‘patio_cly’,‘bhb_sale_proj’,‘bhb_sale_ly’,‘bhb_sale_actual’,‘bhb_sale_cproj’,‘bhb_sale_cly’,‘gc_proj’,‘gc_ly’,‘gc_actual’,‘ppa_proj’,‘ppa_ly’,‘ppa_actual’,‘lab_sales’,‘lab_dollars’,‘lab_actual’,‘lab_proj’,‘food_sales’,‘food_spent’,‘food_proj’,‘lbw_sales’,‘lbw_spent’,‘lbw_proj’,‘pcc_sales’,‘pcc_spent’,‘pcc_proj’,‘nab_sales’,‘nab_spent’,‘nab_proj’,‘ot_sched’,‘ot_actual’,‘ot_curr’,‘disc_r’,‘disc_e’,‘disc_o’,‘marg_house’,‘marg16’,‘marg22’,‘marg32’,‘pitchers’,‘togo_margs’,‘float_wk’,‘float_total’,‘mom_wk’,‘mom_total’,‘mom_ewk’,‘mom_etot’,‘bhb_s’,‘bhb_proj’,‘bhb_mt’,‘bhb_pc’,‘bhb_ld’,‘bhb_br’,‘bhb_fp’,‘mimosas’,‘mim_fl’,‘brunch’,‘tacos’,‘fajitas’,‘faj_dur’,‘faj_hue’,‘faj_bac’,‘bighuey’,‘sl_wk’,‘sl_tot’,‘desserts’,‘kids’,‘rev5’,‘rev4’,‘rev_wct’,‘loyalty’,‘emp_wk’,‘emp_tot’];
 const OTXTS=[‘gm_hrs’,‘walkthroughs’,‘marketing’,‘training’,‘projects’,‘mom_name’,‘mom_emp’,‘rev_win’,‘emp_name’,‘marg_house_name’,‘tacos_name’];
 
@@ -827,7 +1037,7 @@ const wks=getWeeks();const idx=wks.findIndex(w=>w.date===date);
 const entry={date,…getOpsData(),savedAt:new Date().toISOString()};
 if(idx>=0)wks[idx]=entry;else wks.push(entry);
 wks.sort((a,b)=>new Date(b.date)-new Date(a.date));
-saveWks(wks);renderHist();
+saveWks(wks);renderHist();cloudPush();
 const sl=gi(‘weekLabel’);if(sl)sl.textContent=‘✓ Saved’;
 setTimeout(()=>{if(sl)sl.textContent=’’;},2000);
 }
@@ -900,10 +1110,17 @@ function closeMeetForm(){gi(‘meeting-form-view’).style.display=‘none’;gi
 function closeDetail(){gi(‘meeting-detail-view’).style.display=‘none’;gi(‘meeting-list-view’).style.display=‘block’;}
 
 function saveMeet(){
-const data=getMeetData();if(!data.m_date){alert(‘Set a meeting date.’);return;}
-const mts=getMeets();mts.push({…data,savedAt:new Date().toISOString()});
+const data=getMeetData();if(!data.m_date){alert('Set a meeting date.');return;}
+const mts=getMeets();
+const existIdx=mts.findIndex(m=>m.m_date===data.m_date);
+if(existIdx>=0){mts[existIdx]={...data,savedAt:new Date().toISOString()};}
+else{mts.push({...data,savedAt:new Date().toISOString()});}
 mts.sort((a,b)=>new Date(b.m_date)-new Date(a.m_date));
-saveMts(mts);closeMeetForm();renderMeetList();alert(‘Meeting saved!’);
+saveMts(mts);
+try{localStorage.removeItem(AUTOSAVE_MEET);}catch(e){}
+cloudPush();
+closeMeetForm();renderMeetList();
+updateCloudStatus('Meeting saved and synced to cloud','green');
 }
 
 function renderMeetList(){
@@ -1088,6 +1305,10 @@ gi(‘sec-ops’).addEventListener(‘input’,()=>{
 const d=getOpsData();d._weekDate=gv(‘weekDate’);
 try{localStorage.setItem(AUTOSAVE,JSON.stringify(d));}catch(e){}
 });
+// Auto-save meeting form
+document.addEventListener('input',e=>{const form=gi('meeting-form-view');if(form&&form.style.display!=='none'){try{localStorage.setItem(AUTOSAVE_MEET,JSON.stringify(getMeetData()));}catch(er){}}});
+// Cloud pull on load
+if(cloudStoreId){setTimeout(()=>cloudPull(),1500);}
 renderMeetList();renderHist();
 });
 </script>

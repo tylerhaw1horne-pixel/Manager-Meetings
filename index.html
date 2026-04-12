@@ -1533,6 +1533,7 @@ gi(‘sec-ops’).addEventListener(‘input’, () => autosave());
 
 renderMeetList();
 renderHist();
+checkCarry();
 
 // Cloud pull if ID exists
 if (syncId) setTimeout(() => cloudPull(), 1500);

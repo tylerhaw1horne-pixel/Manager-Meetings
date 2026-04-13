@@ -567,9 +567,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
   <!-- WEATHER SNAPSHOT -->
   <div class="card">
-    <div class="card-hdr">🌤 <span>Weekly Itinerary and Weather Snapshot</span>
-      <button class="btn xs pr no-print" onclick="fetchWeather()" style="margin-left:auto">Auto-Fill Weather</button>
-    </div>
+    <div class="card-hdr">🌤 <span>Weekly Itinerary and Weather Snapshot</span></div>
     <div class="wx-grid" id="m_wxGrid"></div>
     <div class="fg" style="margin-top:8px"><div class="fl">Weather / Event Notes</div><textarea id="wx_notes" rows="2" oninput="live()"></textarea></div>
   </div>
@@ -904,7 +902,7 @@ async function onDateChange(){
   const key=weekKey();
   if(key){
     const raw=localStorage.getItem(key);
-    if(raw){try{restoreData(JSON.parse(raw));calc();fetchWeather();return;}catch(e){}}
+    if(raw){try{restoreData(JSON.parse(raw));calc();return;}catch(e){}}
   }
   // Not saved — carry last week actuals → this week's LY fields
   const d=gv('weekDate');
@@ -912,7 +910,7 @@ async function onDateChange(){
   const dt=new Date(d+'T12:00:00');
   const prev=new Date(dt);prev.setDate(dt.getDate()-7);
   await autoCarry('hl_week_'+prev.toISOString().split('T')[0]);
-  fetchWeather();
+  
 }
 
 async function autoCarry(prevKey){
@@ -998,12 +996,12 @@ async function saveWeek(){
 async function loadWeek(){
   const key=weekKey();if(!key)return;
   const raw=localStorage.getItem(key);
-  if(raw){try{restoreData(JSON.parse(raw));calc();fetchWeather();return;}catch(e){}}
+  if(raw){try{restoreData(JSON.parse(raw));calc();return;}catch(e){}}
   setSS('loading');
   const ok=await cloudPull();
   setSS(ok?'ok':'err');
   const raw2=localStorage.getItem(key);
-  if(raw2)try{restoreData(JSON.parse(raw2));calc();fetchWeather();}catch(e){}
+  if(raw2)try{restoreData(JSON.parse(raw2));calc();}catch(e){}
 }
 
 function clearOps(){
@@ -1160,7 +1158,7 @@ function renderHist(){
 }
 function loadHistWeek(key){
   const raw=localStorage.getItem(key);if(!raw){alert('Week not found in this browser.');return;}
-  try{const d=JSON.parse(raw);sv('weekDate',d._wd||key.replace('hl_week_',''));updateLabel();restoreData(d);calc();fetchWeather();showTab('ops',null,0);}catch(e){alert('Error loading.');}
+  try{const d=JSON.parse(raw);sv('weekDate',d._wd||key.replace('hl_week_',''));updateLabel();restoreData(d);calc();showTab('ops',null,0);}catch(e){alert('Error loading.');}
 }
 function delHistWeek(key){
   if(!confirm('Remove from history on this device?'))return;
@@ -1173,68 +1171,6 @@ function delHistWeek(key){
    WEATHER — Open-Meteo, Acworth GA
    lat: 34.0607  lon: -84.6775
 ══════════════════════════════════════════════ */
-const WX_I={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',80:'🌦',81:'🌧',82:'🌧',95:'⛈',96:'⛈',99:'⛈'};
-const WX_C={0:'Clear',1:'Mostly Clear',2:'Partly Cloudy',3:'Overcast',45:'Foggy',48:'Foggy',51:'Light Drizzle',53:'Drizzle',55:'Heavy Drizzle',61:'Light Rain',63:'Rain',65:'Heavy Rain',80:'Showers',81:'Heavy Showers',82:'Violent Showers',95:'Thunderstorm',96:'Hail',99:'Severe Storm'};
-
-async function fetchWeather(){
-  // Get Monday of the selected week
-  const d=gv('weekDate');
-  let sd;
-  if(d){
-    sd=new Date(d+'T12:00:00');
-  } else {
-    // Default to this Monday
-    sd=new Date();
-    const dow=(sd.getDay()+6)%7;
-    sd.setDate(sd.getDate()-dow);
-  }
-  const ed=new Date(sd);
-  ed.setDate(sd.getDate()+6);
-
-  const fmt=x=>{
-    const y=x.getFullYear(),m=String(x.getMonth()+1).padStart(2,'0'),day=String(x.getDate()).padStart(2,'0');
-    return `${y}-${m}-${day}`;
-  };
-
-  // Show loading state on weather days
-  const wxBtn=document.querySelector('[onclick="fetchWeather()"]');
-  if(wxBtn){wxBtn.textContent='⏳ Loading...';wxBtn.disabled=true;}
-
-  try{
-    const startStr=fmt(sd), endStr=fmt(ed);
-    const url=`https://api.open-meteo.com/v1/forecast?latitude=34.0607&longitude=-84.6775&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America%2FNew_York&start_date=${startStr}&end_date=${endStr}`;
-    
-    const res=await fetch(url);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data=await res.json();
-    
-    if(!data.daily||!data.daily.weathercode) throw new Error('No daily data returned');
-    
-    const {weathercode,temperature_2m_max,temperature_2m_min}=data.daily;
-    DAYS.forEach((day,i)=>{
-      if(i>=weathercode.length) return;
-      const code=weathercode[i];
-      const hi=Math.round(temperature_2m_max[i]);
-      const lo=Math.round(temperature_2m_min[i]);
-      const setEl=(id,v)=>{const e=gi(id);if(e)e.textContent=v;};
-      setEl(`wx_icon_${i}`,WX_I[code]!==undefined?WX_I[code]:'🌤');
-      setEl(`wx_temp_${i}`,`${hi}° / ${lo}°F`);
-      setEl(`wx_cond_${i}`,WX_C[code]||'—');
-    });
-
-    if(wxBtn){wxBtn.textContent='✓ Weather Loaded';setTimeout(()=>{wxBtn.textContent='Auto-Fill Weather';wxBtn.disabled=false;},2000);}
-    live();
-  }catch(err){
-    console.error('Weather fetch failed:',err);
-    if(wxBtn){
-      wxBtn.textContent='⚠ Weather Failed — Retry';
-      wxBtn.disabled=false;
-      wxBtn.style.background='#c62828';
-      setTimeout(()=>{wxBtn.style.background='';wxBtn.textContent='Auto-Fill Weather';},4000);
-    }
-  }
-}
-
 /* ══════════════════════════════════════════════
    PRINT
 ══════════════════════════════════════════════ */
@@ -1354,7 +1290,7 @@ async function init(){
   }
 
   // Always auto-fetch weather on load
-  fetchWeather();
+  
   renderHist();
 }
 

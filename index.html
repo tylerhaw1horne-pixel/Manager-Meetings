@@ -1020,38 +1020,79 @@ function clearOps(){
 }
 
 /* ══════════════════════════════════════════════
-   CLOUD SYNC — JSONbin.io (free, no account)
+   CLOUD SYNC — Cloudflare KV via worker proxy
+   Uses a free public worker endpoint that stores
+   one JSON blob keyed to "HLAcworth" — no account
+   needed, works from any device/browser.
+   
+   HOW IT WORKS:
+   All week data is bundled into one JSON payload
+   and stored at a fixed key. Any computer that
+   opens the site fetches the same payload.
+   
+   SETUP (one time, 2 minutes):
+   1. Go to https://workers.cloudflare.com
+   2. Create a free account
+   3. Create a KV namespace called "HL_OPS"
+   4. Deploy the worker script below to your worker
+   5. Paste your worker URL in WORKER_URL below
+   
+   WORKER SCRIPT (paste into Cloudflare worker editor):
+   ─────────────────────────────────────────────────────
+   export default {
+     async fetch(req, env) {
+       const cors = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET,PUT,OPTIONS','Access-Control-Allow-Headers':'Content-Type'};
+       if(req.method==='OPTIONS') return new Response(null,{headers:cors});
+       const key = 'HL_OPS_DATA';
+       if(req.method==='GET'){
+         const val = await env.HL_OPS.get(key);
+         return new Response(val||'{}',{headers:{...cors,'Content-Type':'application/json'}});
+       }
+       if(req.method==='PUT'){
+         const body = await req.text();
+         await env.HL_OPS.put(key, body);
+         return new Response('ok',{headers:cors});
+       }
+       return new Response('method not allowed',{status:405,headers:cors});
+     }
+   }
+   ─────────────────────────────────────────────────────
+   
+   Until worker is set up, data saves locally only.
+   Export/Import JSON is the manual cross-device method.
 ══════════════════════════════════════════════ */
-const _BK='hl_jbin_id_v5';
-let _binId=localStorage.getItem(_BK)||null;
+
+// ▼▼▼ PASTE YOUR CLOUDFLARE WORKER URL HERE after setup ▼▼▼
+const WORKER_URL = '';  // e.g. 'https://hl-ops.yourusername.workers.dev'
+// ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 async function cloudPush(){
+  if(!WORKER_URL) return false;
   try{
     const idx=JSON.parse(localStorage.getItem('hl_week_index')||'[]');
     const payload={_r:'HLAcworth',_u:Date.now(),index:idx};
-    idx.slice(0,52).forEach(k=>{const r=localStorage.getItem(k);if(r)try{payload[k]=JSON.parse(r);}catch(e){}});
-    let res;
-    if(!_binId){
-      res=await fetch('https://api.jsonbin.io/v3/b',{method:'POST',
-        headers:{'Content-Type':'application/json','X-Bin-Name':'HL-Acworth-OpsV5','X-Private':'false'},
-        body:JSON.stringify(payload)});
-    }else{
-      res=await fetch(`https://api.jsonbin.io/v3/b/${_binId}`,{method:'PUT',
-        headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    }
-    if(res.ok){const j=await res.json();if(!_binId&&j.metadata){_binId=j.metadata.id;localStorage.setItem(_BK,_binId);}return true;}
-    return false;
+    idx.slice(0,52).forEach(k=>{
+      const r=localStorage.getItem(k);
+      if(r)try{payload[k]=JSON.parse(r);}catch(e){}
+    });
+    const res=await fetch(WORKER_URL,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    return res.ok;
   }catch(e){return false;}
 }
 
 async function cloudPull(){
-  if(!_binId)return false;
+  if(!WORKER_URL) return false;
   try{
-    const res=await fetch(`https://api.jsonbin.io/v3/b/${_binId}/latest`);
-    if(!res.ok)return false;
-    const j=await res.json();const p=j.record;if(!p)return false;
-    if(p.index){localStorage.setItem('hl_week_index',JSON.stringify(p.index));
-      p.index.forEach(k=>{if(p[k])localStorage.setItem(k,JSON.stringify(p[k]));});}
+    const res=await fetch(WORKER_URL+'?t='+Date.now()); // cache-bust
+    if(!res.ok) return false;
+    const p=await res.json();
+    if(!p||!p.index) return false;
+    localStorage.setItem('hl_week_index',JSON.stringify(p.index));
+    p.index.forEach(k=>{if(p[k])localStorage.setItem(k,JSON.stringify(p[k]));});
     return true;
   }catch(e){return false;}
 }
@@ -1059,8 +1100,13 @@ async function cloudPull(){
 function setSS(s){
   const e=gi('syncBadge');if(!e)return;
   e.className='ss';
-  if(s==='ok'){e.classList.add('ss-ok');e.textContent='☁ Synced';}
-  else if(s==='err'){e.classList.add('ss-err');e.textContent='⚠ Saved Locally Only';}
+  if(!WORKER_URL||s==='local'){
+    e.classList.add('ss-err');
+    e.textContent='💾 Local Only — use Export/Import to share across devices';
+    return;
+  }
+  if(s==='ok'){e.classList.add('ss-ok');e.textContent='☁ Synced to Cloud';}
+  else if(s==='err'){e.classList.add('ss-err');e.textContent='⚠ Cloud failed — Saved Locally';}
   else if(s==='saving'){e.classList.add('ss-busy');e.textContent='↑ Saving...';}
   else if(s==='loading'){e.classList.add('ss-busy');e.textContent='↓ Loading...';}
 }
@@ -1070,7 +1116,7 @@ function setSS(s){
 ══════════════════════════════════════════════ */
 function exportJSON(){
   const idx=JSON.parse(localStorage.getItem('hl_week_index')||'[]');
-  const out={version:5,exported:new Date().toISOString(),binId:_binId,weeks:{}};
+  const out={version:5,exported:new Date().toISOString(),weeks:{}};
   idx.forEach(k=>{const r=localStorage.getItem(k);if(r)try{out.weeks[k]=JSON.parse(r);}catch(e){}});
   const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
@@ -1082,13 +1128,16 @@ function importJSON(e){
   r.onload=ev=>{
     try{
       const all=JSON.parse(ev.target.result);let count=0;
-      if(all.weeks){Object.keys(all.weeks).forEach(k=>{localStorage.setItem(k,JSON.stringify(all.weeks[k]));count++;});
+      if(all.weeks){
+        Object.keys(all.weeks).forEach(k=>{localStorage.setItem(k,JSON.stringify(all.weeks[k]));count++;});
         let idx=JSON.parse(localStorage.getItem('hl_week_index')||'[]');
         Object.keys(all.weeks).forEach(k=>{if(!idx.includes(k))idx.push(k);});
-        idx.sort((a,b)=>b.localeCompare(a));localStorage.setItem('hl_week_index',JSON.stringify(idx));}
-      if(all.binId&&!_binId){_binId=all.binId;localStorage.setItem(_BK,_binId);}
-      renderHist();alert(`✓ Imported ${count} week${count!==1?'s':''}.`);
-    }catch(err){alert('Error reading file.');}
+        idx.sort((a,b)=>b.localeCompare(a));
+        localStorage.setItem('hl_week_index',JSON.stringify(idx));
+      }
+      renderHist();
+      alert(`✓ Imported ${count} week${count!==1?'s':''}. Click Load Week to restore.`);
+    }catch(err){alert('Error reading file. Make sure it is a valid backup.');}
   };
   r.readAsText(file);e.target.value='';
 }
@@ -1122,29 +1171,68 @@ function delHistWeek(key){
 
 /* ══════════════════════════════════════════════
    WEATHER — Open-Meteo, Acworth GA
+   lat: 34.0607  lon: -84.6775
 ══════════════════════════════════════════════ */
 const WX_I={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',80:'🌦',81:'🌧',82:'🌧',95:'⛈',96:'⛈',99:'⛈'};
 const WX_C={0:'Clear',1:'Mostly Clear',2:'Partly Cloudy',3:'Overcast',45:'Foggy',48:'Foggy',51:'Light Drizzle',53:'Drizzle',55:'Heavy Drizzle',61:'Light Rain',63:'Rain',65:'Heavy Rain',80:'Showers',81:'Heavy Showers',82:'Violent Showers',95:'Thunderstorm',96:'Hail',99:'Severe Storm'};
 
 async function fetchWeather(){
+  // Get Monday of the selected week
   const d=gv('weekDate');
-  const sd=d?new Date(d+'T12:00:00'):new Date();
-  if(!d){const dow=(sd.getDay()+6)%7;sd.setDate(sd.getDate()-dow);}
-  const ed=new Date(sd);ed.setDate(sd.getDate()+6);
-  const fmt=x=>x.toISOString().split('T')[0];
+  let sd;
+  if(d){
+    sd=new Date(d+'T12:00:00');
+  } else {
+    // Default to this Monday
+    sd=new Date();
+    const dow=(sd.getDay()+6)%7;
+    sd.setDate(sd.getDate()-dow);
+  }
+  const ed=new Date(sd);
+  ed.setDate(sd.getDate()+6);
+
+  const fmt=x=>{
+    const y=x.getFullYear(),m=String(x.getMonth()+1).padStart(2,'0'),day=String(x.getDate()).padStart(2,'0');
+    return `${y}-${m}-${day}`;
+  };
+
+  // Show loading state on weather days
+  const wxBtn=document.querySelector('[onclick="fetchWeather()"]');
+  if(wxBtn){wxBtn.textContent='⏳ Loading...';wxBtn.disabled=true;}
+
   try{
-    const url=`https://api.open-meteo.com/v1/forecast?latitude=34.0607&longitude=-84.6775&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America/New_York&start_date=${fmt(sd)}&end_date=${fmt(ed)}&forecast_days=16`;
-    const res=await fetch(url);const data=await res.json();
+    const startStr=fmt(sd), endStr=fmt(ed);
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=34.0607&longitude=-84.6775&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America%2FNew_York&start_date=${startStr}&end_date=${endStr}`;
+    
+    const res=await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    
+    if(!data.daily||!data.daily.weathercode) throw new Error('No daily data returned');
+    
     const {weathercode,temperature_2m_max,temperature_2m_min}=data.daily;
     DAYS.forEach((day,i)=>{
-      const code=weathercode[i],hi=Math.round(temperature_2m_max[i]),lo=Math.round(temperature_2m_min[i]);
-      const s=(id,v)=>{const e=gi(id);if(e)e.textContent=v;};
-      s(`wx_icon_${i}`,WX_I[code]||'🌤');
-      s(`wx_temp_${i}`,`${hi}°/${lo}°F`);
-      s(`wx_cond_${i}`,WX_C[code]||'—');
+      if(i>=weathercode.length) return;
+      const code=weathercode[i];
+      const hi=Math.round(temperature_2m_max[i]);
+      const lo=Math.round(temperature_2m_min[i]);
+      const setEl=(id,v)=>{const e=gi(id);if(e)e.textContent=v;};
+      setEl(`wx_icon_${i}`,WX_I[code]!==undefined?WX_I[code]:'🌤');
+      setEl(`wx_temp_${i}`,`${hi}° / ${lo}°F`);
+      setEl(`wx_cond_${i}`,WX_C[code]||'—');
     });
+
+    if(wxBtn){wxBtn.textContent='✓ Weather Loaded';setTimeout(()=>{wxBtn.textContent='Auto-Fill Weather';wxBtn.disabled=false;},2000);}
     live();
-  }catch(e){console.warn('Weather fetch failed',e);}
+  }catch(err){
+    console.error('Weather fetch failed:',err);
+    if(wxBtn){
+      wxBtn.textContent='⚠ Weather Failed — Retry';
+      wxBtn.disabled=false;
+      wxBtn.style.background='#c62828';
+      setTimeout(()=>{wxBtn.style.background='';wxBtn.textContent='Auto-Fill Weather';},4000);
+    }
+  }
 }
 
 /* ══════════════════════════════════════════════
@@ -1243,19 +1331,29 @@ async function init(){
   // Set this Monday
   const today=new Date(),mon=new Date(today);
   mon.setDate(today.getDate()-((today.getDay()+6)%7));
-  sv('weekDate',mon.toISOString().split('T')[0]);
+  // Use local date string to avoid timezone issues
+  const y=mon.getFullYear(),m=String(mon.getMonth()+1).padStart(2,'0'),day=String(mon.getDate()).padStart(2,'0');
+  sv('weekDate',`${y}-${m}-${day}`);
   sv('lab_tax',TAX_DEFAULT);
   updateLabel();
 
-  // Pull cloud
-  if(_binId){setSS('loading');const ok=await cloudPull();setSS(ok?'ok':'err');}
-  else setSS('ok');
+  // Try cloud sync if worker URL is set
+  if(WORKER_URL){
+    setSS('loading');
+    const ok=await cloudPull();
+    setSS(ok?'ok':'err');
+  } else {
+    setSS('local'); // shows "Local Only" message
+  }
 
-  // Load this week
+  // Load this week's data from localStorage
   const key=weekKey();
   const raw=key?localStorage.getItem(key):null;
-  if(raw)try{restoreData(JSON.parse(raw));calc();}catch(e){}
+  if(raw){
+    try{restoreData(JSON.parse(raw));calc();}catch(e){console.warn('Restore error',e);}
+  }
 
+  // Always auto-fetch weather on load
   fetchWeather();
   renderHist();
 }

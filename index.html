@@ -73,14 +73,9 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 .met-v{font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;color:#1C1410;line-height:1.2}
 .met-v.sm{font-size:13px}
 .met-v .chip{font-size:9px;padding:0 5px;margin-left:4px;vertical-align:middle}
-.nb{background:#fff;border:1px solid #E8D8C4;border-radius:5px;padding:7px 10px;margin-bottom:5px}
-.nb p{font-size:11px;color:#5C4A38;line-height:1.65;white-space:pre-wrap;min-height:18px}
 .wx-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:5px}
 .wx-day{background:rgba(0,0,0,.03);border:1px solid #E8D8C4;border-radius:6px;padding:5px 4px;text-align:center}
 .wx-day .wn{font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;color:#C55A1B}
-.wx-day .wi{font-size:20px;margin:2px 0;display:block}
-.wx-day .wt{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600}
-.wx-day .wc{font-size:9px;color:#9C8878;margin-bottom:3px}
 .wx-day textarea{font-size:9px;min-height:30px;resize:none;padding:2px 3px}
 .hi{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border:1px solid #E8D8C4;border-radius:5px;margin-bottom:5px;background:#fff}
 .hi:hover{border-color:#C55A1B}
@@ -103,6 +98,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 .disc-net{background:rgba(197,90,27,.06);border:1px solid rgba(197,90,27,.2);border-radius:4px;padding:4px 8px;display:flex;align-items:center;gap:10px;margin-top:4px}
 .disc-net .dn-lbl{font-size:10px;font-weight:700;color:#C55A1B;text-transform:uppercase;letter-spacing:.4px}
 .disc-net .dn-val{font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:#1C1410}
+.nb-lines{display:none}
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   .no-print{display:none!important}
@@ -132,8 +128,6 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   body.print-ops .row .calc{font-size:7pt}
   body.print-ops .sec-title{font-size:6.5pt;margin:3pt 0 2pt;padding-bottom:1pt}
   body.print-ops .disc-net{padding:2pt 5pt;margin-top:2pt}
-  body.print-ops .disc-net .dn-lbl{font-size:6pt}
-  body.print-ops .disc-net .dn-val{font-size:8pt}
   body.print-meet #sec-meet{display:block!important;column-count:2;column-gap:5pt;font-size:6.5pt}
   body.print-meet .card{margin:1pt 0;padding:2pt 3pt;break-inside:avoid;page-break-inside:avoid;display:inline-block;width:100%}
   body.print-meet .card-hdr{padding:2pt 3pt;margin:-2pt -3pt 2.5pt;font-size:6.5pt!important;letter-spacing:.3px}
@@ -165,17 +159,13 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   body.print-meet .nb-lines{display:block!important}
   body.print-meet .nb-line{display:block;border-bottom:.4pt solid #ccc;height:13pt;margin-bottom:1pt}
   body.print-meet #sec-meet > .card:first-child{column-span:all;margin-bottom:2pt}
-  body.print-meet .disc-net{padding:1pt 3pt;margin-top:1pt}
-  body.print-meet .disc-net .dn-lbl{font-size:5pt}
-  body.print-meet .disc-net .dn-val{font-size:7pt}
   @page{margin:7mm 6mm;size:letter portrait}
 }
-.nb-lines{display:none}
 </style>
 </head>
 <body>
 <div class="app">
-<!-- HEADER -->
+
 <div class="hdr no-print">
   <div class="logo"><span>Huey Luey's</span> Acworth</div>
   <div class="hdr-r">
@@ -184,17 +174,17 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <button class="tab" onclick="showTab('meet',this)">📋 Manager Meeting</button>
       <button class="tab" onclick="showTab('hist',this)">🗂 History</button>
     </div>
-    <button class="btn sm pr no-print" onclick="saveWeek()">💾 Save</button>
+    <button class="btn sm pr no-print" onclick="doSave()">💾 Save</button>
     <button class="btn sm no-print" onclick="doPrint('ops')">🖨 Print Ops</button>
     <button class="btn sm no-print" onclick="doPrint('meet')">🖨 Print Meeting</button>
   </div>
 </div>
 <div class="dbar no-print">
-  <span id="syncBadge" class="ss ss-ok">☁ Cloud Sync Ready</span>
-  <button class="btn xs ghost" onclick="exportJSON()">⬇ Export</button>
-  <button class="btn xs ghost" onclick="document.getElementById('importFileInput').click()">⬆ Import</button>
+  <span id="syncBadge" class="ss ss-ok">💾 Local Storage Ready</span>
+  <button class="btn xs ghost" onclick="doExport()">⬇ Export JSON</button>
+  <button class="btn xs ghost" onclick="triggerImport()">⬆ Import JSON</button>
 </div>
-<input type="file" id="importFileInput" accept=".json" onchange="importJSON(event)" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none"/>
+<input type="file" id="fileImport" accept=".json" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;visibility:hidden"/>
 
 <!-- OPERATIONS TAB -->
 
@@ -204,16 +194,16 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <button id="opsEditBtn" class="btn xs no-print" onclick="toggleOpsEdit()" style="margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff">🔓 Editing: ON</button>
     </div>
     <div class="g3">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Week (Mon–Sun)</div><input type="date" id="weekDate" onchange="onDateChange()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Week Label</div><div class="fcalc" id="weekLabel">—</div></div>
+      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Week (Mon-Sun)</div><input type="date" id="weekDate" onchange="onDateChange()"/></div>
+      <div class="fg"><div class="fl">Week Label</div><div class="fcalc" id="weekLabel">-</div></div>
       <div style="display:flex;align-items:flex-end;gap:5px;padding-bottom:1px">
-        <button class="btn sm pr" onclick="saveWeek()">💾 Save Week</button>
-        <button class="btn sm" onclick="loadWeek()">Load</button>
+        <button class="btn sm pr" onclick="doSave()">💾 Save Week</button>
+        <button class="btn sm" onclick="doLoad()">Load</button>
         <button class="btn sm dk" onclick="clearOps()">Clear</button>
       </div>
     </div>
-    <div id="carryNote" class="notice info">↩ Last week's actuals auto-loaded as this week's Last Year values.</div>
-    <div id="savedNote" class="notice ok">✓ Week saved.</div>
+    <div id="carryNote" class="notice info">Last week actuals loaded as Last Year values.</div>
+    <div id="savedNote" class="notice ok">Week saved successfully.</div>
   </div>
 
   <div class="card">
@@ -250,13 +240,13 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Rewards $</div><input type="number" id="disc_rewards" step=".01" oninput="calcDisc()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Other $</div><input type="number" id="disc_other" step=".01" oninput="calcDisc()"/></div>
     </div>
-    <div class="disc-net"><span class="dn-lbl">Net Discounts:</span><span class="dn-val" id="disc_net_display">$0.00</span><span style="font-size:10px;color:#9C8878;margin-left:4px">(Discounts − EZ Cater − Rewards − Other)</span></div>
+    <div class="disc-net"><span class="dn-lbl">Net Discounts:</span><span class="dn-val" id="disc_net_display">$0.00</span><span style="font-size:10px;color:#9C8878;margin-left:4px">(Discounts minus EZ Cater, Rewards, Other)</span></div>
     <div class="div"></div>
     <div id="lbl_28" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor</div>
     <div class="g3" style="margin-bottom:5px">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor % w/o Taxes</div><div class="fcalc" id="lab_pct_notax">—</div></div>
+      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor % w/o Taxes</div><div class="fcalc" id="lab_pct_notax">-</div></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor Cost $</div><input type="number" id="lab_dollars" oninput="calc()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor w/ Taxes %</div><div class="fcalc fcalc-hi" id="lab_pct_wtax">—</div></div>
+      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor w/ Taxes %</div><div class="fcalc fcalc-hi" id="lab_pct_wtax">-</div></div>
     </div>
     <div class="g4" style="margin-bottom:4px">
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor Sales ($)</div><input type="number" id="lab_sales" oninput="calc()"/></div>
@@ -270,17 +260,17 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     <div class="row"><span id="lbl_121" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total OT Hours Current Week (Sched):</span><input type="number" id="ot_cw_sched" oninput="live()" placeholder="Sched"/></div>
     <div class="div"></div>
     <div id="lbl_29" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Cost Percentages</div>
-    <div class="row"><span id="lbl_122" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Cost % Last Week (Proj / Actual):</span><input type="number" id="food_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="food_lw_act" style="max-width:90px">—</div></div>
-    <div class="row" style="margin-bottom:2px"><span id="lbl_200" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">  ↳ Food Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="food_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="food_spent" oninput="calc()" placeholder="Spent"/></div>
+    <div class="row"><span id="lbl_122" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Cost % Last Week (Proj / Actual):</span><input type="number" id="food_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="food_lw_act" style="max-width:90px">-</div></div>
+    <div class="row" style="margin-bottom:2px"><span id="lbl_200" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="food_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="food_spent" oninput="calc()" placeholder="Spent"/></div>
     <div class="row"><span id="lbl_123" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Cost % Current Week (Proj):</span><input type="number" id="food_cw_proj" step=".1" oninput="live()" placeholder="Proj %"/></div>
-    <div class="row" style="margin-top:4px"><span id="lbl_124" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Cost % Last Week (Proj / Actual):</span><input type="number" id="lbw_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="lbw_lw_act" style="max-width:90px">—</div></div>
-    <div class="row" style="margin-bottom:2px"><span id="lbl_201" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">  ↳ LBW Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="lbw_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="lbw_spent" oninput="calc()" placeholder="Spent"/></div>
+    <div class="row" style="margin-top:4px"><span id="lbl_124" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Cost % Last Week (Proj / Actual):</span><input type="number" id="lbw_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="lbw_lw_act" style="max-width:90px">-</div></div>
+    <div class="row" style="margin-bottom:2px"><span id="lbl_201" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="lbw_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="lbw_spent" oninput="calc()" placeholder="Spent"/></div>
     <div class="row"><span id="lbl_125" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Cost % Current Week (Proj):</span><input type="number" id="lbw_cw_proj" step=".1" oninput="live()" placeholder="Proj %"/></div>
-    <div class="row" style="margin-top:4px"><span id="lbl_126" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Paper/Catering/Cleaning % Last Week (Proj / Actual):</span><input type="number" id="pcc_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="pcc_lw_act" style="max-width:90px">—</div></div>
-    <div class="row" style="margin-bottom:2px"><span id="lbl_202" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">  ↳ PCC Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="pcc_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="pcc_spent" oninput="calc()" placeholder="Spent"/></div>
+    <div class="row" style="margin-top:4px"><span id="lbl_126" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Paper/Catering/Cleaning % Last Week (Proj / Actual):</span><input type="number" id="pcc_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="pcc_lw_act" style="max-width:90px">-</div></div>
+    <div class="row" style="margin-bottom:2px"><span id="lbl_202" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">PCC Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="pcc_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="pcc_spent" oninput="calc()" placeholder="Spent"/></div>
     <div class="row"><span id="lbl_127" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">PCC % Current Week (Proj):</span><input type="number" id="pcc_cw_proj" step=".1" oninput="live()" placeholder="Proj %"/></div>
-    <div class="row" style="margin-top:4px"><span id="lbl_128" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">N/A Bev % Last Week (Proj / Actual):</span><input type="number" id="nab_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="nab_lw_act" style="max-width:90px">—</div></div>
-    <div class="row" style="margin-bottom:2px"><span id="lbl_203" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">  ↳ NAB Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="nab_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="nab_spent" oninput="calc()" placeholder="Spent"/></div>
+    <div class="row" style="margin-top:4px"><span id="lbl_128" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">N/A Bev % Last Week (Proj / Actual):</span><input type="number" id="nab_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="nab_lw_act" style="max-width:90px">-</div></div>
+    <div class="row" style="margin-bottom:2px"><span id="lbl_203" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">NAB Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="nab_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="nab_spent" oninput="calc()" placeholder="Spent"/></div>
     <div class="row"><span id="lbl_129" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">N/A Bev % Current Week (Proj):</span><input type="number" id="nab_cw_proj" step=".1" oninput="live()" placeholder="Proj %"/></div>
   </div>
 
@@ -298,12 +288,12 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   </div>
 
   <div class="card">
-    <div class="card-hdr">⭐ <span id="lbl_3" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Experience</span></div>
+    <div class="card-hdr">&#11088; <span id="lbl_3" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Experience</span></div>
     <div class="g4">
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">5-Star Reviews (week)</div><input type="number" id="rev5" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">4-Star Reviews (week)</div><input type="number" id="rev4" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Total Reviews (running)</div><input type="number" id="rev_total" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Current Rating ⭐</div><input type="number" id="rev_rating" step=".1" max="5" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Current Rating</div><input type="number" id="rev_rating" step=".1" max="5" oninput="live()"/></div>
     </div>
     <div class="g2">
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Loyalty Signups</div><input type="number" id="loyalty" oninput="live()"/></div>
@@ -312,10 +302,10 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   </div>
 
   <div class="card">
-    <div class="card-hdr">🍹 <span id="lbl_4" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold</span></div>
+    <div class="card-hdr">&#127369; <span id="lbl_4" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold</span></div>
     <div id="lbl_30" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg of the Month &amp; Employee Contest</div>
     <div class="g4">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Marg of Month — Name</div><input type="text" id="motm_name" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Marg of Month - Name</div><input type="text" id="motm_name" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Qty Sold This Week</div><input type="number" id="motm_wk" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Total Sold Month</div><input type="number" id="motm_total" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1st Place Employee</div><input type="text" id="emp1_name" oninput="live()"/></div>
@@ -326,7 +316,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <div class="fg"></div><div class="fg"></div>
     </div>
     <div class="div"></div>
-    <div id="lbl_31" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🍹 Liquor Product Mix</div>
+    <div id="lbl_31" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Liquor Product Mix</div>
     <div class="g5">
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">To-Go Margs</div><input type="number" id="togo_margs" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">16oz Margs</div><input type="number" id="marg16" oninput="live()"/></div>
@@ -342,7 +332,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <div class="fg"></div>
     </div>
     <div class="div"></div>
-    <div id="lbl_32" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🍽 Food Product Mix</div>
+    <div id="lbl_32" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Product Mix</div>
     <div class="g5">
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Total Fajitas</div><input type="number" id="faj_total" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Durango Style</div><input type="number" id="faj_dur" oninput="live()"/></div>
@@ -358,7 +348,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Steak &amp; Blue Quesadilla</div><input type="number" id="steak_blue" oninput="live()"/></div>
     </div>
     <div class="div"></div>
-    <div id="lbl_38" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🍳 Brunch Product Mix</div>
+    <div id="lbl_38" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Brunch Product Mix</div>
     <div class="g6">
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Hot Cakes</div><input type="number" id="brunch_hotcakes" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">HotCakes Refill</div><input type="number" id="brunch_hotcakes_refill" oninput="live()"/></div>
@@ -368,7 +358,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Chilaquiles</div><input type="number" id="brunch_chilaquiles" oninput="live()"/></div>
     </div>
     <div class="div"></div>
-    <div id="lbl_33" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🏖 Beach House Bar — Cocktail Counts</div>
+    <div id="lbl_33" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar - Cocktail Counts</div>
     <div class="g5">
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Mai Tais</div><input type="number" id="bhb_mt" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Pina Coladas</div><input type="number" id="bhb_pc" oninput="live()"/></div>
@@ -378,7 +368,9 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     </div>
   </div>
 </div>
+
 <!-- MANAGER MEETING TAB -->
+
 <div id="sec-meet" class="sec">
   <div class="card" style="background:#2C1A0E;border-color:#2C1A0E">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
@@ -388,132 +380,132 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       </div>
       <div style="text-align:right">
         <div style="font-family:'Oswald',sans-serif;font-size:10px;color:rgba(255,255,255,.45)">WEEK OF</div>
-        <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:#FF6B0B" id="m_weekLabel">—</div>
-        <div style="font-family:'Oswald',sans-serif;font-size:11px;color:rgba(255,255,255,.45);margin-top:2px">Meeting Date: <span id="m_meetDate">—</span></div>
+        <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:#FF6B0B" id="m_weekLabel">-</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:11px;color:rgba(255,255,255,.45);margin-top:2px">Meeting Date: <span id="m_meetDate">-</span></div>
       </div>
     </div>
     <div style="display:flex;align-items:flex-end;gap:10px;margin-top:8px;flex-wrap:wrap">
       <div>
         <div class="fl" style="color:rgba(255,255,255,.4)">Meeting Date</div>
-        <input type="text" id="meet_date" placeholder="e.g. Monday, April 14 2026" oninput="live()" style="max-width:280px;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff"/>
+        <input type="text" id="meet_date" placeholder="e.g. Monday April 14 2026" oninput="live()" style="max-width:280px;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff"/>
       </div>
-      <button id="editModeBtn" class="btn sm no-print" onclick="toggleEditMode()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;margin-bottom:1px">✏️ Edit Mode: OFF</button>
+      <button id="editModeBtn" class="btn sm no-print" onclick="toggleEditMode()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;margin-bottom:1px">Edit Mode: OFF</button>
     </div>
   </div>
   <div class="card">
-    <div class="card-hdr">🌤 <span id="lbl_5" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Itinerary and Weather Snapshot</span></div>
+    <div class="card-hdr">&#127780; <span id="lbl_5" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Itinerary and Weather Snapshot</span></div>
     <div class="wx-grid" id="m_wxGrid"></div>
     <div class="fg" style="margin-top:8px"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Weather / Event Notes</div><textarea id="wx_notes" rows="2" oninput="live()"></textarea></div>
   </div>
   <div class="card">
-    <div class="card-hdr">📈 <span id="lbl_6" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Last Week Metrics</span></div>
+    <div class="card-hdr">&#128200; <span id="lbl_6" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Last Week Metrics</span></div>
     <div class="met-grid c2">
-      <div class="met"><div id="lbl_300" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Sales</div><div class="met-v" id="m_sales" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_301" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Up Against (Last Yr)</div><div class="met-v" id="m_sales_ly" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_300" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Sales</div><div class="met-v" id="m_sales" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_301" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Up Against (Last Yr)</div><div class="met-v" id="m_sales_ly" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="met-grid c4" style="margin-bottom:4px">
-      <div class="met"><div id="lbl_302" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">To-Go Sales</div><div class="met-v sm" id="m_togo" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_303" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Catering Sales</div><div class="met-v sm" id="m_catering" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_304" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Patio Sales</div><div class="met-v sm" id="m_patio" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_305" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Rooftop Sales</div><div class="met-v sm" id="m_rooftop" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_302" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">To-Go Sales</div><div class="met-v sm" id="m_togo" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_303" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Catering Sales</div><div class="met-v sm" id="m_catering" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_304" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Patio Sales</div><div class="met-v sm" id="m_patio" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_305" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Rooftop Sales</div><div class="met-v sm" id="m_rooftop" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="met-grid c2" style="margin-bottom:4px">
-      <div class="met"><div id="lbl_306" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar</div><div class="met-v sm" id="m_bhb" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_307" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BHB vs Proj</div><div class="met-v sm" id="m_bhb_vsproj" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_306" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar</div><div class="met-v sm" id="m_bhb" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_307" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BHB vs Proj</div><div class="met-v sm" id="m_bhb_vsproj" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="div"></div>
     <div class="met-grid c3">
-      <div class="met"><div id="lbl_308" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Net Discounts</div><div class="met-v" id="m_disc" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_309" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">EZ Cater</div><div class="met-v" id="m_disc_ezcater" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_310" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Other / Voids</div><div class="met-v" id="m_disc_o" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_308" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Net Discounts</div><div class="met-v" id="m_disc" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_309" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">EZ Cater</div><div class="met-v" id="m_disc_ezcater" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_310" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Other / Voids</div><div class="met-v" id="m_disc_o" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="div"></div>
     <div class="met-grid c3">
-      <div class="met"><div id="lbl_311" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor % w/o Taxes</div><div class="met-v" id="m_labor" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_312" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor Cost $</div><div class="met-v" id="m_labor_cost" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_313" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor w/ Taxes %</div><div class="met-v" id="m_labor_wt" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_311" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor % w/o Taxes</div><div class="met-v" id="m_labor" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_312" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor Cost $</div><div class="met-v" id="m_labor_cost" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_313" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor w/ Taxes %</div><div class="met-v" id="m_labor_wt" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="met-grid c2" style="margin-top:6px">
-      <div class="met"><div id="lbl_314" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Cost %</div><div class="met-v" id="m_food" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_315" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Cost %</div><div class="met-v" id="m_lbw" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_314" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Cost %</div><div class="met-v" id="m_food" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_315" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Cost %</div><div class="met-v" id="m_lbw" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="div"></div>
     <div class="met-grid c3">
-      <div class="met"><div id="lbl_316" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">PPA</div><div class="met-v" id="m_ppa" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_317" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">vs Last Year</div><div class="met-v" id="m_ppa_vs" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_318" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">SPLH (Actual)</div><div class="met-v" id="m_splh" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_316" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">PPA</div><div class="met-v" id="m_ppa" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_317" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">vs Last Year</div><div class="met-v" id="m_ppa_vs" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_318" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">SPLH (Actual)</div><div class="met-v" id="m_splh" data-editable contenteditable="false">-</div></div>
     </div>
   </div>
   <div class="card">
-    <div class="card-hdr">⭐ <span id="lbl_7" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Metrics</span></div>
+    <div class="card-hdr">&#11088; <span id="lbl_7" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Metrics</span></div>
     <div class="met-grid" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px">
-      <div class="met"><div id="lbl_319" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Loyalty Signups</div><div class="met-v" id="m_loyalty" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_320" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">5-Star Reviews</div><div class="met-v" id="m_rev5" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_321" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">4-Star Reviews</div><div class="met-v" id="m_rev4" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_322" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total Reviews</div><div class="met-v" id="m_rev_total" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_323" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Current Rating</div><div class="met-v" id="m_rating" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_319" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Loyalty Signups</div><div class="met-v" id="m_loyalty" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_320" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">5-Star Reviews</div><div class="met-v" id="m_rev5" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_321" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">4-Star Reviews</div><div class="met-v" id="m_rev4" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_322" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total Reviews</div><div class="met-v" id="m_rev_total" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_323" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Current Rating</div><div class="met-v" id="m_rating" data-editable contenteditable="false">-</div></div>
     </div>
   </div>
   <div class="card">
-    <div class="card-hdr">🍹 <span id="lbl_8" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold &amp; Employee Recognition</span></div>
+    <div class="card-hdr">&#127369; <span id="lbl_8" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold &amp; Employee Recognition</span></div>
     <div id="lbl_34" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg of the Month</div>
     <div class="met-grid c3">
-      <div class="met"><div id="lbl_324" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg Name</div><div class="met-v sm" id="m_motm" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_325" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Sold This Week</div><div class="met-v" id="m_motm_wk" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_326" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total Sold Month</div><div class="met-v" id="m_motm_total" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_324" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg Name</div><div class="met-v sm" id="m_motm" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_325" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Sold This Week</div><div class="met-v" id="m_motm_wk" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_326" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total Sold Month</div><div class="met-v" id="m_motm_total" data-editable contenteditable="false">-</div></div>
     </div>
     <div id="lbl_35" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;margin-top:8px" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Winner / Employee Recognition</div>
     <div class="met-grid c3">
-      <div class="met"><div id="lbl_327" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">1st Place Employee</div><div class="met-v sm" id="m_emp1" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_328" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Qty This Week</div><div class="met-v" id="m_emp1_wk" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_329" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Qty Total</div><div class="met-v" id="m_emp1_total" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_327" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">1st Place Employee</div><div class="met-v sm" id="m_emp1" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_328" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Qty This Week</div><div class="met-v" id="m_emp1_wk" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_329" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Qty Total</div><div class="met-v" id="m_emp1_total" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="div"></div>
     <div id="lbl_36" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Product Mix Highlights</div>
     <div class="met-grid c4">
-      <div class="met"><div id="lbl_330" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">To-Go Margs</div><div class="met-v" id="m_togo_margs" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_331" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Huey's Floaters</div><div class="met-v" id="m_floaters" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_332" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Desserts</div><div class="met-v" id="m_desserts" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_333" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Top Margarita</div><div class="met-v sm" id="m_top_marg" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_330" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">To-Go Margs</div><div class="met-v" id="m_togo_margs" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_331" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Huey's Floaters</div><div class="met-v" id="m_floaters" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_332" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Desserts</div><div class="met-v" id="m_desserts" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_333" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Top Margarita</div><div class="met-v sm" id="m_top_marg" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="met-grid c4" style="margin-top:6px">
-      <div class="met"><div id="lbl_334" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">16oz Margs</div><div class="met-v" id="m_marg16" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_335" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">22oz Margs</div><div class="met-v" id="m_marg22" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_336" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">32oz Margs</div><div class="met-v" id="m_marg32" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_337" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Pitchers</div><div class="met-v" id="m_pitchers" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_334" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">16oz Margs</div><div class="met-v" id="m_marg16" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_335" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">22oz Margs</div><div class="met-v" id="m_marg22" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_336" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">32oz Margs</div><div class="met-v" id="m_marg32" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_337" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Pitchers</div><div class="met-v" id="m_pitchers" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="div"></div>
-    <div id="lbl_39" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🍳 Brunch Product Mix</div>
+    <div id="lbl_39" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Brunch Product Mix</div>
     <div class="met-grid" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr;gap:6px">
-      <div class="met"><div id="lbl_350" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Hot Cakes</div><div class="met-v" id="m_brunch_hotcakes" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_351" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">HotCakes Refill</div><div class="met-v" id="m_brunch_hotcakes_refill" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_352" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Brunch Skillet</div><div class="met-v" id="m_brunch_skillet" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_353" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">French Toast Ench.</div><div class="met-v" id="m_brunch_french_toast" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_354" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Breakfast Burrito</div><div class="met-v" id="m_brunch_burrito" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_355" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Chilaquiles</div><div class="met-v" id="m_brunch_chilaquiles" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_350" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Hot Cakes</div><div class="met-v" id="m_brunch_hotcakes" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_351" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">HotCakes Refill</div><div class="met-v" id="m_brunch_hotcakes_refill" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_352" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Brunch Skillet</div><div class="met-v" id="m_brunch_skillet" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_353" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">French Toast Ench.</div><div class="met-v" id="m_brunch_french_toast" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_354" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Breakfast Burrito</div><div class="met-v" id="m_brunch_burrito" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_355" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Chilaquiles</div><div class="met-v" id="m_brunch_chilaquiles" data-editable contenteditable="false">-</div></div>
     </div>
     <div class="div"></div>
-    <div id="lbl_37" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🏖 Beach House Bar</div>
+    <div id="lbl_37" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar</div>
     <div class="met-grid" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px">
-      <div class="met"><div id="lbl_338" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Mai Tais</div><div class="met-v" id="m_bhb_mt" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_339" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Pina Coladas</div><div class="met-v" id="m_bhb_pc" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_340" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Lemon Drop</div><div class="met-v" id="m_bhb_ld" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_341" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Blueberry Refresher</div><div class="met-v" id="m_bhb_br" data-editable contenteditable="false">—</div></div>
-      <div class="met"><div id="lbl_342" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Front Porch Swing</div><div class="met-v" id="m_bhb_fp" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div id="lbl_338" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Mai Tais</div><div class="met-v" id="m_bhb_mt" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_339" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Pina Coladas</div><div class="met-v" id="m_bhb_pc" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_340" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Lemon Drop</div><div class="met-v" id="m_bhb_ld" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_341" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Blueberry Refresher</div><div class="met-v" id="m_bhb_br" data-editable contenteditable="false">-</div></div>
+      <div class="met"><div id="lbl_342" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Front Porch Swing</div><div class="met-v" id="m_bhb_fp" data-editable contenteditable="false">-</div></div>
     </div>
   </div>
   <div class="card">
-    <div class="card-hdr">🍳 <span id="lbl_9" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BOH Focus</span></div>
+    <div class="card-hdr">&#127859; <span id="lbl_9" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BOH Focus</span></div>
     <textarea id="boh_focus" rows="4" oninput="live()" placeholder="BOH notes, focus areas, issues..."></textarea>
     <div class="nb-lines" id="boh_lines"></div>
   </div>
   <div class="card">
-    <div class="card-hdr">🍽 <span id="lbl_10" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">FOH Focus</span></div>
+    <div class="card-hdr">&#127869; <span id="lbl_10" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">FOH Focus</span></div>
     <textarea id="foh_focus" rows="4" oninput="live()" placeholder="FOH notes, focus areas, issues..."></textarea>
     <div class="nb-lines" id="foh_lines"></div>
   </div>
   <div class="card">
-    <div class="card-hdr">📋 <span id="lbl_11" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Manager Notes</span></div>
+    <div class="card-hdr">&#128203; <span id="lbl_11" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Manager Notes</span></div>
     <textarea id="mgr_notes" rows="5" oninput="live()" placeholder="Additional notes, shoutouts, discussion..."></textarea>
     <div class="nb-lines" id="mgr_lines"></div>
   </div>
@@ -523,354 +515,485 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
 <div id="sec-hist" class="sec">
   <div class="card">
-    <div class="card-hdr">🗂 <span id="lbl_12" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Saved Weeks</span></div>
-    <div id="histList"><p style="color:#9C8878;font-size:12px;padding:8px 0">No saved weeks yet. Save a week from the Operations tab.</p></div>
+    <div class="card-hdr">&#128193; <span id="lbl_12" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Saved Weeks</span></div>
+    <div id="histList"><p style="color:#9C8878;font-size:12px;padding:8px 0">No saved weeks yet.</p></div>
   </div>
 </div>
-</div>
+
+</div><!-- /app -->
 <script>
-const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const TAX_DEFAULT=14.53;
-const gi=id=>document.getElementById(id);
-const gv=id=>gi(id)?gi(id).value||'':'';
-const gn=id=>parseFloat(gv(id))||0;
-const sv=(id,v)=>{const e=gi(id);if(e)e.value=v||'';};
-const fD=n=>(!n&&n!==0)||isNaN(n)?'—':'$'+Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
-const fP=n=>n==null||isNaN(n)?'—':n.toFixed(1)+'%';
-const fN=n=>(!n)||isNaN(n)?'—':Number(n).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
-function chipHL(actual,ref){if(!actual||!ref)return '<span class="chip nt">—</span>';const p=((actual-ref)/ref)*100,c=p>=0?'up':'dn';return '<span class="chip '+c+'">'+(p>=0?'+':'')+p.toFixed(1)+'%</span>';}
-function txt(id,v){const e=gi(id);if(e)e.textContent=v||'—';}
-function htm(id,v){const e=gi(id);if(e)e.innerHTML=v||'—';}
+var TAX_DEFAULT = 14.53;
+var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+var _editMode = false;
+var _opsLocked = false;
+
+function gi(id){ return document.getElementById(id); }
+function gv(id){ var e=gi(id); return e ? e.value||’’ : ‘’; }
+function gn(id){ return parseFloat(gv(id))||0; }
+function sv(id,v){ var e=gi(id); if(e) e.value = v||’’; }
+function fD(n){ if((!n && n!==0)||isNaN(n)) return ‘-’; return ‘$’+Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,’,’); }
+function fP(n){ if(n==null||isNaN(n)) return ‘-’; return n.toFixed(1)+’%’; }
+function fN(n){ if(!n||isNaN(n)) return ‘-’; return Number(n).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,’,’); }
+function chip(actual,ref){
+if(!actual||!ref) return ‘<span class="chip nt">-</span>’;
+var p=((actual-ref)/ref)*100, c=p>=0?‘up’:‘dn’;
+return ‘<span class="chip '+c+'">’+(p>=0?’+’:’’)+p.toFixed(1)+’%</span>’;
+}
+function setTxt(id,v){ var e=gi(id); if(e) e.textContent=v||’-’; }
+function setHtm(id,v){ var e=gi(id); if(e) e.innerHTML=v||’-’; }
+function safeTxt(id,v){
+var e=gi(id); if(!e) return;
+if(_editMode && e.dataset.mirror!==undefined && e.innerHTML!==e.dataset.mirror) return;
+e.textContent=v||’-’;
+}
+function safeHtm(id,v){
+var e=gi(id); if(!e) return;
+if(_editMode && e.dataset.mirror!==undefined && e.innerHTML!==e.dataset.mirror) return;
+e.innerHTML=v||’-’;
+}
 
 function buildAll(){
-let h=’’;
-DAYS.forEach(function(d,i){
-h+=’<div class="wx-day"><div class="wn">’+d.slice(0,3).toUpperCase()+’</div>’+
-‘<input type="text" id="wx_icon_'+i+'" value="🌤" style="font-size:15px;text-align:center;padding:1px;border:1px solid #E8D8C4;border-radius:3px;width:100%;margin:2px 0" oninput="live()"/>’+
-‘<input type="text" id="wx_temp_'+i+'" placeholder="Hi / Lo F" style="font-size:9px;text-align:center;padding:2px 3px;margin-bottom:2px" oninput="live()"/>’+
-‘<input type="text" id="wx_cond_'+i+'" placeholder="Condition" style="font-size:9px;text-align:center;padding:1px 3px;margin-bottom:2px;color:#9C8878" oninput="live()"/>’+
-‘<textarea id="wx_itin_'+i+'" placeholder="Notes..." oninput="live()" style="font-size:9px;min-height:28px;resize:none;padding:2px 3px"></textarea></div>’;
-});
-gi(‘m_wxGrid’).innerHTML=h;
+var h=’’;
+for(var i=0;i<7;i++){
+h+=’<div class="wx-day"><div class="wn">’+DAYS[i].slice(0,3).toUpperCase()+’</div>’+
+‘<input type="text" id="wx_icon_'+i+'" value="" style="font-size:13px;text-align:center;padding:1px;border:1px solid #E8D8C4;border-radius:3px;width:100%;margin:2px 0" oninput="live()" placeholder="Icon"/>’+
+‘<input type="text" id="wx_temp_'+i+'" style="font-size:9px;text-align:center;padding:2px 3px;margin-bottom:2px" oninput="live()" placeholder="Hi/Lo F"/>’+
+‘<input type="text" id="wx_cond_'+i+'" style="font-size:9px;text-align:center;padding:1px 3px;margin-bottom:2px;color:#9C8878" oninput="live()" placeholder="Condition"/>’+
+‘<textarea id="wx_itin_'+i+'" oninput="live()" style="font-size:9px;min-height:28px;resize:none;padding:2px 3px" placeholder="Notes..."></textarea></div>’;
+}
+gi(‘m_wxGrid’).innerHTML = h;
 [‘boh_lines’,‘foh_lines’,‘mgr_lines’].forEach(function(id){
-var lines=’’;for(var i=0;i<8;i++)lines+=’<span class="nb-line"></span>’;
-gi(id).innerHTML=lines;
+var s=’’; for(var i=0;i<8;i++) s+=’<span class="nb-line"></span>’;
+gi(id).innerHTML=s;
 });
 }
 
 function calcDisc(){
-var net=gn(‘disc_total’)-gn(‘disc_ezcater’)-gn(‘disc_rewards’)-gn(‘disc_other’);
-var el=gi(‘disc_net_display’);if(el)el.textContent=fD(net);
-mirrorMeeting();scheduleSave();
+var net = gn(‘disc_total’)-gn(‘disc_ezcater’)-gn(‘disc_rewards’)-gn(‘disc_other’);
+var el = gi(‘disc_net_display’);
+if(el) el.textContent = fD(net);
+mirrorMeeting();
 }
 
 function calc(){
-htm(‘s_lw_vsly’,chipHL(gn(‘s_lw_act’),gn(‘s_lw_ly’)));
-htm(‘cat_lw_vsly’,chipHL(gn(‘cat_lw_act’),gn(‘cat_lw_ly’)));
-htm(‘rft_lw_vsly’,chipHL(gn(‘rft_lw_act’),gn(‘rft_lw_ly’)));
-htm(‘togo_lw_vsly’,chipHL(gn(‘togo_lw_act’),gn(‘togo_lw_ly’)));
-htm(‘patio_lw_vsly’,chipHL(gn(‘patio_lw_act’),gn(‘patio_lw_ly’)));
-htm(‘bhb_lw_vsproj’,chipHL(gn(‘bhb_lw_act’),gn(‘bhb_lw_proj’)));
-htm(‘ppa_lw_vsly’,chipHL(gn(‘ppa_lw_act’),gn(‘ppa_cw_ly’)));
-var labS=gn(‘lab_sales’),labD=gn(‘lab_dollars’),taxR=gn(‘lab_tax’)||TAX_DEFAULT;
-var labAct=labS>0?(labD/labS)*100:null;
-var labWtax=labAct!=null?labAct*(1+taxR/100):null;
-gi(‘lab_pct_notax’).textContent=labAct!=null?fP(labAct):’—’;gi(‘lab_pct_notax’)._val=labAct;
-gi(‘lab_pct_wtax’).textContent=labWtax!=null?fP(labWtax):’—’;gi(‘lab_pct_wtax’)._val=labWtax;
+setHtm(‘s_lw_vsly’,   chip(gn(‘s_lw_act’),gn(‘s_lw_ly’)));
+setHtm(‘cat_lw_vsly’, chip(gn(‘cat_lw_act’),gn(‘cat_lw_ly’)));
+setHtm(‘rft_lw_vsly’, chip(gn(‘rft_lw_act’),gn(‘rft_lw_ly’)));
+setHtm(‘togo_lw_vsly’,chip(gn(‘togo_lw_act’),gn(‘togo_lw_ly’)));
+setHtm(‘patio_lw_vsly’,chip(gn(‘patio_lw_act’),gn(‘patio_lw_ly’)));
+setHtm(‘bhb_lw_vsproj’,chip(gn(‘bhb_lw_act’),gn(‘bhb_lw_proj’)));
+setHtm(‘ppa_lw_vsly’, chip(gn(‘ppa_lw_act’),gn(‘ppa_cw_ly’)));
+var labS=gn(‘lab_sales’), labD=gn(‘lab_dollars’), taxR=gn(‘lab_tax’)||TAX_DEFAULT;
+var labAct = labS>0 ? (labD/labS)*100 : null;
+var labWtax = labAct!=null ? labAct*(1+taxR/100) : null;
+gi(‘lab_pct_notax’).textContent = labAct!=null ? fP(labAct) : ‘-’;
+gi(‘lab_pct_notax’)._val = labAct;
+gi(‘lab_pct_wtax’).textContent = labWtax!=null ? fP(labWtax) : ‘-’;
+gi(‘lab_pct_wtax’)._val = labWtax;
 [[‘food’],[‘lbw’],[‘pcc’],[‘nab’]].forEach(function(a){
-var id=a[0],s=gn(id+’_sales’),sp=gn(id+’_spent’),act=s>0?(sp/s)*100:null;
-gi(id+’_lw_act’).textContent=act!=null?fP(act):’—’;gi(id+’_lw_act’)._val=act;
+var id=a[0], s=gn(id+’_sales’), sp=gn(id+’_spent’);
+var act = s>0 ? (sp/s)*100 : null;
+gi(id+’_lw_act’).textContent = act!=null ? fP(act) : ‘-’;
+gi(id+’_lw_act’)._val = act;
 });
-calcDisc();mirrorMeeting();scheduleSave();
+calcDisc();
+mirrorMeeting();
 }
 
-function live(){mirrorMeeting();scheduleSave();}
+function live(){
+mirrorMeeting();
+}
 
 function mirrorMeeting(){
-var d=gv(‘weekDate’);
-if(d){var dt=new Date(d+‘T12:00:00’),en=new Date(dt);en.setDate(dt.getDate()+6);var f=function(x){return x.toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’});};txt(‘m_weekLabel’,f(dt)+’ - ‘+f(en));}
-txt(‘m_meetDate’,gv(‘meet_date’)||’—’);
-var sAct=gn(‘s_lw_act’),sLY=gn(‘s_lw_ly’);
-safeHtm(‘m_sales’,sAct?fD(sAct)+’ ’+chipHL(sAct,sLY):’—’);
-safeTxt(‘m_sales_ly’,sLY?fD(sLY):’—’);
-var togoAct=gn(‘togo_lw_act’),togoLY=gn(‘togo_lw_ly’);
-safeHtm(‘m_togo’,togoAct?fD(togoAct)+’ ’+chipHL(togoAct,togoLY):’—’);
-var catAct=gn(‘cat_lw_act’),catLY=gn(‘cat_lw_ly’);
-safeHtm(‘m_catering’,catAct?fD(catAct)+’ ’+chipHL(catAct,catLY):’—’);
-var patAct=gn(‘patio_lw_act’),patLY=gn(‘patio_lw_ly’);
-safeHtm(‘m_patio’,patAct?fD(patAct)+’ ’+chipHL(patAct,patLY):’—’);
-var rftAct=gn(‘rft_lw_act’),rftLY=gn(‘rft_lw_ly’);
-safeHtm(‘m_rooftop’,rftAct?fD(rftAct)+’ ’+chipHL(rftAct,rftLY):’—’);
-safeTxt(‘m_bhb’,fD(gn(‘bhb_lw_act’)));
-safeHtm(‘m_bhb_vsproj’,chipHL(gn(‘bhb_lw_act’),gn(‘bhb_lw_proj’)));
+var d = gv(‘weekDate’);
+if(d){
+var dt=new Date(d+‘T12:00:00’), en=new Date(dt); en.setDate(dt.getDate()+6);
+var f=function(x){return x.toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’});};
+setTxt(‘m_weekLabel’, f(dt)+’ - ‘+f(en));
+}
+setTxt(‘m_meetDate’, gv(‘meet_date’)||’-’);
+var sAct=gn(‘s_lw_act’), sLY=gn(‘s_lw_ly’);
+safeHtm(‘m_sales’, sAct ? fD(sAct)+’ ’+chip(sAct,sLY) : ‘-’);
+safeTxt(‘m_sales_ly’, sLY ? fD(sLY) : ‘-’);
+var togoAct=gn(‘togo_lw_act’), togoLY=gn(‘togo_lw_ly’);
+safeHtm(‘m_togo’, togoAct ? fD(togoAct)+’ ’+chip(togoAct,togoLY) : ‘-’);
+var catAct=gn(‘cat_lw_act’), catLY=gn(‘cat_lw_ly’);
+safeHtm(‘m_catering’, catAct ? fD(catAct)+’ ’+chip(catAct,catLY) : ‘-’);
+var patAct=gn(‘patio_lw_act’), patLY=gn(‘patio_lw_ly’);
+safeHtm(‘m_patio’, patAct ? fD(patAct)+’ ’+chip(patAct,patLY) : ‘-’);
+var rftAct=gn(‘rft_lw_act’), rftLY=gn(‘rft_lw_ly’);
+safeHtm(‘m_rooftop’, rftAct ? fD(rftAct)+’ ’+chip(rftAct,rftLY) : ‘-’);
+safeTxt(‘m_bhb’, fD(gn(‘bhb_lw_act’)));
+safeHtm(‘m_bhb_vsproj’, chip(gn(‘bhb_lw_act’),gn(‘bhb_lw_proj’)));
 var discNet=gn(‘disc_total’)-gn(‘disc_ezcater’)-gn(‘disc_rewards’)-gn(‘disc_other’);
-safeTxt(‘m_disc’,fD(discNet));safeTxt(‘m_disc_ezcater’,fD(gn(‘disc_ezcater’)));safeTxt(‘m_disc_o’,fD(gn(‘disc_other’)));
-var labAct=gi(‘lab_pct_notax’)._val,labWtax=gi(‘lab_pct_wtax’)._val;
-safeTxt(‘m_labor’,labAct!=null?fP(labAct):’—’);
-safeTxt(‘m_labor_cost’,gn(‘lab_dollars’)?fD(gn(‘lab_dollars’)):’—’);
-safeTxt(‘m_labor_wt’,labWtax!=null?fP(labWtax):’—’);
-safeTxt(‘m_food’,gi(‘food_lw_act’)._val!=null?fP(gi(‘food_lw_act’)._val):’—’);
-safeTxt(‘m_lbw’,gi(‘lbw_lw_act’)._val!=null?fP(gi(‘lbw_lw_act’)._val):’—’);
-safeTxt(‘m_ppa’,gn(‘ppa_lw_act’)?fD(gn(‘ppa_lw_act’)):’—’);
-safeHtm(‘m_ppa_vs’,chipHL(gn(‘ppa_lw_act’),gn(‘ppa_cw_ly’)));
-safeTxt(‘m_splh’,gn(‘splh_lw_act’)?fD(gn(‘splh_lw_act’)):’—’);
-safeTxt(‘m_loyalty’,fN(gn(‘loyalty’)));safeTxt(‘m_rev5’,gn(‘rev5’)||’—’);safeTxt(‘m_rev4’,gn(‘rev4’)||’—’);
-safeTxt(‘m_rating’,gn(‘rev_rating’)||’—’);safeTxt(‘m_rev_total’,gn(‘rev_total’)||’—’);
-safeTxt(‘m_motm’,gv(‘motm_name’)||’—’);safeTxt(‘m_motm_wk’,gn(‘motm_wk’)||’—’);safeTxt(‘m_motm_total’,gn(‘motm_total’)||’—’);
-safeTxt(‘m_emp1’,gv(‘emp1_name’)||’—’);safeTxt(‘m_emp1_wk’,gn(‘emp1_wk’)||’—’);safeTxt(‘m_emp1_total’,gn(‘emp1_total’)||’—’);
-safeTxt(‘m_togo_margs’,gn(‘togo_margs’)||’—’);safeTxt(‘m_floaters’,gn(‘floaters’)||’—’);safeTxt(‘m_desserts’,gn(‘desserts’)||’—’);
-safeTxt(‘m_top_marg’,gv(‘top_marg’)||’—’);safeTxt(‘m_marg16’,gn(‘marg16’)||’—’);safeTxt(‘m_marg22’,gn(‘marg22’)||’—’);
-safeTxt(‘m_marg32’,gn(‘marg32’)||’—’);safeTxt(‘m_pitchers’,gn(‘pitchers’)||’—’);
-safeTxt(‘m_bhb_mt’,gn(‘bhb_mt’)||’—’);safeTxt(‘m_bhb_pc’,gn(‘bhb_pc’)||’—’);safeTxt(‘m_bhb_ld’,gn(‘bhb_ld’)||’—’);
-safeTxt(‘m_bhb_br’,gn(‘bhb_br’)||’—’);safeTxt(‘m_bhb_fp’,gn(‘bhb_fp’)||’—’);
-safeTxt(‘m_brunch_hotcakes’,gn(‘brunch_hotcakes’)||’—’);safeTxt(‘m_brunch_hotcakes_refill’,gn(‘brunch_hotcakes_refill’)||’—’);
-safeTxt(‘m_brunch_skillet’,gn(‘brunch_skillet’)||’—’);safeTxt(‘m_brunch_french_toast’,gn(‘brunch_french_toast’)||’—’);
-safeTxt(‘m_brunch_burrito’,gn(‘brunch_burrito’)||’—’);safeTxt(‘m_brunch_chilaquiles’,gn(‘brunch_chilaquiles’)||’—’);
+safeTxt(‘m_disc’, fD(discNet));
+safeTxt(‘m_disc_ezcater’, fD(gn(‘disc_ezcater’)));
+safeTxt(‘m_disc_o’, fD(gn(‘disc_other’)));
+var labAct=gi(‘lab_pct_notax’)._val, labWtax=gi(‘lab_pct_wtax’)._val;
+safeTxt(‘m_labor’, labAct!=null ? fP(labAct) : ‘-’);
+safeTxt(‘m_labor_cost’, gn(‘lab_dollars’) ? fD(gn(‘lab_dollars’)) : ‘-’);
+safeTxt(‘m_labor_wt’, labWtax!=null ? fP(labWtax) : ‘-’);
+safeTxt(‘m_food’, gi(‘food_lw_act’)._val!=null ? fP(gi(‘food_lw_act’)._val) : ‘-’);
+safeTxt(‘m_lbw’, gi(‘lbw_lw_act’)._val!=null ? fP(gi(‘lbw_lw_act’)._val) : ‘-’);
+safeTxt(‘m_ppa’, gn(‘ppa_lw_act’) ? fD(gn(‘ppa_lw_act’)) : ‘-’);
+safeHtm(‘m_ppa_vs’, chip(gn(‘ppa_lw_act’),gn(‘ppa_cw_ly’)));
+safeTxt(‘m_splh’, gn(‘splh_lw_act’) ? fD(gn(‘splh_lw_act’)) : ‘-’);
+safeTxt(‘m_loyalty’, fN(gn(‘loyalty’)));
+safeTxt(‘m_rev5’, gn(‘rev5’)||’-’); safeTxt(‘m_rev4’, gn(‘rev4’)||’-’);
+safeTxt(‘m_rating’, gn(‘rev_rating’)||’-’); safeTxt(‘m_rev_total’, gn(‘rev_total’)||’-’);
+safeTxt(‘m_motm’, gv(‘motm_name’)||’-’); safeTxt(‘m_motm_wk’, gn(‘motm_wk’)||’-’); safeTxt(‘m_motm_total’, gn(‘motm_total’)||’-’);
+safeTxt(‘m_emp1’, gv(‘emp1_name’)||’-’); safeTxt(‘m_emp1_wk’, gn(‘emp1_wk’)||’-’); safeTxt(‘m_emp1_total’, gn(‘emp1_total’)||’-’);
+safeTxt(‘m_togo_margs’, gn(‘togo_margs’)||’-’); safeTxt(‘m_floaters’, gn(‘floaters’)||’-’);
+safeTxt(‘m_desserts’, gn(‘desserts’)||’-’); safeTxt(‘m_top_marg’, gv(‘top_marg’)||’-’);
+safeTxt(‘m_marg16’, gn(‘marg16’)||’-’); safeTxt(‘m_marg22’, gn(‘marg22’)||’-’);
+safeTxt(‘m_marg32’, gn(‘marg32’)||’-’); safeTxt(‘m_pitchers’, gn(‘pitchers’)||’-’);
+safeTxt(‘m_bhb_mt’, gn(‘bhb_mt’)||’-’); safeTxt(‘m_bhb_pc’, gn(‘bhb_pc’)||’-’);
+safeTxt(‘m_bhb_ld’, gn(‘bhb_ld’)||’-’); safeTxt(‘m_bhb_br’, gn(‘bhb_br’)||’-’); safeTxt(‘m_bhb_fp’, gn(‘bhb_fp’)||’-’);
+safeTxt(‘m_brunch_hotcakes’, gn(‘brunch_hotcakes’)||’-’);
+safeTxt(‘m_brunch_hotcakes_refill’, gn(‘brunch_hotcakes_refill’)||’-’);
+safeTxt(‘m_brunch_skillet’, gn(‘brunch_skillet’)||’-’);
+safeTxt(‘m_brunch_french_toast’, gn(‘brunch_french_toast’)||’-’);
+safeTxt(‘m_brunch_burrito’, gn(‘brunch_burrito’)||’-’);
+safeTxt(‘m_brunch_chilaquiles’, gn(‘brunch_chilaquiles’)||’-’);
 }
 
 function updateLabel(){
-var d=gv(‘weekDate’);if(!d){gi(‘weekLabel’).textContent=’—’;return;}
-var dt=new Date(d+‘T12:00:00’),en=new Date(dt);en.setDate(dt.getDate()+6);
+var d=gv(‘weekDate’);
+if(!d){ gi(‘weekLabel’).textContent=’-’; return; }
+var dt=new Date(d+‘T12:00:00’), en=new Date(dt); en.setDate(dt.getDate()+6);
 var f=function(x){return x.toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’,year:‘numeric’});};
-gi(‘weekLabel’).textContent=f(dt)+’ - ’+f(en);
+gi(‘weekLabel’).textContent = f(dt)+’ - ’+f(en);
 }
 
-async function onDateChange(){
+function onDateChange(){
 updateLabel();
-var key=weekKey();
-if(key){var raw=localStorage.getItem(key);if(raw){try{restoreData(JSON.parse(raw));calc();return;}catch(e){}}}
-var d=gv(‘weekDate’);if(!d)return;
-var dt=new Date(d+‘T12:00:00’),prev=new Date(dt);prev.setDate(dt.getDate()-7);
-await autoCarry(‘hl_week_’+prev.toISOString().split(‘T’)[0]);
+var key = weekKey();
+if(key){
+var raw = localStorage.getItem(key);
+if(raw){ try{ restoreData(JSON.parse(raw)); calc(); return; }catch(e){} }
+}
+var d=gv(‘weekDate’); if(!d) return;
+var dt=new Date(d+‘T12:00:00’), prev=new Date(dt);
+prev.setDate(dt.getDate()-7);
+autoCarry(‘hl_week_’+prev.toISOString().split(‘T’)[0]);
 }
 
-async function autoCarry(prevKey){
-var data=null,raw=localStorage.getItem(prevKey);
-if(raw)try{data=JSON.parse(raw);}catch(e){}
-if(!data)return;
-var pairs=[[‘s_lw_act’,‘s_lw_ly’],[‘cat_lw_act’,‘cat_lw_ly’],[‘rft_lw_act’,‘rft_lw_ly’],[‘togo_lw_act’,‘togo_lw_ly’],[‘patio_lw_act’,‘patio_lw_ly’],[‘s_cw_proj’,‘s_lw_proj’],[‘s_cw_ly’,‘s_lw_ly’]];
+function autoCarry(prevKey){
+var raw=localStorage.getItem(prevKey); if(!raw) return;
+var data; try{ data=JSON.parse(raw); }catch(e){ return; }
+var pairs=[[‘s_lw_act’,‘s_lw_ly’],[‘cat_lw_act’,‘cat_lw_ly’],[‘rft_lw_act’,‘rft_lw_ly’],
+[‘togo_lw_act’,‘togo_lw_ly’],[‘patio_lw_act’,‘patio_lw_ly’],[‘s_cw_proj’,‘s_lw_proj’],[‘s_cw_ly’,‘s_lw_ly’]];
 var carried=false;
-pairs.forEach(function(p){var dstEl=gi(p[1]);if(dstEl&&!dstEl.value&&data[p[0]]){dstEl.value=data[p[0]];carried=true;}});
-if(carried){calc();var n=gi(‘carryNote’);n.classList.add(‘show’);setTimeout(function(){n.classList.remove(‘show’);},5000);}
+pairs.forEach(function(p){
+var el=gi(p[1]);
+if(el && !el.value && data[p[0]]){ el.value=data[p[0]]; carried=true; }
+});
+if(carried){
+calc();
+var n=gi(‘carryNote’); n.classList.add(‘show’);
+setTimeout(function(){ n.classList.remove(‘show’); }, 5000);
+}
 }
 
 function gatherData(){
-var d={*v:6,*wd:gv(‘weekDate’),*ts:Date.now()};
-document.querySelectorAll(‘input[id],textarea[id]’).forEach(function(el){if(el.id&&!el.id.startsWith(’*’))d[el.id]=el.value;});
-document.querySelectorAll(’[id^=“lbl*”]’).forEach(function(el){d[el.id]=el.textContent;});
+var d = { _v:7, *wd:gv(‘weekDate’), *ts:Date.now() };
+document.querySelectorAll(‘input[id],textarea[id]’).forEach(function(el){
+if(el.id && el.id.indexOf(’*’)!==-1) d[el.id]=el.value;
+});
+document.querySelectorAll(’[id^=“lbl*”]’).forEach(function(el){
+d[el.id]=el.textContent;
+});
 return d;
 }
+
 function restoreData(d){
-if(!d)return;
+if(!d) return;
 Object.keys(d).forEach(function(k){
-if(k.startsWith(’*’))return;
-var el=gi(k);if(!el)return;
-if(el.tagName===‘INPUT’||el.tagName===‘TEXTAREA’)el.value=d[k]||’’;
-else if(el.id.startsWith(‘lbl_’)&&d[k])el.textContent=d[k];
+if(k===’_v’||k===’_wd’||k===’*ts’) return;
+var el=gi(k); if(!el) return;
+if(el.tagName===‘INPUT’||el.tagName===‘TEXTAREA’) el.value=d[k]||’’;
+else if(k.indexOf(’lbl*’)===0 && d[k]) el.textContent=d[k];
 });
-if(d._wd)sv(‘weekDate’,d._wd);
-calcDisc();
+if(d._wd) sv(‘weekDate’,d._wd);
+var net=gn(‘disc_total’)-gn(‘disc_ezcater’)-gn(‘disc_rewards’)-gn(‘disc_other’);
+var el=gi(‘disc_net_display’); if(el) el.textContent=fD(net);
+}
+
+function weekKey(){
+var d=gv(‘weekDate’); return d ? ‘hl_week_’+d : null;
+}
+
+function saveIdx(key){
+var raw=localStorage.getItem(‘hl_week_index’);
+var idx=raw ? JSON.parse(raw) : [];
+if(idx.indexOf(key)===-1) idx.unshift(key);
+var seen={};
+idx=idx.filter(function(k){ if(seen[k]) return false; seen[k]=true; return true; });
+idx.sort(function(a,b){ return b.localeCompare(a); });
+if(idx.length>104) idx=idx.slice(0,104);
+localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
+}
+
+function doSave(){
+var key=weekKey();
+if(!key){ alert(‘Please select a week date first.’); return; }
+var data=gatherData();
+try{
+localStorage.setItem(key, JSON.stringify(data));
+saveIdx(key);
+saveLabels();
+var n=gi(‘savedNote’); n.classList.add(‘show’);
+setTimeout(function(){ n.classList.remove(‘show’); }, 3000);
+gi(‘syncBadge’).textContent=’Saved: ’+new Date().toLocaleTimeString();
+renderHist();
+}catch(e){
+alert(’Save failed: ’+e.message);
+}
+}
+
+function doLoad(){
+var key=weekKey(); if(!key) return;
+var raw=localStorage.getItem(key);
+if(raw){
+try{ restoreData(JSON.parse(raw)); calc(); return; }catch(e){}
+}
+alert(‘No saved data found for this week.’);
 }
 
 function saveLabels(){
 var labels={};
-document.querySelectorAll(’[id^=“lbl_”]’).forEach(function(el){labels[el.id]=el.textContent;});
-localStorage.setItem(‘hl_labels’,JSON.stringify(labels));
+document.querySelectorAll(’[id^=“lbl_”]’).forEach(function(el){ labels[el.id]=el.textContent; });
+localStorage.setItem(‘hl_labels’, JSON.stringify(labels));
 }
+
 function restoreLabels(){
-var raw=localStorage.getItem(‘hl_labels’);if(!raw)return;
-try{var labels=JSON.parse(raw);Object.keys(labels).forEach(function(k){var el=gi(k);if(el&&labels[k])el.textContent=labels[k];});}catch(e){}
-}
-
-function weekKey(){var d=gv(‘weekDate’);return d?‘hl_week_’+d:null;}
-function saveIdx(key){
-var idx=JSON.parse(localStorage.getItem(‘hl_week_index’)||’[]’);
-if(!idx.includes(key))idx.unshift(key);
-idx=Array.from(new Set(idx)).sort(function(a,b){return b.localeCompare(a);}).slice(0,104);
-localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
-}
-
-var _st=null;
-function scheduleSave(){
-clearTimeout(_st);
-_st=setTimeout(async function(){
-var key=weekKey();if(!key)return;
-var d=gatherData();localStorage.setItem(key,JSON.stringify(d));saveIdx(key);
-setSS(‘saving’);var ok=await cloudPush();setSS(ok?‘ok’:‘err’);
-},1200);
-}
-
-async function saveWeek(){
-var key=weekKey();if(!key){alert(‘Select a week date first.’);return;}
-var d=gatherData();localStorage.setItem(key,JSON.stringify(d));saveIdx(key);
-setSS(‘saving’);var ok=await cloudPush();setSS(ok?‘ok’:‘err’);
-var n=gi(‘savedNote’);n.classList.add(‘show’);setTimeout(function(){n.classList.remove(‘show’);},3000);
-renderHist();
-}
-
-async function loadWeek(){
-var key=weekKey();if(!key)return;
-var raw=localStorage.getItem(key);
-if(raw){try{restoreData(JSON.parse(raw));calc();return;}catch(e){}}
-setSS(‘loading’);var ok=await cloudPull();setSS(ok?‘ok’:‘err’);
-var raw2=localStorage.getItem(key);if(raw2)try{restoreData(JSON.parse(raw2));calc();}catch(e){}
+var raw=localStorage.getItem(‘hl_labels’); if(!raw) return;
+try{
+var labels=JSON.parse(raw);
+Object.keys(labels).forEach(function(k){ var el=gi(k); if(el && labels[k]) el.textContent=labels[k]; });
+}catch(e){}
 }
 
 function clearOps(){
-if(!confirm(‘Clear all fields? Saved data will not be deleted.’))return;
-document.querySelectorAll(‘input[id],textarea[id]’).forEach(function(el){if(el.id===‘weekDate’||el.id===‘lab_tax’)return;el.value=’’;});
-[‘lab_pct_notax’,‘lab_pct_wtax’,‘food_lw_act’,‘lbw_lw_act’,‘pcc_lw_act’,‘nab_lw_act’].forEach(function(id){var e=gi(id);if(e){e.textContent=’—’;e._val=null;}});
-[‘s_lw_vsly’,‘cat_lw_vsly’,‘rft_lw_vsly’,‘togo_lw_vsly’,‘patio_lw_vsly’,‘bhb_lw_vsproj’,‘ppa_lw_vsly’].forEach(function(id){htm(id,’—’);});
-gi(‘disc_net_display’).textContent=’$0.00’;mirrorMeeting();
+if(!confirm(‘Clear all fields? Saved data will not be deleted.’)) return;
+document.querySelectorAll(‘input[id],textarea[id]’).forEach(function(el){
+if(el.id===‘weekDate’||el.id===‘lab_tax’) return;
+el.value=’’;
+});
+[‘lab_pct_notax’,‘lab_pct_wtax’,‘food_lw_act’,‘lbw_lw_act’,‘pcc_lw_act’,‘nab_lw_act’].forEach(function(id){
+var e=gi(id); if(e){ e.textContent=’-’; e._val=null; }
+});
+[‘s_lw_vsly’,‘cat_lw_vsly’,‘rft_lw_vsly’,‘togo_lw_vsly’,‘patio_lw_vsly’,‘bhb_lw_vsproj’,‘ppa_lw_vsly’].forEach(function(id){
+setHtm(id,’-’);
+});
+var el=gi(‘disc_net_display’); if(el) el.textContent=’$0.00’;
+mirrorMeeting();
 }
 
-const WORKER_URL=’’;
-async function cloudPush(){
-if(!WORKER_URL)return false;
-try{var idx=JSON.parse(localStorage.getItem(‘hl_week_index’)||’[]’);var payload={_r:‘HLAcworth’,_u:Date.now(),index:idx};idx.slice(0,52).forEach(function(k){var r=localStorage.getItem(k);if(r)try{payload[k]=JSON.parse(r);}catch(e){}});var res=await fetch(WORKER_URL,{method:‘PUT’,headers:{‘Content-Type’:‘application/json’},body:JSON.stringify(payload)});return res.ok;}catch(e){return false;}
-}
-async function cloudPull(){
-if(!WORKER_URL)return false;
-try{var res=await fetch(WORKER_URL+’?t=’+Date.now());if(!res.ok)return false;var p=await res.json();if(!p||!p.index)return false;localStorage.setItem(‘hl_week_index’,JSON.stringify(p.index));p.index.forEach(function(k){if(p[k])localStorage.setItem(k,JSON.stringify(p[k]));});return true;}catch(e){return false;}
-}
-function setSS(s){
-var e=gi(‘syncBadge’);if(!e)return;e.className=‘ss’;
-if(!WORKER_URL||s===‘local’){e.classList.add(‘ss-err’);e.textContent=‘💾 Local Only — use Export/Import to share across devices’;return;}
-if(s===‘ok’){e.classList.add(‘ss-ok’);e.textContent=‘☁ Synced to Cloud’;}
-else if(s===‘err’){e.classList.add(‘ss-err’);e.textContent=‘⚠ Cloud failed — Saved Locally’;}
-else if(s===‘saving’){e.classList.add(‘ss-busy’);e.textContent=‘Saving…’;}
-else if(s===‘loading’){e.classList.add(‘ss-busy’);e.textContent=‘Loading…’;}
-}
-
-function exportJSON(){
-var idx=JSON.parse(localStorage.getItem(‘hl_week_index’)||’[]’);
-var out={version:6,exported:new Date().toISOString(),weeks:{}};
-idx.forEach(function(k){var r=localStorage.getItem(k);if(r)try{out.weeks[k]=JSON.parse(r);}catch(e){}});
-var blob=new Blob([JSON.stringify(out,null,2)],{type:‘application/json’});
-var url=URL.createObjectURL(blob);
+function doExport(){
+try{
+var raw=localStorage.getItem(‘hl_week_index’);
+var idx=raw ? JSON.parse(raw) : [];
+var out={version:7, exported:new Date().toISOString(), weeks:{}, labels:{}};
+idx.forEach(function(k){
+var r=localStorage.getItem(k);
+if(r){ try{ out.weeks[k]=JSON.parse(r); }catch(e){} }
+});
+var labRaw=localStorage.getItem(‘hl_labels’);
+if(labRaw){ try{ out.labels=JSON.parse(labRaw); }catch(e){} }
+var json=JSON.stringify(out,null,2);
+var blob=new Blob([json],{type:‘application/json’});
+var url=window.URL.createObjectURL(blob);
+var fname=‘HLAcworth_’+new Date().toISOString().slice(0,10)+’.json’;
 var a=document.createElement(‘a’);
-a.href=url;
-a.download=‘HLAcworth_’+new Date().toISOString().split(‘T’)[0]+’.json’;
 a.style.display=‘none’;
+a.href=url;
+a.setAttribute(‘download’,fname);
 document.body.appendChild(a);
 a.click();
-setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},500);
+window.URL.revokeObjectURL(url);
+document.body.removeChild(a);
+}catch(e){
+alert(’Export failed: ’+e.message);
 }
-function importJSON(e){
-var file=e.target.files[0];
-if(!file)return;
-var r=new FileReader();
-r.onload=function(ev){
-try{
-var all=JSON.parse(ev.target.result),count=0,weeks=all.weeks||{};
-Object.keys(all).forEach(function(k){if(k.startsWith(‘hl_week_’)&&!weeks[k])weeks[k]=all[k];});
-if(Object.keys(weeks).length>0){
-Object.keys(weeks).forEach(function(k){localStorage.setItem(k,JSON.stringify(weeks[k]));count++;});
-var idx=JSON.parse(localStorage.getItem(‘hl_week_index’)||’[]’);
-Object.keys(weeks).forEach(function(k){if(!idx.includes(k))idx.push(k);});
-idx.sort(function(a,b){return b.localeCompare(a);});
-localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
-renderHist();
-alert(‘Imported ‘+count+’ week’+(count!==1?‘s’:’’)+’. Go to History tab and click Load to restore.’);
-} else {
-alert(‘No week data found. Make sure it is a valid HLAcworth backup.’);
-}
-}catch(err){
-alert(‘Error reading file: ‘+err.message);
-}
-gi(‘importFileInput’).value=’’;
-};
-r.onerror=function(){alert(‘Could not read file.’);gi(‘importFileInput’).value=’’;};
-r.readAsText(file);
 }
 
-function renderHist(){
-var idx=JSON.parse(localStorage.getItem(‘hl_week_index’)||’[]’),el=gi(‘histList’);
-if(!idx.length){el.innerHTML=’<p style="color:#9C8878;font-size:12px;padding:8px 0">No saved weeks yet.</p>’;return;}
-var h=’’;
-idx.forEach(function(key){
-var raw=localStorage.getItem(key),sales=’’,saved=’’;
-if(raw)try{var d=JSON.parse(raw);var ac=parseFloat(d.s_lw_act);if(ac)sales=fD(ac)+’ sales’;if(d._ts)saved=‘Saved ‘+new Date(d.*ts).toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’,year:‘numeric’});}catch(e){}
-h+=’<div class="hi"><div><div class="hi-d">Week of ’+key.replace(’hl_week*’,’’)+’</div><div class="hi-m">’+sales+(sales&&saved?’ · ‘:’’)+saved+’</div></div><div style="display:flex;gap:5px"><button class="btn xs" onclick="loadHistWeek(\''+key+'\')">Load</button><button class="btn xs dk" onclick="delHistWeek(\''+key+'\')">Delete</button></div></div>’;
+function triggerImport(){
+var inp=gi(‘fileImport’);
+inp.value=’’;
+inp.onchange=function(e){
+var file=e.target.files[0]; if(!file) return;
+var reader=new FileReader();
+reader.onload=function(ev){
+try{
+var all=JSON.parse(ev.target.result);
+var count=0;
+var weeks=all.weeks||{};
+Object.keys(all).forEach(function(k){
+if(k.indexOf(‘hl_week_’)===0 && !weeks[k]) weeks[k]=all[k];
 });
-el.innerHTML=h;
+var wkeys=Object.keys(weeks);
+if(wkeys.length===0){ alert(‘No week data found in file.’); return; }
+wkeys.forEach(function(k){
+localStorage.setItem(k, JSON.stringify(weeks[k]));
+count++;
+});
+var raw=localStorage.getItem(‘hl_week_index’);
+var idx=raw ? JSON.parse(raw) : [];
+wkeys.forEach(function(k){ if(idx.indexOf(k)===-1) idx.push(k); });
+idx.sort(function(a,b){ return b.localeCompare(a); });
+localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
+if(all.labels){
+localStorage.setItem(‘hl_labels’,JSON.stringify(all.labels));
+restoreLabels();
 }
-function loadHistWeek(key){
-var raw=localStorage.getItem(key);if(!raw){alert(‘Week not found.’);return;}
-try{var d=JSON.parse(raw);sv(‘weekDate’,d.*wd||key.replace(’hl_week*’,’’));updateLabel();restoreData(d);calc();showTab(‘ops’,null,0);}catch(e){alert(‘Error loading.’);}
+renderHist();
+alert(‘Imported ‘+count+’ week’+(count!==1?‘s’:’’)+’ successfully! Go to History to load.’);
+}catch(err){
+alert(‘Import failed: ‘+err.message);
 }
-function delHistWeek(key){
-if(!confirm(‘Remove from history on this device?’))return;
-localStorage.removeItem(key);
-var idx=JSON.parse(localStorage.getItem(‘hl_week_index’)||’[]’);
-idx=idx.filter(function(k){return k!==key;});localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));renderHist();
+inp.value=’’;
+};
+reader.onerror=function(){ alert(‘Could not read file.’); inp.value=’’; };
+reader.readAsText(file);
+};
+inp.click();
 }
 
 function doPrint(which){
 mirrorMeeting();
-var orig=document.title;
-document.title=which===‘ops’?“Huey Luey’s - Operations Chart”:“Huey Luey’s - Manager Meeting Notes”;
-document.body.setAttribute(‘data-print’,which);
-document.body.classList.add(‘print-’+which);
-function afterPrint(){
-document.body.classList.remove(‘print-ops’,‘print-meet’);
-document.body.removeAttribute(‘data-print’);
-document.title=orig;
-window.removeEventListener(‘afterprint’,afterPrint);
+var origTitle=document.title;
+if(which===‘ops’){
+document.title=“Huey Luey’s - Operations Chart”;
+document.body.className=‘print-ops’;
+} else {
+document.title=“Huey Luey’s - Manager Meeting”;
+document.body.className=‘print-meet’;
 }
-window.addEventListener(‘afterprint’,afterPrint);
-setTimeout(function(){window.print();},100);
+window.print();
+document.body.className=’’;
+document.title=origTitle;
 }
 
-function showTab(tab,btnEl,idx){
-document.querySelectorAll(’.sec’).forEach(function(s){s.classList.remove(‘active’);});
-document.querySelectorAll(’.tab’).forEach(function(t){t.classList.remove(‘active’);});
+function showTab(tab,btn){
+document.querySelectorAll(’.sec’).forEach(function(s){ s.classList.remove(‘active’); });
+document.querySelectorAll(’.tab’).forEach(function(t){ t.classList.remove(‘active’); });
 gi(‘sec-’+tab).classList.add(‘active’);
-if(btnEl)btnEl.classList.add(‘active’);
-else{var tabs=document.querySelectorAll(’.tab’);var i=idx!==undefined?idx:tab===‘ops’?0:tab===‘meet’?1:2;if(tabs[i])tabs[i].classList.add(‘active’);}
-if(tab===‘meet’)mirrorMeeting();
-if(tab===‘hist’)renderHist();
+if(btn) btn.classList.add(‘active’);
+if(tab===‘meet’) mirrorMeeting();
+if(tab===‘hist’) renderHist();
 }
 
-var _opsLocked=false;
 function toggleOpsEdit(){
 _opsLocked=!_opsLocked;
-var ops=gi(‘sec-ops’),btn=gi(‘opsEditBtn’);if(!ops||!btn)return;
-ops.querySelectorAll(‘input,textarea,select’).forEach(function(el){el.readOnly=_opsLocked;el.style.background=_opsLocked?‘rgba(0,0,0,.04)’:’’;el.style.cursor=_opsLocked?‘default’:’’;});
-if(_opsLocked){btn.textContent=‘🔒 Editing: LOCKED’;btn.style.background=‘rgba(183,28,28,.55)’;btn.style.border=‘1px solid rgba(255,255,255,.2)’;}
-else{btn.textContent=‘🔓 Editing: ON’;btn.style.background=‘rgba(255,255,255,.15)’;btn.style.border=‘1px solid rgba(255,255,255,.3)’;}
+var btn=gi(‘opsEditBtn’);
+gi(‘sec-ops’).querySelectorAll(‘input,textarea,select’).forEach(function(el){
+el.readOnly=_opsLocked;
+el.style.background=_opsLocked?‘rgba(0,0,0,.04)’:’’;
+el.style.cursor=_opsLocked?‘default’:’’;
+});
+if(_opsLocked){
+btn.textContent=‘Editing: LOCKED’;
+btn.style.background=‘rgba(183,28,28,.55)’;
+} else {
+btn.textContent=‘Editing: ON’;
+btn.style.background=‘rgba(255,255,255,.15)’;
+}
 }
 
-var _editMode=false;
 function toggleEditMode(){
 _editMode=!_editMode;
-var meet=gi(‘sec-meet’),btn=gi(‘editModeBtn’);if(!meet||!btn)return;
+var meet=gi(‘sec-meet’), btn=gi(‘editModeBtn’);
 if(_editMode){
-meet.classList.add(‘edit-mode’);btn.textContent=‘✏️ Edit Mode: ON’;btn.style.background=’#C55A1B’;btn.style.border=‘1px solid #FF6B0B’;
-meet.querySelectorAll(’[data-editable]’).forEach(function(el){el.contentEditable=‘true’;el.setAttribute(‘spellcheck’,‘false’);el.dataset.mirror=el.innerHTML;});
+meet.classList.add(‘edit-mode’);
+btn.textContent=‘Edit Mode: ON’;
+btn.style.background=’#C55A1B’;
+meet.querySelectorAll(’[data-editable]’).forEach(function(el){
+el.contentEditable=‘true’;
+el.setAttribute(‘spellcheck’,‘false’);
+el.dataset.mirror=el.innerHTML;
+});
 } else {
-meet.classList.remove(‘edit-mode’);btn.textContent=‘✏️ Edit Mode: OFF’;btn.style.background=‘rgba(255,255,255,.15)’;btn.style.border=‘1px solid rgba(255,255,255,.3)’;
-meet.querySelectorAll(’[data-editable]’).forEach(function(el){el.contentEditable=‘false’;});
+meet.classList.remove(‘edit-mode’);
+btn.textContent=‘Edit Mode: OFF’;
+btn.style.background=‘rgba(255,255,255,.15)’;
+meet.querySelectorAll(’[data-editable]’).forEach(function(el){
+el.contentEditable=‘false’;
+});
 }
 }
-function safeTxt(id,v){var e=gi(id);if(!e)return;if(_editMode&&e.dataset.mirror!==undefined&&e.innerHTML!==e.dataset.mirror)return;e.textContent=v||’—’;}
-function safeHtm(id,v){var e=gi(id);if(!e)return;if(_editMode&&e.dataset.mirror!==undefined&&e.innerHTML!==e.dataset.mirror)return;e.innerHTML=v||’—’;}
 
-document.addEventListener(‘keydown’,function(e){if((e.ctrlKey||e.metaKey)&&e.key===‘s’){e.preventDefault();saveWeek();}});
+function renderHist(){
+var raw=localStorage.getItem(‘hl_week_index’);
+var idx=raw ? JSON.parse(raw) : [];
+var el=gi(‘histList’);
+if(!idx.length){ el.innerHTML=’<p style="color:#9C8878;font-size:12px;padding:8px 0">No saved weeks yet.</p>’; return; }
+var h=’’;
+idx.forEach(function(key){
+var r=localStorage.getItem(key), sales=’’, saved=’’;
+if(r){ try{
+var d=JSON.parse(r);
+var ac=parseFloat(d.s_lw_act); if(ac) sales=fD(ac)+’ sales’;
+if(d._ts) saved=‘Saved ‘+new Date(d.*ts).toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’,year:‘numeric’});
+}catch(e){} }
+h+=’<div class="hi">’+
+’<div><div class="hi-d">Week of ’+key.replace(’hl_week*’,’’)+’</div>’+
+‘<div class="hi-m">’+sales+(sales&&saved?’ · ‘:’’)+saved+’</div></div>’+
+‘<div style="display:flex;gap:5px">’+
+‘<button class="btn xs" onclick="loadHist(\''+key+'\')">Load</button>’+
+‘<button class="btn xs dk" onclick="delHist(\''+key+'\')">Delete</button>’+
+‘</div></div>’;
+});
+el.innerHTML=h;
+}
 
-async function init(){
-buildAll();
-[‘lab_pct_notax’,‘lab_pct_wtax’,‘food_lw_act’,‘lbw_lw_act’,‘pcc_lw_act’,‘nab_lw_act’,‘lab_lw_act’,‘lab_lw_wtax’].forEach(function(id){var e=gi(id);if(e)e._val=null;});
-var today=new Date(),mon=new Date(today);mon.setDate(today.getDate()-((today.getDay()+6)%7));
-var y=mon.getFullYear(),m=String(mon.getMonth()+1).padStart(2,‘0’),day=String(mon.getDate()).padStart(2,‘0’);
-sv(‘weekDate’,y+’-’+m+’-’+day);sv(‘lab_tax’,TAX_DEFAULT);updateLabel();
-if(WORKER_URL){setSS(‘loading’);var ok=await cloudPull();setSS(ok?‘ok’:‘err’);}else{setSS(‘local’);}
-restoreLabels();
-var key=weekKey(),raw=key?localStorage.getItem(key):null;
-if(raw){try{restoreData(JSON.parse(raw));calc();}catch(e){console.warn(‘Restore error’,e);}}
+function loadHist(key){
+var raw=localStorage.getItem(key); if(!raw){ alert(‘Week not found.’); return; }
+try{
+var d=JSON.parse(raw);
+sv(‘weekDate’, d.*wd||key.replace(’hl_week*’,’’));
+updateLabel();
+restoreData(d);
+calc();
+showTab(‘ops’, document.querySelectorAll(’.tab’)[0]);
+}catch(e){ alert(‘Error loading week.’); }
+}
+
+function delHist(key){
+if(!confirm(‘Remove this week from history?’)) return;
+localStorage.removeItem(key);
+var raw=localStorage.getItem(‘hl_week_index’);
+var idx=raw ? JSON.parse(raw) : [];
+idx=idx.filter(function(k){ return k!==key; });
+localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
 renderHist();
 }
-window.addEventListener(‘DOMContentLoaded’,init);
+
+document.addEventListener(‘keydown’,function(e){
+if((e.ctrlKey||e.metaKey) && e.key===‘s’){ e.preventDefault(); doSave(); }
+});
+
+function init(){
+buildAll();
+[‘lab_pct_notax’,‘lab_pct_wtax’,‘food_lw_act’,‘lbw_lw_act’,‘pcc_lw_act’,‘nab_lw_act’].forEach(function(id){
+var e=gi(id); if(e) e._val=null;
+});
+var today=new Date(), mon=new Date(today);
+mon.setDate(today.getDate()-((today.getDay()+6)%7));
+var y=mon.getFullYear(), m=String(mon.getMonth()+1).padStart(2,‘0’), day=String(mon.getDate()).padStart(2,‘0’);
+sv(‘weekDate’, y+’-’+m+’-’+day);
+sv(‘lab_tax’, TAX_DEFAULT);
+updateLabel();
+restoreLabels();
+var key=weekKey();
+if(key){
+var raw=localStorage.getItem(key);
+if(raw){ try{ restoreData(JSON.parse(raw)); calc(); }catch(e){ console.warn(e); } }
+}
+renderHist();
+}
+
+window.addEventListener(‘DOMContentLoaded’, init);
 </script>
 
 </body>

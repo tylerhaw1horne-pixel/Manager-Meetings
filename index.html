@@ -15,8 +15,9 @@
   --sh:0 2px 8px rgba(0,0,0,.09);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--t1);font-size:13px}
-input,textarea,select{font-family:inherit;font-size:12px;background:#fff;border:1px solid var(--bdr2);border-radius:4px;padding:3px 6px;color:var(--t1);width:100%;transition:border .15s}
+body{font-family:'Open Sans',sans-serif;background:#F5EFE6;background:var(--bg);color:#1C1410;color:var(--t1);font-size:13px}
+.app{max-width:1180px;margin:0 auto;padding:0 8px 60px}
+input,textarea,select{font-family:inherit;font-size:12px;background:#fff;border:1px solid var(--bdr2);border-radius:4px;padding:3px 6px;color:var(--t1);width:100%;transition:border .15s;box-sizing:border-box}
 input:focus,textarea:focus{outline:none;border-color:var(--org);box-shadow:0 0 0 2px rgba(197,90,27,.13)}
 input[type=number]{-moz-appearance:textfield}
 input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
@@ -28,8 +29,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 .btn.sm{font-size:11px;padding:4px 8px}.btn.xs{font-size:10px;padding:3px 7px}
 
 /* ── LAYOUT ── */
-.app{max-width:1180px;margin:0 auto;padding:0 8px 60px}
-.hdr{background:var(–hdr);padding:0 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 3px 14px rgba(0,0,0,.3);min-height:50px;gap:8px;flex-wrap:wrap}
+.hdr{background:#2C1A0E;background:var(–hdr);padding:0 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 3px 14px rgba(0,0,0,.3);min-height:50px;gap:8px;flex-wrap:wrap}
 .logo{font-family:‘Alfa Slab One’,serif;font-size:17px;color:#fff;flex-shrink:0}
 .logo span{color:var(–org2)}
 .hdr-r{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:5px 0}
@@ -44,11 +44,11 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
 /* ── SECTION / CARD ── */
 .sec{display:none}.sec.active{display:block}
-.card{background:var(–card);border:1px solid var(–bdr);border-radius:var(–r);padding:11px 13px;margin:7px 0;box-shadow:var(–sh)}
-.card-hdr{background:var(–hdr);color:#fff;border-radius:var(–r) var(–r) 0 0;padding:7px 12px;margin:-11px -13px 10px;font-family:‘Oswald’,sans-serif;font-weight:600;font-size:13px;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
-.card-hdr span{color:var(–org2)}
-.sec-title{font-family:‘Oswald’,sans-serif;font-weight:600;font-size:11px;color:var(–t3);text-transform:uppercase;letter-spacing:.6px;margin:10px 0 5px;padding-bottom:3px;border-bottom:1px solid var(–bdr)}
-.div{border-top:1px solid var(–bdr);margin:8px 0}
+.card{background:#FFFDF9;background:var(–card);border:1px solid #E8D8C4;border:1px solid var(–bdr);border-radius:7px;border-radius:var(–r);padding:11px 13px;margin:7px 0;box-shadow:0 2px 8px rgba(0,0,0,.09);box-shadow:var(–sh)}
+.card-hdr{background:#2C1A0E;background:var(–hdr);color:#fff;border-radius:7px 7px 0 0;padding:7px 12px;margin:-11px -13px 10px;font-family:‘Oswald’,sans-serif;font-weight:600;font-size:13px;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.card-hdr>span:first-of-type{color:#FF6B0B;color:var(–org2)}
+.sec-title{font-family:‘Oswald’,sans-serif;font-weight:600;font-size:11px;color:#9C8878;color:var(–t3);text-transform:uppercase;letter-spacing:.6px;margin:10px 0 5px;padding-bottom:3px;border-bottom:1px solid #E8D8C4;border-bottom:1px solid var(–bdr)}
+.div{border-top:1px solid #E8D8C4;border-top:1px solid var(–bdr);margin:8px 0}
 
 /* ── FIELD HELPERS ── */
 .fg{margin-bottom:5px}
@@ -58,8 +58,8 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 .row{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap}
 .row .lbl{font-size:11px;color:var(–t2);white-space:nowrap;min-width:180px}
 .row .lbl.w{min-width:260px}
-.row input{max-width:110px}
-.row .sep{font-size:11px;color:var(–t3);padding:0 2px}
+.row input{max-width:110px!important;width:110px!important;flex-shrink:0}
+.row .sep{font-size:11px;color:var(–t3);padding:0 2px;flex-shrink:0}
 .row .calc{font-family:‘Oswald’,sans-serif;font-size:12px;font-weight:600;min-width:80px;color:var(–t1)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}

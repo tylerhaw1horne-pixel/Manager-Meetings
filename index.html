@@ -1,1541 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Huey Luey's Acworth — Ops Dashboard</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌮</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#f5f2ee;--bg2:#fff;--bg3:#faf8f5;--bg4:#f0ece6;
-  --border:#ddd9d2;--border2:#c8c4bc;
-  --text:#1a1a1a;--text2:#5a5750;--text3:#9a9690;
-  --accent:#B85C00;--accent2:#934800;
-  --green:#2d6b0f;--green-bg:#eaf5e0;--green-border:#b0dca0;
-  --blue:#1a4fa0;--blue-bg:#e6f0fb;--blue-border:#b0c8f0;
-  --warn:#7a5a00;--warn-bg:#fdf5e0;--warn-border:#e8d490;
-  --red:#a00;--red-bg:#fdf0f0;
-  --radius:8px;--radius-sm:5px;
-}
-@media(prefers-color-scheme:dark){
-  :root{--bg:#1a1816;--bg2:#242220;--bg3:#1e1c1a;--bg4:#2a2824;--border:#3a3830;--border2:#4a4840;--text:#eeebe6;--text2:#a0a098;--text3:#606058;--accent:#d4751a;--green:#5a9e28;--green-bg:#162a0a;--green-border:#3a6820;--blue-bg:#0e1c38;--blue-border:#284878;--warn-bg:#28200a;--warn-border:#604a10;}
+  --org:#C55A1B;--org2:#FF6B0B;--grn:#3A7D44;--grn2:#648B1A;
+  --bg:#F5EFE6;--card:#FFFDF9;--bdr:#E8D8C4;--bdr2:#D4C0A8;
+  --t1:#1C1410;--t2:#5C4A38;--t3:#9C8878;
+  --wht:#fff;--blu:#1B6BB5;--hdr:#2C1A0E;--hdr2:#3D2615;--r:8px;
+  --sh:0 2px 8px rgba(0,0,0,.10);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:13px}
-.app{max-width:1140px;margin:0 auto;padding:.75rem}
-
-/* ── HEADER ── */
-.hdr{background:var(–bg2);border:1px solid var(–border);border-radius:var(–radius);padding:.75rem 1.1rem;margin-bottom:.6rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-.logo{font-size:17px;font-weight:800;letter-spacing:-.3px;color:var(–accent)}.logo em{color:var(–text);font-style:normal;font-weight:500}
-.tabs{display:flex;gap:2px;background:var(–bg4);border-radius:6px;padding:3px;border:1px solid var(–border)}
-.tab{padding:4px 13px;border-radius:4px;border:none;background:transparent;color:var(–text2);font-size:11.5px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .12s;white-space:nowrap}
-.tab.active{background:var(–bg2);color:var(–text);border:1px solid var(–border2);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--t1);font-size:13px}
+input,textarea,select{font-family:inherit;font-size:12px;background:#fff;border:1px solid var(--bdr2);border-radius:5px;padding:4px 7px;color:var(--t1);width:100%;transition:border .15s}
+input:focus,textarea:focus{outline:none;border-color:var(--org);box-shadow:0 0 0 2px rgba(197,90,27,.14)}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight:500;border:none;border-radius:5px;padding:5px 10px;transition:all .15s;letter-spacing:.4px}
+.btn{background:var(--t2);color:#fff}.btn:hover{background:var(--t1)}
+.btn.pr{background:var(--org)}.btn.pr:hover{background:var(--org2)}
+.btn.gr{background:var(--grn)}.btn.gr:hover{background:var(--grn2)}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff}.btn.ghost:hover{background:rgba(255,255,255,.15)}
+.btn.dk{background:transparent;border:1px solid var(--bdr2);color:var(--t2)}.btn.dk:hover{background:var(--bdr)}
+.btn.sm{font-size:11px;padding:4px 9px}.btn.xs{font-size:10px;padding:3px 7px}
+/* layout */
+.app{max-width:1200px;margin:0 auto;padding:0 8px 60px}
+.hdr{background:var(--hdr);padding:0 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,.28);min-height:50px;gap:8px;flex-wrap:wrap}
+.logo{font-family:'Alfa Slab One',serif;font-size:17px;color:#fff;flex-shrink:0}
+.logo span{color:var(--org2)}
+.hdr-r{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:5px 0}
+.tabs{display:flex;gap:2px;background:rgba(255,255,255,.1);border-radius:6px;padding:2px}
+.tab{background:transparent;color:rgba(255,255,255,.65);font-family:'Oswald',sans-serif;font-size:11px;padding:4px 11px;border-radius:4px;border:none;white-space:nowrap;letter-spacing:.4px}
+.tab.active{background:var(--org);color:#fff}.tab:hover:not(.active){color:#fff;background:rgba(255,255,255,.12)}
+.dbar{background:var(--hdr2);padding:4px 14px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:10px;color:rgba(255,255,255,.5);min-height:30px}
+.ss{font-size:10px;padding:2px 8px;border-radius:10px;font-family:'Oswald',sans-serif;letter-spacing:.3px}
+.ss-ok{background:rgba(46,125,50,.4);color:#A5D6A7}.ss-err{background:rgba(183,28,28,.4);color:#FFCDD2}
+.ss-busy{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* cards */
 .sec{display:none}.sec.active{display:block}
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:12px;margin:7px 0;box-shadow:var(--sh)}
+.ct{font-family:'Oswald',sans-serif;font-weight:600;font-size:13px;color:var(--org);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.badge{font-family:'Open Sans',sans-serif;font-size:10px;font-weight:400;letter-spacing:0;text-transform:none;padding:1px 6px;border-radius:10px}
+.bl-badge{background:rgba(27,107,181,.1);color:var(--blu);border:1px solid rgba(27,107,181,.25)}
+/* grids */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.g5{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px}
+.fg{margin-bottom:6px}
+.fl{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.fcalc{font-size:11px;background:rgba(0,0,0,.03);border:1px solid var(--bdr);border-radius:5px;padding:4px 7px;min-height:26px;display:flex;align-items:center;font-family:'Oswald',sans-serif;font-weight:500}
+.div{border-top:1px solid var(--bdr);margin:8px 0}
+.sh{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;margin:10px 0 5px;padding-bottom:3px;border-bottom:1px solid var(--bdr)}
+/* chips */
+.chip{display:inline-flex;align-items:center;font-size:10px;font-family:'Oswald',sans-serif;font-weight:500;padding:1px 7px;border-radius:10px;white-space:nowrap}
+.up{background:#E8F5E9;color:#2E7D32;border:1px solid #A5D6A7}
+.dn{background:#FFF3E0;color:#BF360C;border:1px solid #FFCC80}
+.nt{background:#F5F5F5;color:#757575;border:1px solid #E0E0E0}
+/* tables */
+.stbl{width:100%;border-collapse:collapse;font-size:11px}
+.stbl th{background:var(--hdr);color:#fff;font-family:'Oswald',sans-serif;font-weight:500;font-size:10px;padding:5px 6px;text-align:left;letter-spacing:.3px;white-space:nowrap}
+.stbl td{padding:3px 5px;border-bottom:1px solid var(--bdr);vertical-align:middle}
+.stbl tr:hover td{background:rgba(197,90,27,.03)}
+.stbl .num{text-align:right;font-family:'Oswald',sans-serif}
+.stbl .rwtd{background:rgba(197,90,27,.07)!important;font-weight:700}
+.stbl .rwtd:first-child{color:var(--org)}
+/* weather */
+.wx-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:6px}
+.wx-day{background:rgba(0,0,0,.03);border:1px solid var(--bdr);border-radius:6px;padding:5px 4px;text-align:center}
+.wx-day .wn{font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;color:var(--org)}
+.wx-day .wi{font-size:20px;margin:2px 0;display:block}
+.wx-day .wt{font-family:'Oswald',sans-serif;font-size:11px;font-weight:600}
+.wx-day .wc{font-size:9px;color:var(--t3);margin-bottom:3px}
+.wx-day textarea{font-size:9px;min-height:30px;resize:none;padding:2px 3px}
+/* meeting display */
+.met{background:rgba(197,90,27,.06);border:1px solid rgba(197,90,27,.18);border-radius:6px;padding:6px 10px}
+.met-l{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.met-v{font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:var(--t1)}
+.nb{background:#fff;border:1px solid var(--bdr);border-radius:6px;padding:8px 10px;margin-bottom:5px}
+.nb p{font-size:11px;color:var(--t2);line-height:1.65;white-space:pre-wrap}
+/* history */
+.hi{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border:1px solid var(--bdr);border-radius:6px;margin-bottom:5px;background:#fff}
+.hi:hover{border-color:var(--org);box-shadow:0 2px 8px rgba(197,90,27,.12)}
+.hi-d{font-family:'Oswald',sans-serif;font-weight:600;font-size:13px}
+.hi-m{font-size:11px;color:var(--t3)}
+/* notices */
+.notice{font-size:11px;padding:5px 9px;border-radius:5px;margin-top:6px;display:none}
+.notice.show{display:block}
+.notice.info{background:#E3F2FD;color:#0D47A1;border:1px solid #BBDEFB}
+.notice.ok{background:#E8F5E9;color:#1B5E20;border:1px solid #C8E6C9}
 
-/* ── CARDS ── */
-.card{background:var(–bg2);border:1px solid var(–border);border-radius:var(–radius);padding:.85rem;margin-bottom:.6rem}
-.ct{font-size:9.5px;font-weight:700;color:var(–text2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:.55rem;padding-bottom:.35rem;border-bottom:1px solid var(–border);display:flex;align-items:center;gap:5px}
-.ct .badge{font-size:8px;padding:1px 5px;border-radius:10px;font-weight:700;letter-spacing:.3px}
-.badge-auto{background:var(–warn-bg);color:var(–warn);border:1px solid var(–warn-border)}
-.badge-sync{background:var(–green-bg);color:var(–green);border:1px solid var(–green-border)}
-
-/* ── GRIDS ── */
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
-.g6{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
-@media(max-width:680px){.g2,.g3,.g4,.g5,.g6{grid-template-columns:1fr 1fr}}
-.fg{display:flex;flex-direction:column;gap:2px;margin-bottom:4px}
-.fg label{font-size:9px;color:var(–text2);font-weight:700;text-transform:uppercase;letter-spacing:.3px}
-.frow{display:flex;gap:4px}
-
-/* ── INPUTS ── */
-input[type=text],input[type=number],input[type=date],textarea,select{
-font-family:inherit;font-size:11.5px;padding:4px 7px;border:1px solid var(–border2);
-border-radius:var(–radius-sm);background:var(–bg2);color:var(–text);width:100%;
-transition:border-color .12s;-webkit-appearance:none}
-input:focus,textarea:focus,select:focus{outline:none;border-color:var(–accent);box-shadow:0 0 0 2px rgba(184,92,0,.1)}
-textarea{resize:vertical;min-height:58px;line-height:1.5}
-input.auto-filled{background:var(–blue-bg)!important;border-color:var(–blue-border)!important}
-input.synced{background:var(–green-bg)!important;border-color:var(–green-border)!important}
-
-/* ── BUTTONS ── */
-.btn{padding:5px 11px;border-radius:var(–radius-sm);border:1px solid var(–border2);background:var(–bg2);color:var(–text);font-size:11px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .12s;white-space:nowrap}
-.btn:hover{background:var(–bg4)}
-.btn.pr{background:var(–accent);border-color:var(–accent);color:#fff}.btn.pr:hover{background:var(–accent2)}
-.btn.gr{background:var(–green);border-color:var(–green);color:#fff}.btn.gr:hover{opacity:.88}
-.btn.sm{padding:3px 8px;font-size:10.5px}
-.brow{display:flex;gap:5px;flex-wrap:wrap;margin-top:.6rem;align-items:center}
-
-/* ── STATUS CHIPS ── */
-.chip{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(–bg4);border:1px solid var(–border)}
-.chip.pos{color:var(–green);border-color:var(–green-border);background:var(–green-bg)}
-.chip.neg{color:var(–red);border-color:#f5c6c6;background:var(–red-bg)}
-.pos{color:var(–green)}.neg{color:var(–red)}
-.div{border:none;border-top:1px solid var(–border);margin:.55rem 0}
-.sl{font-size:11px;font-weight:700;color:var(–text);margin:.5rem 0 .25rem}
-
-/* ── SUMMARY TABLE (matches the ops doc layout) ── */
-.sum-table{width:100%;border-collapse:collapse}
-.sum-table th,.sum-table td{padding:3px 5px;text-align:left;font-size:11px}
-.sum-table th{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(–text2);border-bottom:1px solid var(–border);background:var(–bg4)}
-.sum-table tr:nth-child(even) td{background:var(–bg3)}
-.sum-table td input{border:1px solid var(–border);border-radius:3px;padding:2px 5px;font-size:11px;width:100%;background:var(–bg2);color:var(–text)}
-.sum-table td input:focus{border-color:var(–accent);outline:none}
-.sum-table td input.auto-filled{background:var(–blue-bg);border-color:var(–blue-border)}
-.sum-table .sep{width:6px;background:var(–border);padding:0}
-.sum-table .lbl{font-weight:600;color:var(–text);white-space:nowrap;min-width:140px}
-.sum-table .pct-col{min-width:62px}
-.sum-table .section-hdr td{background:var(–accent);color:#fff;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 5px}
-
-/* ── LABOR BOX ── */
-.lbox{background:var(–warn-bg);border:1px solid var(–warn-border);border-radius:var(–radius-sm);padding:.6rem .8rem;margin-bottom:.5rem}
-.lres{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:.5rem}
-.lri{background:var(–bg2);border:1px solid var(–border);border-radius:var(–radius-sm);padding:.4rem .55rem}
-.ll{font-size:8.5px;color:var(–text3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px;font-weight:700}
-.lv{font-size:14px;font-weight:700;line-height:1.2}
-.ls{font-size:9px;color:var(–text2);margin-top:1px}
-
-/* ── COST BOX ── */
-.ccb{background:var(–bg3);border:1px solid var(–border);border-radius:var(–radius-sm);padding:.55rem .75rem;margin-bottom:.4rem}
-.ccr{display:grid;grid-template-columns:1fr 1fr 1fr 72px 72px;gap:6px;align-items:end}
-@media(max-width:680px){.ccr{grid-template-columns:1fr 1fr}}
-.crp{display:flex;flex-direction:column;align-items:center;background:var(–bg2);border:1px solid var(–border);border-radius:var(–radius-sm);padding:3px 7px;min-width:66px}
-.crp .cl{font-size:8px;color:var(–text3);text-transform:uppercase;font-weight:700;letter-spacing:.3px}
-.crp .cv{font-size:13px;font-weight:700;margin-top:1px}
-
-/* ── BHB ── */
-.bhb{background:linear-gradient(135deg,#fff8f0,#fff3e8);border:1px solid #e8c49a;border-radius:var(–radius);padding:.75rem .9rem}
-.bhbt{font-size:10px;font-weight:700;color:#7a3e00;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem}
-.bhbi{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
-@media(max-width:600px){.bhbi{grid-template-columns:1fr 1fr 1fr}}
-.bhbi-item{background:#fff;border:1px solid #e8c49a;border-radius:var(–radius-sm);padding:.35rem .4rem;text-align:center}
-.bhbi-item label{font-size:8.5px;color:#7a3e00;font-weight:700;display:block;margin-bottom:2px;line-height:1.2}
-.bhbi-item input{text-align:center;border-color:#e8c49a;font-size:11px}
-
-/* ── MEETING ITEMS ── */
-.mi{border:1px solid var(–border);border-radius:var(–radius-sm);padding:.55rem .75rem;cursor:pointer;margin-bottom:4px;transition:all .12s}
-.mi:hover{background:var(–bg3);border-color:var(–border2)}
-.bb{background:none;border:none;color:var(–blue);cursor:pointer;font-size:11.5px;font-weight:600;padding:3px 0;font-family:inherit;margin-bottom:.5rem;display:inline-block}
-
-/* ── WEATHER GRID ── */
-.wgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:.4rem}
-@media(max-width:600px){.wgrid{grid-template-columns:repeat(4,1fr)}}
-.wd{background:var(–bg3);border:1px solid var(–border);border-radius:var(–radius-sm);padding:6px;text-align:center}
-.wd .wdn{font-size:9px;font-weight:700;color:var(–text2);margin-bottom:2px}
-.wd .wdi{font-size:14px;margin-bottom:1px}
-.wd .wdt{font-size:9px;font-weight:700}
-.wd .wdc{font-size:8px;color:var(–text3)}
-.wd .wdit{font-size:8px;color:var(–blue);margin-top:2px;text-align:left;line-height:1.3}
-
-/* ── NOTES BOX ── */
-.nb{background:var(–bg3);border-radius:var(–radius-sm);padding:.45rem .65rem;margin-bottom:.35rem}
-.nb .nl{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(–text2);margin-bottom:2px}
-.nb p{font-size:11.5px;line-height:1.6}
-.met{background:var(–bg3);border:1px solid var(–border);border-radius:var(–radius-sm);padding:.35rem .55rem}
-.met label{font-size:8.5px;color:var(–text3);text-transform:uppercase;font-weight:700;display:block;margin-bottom:1px}
-.met .mv{font-size:15px;font-weight:700}
-.met .ms{font-size:9.5px;color:var(–text2)}
-.note-line{display:block;border-bottom:1px solid var(–border);height:18px;margin-bottom:2px}
-
-/* ── HISTORY TABLE ── */
-.ht{width:100%;border-collapse:collapse;font-size:11px}
-.ht th{text-align:left;padding:4px 6px;border-bottom:1px solid var(–border);color:var(–text2);font-weight:700;font-size:9px;white-space:nowrap;background:var(–bg4);text-transform:uppercase;letter-spacing:.3px}
-.ht td{padding:4px 6px;border-bottom:1px solid var(–border);white-space:nowrap}
-.ht tr:hover td{background:var(–bg3)}
-
-/* ── NOTICES ── */
-.notice{border-radius:var(–radius-sm);padding:.4rem .75rem;font-size:11px;font-weight:600;display:none}
-.notice.info{background:var(–blue-bg);color:var(–blue);border:1px solid var(–blue-border)}
-.notice.green{background:var(–green-bg);color:var(–green);border:1px solid var(–green-border)}
-.sync-banner{background:var(–green-bg);border:1px solid var(–green-border);border-radius:var(–radius-sm);padding:.35rem .65rem;font-size:11px;color:var(–green);font-weight:600;display:none;margin-top:.4rem}
-.cloud-bar{background:var(–bg2);border:1px solid var(–border);border-radius:var(–radius);padding:.55rem .9rem;margin-bottom:.6rem;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.cstat{font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;display:none}
-.cstat.ok{background:var(–green-bg);color:var(–green)}
-.cstat.info{background:var(–blue-bg);color:var(–blue)}
-.cstat.warn{background:var(–warn-bg);color:var(–warn)}
-.week-hdr{background:var(–bg4);border:1px solid var(–border);border-radius:var(–radius);padding:.6rem .9rem;margin-bottom:.6rem;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-
-/* ══════════════════════════════
-PRINT — 2 pages per document
-══════════════════════════════ */
+/* ═══ PRINT ═══ */
 @media print{
-@page{size:letter portrait;margin:.32in .38in}
-*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-shadow:none!important}
-body{background:#fff!important;font-family:Arial,sans-serif!important;font-size:7pt!important;color:#000!important}
-.hdr,.tabs,.brow,.btn,.bb,.badge,.badge-auto,.badge-sync,.cloud-bar,.week-hdr .no-print,.no-print{display:none!important}
-.app{max-width:100%!important;padding:0!important}
-.sec{display:none!important}
-body.pr-ops #sec-ops{display:block!important}
-body.pr-meet #sec-meet{display:block!important}
-body.pr-meet #meeting-list,body.pr-meet #meeting-form{display:none!important}
-body.pr-meet #meeting-detail{display:block!important}
-.card{background:#fff!important;border:none!important;border-radius:0!important;padding:0!important;margin:0!important}
-.ct{font-size:6pt!important;font-weight:700!important;border-bottom:.5pt solid #999!important;padding-bottom:2pt!important;margin-bottom:3pt!important;background:none!important;color:#333!important;border-top:none!important;border-left:none!important;border-right:none!important}
-input,textarea,select{border:.5pt solid #bbb!important;padding:1pt 2pt!important;font-size:7pt!important;background:#fff!important;color:#000!important;height:11pt!important;border-radius:0!important}
-textarea{height:auto!important;min-height:18pt!important}
-.fg label{font-size:5pt!important;color:#666!important;font-weight:700!important;margin-bottom:1pt!important}
-.fg{margin-bottom:2pt!important}
-.chip{font-size:6.5pt!important;padding:1pt 4pt!important;border:.5pt solid #ddd!important}
-.chip.pos{color:#1a5c08!important;background:#edf7e5!important}
-.chip.neg{color:#900!important;background:#fdf0f0!important}
-.div{border-top:.5pt solid #ddd!important;margin:3pt 0!important}
-.sl{font-size:7pt!important;font-weight:700!important;margin:3pt 0 2pt!important}
-.g2{display:grid!important;grid-template-columns:1fr 1fr!important;gap:4pt!important}
-.g3{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:3pt!important}
-.g4{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:3pt!important}
-.g5{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:2pt!important}
-.g6{display:grid!important;grid-template-columns:repeat(6,1fr)!important;gap:2pt!important}
-.lbox{background:#fff8f0!important;border:.5pt solid #c8a870!important;padding:3pt 4pt!important}
-.lres{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:3pt!important;margin-top:2pt!important}
-.lri{padding:2pt 3pt!important;border:.5pt solid #ddd!important;background:#fff!important}
-.ll{font-size:5pt!important;color:#888!important;font-weight:700!important}
-.lv{font-size:10pt!important;font-weight:700!important}
-.ccb{background:#fafafa!important;border:.5pt solid #ccc!important;padding:2pt 4pt!important;margin-bottom:2pt!important}
-.ccr{display:grid!important;grid-template-columns:1fr 1fr 1fr 42pt 42pt!important;gap:2pt!important}
-.crp{padding:1pt 3pt!important;border:.5pt solid #ccc!important;min-width:38pt!important;background:#fff!important}
-.crp .cl{font-size:4.5pt!important;font-weight:700!important}
-.crp .cv{font-size:9pt!important;font-weight:700!important}
-.bhb{background:#fff8f0!important;border:.5pt solid #e8c49a!important;padding:3pt 4pt!important}
-.bhbt{font-size:6pt!important;margin-bottom:2pt!important}
-.bhbi{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:2pt!important}
-.bhbi-item{border:.5pt solid #e8c49a!important;padding:1.5pt!important}
-.bhbi-item label{font-size:5pt!important;margin-bottom:1pt!important}
-.wgrid{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:2pt!important}
-.wd{background:#fafafa!important;border:.5pt solid #ddd!important;padding:3pt!important}
-.wd .wdn{font-size:6pt!important}
-.wd .wdi{font-size:10pt!important}
-.wd .wdt{font-size:6.5pt!important}
-.wd .wdc{font-size:5.5pt!important}
-.wd .wdit{font-size:5.5pt!important}
-.met{background:#fafafa!important;border:.5pt solid #ddd!important;padding:2pt 3pt!important}
-.met label{font-size:5pt!important}
-.met .mv{font-size:12pt!important}
-.nb{background:#fafafa!important;border:.5pt solid #ddd!important;padding:2pt 4pt!important;margin-bottom:2pt!important}
-.nb p{font-size:7pt!important;line-height:1.4!important}
-.sum-table th{font-size:5.5pt!important;padding:1.5pt 2pt!important;background:#f0ece6!important}
-.sum-table td{padding:1.5pt 2pt!important}
-.sum-table td input{font-size:6.5pt!important;padding:1pt 2pt!important;height:10pt!important;border:.5pt solid #bbb!important}
-.note-line{height:13pt!important;border-bottom:.5pt solid #ccc!important;margin-bottom:1.5pt!important}
-/* OPS page 1 */
-body.pr-ops #ops-p1{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8pt!important;page-break-after:always!important}
-body.pr-ops #ops-p1::before{content:“Huey Luey’s Acworth \2014 Weekly Operations Chart”;display:block!important;grid-column:1/-1!important;font-size:10pt!important;font-weight:700!important;color:#B85C00!important;border-bottom:1.5pt solid #B85C00!important;padding-bottom:3pt!important;margin-bottom:5pt!important}
-/* OPS page 2 */
-body.pr-ops #ops-p2{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8pt!important}
-body.pr-ops #ops-p2::before{content:“Huey Luey’s Acworth \2014 Operations (continued)”;display:block!important;grid-column:1/-1!important;font-size:9pt!important;font-weight:700!important;color:#B85C00!important;border-bottom:1pt solid #B85C00!important;padding-bottom:2pt!important;margin-bottom:4pt!important}
-/* MEET page 1 */
-body.pr-meet #meet-p1{page-break-after:always!important}
-body.pr-meet #meet-p1::before{content:“Huey Luey’s Acworth \2014 Manager Meeting Notes”;display:block!important;font-size:10pt!important;font-weight:700!important;color:#B85C00!important;border-bottom:1.5pt solid #B85C00!important;padding-bottom:3pt!important;margin-bottom:5pt!important}
-body.pr-meet #meet-p1-cols{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8pt!important;margin-top:4pt!important}
-/* MEET page 2 */
-body.pr-meet #meet-p2::before{content:“Huey Luey’s Acworth \2014 Manager Meeting (continued)”;display:block!important;font-size:9pt!important;font-weight:700!important;color:#B85C00!important;border-bottom:1pt solid #B85C00!important;padding-bottom:2pt!important;margin-bottom:4pt!important}
-body.pr-meet #meet-p2-cols{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8pt!important;margin-top:4pt!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .no-print{display:none!important}
+  body{background:#fff;font-size:8pt;margin:0}
+  .app{max-width:100%;padding:0 4pt}
+  body.print-ops #sec-meet,body.print-ops #sec-hist{display:none!important}
+  body.print-ops #sec-ops{display:block!important}
+  body.print-meet #sec-ops,body.print-meet #sec-hist{display:none!important}
+  body.print-meet #sec-meet{display:block!important}
+  .hdr,.dbar{display:none!important}
+  .card{box-shadow:none!important;margin:3pt 0;padding:5pt 6pt;border:.4pt solid #ccc!important;border-radius:2pt!important;break-inside:avoid}
+  .ct{font-size:9pt;margin-bottom:3pt}
+  .fl{font-size:7pt}
+  .fcalc{font-size:8pt;min-height:14pt;padding:1pt 3pt}
+  input,textarea,select{font-size:7pt!important;padding:1pt 3pt!important;border:.3pt solid #bbb!important;border-radius:1pt!important}
+  .g2,.g3,.g4,.g5{gap:3pt}.fg{margin-bottom:3pt}
+  .stbl th{font-size:7pt;padding:2pt 4pt;background:#2C1A0E!important;color:#fff!important}
+  .stbl td{font-size:7pt;padding:2pt 3pt;border-bottom:.3pt solid #ddd}
+  .chip{font-size:6.5pt;padding:0 4pt}.badge{display:none}
+  .div{margin:4pt 0}.sh{font-size:7.5pt;margin:5pt 0 3pt}
+  .met{padding:3pt 5pt;border:.3pt solid #ddd!important}
+  .met-l{font-size:7pt}.met-v{font-size:11pt}
+  .nb{padding:4pt 6pt;margin-bottom:3pt;border:.3pt solid #ddd!important}
+  .nb p{font-size:7pt;line-height:1.5}
+  .wx-grid{gap:2pt;margin-top:3pt}
+  .wx-day{padding:2pt 3pt}
+  .wx-day .wi{font-size:12pt;margin:1pt 0}
+  .wx-day .wt{font-size:9pt}.wx-day .wc{font-size:7pt}
+  .wx-day textarea{font-size:7pt!important;min-height:18pt}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:1fr 1fr 1fr}
+  .g4{grid-template-columns:1fr 1fr 1fr 1fr}
+  .g5{grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+  /* page header auto-added via print */
+  .print-hdr{display:block!important;text-align:center;padding:4pt 0 8pt;border-bottom:1pt solid #C55A1B;margin-bottom:6pt}
+  .print-hdr h1{font-family:'Georgia',serif;font-size:14pt;color:#C55A1B}
+  .print-hdr p{font-size:8pt;color:#888;margin-top:2pt}
+  @page{margin:11mm 9mm;size:letter portrait}
 }
+/* hide print header on screen */
+.print-hdr{display:none}
 </style>
-
 </head>
 <body>
 <div class="app">
 
-<!-- HEADER -->
+<!-- PRINT HEADER (shows only when printing) -->
+<div class="print-hdr" id="printHdr">
+  <h1 id="printTitle">Huey Luey's Mexican Kitchen — Acworth</h1>
+  <p id="printSub">Weekly Operations Report</p>
+</div>
 
+<!-- NAV HEADER -->
 <div class="hdr no-print">
-  <div class="logo">Huey Luey's <em>Acworth — Ops</em></div>
-  <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+  <div class="logo"><span>Huey Luey's</span> Acworth — Ops</div>
+  <div class="hdr-r">
     <div class="tabs">
-      <button class="tab active" onclick="showTab('ops',this)">Operations</button>
-      <button class="tab" onclick="showTab('meet',this)">Manager Meetings</button>
-      <button class="tab" onclick="showTab('hist',this)">History</button>
+      <button class="tab active" onclick="showTab('ops',this)">📊 Operations</button>
+      <button class="tab" onclick="showTab('meet',this)">📋 Manager Meeting</button>
+      <button class="tab" onclick="showTab('hist',this)">🗂 History</button>
     </div>
-    <button class="btn sm pr" onclick="saveWeek()">💾 Save Week</button>
-    <button class="btn sm gr" onclick="pushToMeeting()">→ Push to Meeting</button>
-    <button class="btn sm" onclick="doPrint('ops')">🖨 Print Ops</button>
-    <button class="btn sm" onclick="doPrint('meet')">🖨 Print Meeting</button>
+    <button class="btn sm pr no-print" onclick="saveWeek()">💾 Save</button>
+    <button class="btn sm no-print" onclick="doPrint('ops')">🖨 Print Ops</button>
+    <button class="btn sm no-print" onclick="doPrint('meet')">🖨 Print Meeting</button>
   </div>
 </div>
 
-<!-- CLOUD BAR -->
-
-<div class="cloud-bar no-print">
-  <span style="font-size:10.5px;font-weight:700;color:var(--text2)">☁️ Sync:</span>
-  <button class="btn sm gr" onclick="cloudPush()">⬆ Save Cloud</button>
-  <button class="btn sm" onclick="cloudPull()">⬇ Load Cloud</button>
-  <button class="btn sm" onclick="showSyncModal()">🔑 Sync ID</button>
-  <button class="btn sm" onclick="createStore()">+ New Store</button>
-  <div id="cstat" class="cstat"></div>
-  <span style="margin-left:auto;font-size:10px;color:var(--text2);font-weight:600">Backup:</span>
-  <button class="btn sm" onclick="exportJSON()">⬇ Export</button>
-  <label class="btn sm" style="cursor:pointer">⬆ Import<input type="file" accept=".json" onchange="importJSON(event)" style="display:none"/></label>
-  <div style="font-size:9.5px;color:var(--text3);width:100%;margin-top:1px">💡 Same Sync ID on any device = shared data. Autosaves locally every change.</div>
+<!-- DATA BAR -->
+<div class="dbar no-print">
+  <span id="syncBadge" class="ss ss-ok">☁ Cloud Sync Ready</span>
+  <button class="btn xs ghost" onclick="exportJSON()">⬇ Export Backup</button>
+  <label class="btn xs ghost" style="cursor:pointer">⬆ Import<input type="file" accept=".json" onchange="importJSON(event)" style="display:none;width:auto;border:none;padding:0"/></label>
+  <span>Data saves to this browser + cloud backup. Export weekly for extra safety.</span>
 </div>
 
-<!-- ══════════════════════════════════════
+<!-- ════════════════════════════════════════
      OPERATIONS TAB
-══════════════════════════════════════ -->
-
+════════════════════════════════════════ -->
 <div id="sec-ops" class="sec active">
 
-  <!-- Week selector bar -->
-
-  <div class="week-hdr">
-    <span style="font-size:12px;font-weight:700">Week of:</span>
-    <input type="date" id="weekDate" style="width:auto" onchange="onWeekChange()"/>
-    <span id="weekRangeLabel" style="font-size:11px;color:var(--text2)"></span>
-    <button class="btn sm no-print" onclick="loadWeek()">Load</button>
-    <button class="btn sm pr no-print" onclick="saveWeek()">Save Week</button>
-    <button class="btn sm no-print" onclick="clearOps()">Clear</button>
-    <span id="saveLabel" style="font-size:11px;color:var(--green);font-weight:700"></span>
-  </div>
-  <div id="carryNote" class="notice info" style="margin-bottom:.5rem">↩ Last week actuals pre-filled as Last Year. Review before saving.</div>
-  <div id="syncNote" class="notice green" style="margin-bottom:.5rem"></div>
-
-  <!-- OPS PRINT PAGE 1 -->
-
-  <div id="ops-p1">
-
-
-<!-- LEFT COL: Summary table -->
-<div>
   <div class="card">
-    <div class="ct">Current Week / Last Week Summary <span class="badge badge-auto">% auto-calc</span><span class="badge badge-sync">→ meeting</span></div>
-    <table class="sum-table">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-family:'Oswald',sans-serif;font-weight:600;font-size:14px">Week of:</span>
+      <input type="date" id="weekDate" style="width:155px" onchange="onDateChange()"/>
+      <span style="font-family:'Oswald',sans-serif;font-size:12px;color:var(--t3)" id="weekLabel"></span>
+      <button class="btn sm" onclick="loadWeek()">Load Saved</button>
+      <button class="btn sm pr" onclick="saveWeek()">💾 Save Week</button>
+      <button class="btn sm dk" onclick="clearFields()">Clear</button>
+    </div>
+    <div id="carryNote" class="notice info">↩ Last week's actuals auto-loaded as this week's Last Year values.</div>
+    <div id="savedNote" class="notice ok">✓ Week saved.</div>
+  </div>
+
+  <!-- SALES -->
+  <div class="card">
+    <div class="ct">Sales — All Revenue Centers <span class="badge bl-badge">% auto-calc</span></div>
+    <div style="overflow-x:auto">
+    <table class="stbl">
       <thead>
         <tr>
-          <th class="lbl"></th>
-          <th colspan="3" style="text-align:center;background:#f5ece0;color:#7a3e00">← LAST WEEK →</th>
-          <th class="sep"></th>
-          <th colspan="2" style="text-align:center;background:#e8f0fb;color:#1a4fa0">← CURR WEEK →</th>
-          <th style="min-width:58px;background:#f5ece0;color:#7a3e00;font-size:8px;text-align:center">vs LY</th>
+          <th style="width:140px">Revenue Center</th>
+          <th colspan="4" style="text-align:center;background:var(--hdr2)">◀ Last Week</th>
+          <th style="background:transparent;border:none;width:8px;padding:0"></th>
+          <th colspan="3" style="text-align:center;background:var(--hdr2)">Current Week ▶</th>
         </tr>
         <tr>
-          <th class="lbl">Revenue Center</th>
-          <th>Proj ($)</th><th>Last Yr ($)</th><th>Actual ($)</th>
-          <th class="sep"></th>
-          <th>Proj ($)</th><th>Last Yr ($)</th>
-          <th class="pct-col">vs LY %</th>
+          <th></th>
+          <th>Proj ($)</th><th>Last Yr ($)</th><th>Actual ($)</th><th>vs LY</th>
+          <th style="background:transparent;border:none;padding:0"></th>
+          <th>Proj ($)</th><th>Last Yr ($)</th><th>Est. Actual ($)</th>
         </tr>
       </thead>
       <tbody id="saleRows"></tbody>
+      <tfoot>
+        <tr>
+          <td style="font-family:'Oswald',sans-serif;font-weight:700;font-size:11px;color:var(--org);background:rgba(197,90,27,.06)">TOTAL</td>
+          <td class="num" id="tot_lw_proj" style="background:rgba(197,90,27,.06)">—</td>
+          <td class="num" id="tot_lw_ly" style="background:rgba(197,90,27,.06)">—</td>
+          <td class="num" id="tot_lw_act" style="background:rgba(197,90,27,.06)">—</td>
+          <td class="num" id="tot_lw_vsly" style="background:rgba(197,90,27,.06)">—</td>
+          <td style="border:none;background:transparent;padding:0"></td>
+          <td class="num" id="tot_cw_proj" style="background:rgba(197,90,27,.06)">—</td>
+          <td class="num" id="tot_cw_ly" style="background:rgba(197,90,27,.06)">—</td>
+          <td class="num" id="tot_cw_est" style="background:rgba(197,90,27,.06)">—</td>
+        </tr>
+      </tfoot>
     </table>
-
+    </div>
     <div class="div"></div>
-    <!-- Guest Count + PPA inline table -->
-    <table class="sum-table">
-      <thead>
-        <tr>
-          <th class="lbl">Metric</th>
-          <th>Proj</th><th>LY / Actual</th><th>Actual</th>
-          <th class="sep"></th>
-          <th>Curr Proj</th><th>Curr LY</th>
-          <th class="pct-col">vs LY</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="lbl">Guest Count</td>
-          <td><input type="number" id="gc_proj" placeholder="Proj"/></td>
-          <td><input type="number" id="gc_ly" placeholder="Last Yr"/></td>
-          <td><input type="number" id="gc_actual" placeholder="Actual" oninput="calcSales()"/></td>
-          <td class="sep"></td>
-          <td><input type="number" id="gc_cproj" placeholder="Proj"/></td>
-          <td><input type="number" id="gc_cly" placeholder="LY"/></td>
-          <td><div id="gc_pct" class="chip">—</div></td>
-        </tr>
-        <tr>
-          <td class="lbl">PPA ($)</td>
-          <td><input type="number" id="ppa_proj" step="0.01" placeholder="Proj"/></td>
-          <td><input type="number" id="ppa_ly" step="0.01" placeholder="Last Yr"/></td>
-          <td><input type="number" id="ppa_actual" step="0.01" placeholder="Actual" oninput="calcSales()"/></td>
-          <td class="sep"></td>
-          <td><input type="number" id="ppa_cproj" step="0.01" placeholder="Proj"/></td>
-          <td><input type="number" id="ppa_cly" step="0.01" placeholder="LY"/></td>
-          <td><div id="ppa_pct" class="chip">—</div></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="div"></div>
-    <!-- Discounts -->
-    <div class="ct" style="margin-top:.4rem">Discounts Last Week <span class="badge badge-sync">→ meeting</span></div>
     <div class="g4">
-      <div class="fg"><label>Rewards ($)</label><input type="number" id="disc_r" step="0.01" oninput="calcDisc()"/></div>
-      <div class="fg"><label>Ez Cater ($)</label><input type="number" id="disc_e" step="0.01" oninput="calcDisc()"/></div>
-      <div class="fg"><label>Other ($)</label><input type="number" id="disc_o" step="0.01" oninput="calcDisc()"/></div>
-      <div class="fg"><label>= Total</label><div id="disc_t" class="chip" style="margin-top:4px">—</div></div>
-    </div>
-  </div>
-</div><!-- /left col p1 -->
-
-<!-- RIGHT COL: Labor + Costs -->
-<div>
-  <div class="card">
-    <div class="ct">Labor <span class="badge badge-auto">14.53% employer tax</span><span class="badge badge-sync">→ meeting</span></div>
-    <div class="lbox">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px">
-        <div class="fg" style="margin-bottom:0"><label>Total Sales ($)</label><input type="number" id="lab_sales" oninput="calcLabor()" placeholder="Auto-fills"/><div style="font-size:8.5px;color:var(--text2);margin-top:1px">Auto from actuals</div></div>
-        <div class="fg" style="margin-bottom:0"><label>Labor $ Paid</label><input type="number" id="lab_dollars" step="0.01" oninput="calcLabor()"/></div>
-        <div class="fg" style="margin-bottom:0"><label>Labor % (no tax)</label><input type="number" id="lab_pct" step="0.01" oninput="calcLabor()"/><div style="font-size:8.5px;color:var(--text2);margin-top:1px">Or enter $ above</div></div>
-        <div class="fg" style="margin-bottom:0"><label>Labor % Proj</label><input type="number" id="lab_proj" step="0.1" oninput="calcLabor()"/></div>
-      </div>
-      <div class="lres" id="laborRes" style="display:none">
-        <div class="lri"><div class="ll">Labor % (no tax)</div><div class="lv" id="lr_base">—</div><div class="ls" id="lr_bs"></div></div>
-        <div class="lri"><div class="ll">Labor % WITH Tax (×1.1453)</div><div class="lv" id="lr_tax" style="color:var(--accent)">—</div><div class="ls">Base × 1.1453</div></div>
-        <div class="lri"><div class="ll">vs Projection</div><div class="lv" id="lr_proj">—</div><div class="ls" id="lr_ps"></div></div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:.4rem">
-      <div class="fg"><label>SPLH Last Wk Proj ($)</label><input type="number" id="splh_proj" step="0.01"/></div>
-      <div class="fg"><label>SPLH Last Wk Actual ($)</label><input type="number" id="splh_actual" step="0.01"/></div>
-      <div class="fg"><label>SPLH Curr Wk Proj ($)</label><input type="number" id="splh_cproj" step="0.01"/></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:.35rem">
-      <div class="fg"><label>OT Hrs Scheduled</label><input type="number" id="ot_sched"/></div>
-      <div class="fg"><label>OT Hrs Actual</label><input type="number" id="ot_actual"/></div>
-      <div class="fg"><label>Curr Wk OT Sched</label><input type="number" id="ot_curr"/></div>
+      <div class="fg"><div class="fl">Guest Count — Actual</div><input type="number" id="gst_actual" oninput="calc()"/></div>
+      <div class="fg"><div class="fl">Guest Count — Last Yr</div><input type="number" id="gst_ly" oninput="calc()"/></div>
+      <div class="fg"><div class="fl">PPA — Actual ($)</div><input type="number" id="ppa_actual" step=".01" oninput="calc()"/></div>
+      <div class="fg"><div class="fl">PPA — Last Yr ($)</div><input type="number" id="ppa_ly" step=".01" oninput="calc()"/></div>
     </div>
   </div>
 
+  <!-- LABOR -->
   <div class="card">
-    <div class="ct">Cost Percentages <span class="badge badge-auto">$ ÷ sales = %</span><span class="badge badge-sync">→ meeting</span></div>
-    <div id="costBoxes"></div>
-  </div>
-</div><!-- /right col p1 -->
-
-
-  </div><!-- /ops-p1 -->
-
-  <!-- OPS PRINT PAGE 2 -->
-
-  <div id="ops-p2">
-
-
-<!-- LEFT: GM + Guest -->
-<div>
-  <div class="card">
-    <div class="ct">GM Operations <span class="badge badge-sync">→ meeting</span></div>
-    <div class="g2">
-      <div class="fg"><label>GM Total Hours</label><input type="text" id="gm_hrs"/></div>
-      <div class="fg"><label>Q&amp;A Walkthroughs</label><input type="text" id="walkthroughs"/></div>
+    <div class="ct">Labor <span class="badge bl-badge">% auto-calc</span></div>
+    <div class="g5">
+      <div class="fg"><div class="fl">Sales ($)</div><input type="number" id="lab_sales" oninput="calc()"/></div>
+      <div class="fg"><div class="fl">Labor $ Spent</div><input type="number" id="lab_dollars" oninput="calc()"/></div>
+      <div class="fg"><div class="fl">Proj Labor %</div><input type="number" id="lab_proj" step=".1" oninput="calc()"/></div>
+      <div class="fg"><div class="fl">Actual Labor %</div><div class="fcalc" id="lab_pct">—</div></div>
+      <div class="fg"><div class="fl">Budget Labor %</div><input type="number" id="lab_budget" step=".1" oninput="calc()"/></div>
     </div>
-    <div class="fg" style="margin-top:.3rem"><label>Videos / Podcasts / Training Watched</label><input type="text" id="training"/></div>
-    <div class="fg" style="margin-top:.3rem"><label>Projects Completed</label><textarea id="projects"></textarea></div>
   </div>
+
+  <!-- COST % -->
   <div class="card">
-    <div class="ct">Guest Experience <span class="badge badge-sync">→ meeting</span></div>
+    <div class="ct">Cost Percentages <span class="badge bl-badge">% auto-calc</span></div>
+    <div style="overflow-x:auto">
+    <table class="stbl">
+      <thead><tr><th>Category</th><th>Sales ($)</th><th>$ Spent</th><th>Proj %</th><th>Actual %</th><th>vs Proj</th></tr></thead>
+      <tbody id="costRows"></tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- DISCOUNTS -->
+  <div class="card">
+    <div class="ct">Discounts &amp; Voids</div>
     <div class="g3">
-      <div class="fg"><label>Google 5★ / 4★</label><div class="frow"><input type="number" id="rev5"/><input type="number" id="rev4"/></div></div>
-      <div class="fg"><label>Loyalty Signups</label><input type="number" id="loyalty"/></div>
-      <div class="fg"><label>Marketing Plan</label><input type="text" id="marketing"/></div>
+      <div class="fg"><div class="fl">Restaurant Discounts ($)</div><input type="number" id="disc_r" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Employee Discounts ($)</div><input type="number" id="disc_e" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Other / Voids ($)</div><input type="number" id="disc_o" step=".01" oninput="live()"/></div>
     </div>
   </div>
-</div>
 
-<!-- RIGHT: Items Sold -->
-<div>
+  <!-- PRODUCT MIX -->
   <div class="card">
-    <div class="ct">Items Sold <span class="badge badge-sync">→ meeting</span></div>
-
-    <div class="sl">Marg of the Month</div>
+    <div class="ct">Product Mix &amp; Specials</div>
     <div class="g4">
-      <div class="fg"><label>MoM Name</label><input type="text" id="mom_name" placeholder="Blood Orange"/></div>
-      <div class="fg"><label>MoM Sold Wk / Total</label><div class="frow"><input type="number" id="mom_wk"/><input type="number" id="mom_total"/></div></div>
-      <div class="fg"><label>1st Place Emp</label><input type="text" id="mom_emp"/></div>
-      <div class="fg"><label>Emp QTY Wk / Total</label><div class="frow"><input type="number" id="mom_ewk"/><input type="number" id="mom_etot"/></div></div>
+      <div class="fg"><div class="fl">To-Go Margs Sold</div><input type="number" id="togo_margs" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Desserts Sold</div><input type="number" id="desserts" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Loyalty Signups</div><input type="number" id="loyalty" oninput="live()"/></div>
+      <div class="fg"></div>
     </div>
-
-    <div class="sl">Margaritas</div>
-    <div class="g5">
-      <div class="fg"><label>Top Sold Marg</label><input type="text" id="top_marg_name" placeholder="House"/></div>
-      <div class="fg"><label>Top Marg QTY</label><input type="number" id="top_marg_qty"/></div>
-      <div class="fg"><label>ToGo Margs</label><input type="number" id="togo_margs"/></div>
-      <div class="fg"><label>16oz</label><input type="number" id="marg16"/></div>
-      <div class="fg"><label>22oz</label><input type="number" id="marg22"/></div>
-    </div>
-    <div class="g5" style="margin-top:.3rem">
-      <div class="fg"><label>32oz</label><input type="number" id="marg32"/></div>
-      <div class="fg"><label>Pitchers</label><input type="number" id="pitchers"/></div>
-      <div class="fg"><label>Huey's Floaters Wk</label><input type="number" id="float_wk"/></div>
-      <div class="fg"><label>Floaters Total</label><input type="number" id="float_total"/></div>
-    </div>
-
-    <div class="sl">Brunch</div>
-    <div class="g4">
-      <div class="fg"><label>Mimosas</label><input type="number" id="mimosas"/></div>
-      <div class="fg"><label>Mimosa Flights</label><input type="number" id="mim_fl"/></div>
-      <div class="fg"><label>Brunch Items Total</label><input type="number" id="brunch"/></div>
-    </div>
-
-    <div class="sl">Food Items</div>
-    <div class="g5">
-      <div class="fg"><label>Top Food Item</label><input type="text" id="top_food_name" placeholder="Tacos"/></div>
-      <div class="fg"><label>Top Food QTY</label><input type="number" id="top_food_qty"/></div>
-      <div class="fg"><label>Desserts</label><input type="number" id="desserts"/></div>
-      <div class="fg"><label>Kids Menu</label><input type="number" id="kids"/></div>
-      <div class="fg"><label>The Big Huey</label><input type="number" id="bighuey"/></div>
-    </div>
-    <div class="g5" style="margin-top:.3rem">
-      <div class="fg"><label>Fajitas Total</label><input type="number" id="fajitas"/></div>
-      <div class="fg"><label>Durango Style</label><input type="number" id="faj_dur"/></div>
-      <div class="fg"><label>Huey's Style</label><input type="number" id="faj_hue"/></div>
-      <div class="fg"><label>Bacon Shrimp</label><input type="number" id="faj_bac"/></div>
-    </div>
-    <div class="g5" style="margin-top:.3rem">
-      <div class="fg"><label>Steak &amp; Blue Quesadilla Wk</label><input type="number" id="steak_wk"/></div>
-      <div class="fg"><label>Steak &amp; Blue Total</label><input type="number" id="steak_tot"/></div>
-    </div>
-
     <div class="div"></div>
-    <!-- Beach House Bar -->
-    <div class="bhb">
-      <div class="bhbt">🌴 Beach House Bar</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 80px;gap:6px;margin-bottom:.5rem;align-items:end">
-        <div class="fg" style="margin-bottom:0"><label>BHB Sales ($)</label><input type="number" id="bhb_s" step="0.01" oninput="calcBHB()"/></div>
-        <div class="fg" style="margin-bottom:0"><label>BHB Sales LY ($)</label><input type="number" id="bhb_ly" step="0.01" oninput="calcBHB()"/></div>
-        <div class="fg" style="margin-bottom:0"><label>BHB Proj ($)</label><input type="number" id="bhb_proj" step="0.01"/></div>
-        <div id="bhb_vsly" class="chip">—</div>
-      </div>
-      <div class="bhbi">
-        <div class="bhbi-item"><label>Mai Tai</label><input type="number" id="bhb_mt" oninput="calcBHB()"/></div>
-        <div class="bhbi-item"><label>Piña Colada</label><input type="number" id="bhb_pc" oninput="calcBHB()"/></div>
-        <div class="bhbi-item"><label>Lemon Drop Shot</label><input type="number" id="bhb_ld" oninput="calcBHB()"/></div>
-        <div class="bhbi-item"><label>Blueberry Refresher</label><input type="number" id="bhb_br" oninput="calcBHB()"/></div>
-        <div class="bhbi-item"><label>Front Porch Swing</label><input type="number" id="bhb_fp" oninput="calcBHB()"/></div>
-      </div>
-      <div id="bhb_tot" class="chip" style="margin-top:.35rem;display:none"></div>
+    <div class="sh">Google Reviews</div>
+    <div class="g4">
+      <div class="fg"><div class="fl">5-Star Reviews (week)</div><input type="number" id="rev5" oninput="live()"/></div>
+      <div class="fg"><div class="fl">4-Star Reviews (week)</div><input type="number" id="rev4" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Total Reviews (running)</div><input type="number" id="rev_total" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Current Rating ⭐</div><input type="number" id="rev_rating" step=".1" max="5" oninput="live()"/></div>
     </div>
   </div>
-</div>
 
-
-  </div><!-- /ops-p2 -->
-
-  <div class="brow no-print">
-    <button class="btn pr" onclick="saveWeek()">💾 Save Week</button>
-    <button class="btn gr" onclick="pushToMeeting()">→ Push to Manager Meeting</button>
-    <button class="btn" onclick="clearOps()">Clear Form</button>
-    <button class="btn" onclick="doPrint('ops')">🖨 Print Ops</button>
+  <!-- RECOGNITION -->
+  <div class="card">
+    <div class="ct">Employee Recognition</div>
+    <div class="sh">Manager of the Month</div>
+    <div class="g4">
+      <div class="fg"><div class="fl">Name</div><input type="text" id="mom_name" oninput="live()"/></div>
+      <div class="fg"><div class="fl">This Week $</div><input type="number" id="mom_wk" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Running Total $</div><input type="number" id="mom_total" step=".01" oninput="live()"/></div>
+      <div class="fg"></div>
+    </div>
+    <div class="sh">Employee of the Month</div>
+    <div class="g4">
+      <div class="fg"><div class="fl">Name</div><input type="text" id="eom_name" oninput="live()"/></div>
+      <div class="fg"><div class="fl">This Week $</div><input type="number" id="eom_wk" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Running Total $</div><input type="number" id="eom_total" step=".01" oninput="live()"/></div>
+      <div class="fg"></div>
+    </div>
+    <div class="div"></div>
+    <div class="g4">
+      <div class="fg"><div class="fl">Float — This Week $</div><input type="number" id="float_wk" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Float — Running Total $</div><input type="number" id="float_total" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Side-Line — This Week $</div><input type="number" id="sl_wk" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Side-Line — Running Total $</div><input type="number" id="sl_total" step=".01" oninput="live()"/></div>
+    </div>
   </div>
+
+  <!-- BEACH HOUSE BAR (no LY) -->
+  <div class="card">
+    <div class="ct">🏖 Beach House Bar</div>
+    <div class="g4">
+      <div class="fg"><div class="fl">BHB Sales ($)</div><input type="number" id="bhb_s" oninput="calc()"/></div>
+      <div class="fg"><div class="fl">BHB Proj ($)</div><input type="number" id="bhb_proj" oninput="calc()"/></div>
+      <div class="fg"><div class="fl">vs Proj</div><div class="fcalc" id="bhb_vsproj">—</div></div>
+      <div class="fg"><div class="fl">BHB Labor %</div><input type="number" id="bhb_labp" step=".1" oninput="live()"/></div>
+    </div>
+    <div class="sh">Cocktail Count</div>
+    <div class="g5">
+      <div class="fg"><div class="fl">Mai Tais</div><input type="number" id="bhb_mt" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Piña Coladas</div><input type="number" id="bhb_pc" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Lemon Drop Shots</div><input type="number" id="bhb_ld" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Blueberry Refresher</div><input type="number" id="bhb_br" oninput="live()"/></div>
+      <div class="fg"><div class="fl">Front Porch Swing</div><input type="number" id="bhb_fp" oninput="live()"/></div>
+    </div>
+    <div class="fg"><div class="fl">BHB Notes</div><textarea id="bhb_notes" rows="2" oninput="live()"></textarea></div>
+  </div>
+
+  <!-- WEATHER -->
+  <div class="card">
+    <div class="ct">🌤 Weekly Weather — Acworth, GA
+      <button class="btn xs pr no-print" onclick="fetchWeather()" style="margin-left:4px">Auto-Fill Weather</button>
+    </div>
+    <div class="wx-grid" id="wxGrid"></div>
+  </div>
+
+  <!-- MANAGER GOALS -->
+  <div class="card">
+    <div class="ct">Manager Goals &amp; Accountability</div>
+    <div id="mgrGoals"></div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="card">
+    <div class="ct">Weekly Notes</div>
+    <div class="g2">
+      <div class="fg"><div class="fl">BOH Notes / Issues</div><textarea id="notes_boh" rows="3" oninput="live()"></textarea></div>
+      <div class="fg"><div class="fl">FOH Notes / Issues</div><textarea id="notes_foh" rows="3" oninput="live()"></textarea></div>
+    </div>
+    <div class="fg"><div class="fl">Manager Notes / Shoutouts</div><textarea id="notes_mgr" rows="3" oninput="live()"></textarea></div>
+    <div class="g2">
+      <div class="fg"><div class="fl">Feedback / Action Items</div><textarea id="notes_feedback" rows="3" oninput="live()"></textarea></div>
+      <div class="fg"><div class="fl">Follow-Up from Last Week</div><textarea id="notes_followup" rows="3" oninput="live()"></textarea></div>
+    </div>
+  </div>
+
 </div><!-- /sec-ops -->
 
-<!-- ══════════════════════════════════════
-     MANAGER MEETINGS TAB
-══════════════════════════════════════ -->
-
+<!-- ════════════════════════════════════════
+     MANAGER MEETING TAB
+════════════════════════════════════════ -->
 <div id="sec-meet" class="sec">
-  <div class="card no-print">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
-      <div style="font-size:13px;font-weight:700">Manager Meeting Notes</div>
-      <div style="display:flex;gap:5px;flex-wrap:wrap">
-        <button class="btn sm gr" onclick="pushToMeeting()">↺ Sync from Ops</button>
-        <button class="btn sm pr" onclick="showNewMeet()">+ New Meeting</button>
-        <button class="btn sm" onclick="doPrint('meet')">🖨 Print</button>
+
+  <div class="card" style="background:var(--hdr);border-color:var(--hdr)">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>
+        <div style="font-family:'Alfa Slab One',serif;font-size:20px;color:var(--org2)">Huey Luey's Mexican Kitchen</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:13px;color:rgba(255,255,255,.6);letter-spacing:1.5px;margin-top:2px">WEEKLY MANAGER MEETING — ACWORTH</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:'Oswald',sans-serif;font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.5px">WEEK OF</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:var(--org2)" id="m_weekLabel">—</div>
       </div>
     </div>
   </div>
 
-  <!-- List view -->
-
-  <div id="meeting-list">
-    <div id="meetList"></div>
-    <div id="noMeet" style="text-align:center;padding:2rem;color:var(--text3);display:none">No meetings saved yet.</div>
-  </div>
-
-  <!-- Detail view (used for print too) -->
-
-  <div id="meeting-detail" style="display:none">
-    <button class="bb no-print" onclick="closeDetail()">← Back to meetings</button>
-    <!-- PRINT PAGE 1 -->
-    <div id="meet-p1">
-      <div class="card" id="mHdr"></div>
-      <div class="card" id="mWeather"></div>
-      <div id="meet-p1-cols">
-        <div id="m-p1-left"></div>
-        <div id="m-p1-right"></div>
-      </div>
+  <div class="card">
+    <div class="ct">Sales Review</div>
+    <div style="overflow-x:auto">
+    <table class="stbl">
+      <thead><tr><th>Revenue Center</th><th>Actual ($)</th><th>Last Yr ($)</th><th>vs LY</th><th>Proj ($)</th></tr></thead>
+      <tbody id="m_saleRows"></tbody>
+    </table>
     </div>
-    <!-- PRINT PAGE 2 -->
-    <div id="meet-p2">
-      <div id="meet-p2-cols">
-        <div id="m-p2-left"></div>
-        <div id="m-p2-right"></div>
-      </div>
-    </div>
-    <div class="brow no-print"><button class="btn" onclick="doPrint('meet')">🖨 Print This Meeting</button></div>
-  </div>
-
-  <!-- Form view -->
-
-  <div id="meeting-form" style="display:none">
-    <div class="card">
-      <button class="bb" onclick="closeMeetForm()">← Cancel</button>
-      <div class="ct">New Manager Meeting</div>
-      <div class="g2">
-        <div class="fg"><label>Week Date Range</label><input type="text" id="m_week" placeholder="4/6/2026 – 4/12/2026"/></div>
-        <div class="fg"><label>Meeting Date</label><input type="date" id="m_date"/></div>
-      </div>
-      <div class="sync-banner" id="m_sync_banner">✓ Synced from Operations — green fields auto-filled.</div>
-    </div>
-
-
-<!-- Weather -->
-<div class="card">
-  <div class="ct">Weekly Itinerary &amp; Weather Snapshot <span id="wx_status" style="font-size:9px;color:var(--text2);font-weight:400"></span></div>
-  <div id="wInputs"></div>
-  <div class="g2" style="margin-top:.5rem">
-    <div class="fg"><label>Total Caterings ($)</label><input type="number" id="m_cat_total" step="0.01"/></div>
-    <div class="fg"><label>Notes</label><input type="text" id="m_cat_notes" placeholder="Anticipate more caterings to drop in!"/></div>
-  </div>
-</div>
-
-<!-- Last Week Metrics — matching the meeting doc exactly -->
-<div class="card">
-  <div class="ct">Last Week Metrics <span class="badge badge-auto">% auto-calc</span><span class="badge badge-sync">← synced from ops</span></div>
-
-  <!-- Sales rows matching meeting doc format -->
-  <div style="display:grid;grid-template-columns:160px 1fr 1fr 80px;gap:5px;align-items:center;margin-bottom:4px;border-bottom:1px solid var(--border);padding-bottom:3px">
-    <div style="font-size:8.5px;font-weight:700;color:var(--text2);text-transform:uppercase">Revenue Center</div>
-    <div style="font-size:8.5px;color:var(--text2)">Actual ($)</div>
-    <div style="font-size:8.5px;color:var(--text2)">Up Against / LY ($)</div>
-    <div style="font-size:8.5px;color:var(--text2)">vs LY</div>
-  </div>
-  <div id="mMetRows"></div>
-
-  <div class="div"></div>
-
-  <!-- Discounts -->
-  <div style="font-size:9.5px;font-weight:700;color:var(--text2);margin-bottom:.3rem">Discounts <span class="badge badge-sync">← synced</span></div>
-  <div class="g4">
-    <div class="fg"><label>Rewards ($)</label><input type="number" id="m_disc_r" step="0.01"/></div>
-    <div class="fg"><label>Ez Cater ($)</label><input type="number" id="m_disc_e" step="0.01"/></div>
-    <div class="fg"><label>Other ($)</label><input type="number" id="m_disc_o" step="0.01"/></div>
-    <div class="fg"><label>= Total</label><div id="m_disc_t" class="chip" style="margin-top:4px">—</div></div>
-  </div>
-
-  <div class="div"></div>
-
-  <!-- Labor display (synced from ops) -->
-  <div style="font-size:9.5px;font-weight:700;color:var(--text2);margin-bottom:.3rem">Labor <span class="badge badge-sync">← synced</span></div>
-  <div class="lbox">
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px">
-      <div class="fg" style="margin-bottom:0"><label>Total Sales ($)</label><input type="number" id="m_lab_s" oninput="calcMLab()"/></div>
-      <div class="fg" style="margin-bottom:0"><label>Labor $ Paid</label><input type="number" id="m_lab_d" step="0.01" oninput="calcMLab()"/></div>
-      <div class="fg" style="margin-bottom:0"><label>Labor % (no tax)</label><input type="number" id="m_labor" step="0.01" oninput="calcMLab()"/></div>
-      <div class="fg" style="margin-bottom:0"><label>Labor % Proj</label><input type="number" id="m_labor_p" step="0.1" oninput="calcMLab()"/></div>
-    </div>
-    <div class="lres" id="mLaborRes" style="display:none">
-      <div class="lri"><div class="ll">Labor % (no tax)</div><div class="lv" id="ml_base">—</div><div class="ls" id="ml_bs"></div></div>
-      <div class="lri"><div class="ll">Labor % WITH Tax</div><div class="lv" id="ml_tax" style="color:var(--accent)">—</div><div class="ls">×1.1453</div></div>
-      <div class="lri"><div class="ll">vs Projection</div><div class="lv" id="ml_proj">—</div><div class="ls" id="ml_ps"></div></div>
+    <div class="div"></div>
+    <div class="g4" style="margin-top:4px">
+      <div class="met"><div class="met-l">Guest Count</div><div class="met-v" id="m_gst">—</div></div>
+      <div class="met"><div class="met-l">PPA Actual</div><div class="met-v" id="m_ppa">—</div></div>
+      <div class="met"><div class="met-l">PPA vs Last Yr</div><div class="met-v" id="m_ppa_vs">—</div></div>
+      <div class="met"><div class="met-l">Loyalty Signups</div><div class="met-v" id="m_loyalty">—</div></div>
     </div>
   </div>
 
-  <div class="div"></div>
-
-  <!-- Cost %s -->
-  <div style="font-size:9.5px;font-weight:700;color:var(--text2);margin-bottom:.3rem">Cost %s <span class="badge badge-sync">← synced</span></div>
-  <div id="mCostBoxes"></div>
-
-  <!-- PPA -->
-  <div class="g3" style="margin-top:.4rem">
-    <div class="fg"><label>PPA Actual ($)</label><input type="number" id="m_ppa" step="0.01" oninput="calcMPcts()"/></div>
-    <div class="fg"><label>PPA LY ($)</label><input type="number" id="m_ppa_ly" step="0.01" oninput="calcMPcts()"/></div>
-    <div class="fg"><label>PPA vs LY</label><div id="m_ppa_pct" class="chip" style="margin-top:4px">—</div></div>
-  </div>
-
-  <div class="div"></div>
-
-  <!-- Guest Metrics -->
-  <div style="font-size:9.5px;font-weight:700;color:var(--text2);margin-bottom:.3rem">Guest Metrics <span class="badge badge-sync">← synced</span></div>
-  <div class="g4">
-    <div class="fg"><label>Loyalty Signups</label><input type="number" id="m_loyalty"/></div>
-    <div class="fg"><label>Google 5★ / 4★</label><div class="frow"><input type="number" id="m_rev5"/><input type="number" id="m_rev4"/></div></div>
-    <div class="fg"><label>Employee Winner / QTY</label><div class="frow"><input type="text" id="m_emp"/><input type="number" id="m_emp_q"/></div></div>
-  </div>
-
-  <div class="div"></div>
-
-  <!-- Items sold (meeting format) -->
-  <div style="font-size:9.5px;font-weight:700;color:var(--text2);margin-bottom:.3rem">Items Sold <span class="badge badge-sync">← synced</span></div>
-  <div class="g4">
-    <div class="fg"><label>MoM Marg</label><input type="text" id="m_mom"/></div>
-    <div class="fg"><label>MoM Sold Wk / Total</label><div class="frow"><input type="number" id="m_mom_wk"/><input type="number" id="m_mom_t"/></div></div>
-    <div class="fg"><label>MoM Winner / Wk / Total</label><div class="frow"><input type="text" id="m_mom_win"/><input type="number" id="m_mwwk"/><input type="number" id="m_mwtot"/></div></div>
-  </div>
-  <div class="g5" style="margin-top:.3rem">
-    <div class="fg"><label>ToGo Margs</label><input type="number" id="m_togo_m"/></div>
-    <div class="fg"><label>Desserts</label><input type="number" id="m_desserts"/></div>
-    <div class="fg"><label>Huey's Floaters Wk</label><input type="number" id="m_flt_wk"/></div>
-    <div class="fg"><label>Total Floaters</label><input type="number" id="m_flt_t"/></div>
-    <div class="fg"><label>Steak &amp; Blue Wk / Total</label><div class="frow"><input type="number" id="m_steak_wk"/><input type="number" id="m_steak_t"/></div></div>
-  </div>
-
-  <div class="div"></div>
-
-  <!-- BHB compact in meeting -->
-  <div style="font-size:9.5px;font-weight:700;color:#7a3e00;margin-bottom:.3rem">🌴 Beach House Bar <span class="badge badge-sync">← synced</span></div>
-  <div style="background:linear-gradient(135deg,#fff8f0,#fff3e8);border:1px solid #e8c49a;border-radius:var(--radius-sm);padding:.5rem .7rem">
-    <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:6px;align-items:end;margin-bottom:.4rem">
-      <div class="fg" style="margin-bottom:0"><label style="color:#7a3e00">BHB Sales ($)</label><input type="number" id="m_bhb_s" step="0.01" style="border-color:#e8c49a" oninput="calcMBHB()"/></div>
-      <div class="fg" style="margin-bottom:0"><label style="color:#7a3e00">BHB Proj ($)</label><input type="number" id="m_bhb_proj" step="0.01" style="border-color:#e8c49a"/></div>
-      <div id="m_bhb_vsly" class="chip">—</div>
+  <div class="card">
+    <div class="ct">Labor Summary</div>
+    <div class="g4">
+      <div class="met"><div class="met-l">Labor $ Spent</div><div class="met-v" id="m_lab_d">—</div></div>
+      <div class="met"><div class="met-l">Actual Labor %</div><div class="met-v" id="m_lab_pct">—</div></div>
+      <div class="met"><div class="met-l">Projected Labor %</div><div class="met-v" id="m_lab_proj">—</div></div>
+      <div class="met"><div class="met-l">Budget Labor %</div><div class="met-v" id="m_lab_budget">—</div></div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px">
-      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:700;margin-bottom:2px">Mai Tai</div><input type="number" id="m_bhb_mt" style="text-align:center;border-color:#e8c49a;font-size:11px"/></div>
-      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:700;margin-bottom:2px">Piña Colada</div><input type="number" id="m_bhb_pc" style="text-align:center;border-color:#e8c49a;font-size:11px"/></div>
-      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:700;margin-bottom:2px">Lemon Drop</div><input type="number" id="m_bhb_ld" style="text-align:center;border-color:#e8c49a;font-size:11px"/></div>
-      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:700;margin-bottom:2px">Blueberry</div><input type="number" id="m_bhb_br" style="text-align:center;border-color:#e8c49a;font-size:11px"/></div>
-      <div style="text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:700;margin-bottom:2px">Front Porch</div><input type="number" id="m_bhb_fp" style="text-align:center;border-color:#e8c49a;font-size:11px"/></div>
+    <div class="fg" style="margin-top:8px"><div class="fl">Labor Notes</div><textarea id="m_labor_notes" rows="2" oninput="live()"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Cost Percentages</div>
+    <table class="stbl">
+      <thead><tr><th>Category</th><th>$ Spent</th><th>Actual %</th><th>Proj %</th><th>vs Proj</th></tr></thead>
+      <tbody id="m_costRows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="ct">Discounts &amp; Voids</div>
+    <div class="g3" style="margin-bottom:6px">
+      <div class="met"><div class="met-l">Restaurant Discounts</div><div class="met-v" id="m_disc_r">—</div></div>
+      <div class="met"><div class="met-l">Employee Discounts</div><div class="met-v" id="m_disc_e">—</div></div>
+      <div class="met"><div class="met-l">Other / Voids</div><div class="met-v" id="m_disc_o">—</div></div>
+    </div>
+    <div class="fg"><div class="fl">Discount Discussion</div><textarea id="m_disc_notes" rows="2" oninput="live()"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Product Mix &amp; Google Reviews</div>
+    <div class="g4" style="margin-bottom:6px">
+      <div class="met"><div class="met-l">To-Go Margs</div><div class="met-v" id="m_togo_m">—</div></div>
+      <div class="met"><div class="met-l">Desserts Sold</div><div class="met-v" id="m_desserts">—</div></div>
+      <div class="met"><div class="met-l">5-Star Reviews</div><div class="met-v" id="m_rev5">—</div></div>
+      <div class="met"><div class="met-l">4-Star Reviews</div><div class="met-v" id="m_rev4">—</div></div>
+    </div>
+    <div class="g2">
+      <div class="met"><div class="met-l">Total Reviews (Running)</div><div class="met-v" id="m_rev_total">—</div></div>
+      <div class="met"><div class="met-l">Current Rating ⭐</div><div class="met-v" id="m_rev_rating">—</div></div>
+    </div>
+    <div class="fg" style="margin-top:7px"><div class="fl">Product Mix Notes</div><textarea id="m_mix_notes" rows="2" oninput="live()"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">🏖 Beach House Bar</div>
+    <div class="g4" style="margin-bottom:6px">
+      <div class="met"><div class="met-l">BHB Sales</div><div class="met-v" id="m_bhb_s">—</div></div>
+      <div class="met"><div class="met-l">vs Proj</div><div class="met-v" id="m_bhb_proj">—</div></div>
+      <div class="met"><div class="met-l">BHB Labor %</div><div class="met-v" id="m_bhb_labp">—</div></div>
+      <div class="met"></div>
+    </div>
+    <div class="g5">
+      <div class="met"><div class="met-l">Mai Tais</div><div class="met-v" id="m_bhb_mt">—</div></div>
+      <div class="met"><div class="met-l">Piña Coladas</div><div class="met-v" id="m_bhb_pc">—</div></div>
+      <div class="met"><div class="met-l">Lemon Drop Shots</div><div class="met-v" id="m_bhb_ld">—</div></div>
+      <div class="met"><div class="met-l">Blueberry Refresher</div><div class="met-v" id="m_bhb_br">—</div></div>
+      <div class="met"><div class="met-l">Front Porch Swing</div><div class="met-v" id="m_bhb_fp">—</div></div>
+    </div>
+    <div class="fg" style="margin-top:7px"><div class="fl">BHB Notes</div><textarea id="m_bhb_notes" rows="2" oninput="live()"></textarea></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Employee Recognition</div>
+    <div class="sh">Manager of the Month</div>
+    <div class="g3" style="margin-bottom:6px">
+      <div class="met"><div class="met-l">Name</div><div class="met-v" id="m_mom">—</div></div>
+      <div class="met"><div class="met-l">This Week $</div><div class="met-v" id="m_mom_wk">—</div></div>
+      <div class="met"><div class="met-l">Running Total $</div><div class="met-v" id="m_mom_total">—</div></div>
+    </div>
+    <div class="sh">Employee of the Month</div>
+    <div class="g3" style="margin-bottom:6px">
+      <div class="met"><div class="met-l">Name</div><div class="met-v" id="m_eom">—</div></div>
+      <div class="met"><div class="met-l">This Week $</div><div class="met-v" id="m_eom_wk">—</div></div>
+      <div class="met"><div class="met-l">Running Total $</div><div class="met-v" id="m_eom_total">—</div></div>
+    </div>
+    <div class="div"></div>
+    <div class="g4">
+      <div class="met"><div class="met-l">Float — Wk $</div><div class="met-v" id="m_float_wk">—</div></div>
+      <div class="met"><div class="met-l">Float — Total $</div><div class="met-v" id="m_float_total">—</div></div>
+      <div class="met"><div class="met-l">Side-Line — Wk $</div><div class="met-v" id="m_sl_wk">—</div></div>
+      <div class="met"><div class="met-l">Side-Line — Total $</div><div class="met-v" id="m_sl_total">—</div></div>
     </div>
   </div>
-</div>
 
-<!-- Focus Notes -->
-<div class="card">
-  <div class="ct">Focus &amp; Manager Notes</div>
-  <div class="fg"><label>BOH Focus</label><textarea id="m_boh" placeholder="BOH Focus..."></textarea></div>
-  <div class="fg" style="margin-top:.4rem"><label>FOH Focus</label><textarea id="m_foh" placeholder="FOH Focus..."></textarea></div>
-  <div class="fg" style="margin-top:.4rem"><label>Manager Notes / Shoutouts</label><textarea id="m_mgr" placeholder="Manager Notes..."></textarea></div>
-</div>
-
-<div class="brow no-print">
-  <button class="btn pr" onclick="saveMeet()">💾 Save Meeting</button>
-  <button class="btn gr" onclick="pushToMeeting()">↺ Re-sync from Ops</button>
-  <button class="btn" onclick="closeMeetForm()">Cancel</button>
-</div>
-
-
+  <div class="card">
+    <div class="ct">Manager Goals Review</div>
+    <div id="m_mgrGoals"></div>
   </div>
+
+  <div class="card">
+    <div class="ct">🌤 Weekly Weather</div>
+    <div class="wx-grid" id="m_wxGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Operations Notes</div>
+    <div class="sh">BOH</div><div class="nb"><p id="m_notes_boh">—</p></div>
+    <div class="sh">FOH</div><div class="nb"><p id="m_notes_foh">—</p></div>
+    <div class="sh">Manager Notes / Shoutouts</div><div class="nb"><p id="m_notes_mgr">—</p></div>
+    <div class="sh">Feedback / Action Items</div><div class="nb"><p id="m_notes_feedback">—</p></div>
+    <div class="sh">Follow-Up from Last Week</div><div class="nb"><p id="m_notes_followup">—</p></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Live Meeting Notes</div>
+    <div class="g2 fg">
+      <div><div class="fl">Meeting Date</div><input type="text" id="m_meet_date" placeholder="e.g. Monday April 14, 2026" oninput="live()"/></div>
+      <div><div class="fl">Attendees</div><input type="text" id="m_attendees" placeholder="Managers present" oninput="live()"/></div>
+    </div>
+    <div class="fg"><div class="fl">Meeting Notes</div><textarea id="m_extra_notes" rows="5" oninput="live()"></textarea></div>
+    <div class="fg"><div class="fl">Next Week Focus / Goals</div><textarea id="m_next_focus" rows="3" oninput="live()"></textarea></div>
+  </div>
+
 </div><!-- /sec-meet -->
 
-<!-- ══════════════════════════════════════
+<!-- ════════════════════════════════════════
      HISTORY TAB
-══════════════════════════════════════ -->
-
+════════════════════════════════════════ -->
 <div id="sec-hist" class="sec">
   <div class="card">
-    <div class="ct">Week-over-Week History</div>
-    <div style="overflow-x:auto">
-      <table class="ht">
-        <thead><tr><th>Week</th><th>Sales</th><th>vs LY</th><th>Catering</th><th>RFT</th><th>ToGo</th><th>Patio</th><th>Labor%</th><th>w/Tax%</th><th>Food%</th><th>LBW%</th><th>Guests</th><th>PPA</th><th>Loyalty</th></tr></thead>
-        <tbody id="histBody"></tbody>
-      </table>
-      <div id="noHist" style="text-align:center;padding:2rem;color:var(--text3);display:none">No weeks saved yet.</div>
-    </div>
+    <div class="ct">Saved Weeks</div>
+    <div id="histList"><p style="color:var(--t3);font-size:12px;padding:8px 0">No saved weeks yet.</p></div>
   </div>
 </div>
 
-</div><!-- .app -->
+</div><!-- /app -->
 
 <script>
-// ═══════════════════════════════════════════════════
-// CONSTANTS & CONFIG
-// ═══════════════════════════════════════════════════
-const TAX = 0.1453;
-const DB_KEY = 'hl_v3';
-const AUTO_KEY = 'hl_auto_v3';
-const SYNC_KEY = 'hl_syncid';
+/* ════════════════════════════════════════════════════
+   CONSTANTS
+════════════════════════════════════════════════════ */
+const MGR = ['Tyler','Nash','Marlon','Veronica','Liz'];
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const DAY_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const WX_ICONS = {'sunny':'☀️','partly cloudy':'⛅','cloudy':'☁️','rain':'🌧️','stormy':'⛈️','small rain':'🌦️','partly rain':'🌦️','party cloudy':'⛅','foggy':'🌫️','snow':'❄️'};
-
-// Revenue centers — matches both documents exactly
-const SALE_C = [
-  {id:'s',      l:'Total Sales'},
-  {id:'cat',    l:'Catering Sales'},
-  {id:'rft',    l:'RFT (Rooftop) Sales'},
-  {id:'togo',   l:'ToGo Sales'},
-  {id:'patio',  l:'Patio Sales'},
+const SALE_ROWS = [
+  {id:'s',        l:'Total Sales',    rw:true},
+  {id:'cat',      l:'Catering Sales', rw:false},
+  {id:'rft',      l:'Rooftop Sales',  rw:false},
+  {id:'togo',     l:'To-Go Sales',    rw:false},
+  {id:'patio',    l:'Patio Sales',    rw:false},
+  {id:'bhb_sale', l:'Beach House Bar',rw:false},
 ];
-const COST_C = [
-  {id:'food', l:'Food Cost'},
-  {id:'lbw',  l:'LBW (Liquor/Beer/Wine)'},
-  {id:'pcc',  l:'Paper/Catering/Cleaning'},
-  {id:'nab',  l:'N/A Bev'},
-];
-// Meeting revenue centers (matches meeting doc order)
-const MEET_C = [
-  {id:'ms',   l:'Sales'},
-  {id:'mcat', l:'Catering Sales'},
-  {id:'mpat', l:'Patio Sales'},
-  {id:'mrft', l:'Rooftop Sales'},
-  {id:'mtogo',l:'ToGo Sales'},
+const COST_ROWS = [
+  {id:'food', l:'Food Cost',               budget:22.6},
+  {id:'lbw',  l:'LBW (Liquor/Beer/Wine)',  budget:5.1},
+  {id:'pcc',  l:'Paper/Catering/Cleaning', budget:1.4},
+  {id:'nab',  l:'N/A Beverage Cost',       budget:1.2},
 ];
 
-// Sync map: ops field → meeting field
-const SMAP = {
-  s_actual:'ms_act',     s_ly:'ms_ly',
-  cat_actual:'mcat_act', cat_ly:'mcat_ly',
-  rft_actual:'mrft_act', rft_ly:'mrft_ly',
-  togo_actual:'mtogo_act',togo_ly:'mtogo_ly',
-  patio_actual:'mpat_act',patio_ly:'mpat_ly',
-  lab_sales:'m_lab_s', lab_dollars:'m_lab_d', lab_pct:'m_labor', lab_proj:'m_labor_p',
-  food_sales:'m_food_sales',food_spent:'m_food_spent',food_proj:'m_food_proj',
-  lbw_sales:'m_lbw_sales',lbw_spent:'m_lbw_spent',lbw_proj:'m_lbw_proj',
-  pcc_sales:'m_pcc_sales',pcc_spent:'m_pcc_spent',pcc_proj:'m_pcc_proj',
-  nab_sales:'m_nab_sales',nab_spent:'m_nab_spent',nab_proj:'m_nab_proj',
-  ppa_actual:'m_ppa', ppa_ly:'m_ppa_ly',
-  disc_r:'m_disc_r', disc_e:'m_disc_e', disc_o:'m_disc_o',
-  loyalty:'m_loyalty', rev5:'m_rev5', rev4:'m_rev4',
-  mom_name:'m_mom', mom_wk:'m_mom_wk', mom_total:'m_mom_t',
-  mom_emp:'m_mom_win', mom_ewk:'m_mwwk', mom_etot:'m_mwtot',
-  float_wk:'m_flt_wk', float_total:'m_flt_t',
-  togo_margs:'m_togo_m', desserts:'m_desserts',
-  steak_wk:'m_steak_wk', steak_tot:'m_steak_t',
-  bhb_s:'m_bhb_s', bhb_proj:'m_bhb_proj',
-  bhb_mt:'m_bhb_mt', bhb_pc:'m_bhb_pc', bhb_ld:'m_bhb_ld',
-  bhb_br:'m_bhb_br', bhb_fp:'m_bhb_fp',
-};
-
-// ═══════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════
+/* ════ HELPERS ════ */
 const gi = id => document.getElementById(id);
-const gv = id => { const e = gi(id); return e ? e.value : ''; };
-const fD = n => (!n && n !== 0) ? '—' : '$' + Number(n).toLocaleString('en-US', {maximumFractionDigits:0});
-const fP = (a, b) => {
-  if (!a || !b || +b === 0) return null;
-  const p = ((+a - +b) / +b * 100);
-  return (p >= 0 ? '+' : '') + p.toFixed(1) + '%';
-};
-const pC = s => s ? (s.startsWith('+') ? 'pos' : 'neg') : '';
-const gIcon = c => {
-  if (!c) return '🌤️';
-  const k = c.toLowerCase();
-  for (const [n,v] of Object.entries(WX_ICONS)) if (k.includes(n)) return v;
-  return '🌤️';
-};
-function setChip(id, val, isPos) {
-  const e = gi(id); if (!e) return;
-  e.textContent = val || '—';
-  e.className = 'chip' + (val ? (isPos !== undefined ? (isPos ? ' pos' : ' neg') : (' ' + pC(val))) : '');
-}
+const gv = id => gi(id)?gi(id).value||'':'';
+const gn = id => parseFloat(gv(id))||0;
+const sv = (id,v) => { const e=gi(id); if(e) e.value=v||''; };
+const fD = n => (!n&&n!==0)||isNaN(n) ? '—' : '$'+Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+const fDz= n => n==null||isNaN(n) ? '—' : '$'+Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+const fP = n => n==null||isNaN(n) ? '—' : n.toFixed(1)+'%';
+const fN = n => (!n&&n!==0)||isNaN(n) ? '—' : Number(n).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
 
-// ═══════════════════════════════════════════════════
-// BUILD DOM — Sales table rows
-// ═══════════════════════════════════════════════════
-function buildSaleRows() {
-  const tb = gi('saleRows'); if (!tb) return;
-  tb.innerHTML = SALE_C.map(({id, l, bhb}) => {
-    const bg = bhb ? 'background:linear-gradient(90deg,#fff8f0,transparent);' : '';
-    const tc = bhb ? 'color:#7a3e00;font-weight:700' : '';
-    return `<tr style="${bg}">
-      <td class="lbl" style="${tc}">${bhb ? '🌴 ' : ''}${l}</td>
-      <td><input type="number" id="${id}_proj" oninput="calcSales()"/></td>
-      <td><input type="number" id="${id}_ly" oninput="calcSales()"/></td>
-      <td><input type="number" id="${id}_actual" oninput="calcSales();onSalesActualChange('${id}')" style="${bhb?'border-color:#e8c49a':''}"/></td>
-      <td class="sep"></td>
-      <td><input type="number" id="${id}_cproj"/></td>
-      <td><input type="number" id="${id}_cly" style="background:var(--blue-bg);border-color:var(--blue-border);" title="Auto-fills from this week's actual next week"/></td>
-      <td><div id="${id}_pct" class="chip">—</div></td>
+function chipHL(actual,ref){
+  if(!actual||!ref) return '<span class="chip nt">—</span>';
+  const p=((actual-ref)/ref)*100;
+  const c=p>=0?'up':'dn';
+  return `<span class="chip ${c}">${p>=0?'+':''}${p.toFixed(1)}%</span>`;
+}
+function chipDiff(diff,invertGood){
+  if(diff==null||isNaN(diff)) return '<span class="chip nt">—</span>';
+  const good=invertGood?diff<=0:diff>=0;
+  return `<span class="chip ${good?'up':'dn'}">${diff>=0?'+':''}${diff.toFixed(1)}%</span>`;
+}
+function txt(id,v){ const e=gi(id); if(e) e.textContent=v||'—'; }
+function html(id,v){ const e=gi(id); if(e) e.innerHTML=v||'—'; }
+
+/* ════════════════════════════════════════════════════
+   BUILD DOM
+════════════════════════════════════════════════════ */
+function buildAll(){
+  // Sales rows
+  let h='';
+  SALE_ROWS.forEach(r=>{
+    const td=r.rw?'class="rwtd"':'';
+    h+=`<tr>
+      <td ${td}>${r.l}</td>
+      <td ${td}><input type="number" id="${r.id}_lw_proj" oninput="calc()" style="width:82px"/></td>
+      <td ${td}><input type="number" id="${r.id}_lw_ly" oninput="calc()" style="width:82px"/></td>
+      <td ${td}><input type="number" id="${r.id}_lw_act" oninput="calc()" style="width:82px"/></td>
+      <td ${td} class="num" id="${r.id}_lw_vsly">—</td>
+      <td style="border:none;padding:0;width:8px"></td>
+      <td ${td}><input type="number" id="${r.id}_cw_proj" oninput="calc()" style="width:82px"/></td>
+      <td ${td}><input type="number" id="${r.id}_cw_ly" oninput="calc()" style="width:82px"/></td>
+      <td ${td}><input type="number" id="${r.id}_cw_est" oninput="calc()" style="width:82px"/></td>
     </tr>`;
-  }).join('');
-}
-
-function buildCostBoxes(cid, pfx) {
-  const c = gi(cid); if (!c) return;
-  const isMeet = !!pfx;
-  c.innerHTML = COST_C.map(({id, l}) => `
-    <div class="ccb">
-      <div style="font-size:9px;font-weight:700;margin-bottom:.3rem">${l} ${isMeet ? '<span class="badge badge-sync">← synced</span>' : '<span class="badge badge-auto">$ ÷ sales = %</span>'}</div>
-      <div class="ccr">
-        <div class="fg" style="margin-bottom:0"><label>Total Sales ($)</label><input type="number" id="${pfx||''}${id}_sales" oninput="calcCost('${pfx||''}${id}')"/></div>
-        <div class="fg" style="margin-bottom:0"><label>$ Spent</label><input type="number" id="${pfx||''}${id}_spent" step="0.01" oninput="calcCost('${pfx||''}${id}')"/></div>
-        <div class="fg" style="margin-bottom:0"><label>% Proj</label><input type="number" id="${pfx||''}${id}_proj" step="0.1" oninput="calcCost('${pfx||''}${id}')"/></div>
-        <div class="crp"><div class="cl">Actual %</div><div class="cv" id="${pfx||''}${id}_po">—</div></div>
-        <div class="crp"><div class="cl">vs Proj</div><div class="cv" id="${pfx||''}${id}_do">—</div></div>
-      </div>
-    </div>`).join('');
-}
-
-function buildMeetRows() {
-  const c = gi('mMetRows'); if (!c) return;
-  c.innerHTML = MEET_C.map(({id, l, bhb}) => {
-    const bg = bhb ? 'background:linear-gradient(90deg,#fff8f0,transparent);border-radius:3px;padding:2px 4px;' : '';
-    const tc = bhb ? 'color:#7a3e00;font-weight:700' : '';
-    return `<div style="${bg}display:grid;grid-template-columns:160px 1fr 1fr 80px;gap:5px;align-items:center;margin-bottom:4px">
-      <div style="font-size:11px;${tc}">${bhb ? '🌴 ' : ''}${l}</div>
-      <input type="number" id="${id}_act" oninput="calcMPcts()"/>
-      <input type="number" id="${id}_ly" oninput="calcMPcts()"/>
-      <div id="${id}_pct" class="chip">—</div>
-    </div>`;
-  }).join('');
-}
-
-async function buildWeather() {
-  const g = gi('wInputs'); if (!g) return;
-  // Determine week dates from weekDate field
-  const wd = gv('weekDate');
-  const ref = wd ? new Date(wd + 'T12:00:00') : new Date();
-  const dow = ref.getDay();
-  const mon = new Date(ref);
-  mon.setDate(ref.getDate() - (dow === 0 ? 6 : dow - 1));
-  const dates = Array.from({length:7}, (_, i) => {
-    const d = new Date(mon); d.setDate(mon.getDate() + i); return d;
   });
-  const fmt = d => `${DAY_SHORT[d.getDay()]} ${d.getMonth()+1}/${d.getDate()}`;
+  gi('saleRows').innerHTML=h;
 
-  g.innerHTML = '<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">' +
-    DAYS.map((day, i) => `
-      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px">
-        <div style="font-size:9px;font-weight:700;margin-bottom:2px">${fmt(dates[i])}</div>
-        <div id="wx_${day}" style="font-size:8px;color:var(--text3);margin-bottom:2px"></div>
-        <input type="text" id="wc_${day}" placeholder="Condition" style="margin-bottom:2px;font-size:10px"/>
-        <div style="display:flex;gap:2px;margin-bottom:2px">
-          <input type="number" id="wh_${day}" placeholder="H°F" style="width:50%;font-size:10px"/>
-          <input type="number" id="wl_${day}" placeholder="L°F" style="width:50%;font-size:10px"/>
+  // Cost rows
+  h='';
+  COST_ROWS.forEach(r=>{
+    h+=`<tr>
+      <td style="font-weight:600">${r.l}</td>
+      <td><input type="number" id="${r.id}_sales" oninput="calc()" style="width:82px"/></td>
+      <td><input type="number" id="${r.id}_spent" oninput="calc()" style="width:82px"/></td>
+      <td><input type="number" id="${r.id}_proj" oninput="calc()" step=".1" style="width:60px"/></td>
+      <td class="num" id="${r.id}_actual">—</td>
+      <td class="num" id="${r.id}_vsproj">—</td>
+    </tr>`;
+  });
+  gi('costRows').innerHTML=h;
+
+  // Weather grids
+  buildWx('wxGrid', true);
+  buildWx('m_wxGrid', false);
+
+  // Mgr goals
+  buildGoals('mgrGoals', true);
+  buildGoals('m_mgrGoals', false);
+
+  // Meeting table bodies
+  h='';
+  SALE_ROWS.forEach(r=>{
+    const td=r.rw?'class="rwtd"':'';
+    h+=`<tr>
+      <td ${td}>${r.l}</td>
+      <td class="num" ${td} id="m_${r.id}_act">—</td>
+      <td class="num" ${td} id="m_${r.id}_ly">—</td>
+      <td class="num" ${td} id="m_${r.id}_vsly">—</td>
+      <td class="num" ${td} id="m_${r.id}_proj">—</td>
+    </tr>`;
+  });
+  gi('m_saleRows').innerHTML=h;
+
+  h='';
+  COST_ROWS.forEach(r=>{
+    h+=`<tr>
+      <td style="font-weight:600">${r.l}</td>
+      <td class="num" id="m_${r.id}_spent">—</td>
+      <td class="num" id="m_${r.id}_actual">—</td>
+      <td class="num" id="m_${r.id}_proj">—</td>
+      <td class="num" id="m_${r.id}_vsproj">—</td>
+    </tr>`;
+  });
+  gi('m_costRows').innerHTML=h;
+
+  // Init _val
+  gi('lab_pct')._val=null;
+  COST_ROWS.forEach(r=>{ gi(`${r.id}_actual`)._val=null; });
+}
+
+function buildWx(gid, editable){
+  let h='';
+  DAYS.forEach((d,i)=>{
+    h+=`<div class="wx-day">
+      <div class="wn">${d.slice(0,3).toUpperCase()}</div>
+      <span class="wi" id="${gid}_icon_${i}">🌤</span>
+      <div class="wt" id="${gid}_temp_${i}">—</div>
+      <div class="wc" id="${gid}_cond_${i}">—</div>
+      ${editable
+        ?`<textarea id="wx_note_${i}" placeholder="Notes..." oninput="live()"></textarea>`
+        :`<div style="font-size:9px;color:var(--t3);min-height:18px;text-align:left;padding:1px 2px" id="m_wx_note_${i}"></div>`
+      }
+    </div>`;
+  });
+  gi(gid).innerHTML=h;
+}
+
+function buildGoals(gid, editable){
+  let h='';
+  if(!editable) h+='<div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:4px;padding:0 0 6px;border-bottom:1px solid var(--bdr);margin-bottom:4px"><div style="font-family:\'Oswald\',sans-serif;font-size:10px;font-weight:700;color:var(--t3)">MANAGER</div><div style="font-family:\'Oswald\',sans-serif;font-size:10px;font-weight:700;color:var(--t3)">GOAL</div><div style="font-family:\'Oswald\',sans-serif;font-size:10px;font-weight:700;color:var(--t3)">RESULT</div></div>';
+  MGR.forEach(m=>{
+    const k=m.toLowerCase();
+    if(editable){
+      h+=`<div class="fg">
+        <div class="fl">${m}</div>
+        <div class="g2">
+          <input type="text" id="goal_${k}_g" placeholder="Goal this week" oninput="live()"/>
+          <input type="text" id="goal_${k}_r" placeholder="Result / Notes" oninput="live()"/>
         </div>
-        <textarea id="wi_${day}" placeholder="Itinerary..." style="min-height:34px;font-size:9.5px"></textarea>
+      </div>`;
+    } else {
+      h+=`<div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:4px;align-items:start;padding:4px 0;border-bottom:1px solid var(--bdr)">
+        <div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:12px">${m}</div>
+        <div id="m_goal_${k}_g" style="font-size:11px;color:var(--t2)">—</div>
+        <div id="m_goal_${k}_r" style="font-size:11px;color:var(--t3)">—</div>
+      </div>`;
+    }
+  });
+  gi(gid).innerHTML=h;
+}
 
+/* ════════════════════════════════════════════════════
+   CALCULATIONS + LIVE MIRROR TO MEETING
+════════════════════════════════════════════════════ */
+function calc(){
+  // Sales totals
+  let T={lw_proj:0,lw_ly:0,lw_act:0,cw_proj:0,cw_ly:0,cw_est:0};
+  SALE_ROWS.forEach(r=>{
+    const p=gn(`${r.id}_lw_proj`),ly=gn(`${r.id}_lw_ly`),ac=gn(`${r.id}_lw_act`);
+    const cp=gn(`${r.id}_cw_proj`),cl=gn(`${r.id}_cw_ly`),ce=gn(`${r.id}_cw_est`);
+    html(`${r.id}_lw_vsly`, chipHL(ac,ly));
+    T.lw_proj+=p;T.lw_ly+=ly;T.lw_act+=ac;
+    T.cw_proj+=cp;T.cw_ly+=cl;T.cw_est+=ce;
+  });
+  txt('tot_lw_proj',fD(T.lw_proj));txt('tot_lw_ly',fD(T.lw_ly));txt('tot_lw_act',fD(T.lw_act));
+  html('tot_lw_vsly',chipHL(T.lw_act,T.lw_ly));
+  txt('tot_cw_proj',fD(T.cw_proj));txt('tot_cw_ly',fD(T.cw_ly));txt('tot_cw_est',fD(T.cw_est));
 
-  </div>`).join('') + '</div>';
+  // Labor
+  const labS=gn('lab_sales'),labD=gn('lab_dollars');
+  const labPct=labS>0?(labD/labS)*100:null;
+  gi('lab_pct').textContent=fP(labPct);
+  gi('lab_pct')._val=labPct;
 
+  // Cost %
+  COST_ROWS.forEach(r=>{
+    const s=gn(`${r.id}_sales`),sp=gn(`${r.id}_spent`),pr=gn(`${r.id}_proj`);
+    const act=s>0?(sp/s)*100:null;
+    const diff=(act!=null&&pr>0)?act-pr:null;
+    gi(`${r.id}_actual`).innerHTML=act!=null?fP(act):'—';
+    gi(`${r.id}_actual`)._val=act;
+    gi(`${r.id}_vsproj`).innerHTML=diff!=null?chipDiff(diff,true):'—';
+  });
 
-// Fetch weather for Acworth, GA
-const ws = gi(‘wx_status’);
-if (ws) ws.textContent = ‘fetching weather…’;
-try {
-const sd = dates[0].toISOString().split(‘T’)[0];
-const ed = dates[6].toISOString().split(‘T’)[0];
-const url = `https://api.open-meteo.com/v1/forecast?latitude=34.0659&longitude=-84.6588&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America%2FNew_York&start_date=${sd}&end_date=${ed}`;
-const data = await fetch(url).then(r => r.json());
-const wmoStr = c => {
-if (c===0) return ‘Sunny’; if (c<=2) return ‘Partly Cloudy’; if (c===3) return ‘Cloudy’;
-if (c<=49) return ‘Foggy’; if (c<=57) return ‘Small Rain’; if (c<=67) return ‘Rain’;
-if (c<=77) return ‘Snow’; if (c<=82) return ‘Small Rain’; return ‘Stormy’;
-};
-DAYS.forEach((day, i) => {
-const wc = gi(‘wc_’ + day), wh = gi(‘wh_’ + day), wl = gi(‘wl_’ + day);
-if (wc && !wc.value) wc.value = wmoStr(data.daily.weathercode[i] || 0);
-if (wh && !wh.value) wh.value = Math.round(data.daily.temperature_2m_max[i] || 0);
-if (wl && !wl.value) wl.value = Math.round(data.daily.temperature_2m_min[i] || 0);
+  // BHB
+  html('bhb_vsproj',chipHL(gn('bhb_s'),gn('bhb_proj')));
+
+  // Mirror all to meeting
+  mirrorMeeting();
+  scheduleSave();
+}
+
+function live(){ mirrorMeeting(); scheduleSave(); }
+
+function mirrorMeeting(){
+  // Week label
+  const d=gv('weekDate');
+  if(d){
+    const dt=new Date(d+'T12:00:00'),en=new Date(dt);en.setDate(dt.getDate()+6);
+    const f=x=>x.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    txt('m_weekLabel',`${f(dt)} – ${f(en)}, ${dt.getFullYear()}`);
+  }
+
+  // Sales
+  SALE_ROWS.forEach(r=>{
+    txt(`m_${r.id}_act`, fD(gn(`${r.id}_lw_act`)));
+    txt(`m_${r.id}_ly`,  fD(gn(`${r.id}_lw_ly`)));
+    html(`m_${r.id}_vsly`, chipHL(gn(`${r.id}_lw_act`),gn(`${r.id}_lw_ly`)));
+    txt(`m_${r.id}_proj`, fD(gn(`${r.id}_lw_proj`)));
+  });
+
+  // Guest / PPA
+  txt('m_gst', fN(gn('gst_actual')));
+  txt('m_ppa', fDz(gn('ppa_actual')));
+  html('m_ppa_vs', chipHL(gn('ppa_actual'),gn('ppa_ly')));
+  txt('m_loyalty', gn('loyalty')||'—');
+
+  // Labor
+  txt('m_lab_d',    fDz(gn('lab_dollars')));
+  txt('m_lab_pct',  gi('lab_pct')._val!=null?fP(gi('lab_pct')._val):'—');
+  txt('m_lab_proj', gn('lab_proj')?fP(gn('lab_proj')):'—');
+  txt('m_lab_budget',gn('lab_budget')?fP(gn('lab_budget')):'—');
+
+  // Cost %
+  COST_ROWS.forEach(r=>{
+    const act=gi(`${r.id}_actual`)._val;
+    const pr=gn(`${r.id}_proj`);
+    const diff=(act!=null&&pr>0)?act-pr:null;
+    txt(`m_${r.id}_spent`,  fDz(gn(`${r.id}_spent`)));
+    txt(`m_${r.id}_actual`, act!=null?fP(act):'—');
+    txt(`m_${r.id}_proj`,   pr?fP(pr):'—');
+    html(`m_${r.id}_vsproj`,diff!=null?chipDiff(diff,true):'—');
+  });
+
+  // Discounts
+  txt('m_disc_r',fDz(gn('disc_r')));txt('m_disc_e',fDz(gn('disc_e')));txt('m_disc_o',fDz(gn('disc_o')));
+
+  // Mix
+  txt('m_togo_m',  gn('togo_margs')||'—');
+  txt('m_desserts',gn('desserts')||'—');
+  txt('m_rev5',    gn('rev5')||'—');
+  txt('m_rev4',    gn('rev4')||'—');
+  txt('m_rev_total',gn('rev_total')||'—');
+  txt('m_rev_rating',gn('rev_rating')||'—');
+
+  // BHB
+  txt('m_bhb_s',   fD(gn('bhb_s')));
+  html('m_bhb_proj',chipHL(gn('bhb_s'),gn('bhb_proj')));
+  txt('m_bhb_labp',gn('bhb_labp')?fP(gn('bhb_labp')):'—');
+  txt('m_bhb_mt',  gn('bhb_mt')||'—');
+  txt('m_bhb_pc',  gn('bhb_pc')||'—');
+  txt('m_bhb_ld',  gn('bhb_ld')||'—');
+  txt('m_bhb_br',  gn('bhb_br')||'—');
+  txt('m_bhb_fp',  gn('bhb_fp')||'—');
+
+  // Recognition
+  txt('m_mom',      gv('mom_name')||'—');
+  txt('m_mom_wk',   fDz(gn('mom_wk')));
+  txt('m_mom_total',fDz(gn('mom_total')));
+  txt('m_eom',      gv('eom_name')||'—');
+  txt('m_eom_wk',   fDz(gn('eom_wk')));
+  txt('m_eom_total',fDz(gn('eom_total')));
+  txt('m_float_wk', fDz(gn('float_wk')));
+  txt('m_float_total',fDz(gn('float_total')));
+  txt('m_sl_wk',   fDz(gn('sl_wk')));
+  txt('m_sl_total',fDz(gn('sl_total')));
+
+  // Goals
+  MGR.forEach(m=>{
+    const k=m.toLowerCase();
+    txt(`m_goal_${k}_g`,gv(`goal_${k}_g`)||'—');
+    txt(`m_goal_${k}_r`,gv(`goal_${k}_r`)||'—');
+  });
+
+  // Weather mirror
+  DAYS.forEach((d,i)=>{
+    const cp=(srcId,dstId)=>{ const e=gi(srcId); if(e&&gi(dstId)) gi(dstId).textContent=e.textContent||'—'; };
+    cp(`wxGrid_icon_${i}`,`m_wxGrid_icon_${i}`);
+    cp(`wxGrid_temp_${i}`,`m_wxGrid_temp_${i}`);
+    cp(`wxGrid_cond_${i}`,`m_wxGrid_cond_${i}`);
+    const ne=gi(`m_wx_note_${i}`);
+    if(ne) ne.textContent=gv(`wx_note_${i}`)||'';
+  });
+
+  // Notes
+  ['boh','foh','mgr','feedback','followup'].forEach(f=>{ txt(`m_notes_${f}`,gv(`notes_${f}`)||'—'); });
+}
+
+/* ════════════════════════════════════════════════════
+   WEEK DATE / LABEL
+════════════════════════════════════════════════════ */
+function updateLabel(){
+  const d=gv('weekDate');
+  if(!d){gi('weekLabel').textContent='';return;}
+  const dt=new Date(d+'T12:00:00'),en=new Date(dt);en.setDate(dt.getDate()+6);
+  const f=x=>x.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  gi('weekLabel').textContent=`${f(dt)} – ${f(en)}`;
+}
+
+async function onDateChange(){
+  updateLabel();
+  // Try to load saved data for this week
+  const key=weekKey();
+  if(!key) return;
+  const raw=localStorage.getItem(key);
+  if(raw){
+    try{ restoreData(JSON.parse(raw)); calc(); fetchWeather(); return; }catch(e){}
+  }
+  // Not found → try carry from last week
+  const dt=new Date(gv('weekDate')+'T12:00:00');
+  const prevDt=new Date(dt);prevDt.setDate(dt.getDate()-7);
+  await autoCarry('hl_week_'+prevDt.toISOString().split('T')[0]);
+  fetchWeather();
+}
+
+async function autoCarry(prevKey){
+  let data=null;
+  const raw=localStorage.getItem(prevKey);
+  if(raw) try{data=JSON.parse(raw);}catch(e){}
+  if(!data) return;
+  let carried=false;
+  // Carry last week actuals → this week LW Last Year fields (if blank)
+  SALE_ROWS.forEach(r=>{
+    const lyEl=gi(`${r.id}_lw_ly`);
+    if(lyEl&&!lyEl.value&&data[`${r.id}_lw_act`]){
+      lyEl.value=data[`${r.id}_lw_act`]; carried=true;
+    }
+    const cwLyEl=gi(`${r.id}_cw_ly`);
+    if(cwLyEl&&!cwLyEl.value&&data[`${r.id}_cw_est`]){
+      cwLyEl.value=data[`${r.id}_cw_est`]; carried=true;
+    }
+  });
+  if(carried){
+    calc();
+    const n=gi('carryNote');
+    n.classList.add('show');setTimeout(()=>n.classList.remove('show'),4500);
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   DATA GATHER / RESTORE
+════════════════════════════════════════════════════ */
+function gatherData(){
+  const d={_v:4,_wd:gv('weekDate'),_ts:Date.now()};
+  document.querySelectorAll('input[id],textarea[id]').forEach(el=>{
+    if(el.id&&!el.id.startsWith('_')) d[el.id]=el.value;
+  });
+  return d;
+}
+
+function restoreData(d){
+  if(!d) return;
+  Object.keys(d).forEach(k=>{
+    if(k.startsWith('_')) return;
+    const el=gi(k);
+    if(el&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA')) el.value=d[k]||'';
+  });
+  if(d._wd) sv('weekDate',d._wd);
+}
+
+/* ════════════════════════════════════════════════════
+   SAVE / LOAD
+════════════════════════════════════════════════════ */
+function weekKey(){ const d=gv('weekDate'); return d?'hl_week_'+d:null; }
+
+function saveIdx(key){
+  let idx=JSON.parse(localStorage.getItem('hl_week_index')||'[]');
+  if(!idx.includes(key)) idx.unshift(key);
+  idx=[...new Set(idx)].sort((a,b)=>b.localeCompare(a)).slice(0,104);
+  localStorage.setItem('hl_week_index',JSON.stringify(idx));
+}
+
+let _saveTimer=null;
+function scheduleSave(){
+  clearTimeout(_saveTimer);
+  _saveTimer=setTimeout(()=>{
+    const key=weekKey();if(!key) return;
+    const d=gatherData();
+    localStorage.setItem(key,JSON.stringify(d));
+    saveIdx(key);
+    cloudPush();
+  },1000);
+}
+
+async function saveWeek(){
+  const key=weekKey();
+  if(!key){alert('Select a week date first.');return;}
+  const d=gatherData();
+  localStorage.setItem(key,JSON.stringify(d));
+  saveIdx(key);
+  setSS('saving');
+  const ok=await cloudPush();
+  setSS(ok?'ok':'err');
+  const n=gi('savedNote');n.classList.add('show');setTimeout(()=>n.classList.remove('show'),3000);
+  renderHist();
+}
+
+async function loadWeek(){
+  const key=weekKey();if(!key) return;
+  const raw=localStorage.getItem(key);
+  if(raw){try{restoreData(JSON.parse(raw));calc();fetchWeather();return;}catch(e){}}
+  // Try cloud
+  setSS('loading');
+  const ok=await cloudPull();
+  setSS(ok?'ok':'err');
+  const raw2=localStorage.getItem(key);
+  if(raw2){try{restoreData(JSON.parse(raw2));calc();fetchWeather();}catch(e){}}
+}
+
+function clearFields(){
+  if(!confirm('Clear all fields? Saved data is not deleted.')) return;
+  document.querySelectorAll('input[id],textarea[id]').forEach(el=>{
+    if(el.id==='weekDate') return; el.value='';
+  });
+  gi('lab_pct').textContent='—';gi('lab_pct')._val=null;
+  COST_ROWS.forEach(r=>{gi(`${r.id}_actual`).innerHTML='—';gi(`${r.id}_actual`)._val=null;gi(`${r.id}_vsproj`).innerHTML='—';});
+  SALE_ROWS.forEach(r=>{html(`${r.id}_lw_vsly`,'—');});
+  mirrorMeeting();
+}
+
+/* ════════════════════════════════════════════════════
+   CLOUD SYNC via JSONbin.io
+   Free tier: 10k reads + 10k writes/month.
+   Data: one bin stores all weeks for Huey Luey's Acworth.
+   On first save, bin created → ID stored in localStorage.
+   On any computer: Pull syncs from cloud to local.
+════════════════════════════════════════════════════ */
+const _BK='hl_jbin_id';
+let _binId=localStorage.getItem(_BK)||null;
+
+async function cloudPush(){
+  try{
+    const idx=JSON.parse(localStorage.getItem('hl_week_index')||'[]');
+    const payload={_r:'HLAcworth',_u:Date.now(),index:idx};
+    idx.slice(0,52).forEach(k=>{
+      const r=localStorage.getItem(k);
+      if(r) try{payload[k]=JSON.parse(r);}catch(e){}
+    });
+    let res;
+    if(!_binId){
+      res=await fetch('https://api.jsonbin.io/v3/b',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','X-Bin-Name':'HL-Acworth-OpsV4','X-Private':'false'},
+        body:JSON.stringify(payload)
+      });
+    } else {
+      res=await fetch(`https://api.jsonbin.io/v3/b/${_binId}`,{
+        method:'PUT',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload)
+      });
+    }
+    if(res.ok){
+      const j=await res.json();
+      if(!_binId&&j.metadata){
+        _binId=j.metadata.id;
+        localStorage.setItem(_BK,_binId);
+      }
+      return true;
+    }
+    return false;
+  }catch(e){return false;}
+}
+
+async function cloudPull(){
+  if(!_binId) return false;
+  try{
+    const res=await fetch(`https://api.jsonbin.io/v3/b/${_binId}/latest`);
+    if(!res.ok) return false;
+    const j=await res.json();
+    const p=j.record;if(!p) return false;
+    if(p.index){
+      localStorage.setItem('hl_week_index',JSON.stringify(p.index));
+      p.index.forEach(k=>{ if(p[k]) localStorage.setItem(k,JSON.stringify(p[k])); });
+    }
+    return true;
+  }catch(e){return false;}
+}
+
+function setSS(state){
+  const e=gi('syncBadge');if(!e) return;
+  e.className='ss';
+  if(state==='ok'){e.classList.add('ss-ok');e.textContent='☁ Synced';}
+  else if(state==='err'){e.classList.add('ss-err');e.textContent='⚠ Sync Failed — Saved Locally';}
+  else if(state==='saving'){e.classList.add('ss-busy');e.textContent='↑ Saving...';}
+  else if(state==='loading'){e.classList.add('ss-busy');e.textContent='↓ Loading from Cloud...';}
+}
+
+/* ════════════════════════════════════════════════════
+   EXPORT / IMPORT
+════════════════════════════════════════════════════ */
+function exportJSON(){
+  const idx=JSON.parse(localStorage.getItem('hl_week_index')||'[]');
+  const out={version:4,exported:new Date().toISOString(),binId:_binId,weeks:{}};
+  idx.forEach(k=>{ const r=localStorage.getItem(k); if(r) try{out.weeks[k]=JSON.parse(r);}catch(e){} });
+  const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='HLAcworth_Ops_'+new Date().toISOString().split('T')[0]+'.json';a.click();
+}
+
+function importJSON(e){
+  const file=e.target.files[0];if(!file) return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const all=JSON.parse(ev.target.result);
+      let count=0;
+      if(all.weeks){
+        Object.keys(all.weeks).forEach(k=>{ localStorage.setItem(k,JSON.stringify(all.weeks[k]));count++; });
+        let idx=JSON.parse(localStorage.getItem('hl_week_index')||'[]');
+        Object.keys(all.weeks).forEach(k=>{ if(!idx.includes(k)) idx.push(k); });
+        idx.sort((a,b)=>b.localeCompare(a));
+        localStorage.setItem('hl_week_index',JSON.stringify(idx));
+      }
+      if(all.binId&&!_binId){_binId=all.binId;localStorage.setItem(_BK,_binId);}
+      renderHist();
+      alert(`✓ Imported ${count} week${count!==1?'s':''}.`);
+    }catch(err){alert('Error reading file.');}
+  };
+  r.readAsText(file);e.target.value='';
+}
+
+/* ════════════════════════════════════════════════════
+   HISTORY
+════════════════════════════════════════════════════ */
+function renderHist(){
+  const idx=JSON.parse(localStorage.getItem('hl_week_index')||'[]');
+  const el=gi('histList');
+  if(!idx.length){el.innerHTML='<p style="color:var(--t3);font-size:12px;padding:8px 0">No saved weeks yet.</p>';return;}
+  let h='';
+  idx.forEach(key=>{
+    const raw=localStorage.getItem(key);
+    let sales='',saved='';
+    if(raw) try{
+      const d=JSON.parse(raw);
+      const ac=parseFloat(d.s_lw_act);if(ac) sales=fD(ac)+' LW sales';
+      if(d._ts) saved='Saved '+new Date(d._ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    }catch(e){}
+    h+=`<div class="hi">
+      <div><div class="hi-d">Week of ${key.replace('hl_week_','')}</div><div class="hi-m">${sales}${sales&&saved?' · ':''}${saved}</div></div>
+      <div style="display:flex;gap:5px">
+        <button class="btn xs" onclick="loadHistWeek('${key}')">Load</button>
+        <button class="btn xs dk" onclick="delHistWeek('${key}')">Delete</button>
+      </div>
+    </div>`;
+  });
+  el.innerHTML=h;
+}
+
+function loadHistWeek(key){
+  const raw=localStorage.getItem(key);
+  if(!raw){alert('Week not in this browser. Use Export/Import to transfer data.');return;}
+  try{
+    const d=JSON.parse(raw);
+    sv('weekDate',d._wd||key.replace('hl_week_',''));
+    updateLabel();restoreData(d);calc();fetchWeather();showTab('ops',null,0);
+  }catch(e){alert('Error loading week.');}
+}
+
+function delHistWeek(key){
+  if(!confirm('Remove from history on this device?')) return;
+  localStorage.removeItem(key);
+  let idx=JSON.parse(localStorage.getItem('hl_week_index')||'[]');
+  idx=idx.filter(k=>k!==key);localStorage.setItem('hl_week_index',JSON.stringify(idx));
+  renderHist();
+}
+
+/* ════════════════════════════════════════════════════
+   WEATHER — Open-Meteo API, Acworth GA
+════════════════════════════════════════════════════ */
+const WX_I={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',80:'🌦',81:'🌧',82:'🌧',95:'⛈',96:'⛈',99:'⛈'};
+const WX_C={0:'Clear',1:'Mostly Clear',2:'Partly Cloudy',3:'Overcast',45:'Foggy',48:'Foggy',51:'Light Drizzle',53:'Drizzle',55:'Heavy Drizzle',61:'Light Rain',63:'Rain',65:'Heavy Rain',80:'Showers',81:'Heavy Showers',82:'Violent Showers',95:'Thunderstorm',96:'Hail',99:'Severe Storm'};
+
+async function fetchWeather(){
+  const d=gv('weekDate');
+  const sd=d?new Date(d+'T12:00:00'):new Date();
+  // Snap to Monday
+  if(!d){const dow=(sd.getDay()+6)%7;sd.setDate(sd.getDate()-dow);}
+  const ed=new Date(sd);ed.setDate(sd.getDate()+6);
+  const fmt=x=>x.toISOString().split('T')[0];
+  try{
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=34.0607&longitude=-84.6775&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America/New_York&start_date=${fmt(sd)}&end_date=${fmt(ed)}&forecast_days=16`;
+    const res=await fetch(url);const data=await res.json();
+    const {weathercode,temperature_2m_max,temperature_2m_min}=data.daily;
+    DAYS.forEach((day,i)=>{
+      const code=weathercode[i],hi=Math.round(temperature_2m_max[i]),lo=Math.round(temperature_2m_min[i]);
+      const setEl=(id,v)=>{ const e=gi(id);if(e) e.textContent=v; };
+      setEl(`wxGrid_icon_${i}`,WX_I[code]||'🌤');
+      setEl(`wxGrid_temp_${i}`,`${hi}° / ${lo}°F`);
+      setEl(`wxGrid_cond_${i}`,WX_C[code]||'—');
+    });
+    mirrorMeeting();
+  }catch(e){ console.warn('Weather fetch failed',e); }
+}
+
+/* ════════════════════════════════════════════════════
+   PRINT
+════════════════════════════════════════════════════ */
+function doPrint(which){
+  mirrorMeeting();
+  const orig=document.title;
+  gi('printTitle').textContent="Huey Luey's Mexican Kitchen — Acworth";
+  gi('printSub').textContent=which==='ops'?'Weekly Operations Report':'Weekly Manager Meeting';
+  document.body.className=`print-${which}`;
+  document.title=gi('printSub').textContent;
+  window.print();
+  setTimeout(()=>{document.body.className='';document.title=orig;},600);
+}
+
+/* ════════════════════════════════════════════════════
+   TABS
+════════════════════════════════════════════════════ */
+function showTab(tab,btnEl,idx){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  gi('sec-'+tab).classList.add('active');
+  if(btnEl) btnEl.classList.add('active');
+  else{ const tabs=document.querySelectorAll('.tab');const i=idx!==undefined?idx:tab==='ops'?0:tab==='meet'?1:2;if(tabs[i])tabs[i].classList.add('active'); }
+  if(tab==='meet') mirrorMeeting();
+  if(tab==='hist') renderHist();
+}
+
+/* ════════════════════════════════════════════════════
+   KEYBOARD SHORTCUT
+════════════════════════════════════════════════════ */
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveWeek();}
 });
-if (ws) ws.textContent = ‘✓ Weather auto-filled for Acworth, GA’;
-} catch (e) {
-if (ws) ws.textContent = ‘(enter manually — weather unavailable)’;
-}
-}
 
-// ═══════════════════════════════════════════════════
-// CALCULATIONS
-// ═══════════════════════════════════════════════════
-function calcSales() {
-SALE_C.forEach(({id}) => {
-const p = fP(gv(id + ‘_actual’), gv(id + ‘_ly’));
-setChip(id + ‘_pct’, p);
-});
-setChip(‘gc_pct’, fP(gv(‘gc_actual’), gv(‘gc_ly’)));
-setChip(‘ppa_pct’, fP(gv(‘ppa_actual’), gv(‘ppa_ly’)));
-}
+/* ════════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════════ */
+async function init(){
+  buildAll();
 
-function onSalesActualChange(id) {
-if (id === ‘s’) { syncLabSales(); }
-}
+  // Set to this week's Monday
+  const today=new Date(),mon=new Date(today);
+  mon.setDate(today.getDate()-((today.getDay()+6)%7));
+  sv('weekDate',mon.toISOString().split('T')[0]);
+  updateLabel();
 
-function syncLabSales() {
-const v = gv(‘s_actual’);
-const e = gi(‘lab_sales’); if (e && v) { e.value = v; calcLabor(); }
-COST_C.forEach(({id}) => { const el = gi(id + ‘_sales’); if (el && !el.dataset.manual) el.value = v || ‘’; calcCost(id); });
-}
+  // Pull cloud data first (syncs other devices' saves down)
+  if(_binId){
+    setSS('loading');
+    const ok=await cloudPull();
+    setSS(ok?'ok':'err');
+  } else {
+    setSS('ok');
+  }
 
-function calcCost(fid) {
-const s = +gv(fid + ‘_sales’) || 0;
-const sp = +gv(fid + ‘_spent’) || 0;
-const pr = +gv(fid + ‘_proj’) || 0;
-const po = gi(fid + ‘_po’), dout = gi(fid + ‘_do’);
-if (!s || !sp) {
-if (po) po.textContent = ‘—’;
-if (dout) { dout.textContent = ‘—’; dout.style.color = ‘’; }
-return;
-}
-const pct = (sp / s) * 100;
-if (po) po.textContent = pct.toFixed(2) + ‘%’;
-if (pr && dout) {
-const d = pct - pr;
-dout.textContent = (d > 0 ? ‘+’ : ‘’) + d.toFixed(2) + ‘pp’;
-dout.style.color = d > 0 ? ‘var(–red)’ : ‘var(–green)’;
-} else if (dout) { dout.textContent = ‘—’; dout.style.color = ‘’; }
+  // Load this week
+  const key=weekKey();
+  const raw=key?localStorage.getItem(key):null;
+  if(raw){try{restoreData(JSON.parse(raw));calc();}catch(e){}}
+
+  // Weather always auto-fetches for current week
+  fetchWeather();
+  renderHist();
 }
 
-function calcLabor() {
-const s = +gv(‘lab_sales’) || 0, d = +gv(‘lab_dollars’) || 0;
-const p = +gv(‘lab_pct’) || 0, pr = +gv(‘lab_proj’) || 0;
-let base = 0, src = ‘’;
-if (d && s) { base = (d / s) * 100; src = fD(d) + ’ ÷ ’ + fD(s); }
-else if (p) { base = p; src = ‘from % entered’; }
-const res = gi(‘laborRes’); if (!base) { if (res) res.style.display = ‘none’; return; }
-if (res) res.style.display = ‘grid’;
-if (d && s && !p) { const el = gi(‘lab_pct’); if (el) el.value = base.toFixed(2); }
-const wt = base * (1 + TAX);
-gi(‘lr_base’).textContent = base.toFixed(2) + ‘%’; gi(‘lr_bs’).textContent = src;
-gi(‘lr_tax’).textContent = wt.toFixed(2) + ‘%’;
-const e3 = gi(‘lr_proj’);
-if (pr && e3) {
-const dv = wt - pr;
-e3.textContent = (dv > 0 ? ‘+’ : ‘’) + dv.toFixed(2) + ‘pp’;
-e3.className = ’lv ’ + (dv > 0 ? ‘neg’ : ‘pos’);
-gi(‘lr_ps’).textContent = ’vs proj ’ + pr + ‘%’;
-} else if (e3) { e3.textContent = ‘—’; e3.className = ‘lv’; }
-}
-
-function calcMLab() {
-const s = +gv(‘m_lab_s’) || 0, d = +gv(‘m_lab_d’) || 0;
-const p = +gv(‘m_labor’) || 0, pr = +gv(‘m_labor_p’) || 0;
-let base = 0, src = ‘’;
-if (d && s) { base = (d / s) * 100; src = fD(d) + ’ ÷ ’ + fD(s); }
-else if (p) { base = p; src = ‘from % entered’; }
-const res = gi(‘mLaborRes’); if (!base) { if (res) res.style.display = ‘none’; return; }
-if (res) res.style.display = ‘grid’;
-const wt = base * (1 + TAX);
-gi(‘ml_base’).textContent = base.toFixed(2) + ‘%’; gi(‘ml_bs’).textContent = src;
-gi(‘ml_tax’).textContent = wt.toFixed(2) + ‘%’;
-const e3 = gi(‘ml_proj’);
-if (pr && e3) {
-const dv = wt - pr;
-e3.textContent = (dv > 0 ? ‘+’ : ‘’) + dv.toFixed(2) + ‘pp’;
-e3.className = ’lv ’ + (dv > 0 ? ‘neg’ : ‘pos’);
-gi(‘ml_ps’).textContent = ’vs proj ’ + pr + ‘%’;
-} else if (e3) { e3.textContent = ‘—’; e3.className = ‘lv’; }
-}
-
-function calcMPcts() {
-MEET_C.forEach(({id}) => {
-const p = fP(gv(id + ‘_act’), gv(id + ‘_ly’));
-setChip(id + ‘_pct’, p);
-});
-setChip(‘m_ppa_pct’, fP(gv(‘m_ppa’), gv(‘m_ppa_ly’)));
-// Discounts total
-const t = (+gv(‘m_disc_r’)||0) + (+gv(‘m_disc_e’)||0) + (+gv(‘m_disc_o’)||0);
-const dt = gi(‘m_disc_t’); if (dt) dt.textContent = t > 0 ? fD(t) : ‘—’;
-}
-
-function calcDisc() {
-const t = (+gv(‘disc_r’)||0) + (+gv(‘disc_e’)||0) + (+gv(‘disc_o’)||0);
-const e = gi(‘disc_t’); if (e) e.textContent = t > 0 ? fD(t) : ‘—’;
-}
-
-function calcBHB() {
-const ids = [‘bhb_mt’,‘bhb_pc’,‘bhb_ld’,‘bhb_br’,‘bhb_fp’];
-const tot = ids.reduce((s, id) => s + (+gv(id)||0), 0);
-const tc = gi(‘bhb_tot’);
-if (tc) { tc.style.display = tot > 0 ? ‘inline-block’ : ‘none’; tc.textContent = tot + ’ items sold’; }
-const p = fP(gv(‘bhb_s’), gv(‘bhb_ly’));
-const vc = gi(‘bhb_vsly’);
-if (vc) { vc.textContent = p || ‘—’; vc.className = ‘chip’ + (p ? ’ ’ + pC(p) : ‘’); }
-}
-
-function calcMBHB() {
-const p = fP(gv(‘m_bhb_s’), gv(‘m_bhb_proj’)); // Meeting shows vs proj
-const e = gi(‘m_bhb_vsly’);
-if (e) { e.textContent = p ? p + ’ vs Proj’ : ‘—’; e.className = ‘chip’ + (p ? ’ ’ + pC(p) : ‘’); }
-}
-
-// ═══════════════════════════════════════════════════
-// WEEK MANAGEMENT & AUTO-CARRY
-// ═══════════════════════════════════════════════════
-function onWeekChange() {
-const date = gv(‘weekDate’);
-if (!date) return;
-// Update week range label
-updateWeekLabel(date);
-// Auto-carry: last week actuals → this week LY columns
-const wks = getWeeks();
-if (!wks.length) { autosave(); return; }
-const prev = wks[0]; // most recent saved week
-let carried = false;
-
-// Main sales carry: prev actual → this week LY
-SALE_C.forEach(({id}) => {
-const ly = gi(id + ‘_ly’);
-if (prev[id + ‘_actual’] && ly && !ly.value) {
-ly.value = prev[id + ‘_actual’];
-ly.classList.add(‘auto-filled’);
-carried = true;
-}
-// Current week LY → comes from prev current week proj (the projection becomes LY next week)
-const cly = gi(id + ‘_cly’);
-if (prev[id + ‘_cproj’] && cly && !cly.value) {
-cly.value = prev[id + ‘_cproj’];
-cly.classList.add(‘auto-filled’);
-}
-});
-// Guest count carry
-const gcLY = gi(‘gc_ly’);
-if (prev.gc_actual && gcLY && !gcLY.value) { gcLY.value = prev.gc_actual; gcLY.classList.add(‘auto-filled’); carried = true; }
-// PPA carry
-const ppaLY = gi(‘ppa_ly’);
-if (prev.ppa_actual && ppaLY && !ppaLY.value) { ppaLY.value = prev.ppa_actual; ppaLY.classList.add(‘auto-filled’); carried = true; }
-
-if (carried) {
-const n = gi(‘carryNote’); if (n) n.style.display = ‘block’;
-calcSales();
-}
-autosave();
-}
-
-function updateWeekLabel(date) {
-const el = gi(‘weekRangeLabel’); if (!el || !date) return;
-const d = new Date(date + ‘T12:00:00’);
-const dow = d.getDay();
-const mon = new Date(d); mon.setDate(d.getDate() - (dow === 0 ? 6 : dow - 1));
-const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
-const fmt = x => `${x.getMonth()+1}/${x.getDate()}/${x.getFullYear()}`;
-el.textContent = fmt(mon) + ’ \u2013 ’ + fmt(sun);
-}
-
-// ═══════════════════════════════════════════════════
-// SYNC OPS → MEETING
-// ═══════════════════════════════════════════════════
-function pushToMeeting() {
-if (gi(‘meeting-form’).style.display === ‘none’) showNewMeet();
-document.querySelectorAll(‘input.synced’).forEach(e => e.classList.remove(‘synced’));
-let n = 0;
-Object.entries(SMAP).forEach(([src, dst]) => {
-const se = gi(src), de = gi(dst);
-if (se && de && se.value) { de.value = se.value; de.classList.add(‘synced’); n++; }
-});
-calcMPcts(); calcMLab(); calcMBHB();
-COST_C.forEach(({id}) => calcCost(‘m_’ + id));
-const b = gi(‘m_sync_banner’); if (b) b.style.display = ‘block’;
-const sn = gi(‘syncNote’);
-if (sn) { sn.textContent = ‘✓ ’ + n + ’ fields synced to Manager Meeting.’; sn.style.display = ‘block’; }
-// Auto-set meeting date and week range
-const md = gi(‘m_date’); if (md && !md.value) md.value = gv(‘weekDate’);
-const mw = gi(‘m_week’);
-if (mw && !mw.value) {
-const wd = gv(‘weekDate’);
-if (wd) {
-const d = new Date(wd + ‘T12:00:00’);
-const dow = d.getDay();
-const mon = new Date(d); mon.setDate(d.getDate() - (dow === 0 ? 6 : dow - 1));
-const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
-const fmt = x => `${x.getMonth()+1}/${x.getDate()}/${x.getFullYear()}`;
-mw.value = fmt(mon) + ’ \u2013 ’ + fmt(sun);
-}
-}
-showTab(‘meet’, null);
-gi(‘meeting-list’).style.display = ‘none’;
-gi(‘meeting-detail’).style.display = ‘none’;
-gi(‘meeting-form’).style.display = ‘block’;
-}
-
-// ═══════════════════════════════════════════════════
-// DATA PERSISTENCE
-// ═══════════════════════════════════════════════════
-function getData() { try { return JSON.parse(localStorage.getItem(DB_KEY) || ‘{}’); } catch { return {}; } }
-function setData(d) { try { localStorage.setItem(DB_KEY, JSON.stringify(d)); } catch(e) {} }
-function getWeeks() { return getData().weeks || []; }
-function getMeets() { return getData().meets || []; }
-function saveWks(w) { const d = getData(); d.weeks = w; setData(d); }
-function saveMts(m) { const d = getData(); d.meets = m; setData(d); }
-
-// All ops field IDs
-const ONUMS = [‘s_proj’,‘s_ly’,‘s_actual’,‘s_cproj’,‘s_cly’,‘cat_proj’,‘cat_ly’,‘cat_actual’,‘cat_cproj’,‘cat_cly’,‘rft_proj’,‘rft_ly’,‘rft_actual’,‘rft_cproj’,‘rft_cly’,‘togo_proj’,‘togo_ly’,‘togo_actual’,‘togo_cproj’,‘togo_cly’,‘patio_proj’,‘patio_ly’,‘patio_actual’,‘patio_cproj’,‘patio_cly’,‘gc_proj’,‘gc_ly’,‘gc_actual’,‘gc_cproj’,‘gc_cly’,‘ppa_proj’,‘ppa_ly’,‘ppa_actual’,‘ppa_cproj’,‘ppa_cly’,‘lab_sales’,‘lab_dollars’,‘lab_pct’,‘lab_proj’,‘food_sales’,‘food_spent’,‘food_proj’,‘lbw_sales’,‘lbw_spent’,‘lbw_proj’,‘pcc_sales’,‘pcc_spent’,‘pcc_proj’,‘nab_sales’,‘nab_spent’,‘nab_proj’,‘disc_r’,‘disc_e’,‘disc_o’,‘splh_proj’,‘splh_actual’,‘splh_cproj’,‘ot_sched’,‘ot_actual’,‘ot_curr’,‘rev5’,‘rev4’,‘loyalty’,‘mom_wk’,‘mom_total’,‘mom_ewk’,‘mom_etot’,‘bhb_s’,‘bhb_ly’,‘bhb_proj’,‘bhb_mt’,‘bhb_pc’,‘bhb_ld’,‘bhb_br’,‘bhb_fp’,‘togo_margs’,‘marg16’,‘marg22’,‘marg32’,‘pitchers’,‘float_wk’,‘float_total’,‘mimosas’,‘mim_fl’,‘brunch’,‘top_marg_qty’,‘top_food_qty’,‘desserts’,‘kids’,‘bighuey’,‘fajitas’,‘faj_dur’,‘faj_hue’,‘faj_bac’,‘steak_wk’,‘steak_tot’];
-const OTXTS = [‘gm_hrs’,‘walkthroughs’,‘training’,‘projects’,‘marketing’,‘mom_name’,‘mom_emp’,‘top_marg_name’,‘top_food_name’];
-
-function getOpsData() {
-const d = {};
-ONUMS.forEach(f => { const e = gi(f); if (e) d[f] = e.value; });
-OTXTS.forEach(f => { const e = gi(f); if (e) d[f] = e.value; });
-// Computed fields for history
-const b = +gv(‘lab_pct’) || 0;
-if (b) d.lab_wtax = (b * (1 + TAX)).toFixed(2);
-COST_C.forEach(({id}) => {
-const sp = +gv(id + ‘_spent’) || 0, sa = +gv(id + ‘_sales’) || 0;
-if (sp && sa) d[id + ‘_pct_calc’] = ((sp / sa) * 100).toFixed(2);
-});
-return d;
-}
-
-function setOpsData(data) {
-ONUMS.forEach(f => { const e = gi(f); if (e) e.value = data[f] || ‘’; });
-OTXTS.forEach(f => { const e = gi(f); if (e) e.value = data[f] || ‘’; });
-calcSales(); calcDisc(); calcLabor(); calcBHB();
-COST_C.forEach(({id}) => calcCost(id));
-}
-
-function saveWeek() {
-const date = gv(‘weekDate’);
-if (!date) { alert(‘Select a week date first.’); return; }
-const wks = getWeeks();
-const idx = wks.findIndex(w => w.date === date);
-const entry = Object.assign({date: date}, getOpsData(), {savedAt: new Date().toISOString()});
-if (idx >= 0) wks[idx] = entry; else wks.push(entry);
-wks.sort((a, b) => new Date(b.date) - new Date(a.date));
-saveWks(wks);
-renderHist();
-autosave();
-cloudPush(true);
-const sl = gi(‘saveLabel’);
-if (sl) { sl.textContent = ‘✓ Saved!’; setTimeout(() => sl.textContent = ‘’, 2500); }
-}
-
-function loadWeek() {
-const date = gv(‘weekDate’); if (!date) { alert(‘Select a date.’); return; }
-const w = getWeeks().find(w => w.date === date);
-if (w) { setOpsData(w); }
-else { alert(‘No data saved for that week.’); }
-}
-
-function clearOps() {
-if (!confirm(‘Clear all fields? Saved data is not deleted.’)) return;
-ONUMS.concat(OTXTS).forEach(f => { const e = gi(f); if (e) e.value = ‘’; });
-calcSales(); calcDisc();
-const r = gi(‘laborRes’); if (r) r.style.display = ‘none’;
-gi(‘carryNote’).style.display = ‘none’;
-gi(‘syncNote’).style.display = ‘none’;
-}
-
-function autosave() {
-const d = getOpsData(); d._date = gv(‘weekDate’);
-try { localStorage.setItem(AUTO_KEY, JSON.stringify(d)); } catch(e) {}
-}
-
-// ═══════════════════════════════════════════════════
-// CLOUD SYNC
-// ═══════════════════════════════════════════════════
-let syncId = localStorage.getItem(SYNC_KEY) || ‘’;
-
-function showCstat(msg, type, dur) {
-const e = gi(‘cstat’); if (!e) return;
-e.textContent = msg; e.className = ’cstat ’ + type; e.style.display = ‘inline-block’;
-if (dur) setTimeout(() => { e.style.display = ‘none’; }, dur);
-}
-
-async function cloudPush(silent) {
-if (!syncId) { if (!silent) showCstat(‘No Sync ID — click “+ New Store” first’, ‘warn’, 4000); return; }
-if (!silent) showCstat(‘⬆ Saving…’, ‘info’);
-try {
-const r = await fetch(‘https://api.jsonbin.io/v3/b/’ + syncId, {
-method: ‘PUT’,
-headers: {‘Content-Type’:‘application/json’,‘X-Master-Key’:’$2a$10$REPLACE_WITH_YOUR_KEY’},
-body: JSON.stringify(Object.assign(getData(), {_ts: Date.now()}))
-});
-if (!silent) { if (r.ok) showCstat(‘✓ Saved to cloud’, ‘ok’, 3000); else showCstat(‘⚠ Saved locally (cloud error)’, ‘warn’, 3000); }
-} catch(e) { if (!silent) showCstat(‘⚠ Cloud unavailable — saved locally’, ‘warn’, 3000); }
-}
-
-async function cloudPull() {
-if (!syncId) { showCstat(‘Enter Sync ID first’, ‘warn’, 3000); return; }
-showCstat(‘⬇ Loading…’, ‘info’);
-try {
-const r = await fetch(‘https://api.jsonbin.io/v3/b/’ + syncId + ‘/latest’, {headers:{‘X-Master-Key’:’$2a$10$REPLACE_WITH_YOUR_KEY’}});
-if (r.ok) {
-const j = await r.json(); const data = j.record || j; delete data._ts;
-setData(data); renderHist(); renderMeetList();
-showCstat(‘✓ Loaded ’ + (data.weeks||[]).length + ’ weeks’, ‘ok’, 3000);
-} else showCstat(‘No data for this Sync ID’, ‘info’, 3000);
-} catch(e) { showCstat(‘⚠ Cloud unavailable’, ‘warn’, 3000); }
-}
-
-async function createStore() {
-showCstat(‘Creating…’, ‘info’);
-try {
-const r = await fetch(‘https://api.jsonbin.io/v3/b’, {
-method:‘POST’, headers:{‘Content-Type’:‘application/json’,‘X-Master-Key’:’$2a$10$REPLACE_WITH_YOUR_KEY’,‘X-Bin-Name’:‘HueyLueys’},
-body: JSON.stringify(getData())
-});
-if (r.ok) {
-const j = await r.json(); syncId = j.metadata.id;
-localStorage.setItem(SYNC_KEY, syncId);
-showCstat(‘✓ Created!’, ‘ok’);
-prompt(‘Your Sync ID (save this!):’, syncId);
-} else { showCstat(‘Use Export/Import for backup’, ‘warn’, 5000); }
-} catch(e) { showCstat(‘⚠ Use Export/Import’, ‘warn’, 4000); }
-}
-
-function showSyncModal() {
-const cur = syncId || ‘(none)’;
-if (confirm(’Sync ID: ’ + cur + ‘\n\nOK = Enter new ID\nCancel = Copy current’)) {
-const n = prompt(‘Paste Sync ID:’, syncId);
-if (n && n.trim()) { syncId = n.trim(); localStorage.setItem(SYNC_KEY, syncId); cloudPull(); }
-} else { if (syncId) prompt(‘Your Sync ID:’, syncId); else alert(‘No Sync ID. Click “+ New Store”.’); }
-}
-
-function exportJSON() {
-const blob = new Blob([JSON.stringify(getData(), null, 2)], {type:‘application/json’});
-const a = document.createElement(‘a’); a.href = URL.createObjectURL(blob);
-a.download = ‘hueylueys-backup-’ + new Date().toISOString().split(‘T’)[0] + ‘.json’; a.click();
-}
-
-function importJSON(evt) {
-const f = evt.target.files[0]; if (!f) return;
-const r = new FileReader();
-r.onload = e => {
-try { const d = JSON.parse(e.target.result); setData(d); renderHist(); renderMeetList(); showCstat(‘✓ Imported’, ‘ok’, 3000); }
-catch { alert(‘Invalid file.’); }
-};
-r.readAsText(f); evt.target.value = ‘’;
-}
-
-// ═══════════════════════════════════════════════════
-// TAB MANAGEMENT
-// ═══════════════════════════════════════════════════
-function showTab(t, btn) {
-document.querySelectorAll(’.sec’).forEach(s => s.classList.remove(‘active’));
-document.querySelectorAll(’.tab’).forEach(b => b.classList.remove(‘active’));
-gi(‘sec-’ + t).classList.add(‘active’);
-if (btn) btn.classList.add(‘active’);
-else {
-const m = {ops:0, meet:1, hist:2};
-const tabs = document.querySelectorAll(’.tab’);
-if (tabs[m[t]]) tabs[m[t]].classList.add(‘active’);
-}
-if (t === ‘hist’) renderHist();
-if (t === ‘meet’) renderMeetList();
-}
-
-// ═══════════════════════════════════════════════════
-// MEETING MANAGEMENT
-// ═══════════════════════════════════════════════════
-const MNUMS = [‘ms_act’,‘ms_ly’,‘mcat_act’,‘mcat_ly’,‘mrft_act’,‘mrft_ly’,‘mtogo_act’,‘mtogo_ly’,‘mpat_act’,‘mpat_ly’,‘m_lab_s’,‘m_lab_d’,‘m_labor’,‘m_labor_p’,‘m_ppa’,‘m_ppa_ly’,‘m_rev5’,‘m_rev4’,‘m_loyalty’,‘m_emp_q’,‘m_mom_wk’,‘m_mom_t’,‘m_mwwk’,‘m_mwtot’,‘m_flt_wk’,‘m_flt_t’,‘m_cat_total’,‘m_togo_m’,‘m_desserts’,‘m_steak_wk’,‘m_steak_t’,‘m_disc_r’,‘m_disc_e’,‘m_disc_o’,‘m_bhb_s’,‘m_bhb_proj’,‘m_bhb_mt’,‘m_bhb_pc’,‘m_bhb_ld’,‘m_bhb_br’,‘m_bhb_fp’];
-COST_C.forEach(({id}) => MNUMS.push(‘m_’ + id + ‘*sales’, ’m*’ + id + ‘*spent’, ’m*’ + id + ‘_proj’));
-const MTXTS = [‘m_week’,‘m_date’,‘m_boh’,‘m_foh’,‘m_mgr’,‘m_emp’,‘m_mom’,‘m_cat_notes’,‘m_mom_win’];
-
-function getMeetData() {
-const d = {};
-MNUMS.forEach(f => { const e = gi(f); if (e) d[f] = e.value; });
-MTXTS.forEach(f => { const e = gi(f); if (e) d[f] = e.value; });
-const b = +gv(‘m_labor’) || 0;
-if (b) d.m_wtax = (b * (1 + TAX)).toFixed(2);
-COST_C.forEach(({id}) => {
-const sp = +gv(‘m_’ + id + ‘*spent’) || 0, sa = +gv(’m*’ + id + ‘*sales’) || 0;
-if (sp && sa) d[’m*’ + id + ‘*pct’] = ((sp / sa) * 100).toFixed(2);
-});
-const weather = {};
-DAYS.forEach(day => {
-weather[day] = {cond:gv(’wc*’+day), hi:gv(‘wh_’+day), lo:gv(‘wl_’+day), itin:gv(‘wi_’+day)};
-});
-d.weather = weather;
-return d;
-}
-
-function showNewMeet() {
-gi(‘meeting-list’).style.display = ‘none’;
-gi(‘meeting-detail’).style.display = ‘none’;
-gi(‘meeting-form’).style.display = ‘block’;
-buildWeather();
-buildMeetRows();
-buildCostBoxes(‘mCostBoxes’, ‘m_’);
-gi(‘m_date’).value = new Date().toISOString().split(‘T’)[0];
-// Auto-set week range
-const mw = gi(‘m_week’);
-if (mw && !mw.value) {
-const wd = gv(‘weekDate’);
-if (wd) {
-const d = new Date(wd + ‘T12:00:00’);
-const dow = d.getDay();
-const mon = new Date(d); mon.setDate(d.getDate() - (dow === 0 ? 6 : dow - 1));
-const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
-const fmt = x => `${x.getMonth()+1}/${x.getDate()}/${x.getFullYear()}`;
-mw.value = fmt(mon) + ’ \u2013 ’ + fmt(sun);
-}
-}
-}
-
-function closeMeetForm() { gi(‘meeting-form’).style.display = ‘none’; gi(‘meeting-list’).style.display = ‘block’; }
-function closeDetail() { gi(‘meeting-detail’).style.display = ‘none’; gi(‘meeting-list’).style.display = ‘block’; }
-
-function saveMeet() {
-const data = getMeetData(); if (!data.m_date) { alert(‘Set a meeting date.’); return; }
-const mts = getMeets();
-const idx = mts.findIndex(m => m.m_date === data.m_date);
-const entry = Object.assign({}, data, {savedAt: new Date().toISOString()});
-if (idx >= 0) mts[idx] = entry; else mts.push(entry);
-mts.sort((a, b) => new Date(b.m_date) - new Date(a.m_date));
-saveMts(mts); cloudPush(true); closeMeetForm(); renderMeetList();
-showCstat(‘✓ Meeting saved’, ‘ok’, 3000);
-}
-
-function renderMeetList() {
-const mts = getMeets(); const le = gi(‘meetList’), ne = gi(‘noMeet’); if (!le) return;
-if (!mts.length) { le.innerHTML = ‘’; if (ne) ne.style.display = ‘block’; return; }
-if (ne) ne.style.display = ‘none’;
-le.innerHTML = mts.map((m, i) => {
-const p = fP(m.ms_act, m.ms_ly);
-return `<div class="mi" onclick="viewMeet(${i})"> <div style="font-size:12.5px;font-weight:700">${m.m_week || m.m_date}</div> <div style="font-size:10.5px;color:var(--text2);margin-top:2px">Sales: ${fD(m.ms_act)}${p ? ' <span class="' + pC(p) + '">' + p + ' vs LY</span>' : ''} &nbsp;|&nbsp; ${m.m_date}</div> </div>`;
-}).join(’’);
-}
-
-function viewMeet(idx) {
-const m = getMeets()[idx]; if (!m) return;
-gi(‘meeting-list’).style.display = ‘none’;
-gi(‘meeting-detail’).style.display = ‘block’;
-
-// Header
-gi(‘mHdr’).innerHTML = `<div style="font-size:17px;font-weight:800;color:var(--accent);margin-bottom:2px">${m.m_week || m.m_date}</div><div style="font-size:11px;color:var(--text2)">Meeting Date: ${m.m_date}</div>`;
-
-// Weather
-let wHtml = ‘<div class="ct">Weekly Itinerary & Weather Snapshot</div>’;
-if (m.weather && DAYS.some(d => m.weather[d] && (m.weather[d].cond || m.weather[d].hi))) {
-// Compute dates for this meeting
-const mRef = m.m_date ? new Date(m.m_date + ‘T12:00:00’) : new Date();
-const mdow = mRef.getDay();
-const mMon = new Date(mRef); mMon.setDate(mRef.getDate() - (mdow === 0 ? 6 : mdow - 1));
-const mDates = Array.from({length:7}, (_, i) => { const d = new Date(mMon); d.setDate(mMon.getDate() + i); return d; });
-wHtml += ‘<div class="wgrid">’;
-DAYS.forEach((day, i) => {
-const w = m.weather[day] || {};
-const lbl = DAY_SHORT[mDates[i].getDay()] + ’ ’ + (mDates[i].getMonth()+1) + ‘/’ + mDates[i].getDate();
-wHtml += `<div class="wd"><div class="wdn">${lbl}</div><div class="wdi">${gIcon(w.cond)}</div><div class="wdt">H${w.hi||'—'}/L${w.lo||'—'}</div><div class="wdc">${w.cond||''}</div>${w.itin ? '<div class="wdit">' + w.itin + '</div>' : ''}</div>`;
-});
-wHtml += ‘</div>’;
-if (m.m_cat_total) wHtml += `<div style="font-size:11.5px;font-weight:700;margin-top:.4rem">Total Caterings: ${fD(m.m_cat_total)}</div>`;
-if (m.m_cat_notes) wHtml += `<div style="font-size:10.5px;color:var(--text2)">${m.m_cat_notes}</div>`;
-}
-gi(‘mWeather’).innerHTML = wHtml;
-
-// Page 1 LEFT: Sales metrics (matches meeting doc)
-const metHtml = MEET_C.map(({id, l, bhb}) => {
-const p = fP(m[id + ‘_act’], m[id + ‘_ly’]);
-const bg = bhb ? ‘background:linear-gradient(90deg,#fff8f0,transparent);border-radius:3px;padding:3px 5px;’ : ‘’;
-const tc = bhb ? ‘color:#7a3e00;’ : ‘’;
-return `<div style="${bg}display:flex;justify-content:space-between;align-items:center;padding:3.5px 0;border-bottom:1px solid var(--border)"> <span style="font-size:11px;color:var(--text2);${tc}">${bhb ? '🌴 ' : ''}${l}</span> <div style="display:flex;align-items:center;gap:8px"> <span style="font-size:12px;font-weight:700">${fD(m[id + '_act'])}</span> ${p ? `<span class="chip ${pC(p)}" style="font-size:10px">${p} vs LY</span>` : ''} </div> </div>`;
-}).join(’’);
-
-const upAgainst = m.ms_ly ? `<div style="font-size:10px;color:var(--text2);margin:.3rem 0 .5rem">Up Against: ${fD(m.ms_ly)}</div>` : ‘’;
-
-const costHtml = COST_C.map(({id, l}) => {
-const pct = m[‘m_’ + id + ‘*pct’], proj = m[’m*’ + id + ‘_proj’];
-if (!pct) return ‘’;
-const d2 = pct && proj ? (+pct - +proj).toFixed(2) : null;
-return `<div style="display:flex;justify-content:space-between;padding:2.5px 0;border-bottom:1px solid var(--border)"> <span style="font-size:10.5px;color:var(--text2)">${l}</span> <div><span style="font-size:11.5px;font-weight:700">${(+pct).toFixed(1)}%</span>${d2 !== null ? `<span style="font-size:10px;margin-left:4px;color:${+d2 > 0 ? 'var(--red)' : 'var(--green)'}">${+d2 > 0 ? ‘+’ : ‘’}${d2}pp</span>` : ''}</div> </div>`;
-}).join(’’);
-
-const ppaPct = fP(m.m_ppa, m.m_ppa_ly);
-const discTotal = (+m.m_disc_r||0) + (+m.m_disc_e||0) + (+m.m_disc_o||0);
-
-gi(‘m-p1-left’).innerHTML = `<div class="card">
-<div class="ct">Last Week Metrics</div>
-${metHtml}${upAgainst}
-<div class="div"></div>
-<div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:.3rem">Discounts</div>
-<div style="font-size:11px">Rewards: ${fD(m.m_disc_r)}  |  EzCater: ${fD(m.m_disc_e)}  |  <strong>Total: ${fD(discTotal)}</strong></div>
-<div class="div"></div>
-<div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:.3rem">Labor</div>
-<div class="g2" style="gap:5px">
-<div class="met"><label>Labor % (no tax)</label><div class="mv">${m.m_labor || ‘—’}%</div></div>
-<div class="met"><label>Labor % WITH Tax (14.53%)</label><div class="mv" style="color:var(--accent)">${m.m_wtax ? m.m_wtax + ‘%’ : ‘—’}</div></div>
-</div>
-<div class="div"></div>
-<div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:.3rem">Cost %s</div>
-${costHtml || ‘<div style="font-size:11px;color:var(--text3)">—</div>’}
-<div class="div"></div>
-<div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:.3rem">PPA</div>
-<div style="font-size:12px"><strong>${m.m_ppa ? ‘$’ + m.m_ppa : ‘—’}</strong>${ppaPct ? ’ <span class="' + pC(ppaPct) + '">’ + ppaPct + ’ vs LY</span>’ : ‘’}</div>
-
-  </div>`;
-
-// Page 1 RIGHT: Guest metrics + product mix
-const bhbItems = [[‘m_bhb_mt’,‘Mai Tai’],[‘m_bhb_pc’,‘Piña Colada’],[‘m_bhb_ld’,‘Lemon Drop’],[‘m_bhb_br’,‘Blueberry’],[‘m_bhb_fp’,‘Front Porch’]];
-const bhbTot = bhbItems.reduce((s, [id]) => s + (+m[id] || 0), 0);
-
-gi(‘m-p1-right’).innerHTML = `<div class="card"> <div class="ct">Guest Metrics</div> <div class="g2" style="gap:5px;margin-bottom:.4rem"> <div class="met"><label>Loyalty S/U</label><div class="mv">${m.m_loyalty || '—'}</div></div> <div class="met"><label>Google Reviews</label><div class="mv">5★ ${m.m_rev5||0} &nbsp; 4★ ${m.m_rev4||0}</div></div> <div class="met"><label>Employee Winner</label><div class="mv">${m.m_emp || '—'} (${m.m_emp_q || '—'})</div></div> </div> <div class="ct" style="margin-top:.4rem">Marg of the Month</div> <div style="font-size:11.5px"><strong>${m.m_mom || '—'}</strong> — Sold Wk: ${m.m_mom_wk || '—'} | Total: ${m.m_mom_t || '—'}</div> <div style="font-size:11px;color:var(--text2);margin-top:2px">Winner: ${m.m_mom_win || '—'} | Wk: ${m.m_mwwk || '—'} | Total: ${m.m_mwtot || '—'}</div> <div class="ct" style="margin-top:.4rem">Items Sold</div> <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;font-size:11px;line-height:1.9"> ${m.m_togo_m ? `<div style="color:var(--text2)">To-Go Margaritas:</div><div><strong>${m.m_togo_m}</strong></div>`: ''} ${m.m_desserts ?`<div style="color:var(--text2)">Desserts:</div><div><strong>${m.m_desserts}</strong></div>`: ''} ${m.m_flt_wk ?`<div style="color:var(--text2)">Huey’s Floaters:</div><div><strong>${m.m_flt_wk}</strong></div>`: ''} ${m.m_flt_t ?`<div style="color:var(--text2)">Total Floaters:</div><div><strong>${m.m_flt_t}</strong></div>`: ''} ${m.m_steak_wk ?`<div style="color:var(--text2)">Steak & Blue Wk:</div><div><strong>${m.m_steak_wk}</strong> | Total: ${m.m_steak_t || ‘—’}</div>`: ''} </div> <div class="div"></div> <div style="background:linear-gradient(135deg,#fff8f0,#fff3e8);border:1px solid #e8c49a;border-radius:var(--radius-sm);padding:.5rem .65rem"> <div style="font-size:9px;font-weight:700;color:#7a3e00;margin-bottom:.3rem">🌴 Beach House Bar — ${fD(m.m_bhb_s)} · ${bhbTot} items</div> <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:3px"> ${bhbItems.map(([id, name]) =>`<div style="background:#fff;border:1px solid #e8c49a;border-radius:3px;padding:.3rem;text-align:center"><div style="font-size:8px;color:#7a3e00;font-weight:700">${name}</div><div style="font-size:13px;font-weight:700;color:var(--accent)">${m[id]||‘0’}</div></div>`).join(’’)}
-</div>
-</div>
-
-  </div>`;
-
-// Page 2: BOH / FOH / Manager Notes
-const lines = n => Array(n).fill(’<span class="note-line"></span>’).join(’’);
-gi(‘m-p2-left’).innerHTML = `<div class="card">
-<div class="ct">BOH Focus</div>
-${m.m_boh ? ‘<div class="nb"><div class="nl">BOH Focus</div><p>’ + m.m_boh + ‘</p></div>’ : lines(7)}
-<div class="ct" style="margin-top:.5rem">FOH Focus</div>
-${m.m_foh ? ‘<div class="nb"><div class="nl">FOH Focus</div><p>’ + m.m_foh + ‘</p></div>’ : lines(7)}
-
-  </div>`;
-  gi('m-p2-right').innerHTML = `<div class="card">
-    <div class="ct">Manager Notes</div>
-    ${m.m_mgr ? '<div class="nb"><div class="nl">Manager Notes</div><p>' + m.m_mgr + '</p></div>' : lines(10)}
-    <div style="margin-top:1rem;border-top:1px solid var(--border);padding-top:.4rem;font-size:9px;color:var(--text3);text-align:center">Thoughts and comments? — Huey Luey's Acworth — Confidential</div>
-  </div>`;
-}
-
-// ═══════════════════════════════════════════════════
-// HISTORY
-// ═══════════════════════════════════════════════════
-function renderHist() {
-const wks = getWeeks(); const tb = gi(‘histBody’), ne = gi(‘noHist’); if (!tb) return;
-if (!wks.length) { tb.innerHTML = ‘’; if (ne) ne.style.display = ‘block’; return; }
-if (ne) ne.style.display = ‘none’;
-tb.innerHTML = wks.map(w => {
-const p = fP(w.s_actual, w.s_ly);
-return `<tr>
-<td>${w.date}</td><td>${fD(w.s_actual)}</td>
-<td class="${pC(p)}">${p||’—’}</td>
-<td>${fD(w.cat_actual)}</td><td>${fD(w.rft_actual)}</td>
-<td>${fD(w.togo_actual)}</td><td>${fD(w.patio_actual)}</td>
-
-
-  <td>${w.lab_pct ? w.lab_pct + '%' : '—'}</td>
-  <td>${w.lab_wtax ? w.lab_wtax + '%' : '—'}</td>
-  <td>${w.food_pct_calc ? w.food_pct_calc + '%' : '—'}</td>
-  <td>${w.lbw_pct_calc ? w.lbw_pct_calc + '%' : '—'}</td>
-  <td>${w.gc_actual ? Number(w.gc_actual).toLocaleString() : '—'}</td>
-  <td>${w.ppa_actual ? fD(w.ppa_actual) : '—'}</td>
-  <td>${w.loyalty || '—'}</td>
-</tr>`;
-
-
-}).join(’’);
-}
-
-// ═══════════════════════════════════════════════════
-// PRINT
-// ═══════════════════════════════════════════════════
-function doPrint(type) {
-if (type === ‘meet’) {
-const dv = gi(‘meeting-detail’);
-if (!dv || dv.style.display === ‘none’) {
-const mts = getMeets();
-if (!mts.length) { alert(‘No meetings saved. Save a meeting first.’); return; }
-viewMeet(0);
-}
-}
-const orig = document.title;
-document.title = type === ‘ops’ ? “Huey Luey’s Acworth — Operations” : “Huey Luey’s Acworth — Manager Meeting”;
-document.body.className = ‘pr-’ + type;
-window.print();
-document.body.className = ‘’;
-document.title = orig;
-}
-
-// ═══════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════
-window.addEventListener(‘DOMContentLoaded’, () => {
-buildSaleRows();
-buildCostBoxes(‘costBoxes’, ‘’);
-
-// Default to Monday of current week
-const today = new Date();
-const dow = today.getDay();
-const mon = new Date(today);
-mon.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
-const defaultDate = mon.toISOString().split(‘T’)[0];
-gi(‘weekDate’).value = defaultDate;
-updateWeekLabel(defaultDate);
-
-// Restore autosave
-try {
-const raw = localStorage.getItem(AUTO_KEY);
-if (raw) {
-const data = JSON.parse(raw);
-setOpsData(data);
-if (data._date) { gi(‘weekDate’).value = data._date; updateWeekLabel(data._date); }
-}
-} catch(e) {}
-
-// Autosave on every ops input
-gi(‘sec-ops’).addEventListener(‘input’, () => autosave());
-
-renderMeetList();
-renderHist();
-checkCarry();
-
-// Cloud pull if ID exists
-if (syncId) setTimeout(() => cloudPull(), 1500);
-});
+window.addEventListener('DOMContentLoaded',init);
 </script>
-
 </body>
 </html>

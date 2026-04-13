@@ -98,7 +98,23 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 .hi-d{font-family:'Oswald',sans-serif;font-weight:600;font-size:13px}
 .hi-m{font-size:11px;color:var(--t3)}
 
-/* ── NOTICES ── */
+/* ── EDIT MODE ── */
+.edit-mode .met-v[data-editable]{
+  cursor:pointer;
+  background:rgba(255,255,255,.8);
+  border:1.5px dashed var(--org);
+  border-radius:4px;
+  padding:2px 6px;
+  min-width:60px;
+  display:inline-block;
+  transition:background .15s;
+}
+.edit-mode .met-v[data-editable]:hover{background:#fff;border-color:var(--org2)}
+.edit-mode .met-v[data-editable]:empty::before{content:'Click to edit';color:var(--t3);font-size:11px}
+.edit-mode .met-v[data-editable]:focus{outline:none;background:#fff;border-color:var(--org2);box-shadow:0 0 0 2px rgba(197,90,27,.15)}
+.edit-badge{display:none}
+.edit-mode .edit-badge{display:inline-block;background:var(--org2);color:#fff;font-size:9px;font-family:'Oswald',sans-serif;padding:1px 6px;border-radius:10px;letter-spacing:.4px;margin-left:6px;vertical-align:middle}
+
 .notice{font-size:11px;padding:5px 9px;border-radius:5px;margin-top:5px;display:none}
 .notice.show{display:block}
 .notice.info{background:#E3F2FD;color:#0D47A1;border:1px solid #BBDEFB}
@@ -518,16 +534,6 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     </div>
   </div>
 
-  <!-- MANAGER GOALS / NOTES (Ops side — for internal tracking) -->
-  <div class="card">
-    <div class="card-hdr">📝 <span>Manager Goals &amp; Notes</span></div>
-    <div id="mgrGoals"></div>
-    <div class="div"></div>
-    <div class="g2">
-      <div class="fg"><div class="fl">Operational Notes / Follow-Ups</div><textarea id="ops_notes" rows="3" oninput="live()"></textarea></div>
-      <div class="fg"><div class="fl">Projects / Maintenance</div><textarea id="ops_projects" rows="3" oninput="live()"></textarea></div>
-    </div>
-  </div>
 
 </div><!-- /sec-ops -->
 
@@ -541,7 +547,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   <div class="card" style="background:var(--hdr);border-color:var(--hdr)">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
       <div>
-        <div style="font-family:'Alfa Slab One',serif;font-size:21px;color:var(--org2)">Huey Luey's Acworth</div>
+        <div style="font-family:'Alfa Slab One',serif;font-size:21px;color:var(--org2)">Huey Luey's Acworth <span class="edit-badge">EDIT MODE ON</span></div>
         <div style="font-family:'Oswald',sans-serif;font-size:13px;color:rgba(255,255,255,.6);letter-spacing:1.5px;margin-top:2px">MANAGER MEETING NOTES</div>
       </div>
       <div style="text-align:right">
@@ -550,9 +556,12 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
         <div style="font-family:'Oswald',sans-serif;font-size:11px;color:rgba(255,255,255,.45);margin-top:2px">Meeting Date: <span id="m_meetDate">—</span></div>
       </div>
     </div>
-    <div style="margin-top:8px">
-      <div class="fl" style="color:rgba(255,255,255,.4)">Meeting Date</div>
-      <input type="text" id="meet_date" placeholder="e.g. Monday, April 14 2026" oninput="live()" style="max-width:300px;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff"/>
+    <div style="display:flex;align-items:flex-end;gap:10px;margin-top:8px;flex-wrap:wrap">
+      <div>
+        <div class="fl" style="color:rgba(255,255,255,.4)">Meeting Date</div>
+        <input type="text" id="meet_date" placeholder="e.g. Monday, April 14 2026" oninput="live()" style="max-width:280px;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff"/>
+      </div>
+      <button id="editModeBtn" class="btn sm no-print" onclick="toggleEditMode()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;margin-bottom:1px">✏️ Edit Mode: OFF</button>
     </div>
   </div>
 
@@ -570,44 +579,44 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     <div class="card-hdr">📈 <span>Last Week Metrics</span></div>
 
     <div class="met-grid c2">
-      <div class="met"><div class="met-l">Sales</div><div class="met-v" id="m_sales">—</div></div>
-      <div class="met"><div class="met-l">Up Against (Last Yr)</div><div class="met-v" id="m_sales_ly">—</div></div>
+      <div class="met"><div class="met-l">Sales</div><div class="met-v" id="m_sales" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Up Against (Last Yr)</div><div class="met-v" id="m_sales_ly" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="met-grid c4" style="margin-bottom:8px">
-      <div class="met"><div class="met-l">To-Go Sales</div><div class="met-v sm" id="m_togo">—</div></div>
-      <div class="met"><div class="met-l">Catering Sales</div><div class="met-v sm" id="m_catering">—</div></div>
-      <div class="met"><div class="met-l">Patio Sales</div><div class="met-v sm" id="m_patio">—</div></div>
-      <div class="met"><div class="met-l">Rooftop Sales</div><div class="met-v sm" id="m_rooftop">—</div></div>
+      <div class="met"><div class="met-l">To-Go Sales</div><div class="met-v sm" id="m_togo" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Catering Sales</div><div class="met-v sm" id="m_catering" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Patio Sales</div><div class="met-v sm" id="m_patio" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Rooftop Sales</div><div class="met-v sm" id="m_rooftop" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="met-grid c4" style="margin-bottom:8px">
-      <div class="met"><div class="met-l">Beach House Bar</div><div class="met-v sm" id="m_bhb">—</div></div>
-      <div class="met"><div class="met-l">vs Proj</div><div class="met-v sm" id="m_bhb_vsproj">—</div></div>
+      <div class="met"><div class="met-l">Beach House Bar</div><div class="met-v sm" id="m_bhb" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">vs Proj</div><div class="met-v sm" id="m_bhb_vsproj" data-editable contenteditable="false">—</div></div>
       <div class="met"></div><div class="met"></div>
     </div>
 
     <div class="div"></div>
     <div class="met-grid c3">
-      <div class="met"><div class="met-l">Discounts</div><div class="met-v" id="m_disc">—</div></div>
-      <div class="met"><div class="met-l">Employee Discounts</div><div class="met-v" id="m_disc_e">—</div></div>
-      <div class="met"><div class="met-l">Other / Voids</div><div class="met-v" id="m_disc_o">—</div></div>
+      <div class="met"><div class="met-l">Discounts</div><div class="met-v" id="m_disc" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Employee Discounts</div><div class="met-v" id="m_disc_e" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Other / Voids</div><div class="met-v" id="m_disc_o" data-editable contenteditable="false">—</div></div>
     </div>
 
     <div class="div"></div>
     <div class="met-grid c3">
-      <div class="met"><div class="met-l">Labor %</div><div class="met-v" id="m_labor">—</div></div>
-      <div class="met"><div class="met-l">Labor % W/Taxes</div><div class="met-v" id="m_labor_wt">—</div></div>
-      <div class="met"><div class="met-l">Budget Labor %</div><div class="met-v" id="m_labor_budget">—</div></div>
+      <div class="met"><div class="met-l">Labor %</div><div class="met-v" id="m_labor" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Labor % W/Taxes</div><div class="met-v" id="m_labor_wt" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Budget Labor %</div><div class="met-v" id="m_labor_budget" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="met-grid c2" style="margin-top:6px">
-      <div class="met"><div class="met-l">Food Cost %</div><div class="met-v" id="m_food">—</div></div>
-      <div class="met"><div class="met-l">LBW Cost %</div><div class="met-v" id="m_lbw">—</div></div>
+      <div class="met"><div class="met-l">Food Cost %</div><div class="met-v" id="m_food" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">LBW Cost %</div><div class="met-v" id="m_lbw" data-editable contenteditable="false">—</div></div>
     </div>
 
     <div class="div"></div>
     <div class="met-grid c3">
-      <div class="met"><div class="met-l">PPA</div><div class="met-v" id="m_ppa">—</div></div>
-      <div class="met"><div class="met-l">vs Last Year</div><div class="met-v" id="m_ppa_vs">—</div></div>
-      <div class="met"><div class="met-l">SPLH (Actual)</div><div class="met-v" id="m_splh">—</div></div>
+      <div class="met"><div class="met-l">PPA</div><div class="met-v" id="m_ppa" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">vs Last Year</div><div class="met-v" id="m_ppa_vs" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">SPLH (Actual)</div><div class="met-v" id="m_splh" data-editable contenteditable="false">—</div></div>
     </div>
   </div>
 
@@ -615,13 +624,13 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   <div class="card">
     <div class="card-hdr">⭐ <span>Guest Metrics</span></div>
     <div class="met-grid c4">
-      <div class="met"><div class="met-l">Loyalty Signups</div><div class="met-v" id="m_loyalty">—</div></div>
-      <div class="met"><div class="met-l">5-Star Reviews</div><div class="met-v" id="m_rev5">—</div></div>
-      <div class="met"><div class="met-l">4-Star Reviews</div><div class="met-v" id="m_rev4">—</div></div>
-      <div class="met"><div class="met-l">Current Rating</div><div class="met-v" id="m_rating">—</div></div>
+      <div class="met"><div class="met-l">Loyalty Signups</div><div class="met-v" id="m_loyalty" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">5-Star Reviews</div><div class="met-v" id="m_rev5" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">4-Star Reviews</div><div class="met-v" id="m_rev4" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Current Rating</div><div class="met-v" id="m_rating" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="met-grid c2" style="margin-top:6px">
-      <div class="met"><div class="met-l">Total Reviews (Running)</div><div class="met-v" id="m_rev_total">—</div></div>
+      <div class="met"><div class="met-l">Total Reviews (Running)</div><div class="met-v" id="m_rev_total" data-editable contenteditable="false">—</div></div>
       <div class="met"></div>
     </div>
   </div>
@@ -631,45 +640,39 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     <div class="card-hdr">🍹 <span>Items Sold &amp; Employee Recognition</span></div>
     <div class="sec-title">Marg of the Month</div>
     <div class="met-grid c3">
-      <div class="met"><div class="met-l">Marg Name</div><div class="met-v sm" id="m_motm">—</div></div>
-      <div class="met"><div class="met-l">Sold This Week</div><div class="met-v" id="m_motm_wk">—</div></div>
-      <div class="met"><div class="met-l">Total Sold Month</div><div class="met-v" id="m_motm_total">—</div></div>
+      <div class="met"><div class="met-l">Marg Name</div><div class="met-v sm" id="m_motm" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Sold This Week</div><div class="met-v" id="m_motm_wk" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Total Sold Month</div><div class="met-v" id="m_motm_total" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="sec-title" style="margin-top:8px">Winner / Employee Recognition</div>
     <div class="met-grid c3">
-      <div class="met"><div class="met-l">1st Place Employee</div><div class="met-v sm" id="m_emp1">—</div></div>
-      <div class="met"><div class="met-l">Qty This Week</div><div class="met-v" id="m_emp1_wk">—</div></div>
-      <div class="met"><div class="met-l">Qty Total</div><div class="met-v" id="m_emp1_total">—</div></div>
+      <div class="met"><div class="met-l">1st Place Employee</div><div class="met-v sm" id="m_emp1" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Qty This Week</div><div class="met-v" id="m_emp1_wk" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Qty Total</div><div class="met-v" id="m_emp1_total" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="div"></div>
     <div class="sec-title">Product Mix Highlights</div>
     <div class="met-grid c4">
-      <div class="met"><div class="met-l">To-Go Margs</div><div class="met-v" id="m_togo_margs">—</div></div>
-      <div class="met"><div class="met-l">Huey's Floaters</div><div class="met-v" id="m_floaters">—</div></div>
-      <div class="met"><div class="met-l">Desserts</div><div class="met-v" id="m_desserts">—</div></div>
-      <div class="met"><div class="met-l">Top Margarita</div><div class="met-v sm" id="m_top_marg">—</div></div>
+      <div class="met"><div class="met-l">To-Go Margs</div><div class="met-v" id="m_togo_margs" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Huey's Floaters</div><div class="met-v" id="m_floaters" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Desserts</div><div class="met-v" id="m_desserts" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Top Margarita</div><div class="met-v sm" id="m_top_marg" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="met-grid c4" style="margin-top:6px">
-      <div class="met"><div class="met-l">16oz Margs</div><div class="met-v" id="m_marg16">—</div></div>
-      <div class="met"><div class="met-l">22oz Margs</div><div class="met-v" id="m_marg22">—</div></div>
-      <div class="met"><div class="met-l">32oz Margs</div><div class="met-v" id="m_marg32">—</div></div>
-      <div class="met"><div class="met-l">Pitchers</div><div class="met-v" id="m_pitchers">—</div></div>
+      <div class="met"><div class="met-l">16oz Margs</div><div class="met-v" id="m_marg16" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">22oz Margs</div><div class="met-v" id="m_marg22" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">32oz Margs</div><div class="met-v" id="m_marg32" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Pitchers</div><div class="met-v" id="m_pitchers" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="div"></div>
     <div class="sec-title">🏖 Beach House Bar</div>
     <div class="met-grid c5" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr">
-      <div class="met"><div class="met-l">Mai Tais</div><div class="met-v" id="m_bhb_mt">—</div></div>
-      <div class="met"><div class="met-l">Piña Coladas</div><div class="met-v" id="m_bhb_pc">—</div></div>
-      <div class="met"><div class="met-l">Lemon Drop</div><div class="met-v" id="m_bhb_ld">—</div></div>
-      <div class="met"><div class="met-l">Blueberry Refresher</div><div class="met-v" id="m_bhb_br">—</div></div>
-      <div class="met"><div class="met-l">Front Porch Swing</div><div class="met-v" id="m_bhb_fp">—</div></div>
+      <div class="met"><div class="met-l">Mai Tais</div><div class="met-v" id="m_bhb_mt" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Piña Coladas</div><div class="met-v" id="m_bhb_pc" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Lemon Drop</div><div class="met-v" id="m_bhb_ld" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Blueberry Refresher</div><div class="met-v" id="m_bhb_br" data-editable contenteditable="false">—</div></div>
+      <div class="met"><div class="met-l">Front Porch Swing</div><div class="met-v" id="m_bhb_fp" data-editable contenteditable="false">—</div></div>
     </div>
-  </div>
-
-  <!-- MANAGER GOALS REVIEW -->
-  <div class="card">
-    <div class="card-hdr">🎯 <span>Manager Goals Review</span></div>
-    <div id="m_mgrGoals"></div>
   </div>
 
   <!-- BOH FOCUS -->
@@ -737,34 +740,8 @@ function htm(id,v){const e=gi(id);if(e)e.innerHTML=v||'—';}
    BUILD DYNAMIC ELEMENTS
 ══════════════════════════════════════════════ */
 function buildAll(){
-  // Manager goals — OPS side
+  // Weather grid — meeting
   let h='';
-  MANAGERS.forEach(m=>{
-    const k=m.toLowerCase();
-    h+=`<div class="fg"><div class="fl">${m}</div><div class="g2">
-      <input type="text" id="goal_${k}_g" placeholder="Goal this week" oninput="live()"/>
-      <input type="text" id="goal_${k}_r" placeholder="Result / Notes" oninput="live()"/>
-    </div></div>`;
-  });
-  gi('mgrGoals').innerHTML=h;
-
-  // Manager goals — MEETING side (read-only display)
-  h='<div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:4px;padding:0 0 5px;border-bottom:1px solid var(--bdr);margin-bottom:4px">'
-   +'<div style="font-family:\'Oswald\',sans-serif;font-size:10px;font-weight:700;color:var(--t3)">MANAGER</div>'
-   +'<div style="font-family:\'Oswald\',sans-serif;font-size:10px;font-weight:700;color:var(--t3)">GOAL</div>'
-   +'<div style="font-family:\'Oswald\',sans-serif;font-size:10px;font-weight:700;color:var(--t3)">RESULT</div></div>';
-  MANAGERS.forEach(m=>{
-    const k=m.toLowerCase();
-    h+=`<div style="display:grid;grid-template-columns:100px 1fr 1fr;gap:4px;padding:4px 0;border-bottom:1px solid var(--bdr)">
-      <div style="font-family:'Oswald',sans-serif;font-weight:600;font-size:12px">${m}</div>
-      <div id="m_goal_${k}_g" style="font-size:11px;color:var(--t2)">—</div>
-      <div id="m_goal_${k}_r" style="font-size:11px;color:var(--t3)">—</div>
-    </div>`;
-  });
-  gi('m_mgrGoals').innerHTML=h;
-
-  // Weather grid — meeting (editable + read-only display layers)
-  h='';
   DAYS.forEach((d,i)=>{
     h+=`<div class="wx-day">
       <div class="wn">${d.slice(0,3).toUpperCase()}</div>
@@ -828,7 +805,7 @@ function live(){
    MIRROR TO MEETING
 ══════════════════════════════════════════════ */
 function mirrorMeeting(){
-  // Week label
+  // Week label (always update — not an editable met-v)
   const d=gv('weekDate');
   if(d){
     const dt=new Date(d+'T12:00:00'),en=new Date(dt);en.setDate(dt.getDate()+6);
@@ -839,81 +816,72 @@ function mirrorMeeting(){
 
   // Sales
   const sAct=gn('s_lw_act'),sLY=gn('s_lw_ly');
-  txt('m_sales', sAct?fD(sAct)+'  '+(sLY?'('+fP(((sAct-sLY)/sLY)*100)+' vs LY)':''):'—');
-  txt('m_sales_ly', sLY?fD(sLY):'—');
-  txt('m_togo',     fD(gn('togo_lw_act')));
-  txt('m_catering', fD(gn('cat_lw_act')));
-  txt('m_patio',    fD(gn('patio_lw_act')));
-  txt('m_rooftop',  fD(gn('rft_lw_act')));
-  txt('m_bhb',      fD(gn('bhb_lw_act')));
-  htm('m_bhb_vsproj',chipHL(gn('bhb_lw_act'),gn('bhb_lw_proj')));
+  safeTxt('m_sales', sAct?fD(sAct)+'  '+(sLY?'('+fP(((sAct-sLY)/sLY)*100)+' vs LY)':''):'—');
+  safeTxt('m_sales_ly', sLY?fD(sLY):'—');
+  safeTxt('m_togo',     fD(gn('togo_lw_act')));
+  safeTxt('m_catering', fD(gn('cat_lw_act')));
+  safeTxt('m_patio',    fD(gn('patio_lw_act')));
+  safeTxt('m_rooftop',  fD(gn('rft_lw_act')));
+  safeTxt('m_bhb',      fD(gn('bhb_lw_act')));
+  safeHtm('m_bhb_vsproj',chipHL(gn('bhb_lw_act'),gn('bhb_lw_proj')));
 
   // Discounts
-  const totDisc=(gn('disc_r')+gn('disc_e')+gn('disc_o'));
-  txt('m_disc',   fD(gn('disc_r')));
-  txt('m_disc_e', fD(gn('disc_e')));
-  txt('m_disc_o', fD(gn('disc_o')));
+  safeTxt('m_disc',   fD(gn('disc_r')));
+  safeTxt('m_disc_e', fD(gn('disc_e')));
+  safeTxt('m_disc_o', fD(gn('disc_o')));
 
   // Labor
   const labAct=gi('lab_lw_act')._val;
   const labWtax=gi('lab_lw_wtax')._val;
-  txt('m_labor',        labAct!=null?fP(labAct):'—');
-  txt('m_labor_wt',     labWtax!=null?fP(labWtax):'—');
-  txt('m_labor_budget', gn('lab_budget')?fP(gn('lab_budget')):'—');
+  safeTxt('m_labor',        labAct!=null?fP(labAct):'—');
+  safeTxt('m_labor_wt',     labWtax!=null?fP(labWtax):'—');
+  safeTxt('m_labor_budget', gn('lab_budget')?fP(gn('lab_budget')):'—');
 
   // Cost %
-  txt('m_food', gi('food_lw_act')._val!=null?fP(gi('food_lw_act')._val):'—');
-  txt('m_lbw',  gi('lbw_lw_act')._val!=null?fP(gi('lbw_lw_act')._val):'—');
+  safeTxt('m_food', gi('food_lw_act')._val!=null?fP(gi('food_lw_act')._val):'—');
+  safeTxt('m_lbw',  gi('lbw_lw_act')._val!=null?fP(gi('lbw_lw_act')._val):'—');
 
   // PPA
-  txt('m_ppa', gn('ppa_lw_act')?fD(gn('ppa_lw_act')):'—');
-  htm('m_ppa_vs',chipHL(gn('ppa_lw_act'),gn('ppa_cw_ly')));
-  txt('m_splh', gn('splh_lw_act')?fD(gn('splh_lw_act')):'—');
+  safeTxt('m_ppa', gn('ppa_lw_act')?fD(gn('ppa_lw_act')):'—');
+  safeHtm('m_ppa_vs',chipHL(gn('ppa_lw_act'),gn('ppa_cw_ly')));
+  safeTxt('m_splh', gn('splh_lw_act')?fD(gn('splh_lw_act')):'—');
 
   // Guest
-  txt('m_loyalty',   fN(gn('loyalty')));
-  txt('m_rev5',      gn('rev5')||'—');
-  txt('m_rev4',      gn('rev4')||'—');
-  txt('m_rating',    gn('rev_rating')||'—');
-  txt('m_rev_total', gn('rev_total')||'—');
+  safeTxt('m_loyalty',   fN(gn('loyalty')));
+  safeTxt('m_rev5',      gn('rev5')||'—');
+  safeTxt('m_rev4',      gn('rev4')||'—');
+  safeTxt('m_rating',    gn('rev_rating')||'—');
+  safeTxt('m_rev_total', gn('rev_total')||'—');
 
   // Items sold
-  txt('m_motm',       gv('motm_name')||'—');
-  txt('m_motm_wk',    gn('motm_wk')||'—');
-  txt('m_motm_total', gn('motm_total')||'—');
-  txt('m_emp1',       gv('emp1_name')||'—');
-  txt('m_emp1_wk',    gn('emp1_wk')||'—');
-  txt('m_emp1_total', gn('emp1_total')||'—');
-  txt('m_togo_margs', gn('togo_margs')||'—');
-  txt('m_floaters',   gn('floaters')||'—');
-  txt('m_desserts',   gn('desserts')||'—');
-  txt('m_top_marg',   gv('top_marg')||'—');
-  txt('m_marg16',     gn('marg16')||'—');
-  txt('m_marg22',     gn('marg22')||'—');
-  txt('m_marg32',     gn('marg32')||'—');
-  txt('m_pitchers',   gn('pitchers')||'—');
+  safeTxt('m_motm',       gv('motm_name')||'—');
+  safeTxt('m_motm_wk',    gn('motm_wk')||'—');
+  safeTxt('m_motm_total', gn('motm_total')||'—');
+  safeTxt('m_emp1',       gv('emp1_name')||'—');
+  safeTxt('m_emp1_wk',    gn('emp1_wk')||'—');
+  safeTxt('m_emp1_total', gn('emp1_total')||'—');
+  safeTxt('m_togo_margs', gn('togo_margs')||'—');
+  safeTxt('m_floaters',   gn('floaters')||'—');
+  safeTxt('m_desserts',   gn('desserts')||'—');
+  safeTxt('m_top_marg',   gv('top_marg')||'—');
+  safeTxt('m_marg16',     gn('marg16')||'—');
+  safeTxt('m_marg22',     gn('marg22')||'—');
+  safeTxt('m_marg32',     gn('marg32')||'—');
+  safeTxt('m_pitchers',   gn('pitchers')||'—');
 
   // BHB cocktails
-  txt('m_bhb_mt',gn('bhb_mt')||'—');txt('m_bhb_pc',gn('bhb_pc')||'—');
-  txt('m_bhb_ld',gn('bhb_ld')||'—');txt('m_bhb_br',gn('bhb_br')||'—');txt('m_bhb_fp',gn('bhb_fp')||'—');
+  safeTxt('m_bhb_mt',gn('bhb_mt')||'—');safeTxt('m_bhb_pc',gn('bhb_pc')||'—');
+  safeTxt('m_bhb_ld',gn('bhb_ld')||'—');safeTxt('m_bhb_br',gn('bhb_br')||'—');safeTxt('m_bhb_fp',gn('bhb_fp')||'—');
 
-  // Manager goals
-  MANAGERS.forEach(m=>{
-    const k=m.toLowerCase();
-    txt(`m_goal_${k}_g`,gv(`goal_${k}_g`)||'—');
-    txt(`m_goal_${k}_r`,gv(`goal_${k}_r`)||'—');
-  });
-
-  // Weather itinerary
+  // Weather itinerary (read-only divs, not met-v)
   DAYS.forEach((d,i)=>{
     const ro=gi(`wx_itin_ro_${i}`);
     if(ro) ro.textContent=gv(`wx_itin_${i}`)||'';
   });
 
-  // BOH / FOH / Manager notes
+  // BOH / FOH / Manager notes (nb paragraphs, not met-v)
   txt('m_boh', gv('boh_focus')||'—');
   txt('m_foh', gv('foh_focus')||'—');
-  // Manager notes card — show nb only if has content
   const mnEl=gi('mgr_nb'),mgNotes=gv('mgr_notes');
   txt('m_mgr_notes',mgNotes||'—');
   if(mnEl) mnEl.style.display=mgNotes?'block':'none';
@@ -1202,6 +1170,58 @@ function showTab(tab,btnEl,idx){
   else{const tabs=document.querySelectorAll('.tab');const i=idx!==undefined?idx:tab==='ops'?0:tab==='meet'?1:2;if(tabs[i])tabs[i].classList.add('active');}
   if(tab==='meet')mirrorMeeting();
   if(tab==='hist')renderHist();
+}
+
+/* ══════════════════════════════════════════════
+   EDIT MODE — Meeting tab
+   Toggles contenteditable on all met-v display fields
+   so you can manually override any auto-populated value.
+══════════════════════════════════════════════ */
+let _editMode=false;
+
+function toggleEditMode(){
+  _editMode=!_editMode;
+  const meet=gi('sec-meet');
+  const btn=gi('editModeBtn');
+  if(!meet||!btn)return;
+
+  if(_editMode){
+    meet.classList.add('edit-mode');
+    btn.textContent='✏️ Edit Mode: ON';
+    btn.style.background='var(--org)';
+    btn.style.border='1px solid var(--org2)';
+    // Enable contenteditable on all editable fields
+    meet.querySelectorAll('[data-editable]').forEach(el=>{
+      el.contentEditable='true';
+      el.setAttribute('spellcheck','false');
+      // Save the mirror-derived value as a dataset backup
+      el.dataset.mirror=el.textContent;
+    });
+  } else {
+    meet.classList.remove('edit-mode');
+    btn.textContent='✏️ Edit Mode: OFF';
+    btn.style.background='rgba(255,255,255,.15)';
+    btn.style.border='1px solid rgba(255,255,255,.3)';
+    // Disable contenteditable but keep any manual overrides
+    meet.querySelectorAll('[data-editable]').forEach(el=>{
+      el.contentEditable='false';
+    });
+  }
+}
+
+// When mirrorMeeting runs, only overwrite fields that aren't manually edited
+function safeTxt(id,v){
+  const e=gi(id);
+  if(!e)return;
+  // If edit mode is on and the field was manually changed, don't overwrite
+  if(_editMode&&e.dataset.mirror!==undefined&&e.textContent!==e.dataset.mirror)return;
+  e.textContent=v||'—';
+}
+function safeHtm(id,v){
+  const e=gi(id);
+  if(!e)return;
+  if(_editMode&&e.dataset.mirror!==undefined&&e.innerHTML!==e.dataset.mirror)return;
+  e.innerHTML=v||'—';
 }
 
 /* ══════════════════════════════════════════════

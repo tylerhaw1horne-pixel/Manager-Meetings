@@ -193,8 +193,8 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   <span id="syncBadge" class="ss ss-ok">☁ Cloud Sync Ready</span>
   <button class="btn xs ghost" onclick="exportJSON()">⬇ Export</button>
   <button class="btn xs ghost" onclick="document.getElementById('importFileInput').click()">⬆ Import</button>
-  <input type="file" id="importFileInput" accept=".json" onchange="importJSON(event)" style="display:none;position:absolute;width:0;height:0;opacity:0"/>
 </div>
+<input type="file" id="importFileInput" accept=".json" onchange="importJSON(event)" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none"/>
 
 <!-- OPERATIONS TAB -->
 
@@ -747,11 +747,18 @@ var idx=JSON.parse(localStorage.getItem(‘hl_week_index’)||’[]’);
 var out={version:6,exported:new Date().toISOString(),weeks:{}};
 idx.forEach(function(k){var r=localStorage.getItem(k);if(r)try{out.weeks[k]=JSON.parse(r);}catch(e){}});
 var blob=new Blob([JSON.stringify(out,null,2)],{type:‘application/json’});
-var a=document.createElement(‘a’);a.href=URL.createObjectURL(blob);
-a.download=‘HLAcworth_’+new Date().toISOString().split(‘T’)[0]+’.json’;a.click();
+var url=URL.createObjectURL(blob);
+var a=document.createElement(‘a’);
+a.href=url;
+a.download=‘HLAcworth_’+new Date().toISOString().split(‘T’)[0]+’.json’;
+a.style.display=‘none’;
+document.body.appendChild(a);
+a.click();
+setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},500);
 }
 function importJSON(e){
-var file=e.target.files[0];if(!file)return;
+var file=e.target.files[0];
+if(!file)return;
 var r=new FileReader();
 r.onload=function(ev){
 try{
@@ -764,12 +771,17 @@ Object.keys(weeks).forEach(function(k){if(!idx.includes(k))idx.push(k);});
 idx.sort(function(a,b){return b.localeCompare(a);});
 localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
 renderHist();
-alert(‘Imported ‘+count+’ week’+(count!==1?‘s’:’’)+’. Go to History tab or click Load to restore.’);
-} else {alert(‘No week data found. Make sure it is a valid HLAcworth backup.’);}
-}catch(err){alert(‘Error reading file: ‘+err.message);}
+alert(‘Imported ‘+count+’ week’+(count!==1?‘s’:’’)+’. Go to History tab and click Load to restore.’);
+} else {
+alert(‘No week data found. Make sure it is a valid HLAcworth backup.’);
+}
+}catch(err){
+alert(‘Error reading file: ‘+err.message);
+}
+gi(‘importFileInput’).value=’’;
 };
-r.onerror=function(){alert(‘Could not read file.’);};
-r.readAsText(file);e.target.value=’’;
+r.onerror=function(){alert(‘Could not read file.’);gi(‘importFileInput’).value=’’;};
+r.readAsText(file);
 }
 
 function renderHist(){
@@ -798,9 +810,16 @@ function doPrint(which){
 mirrorMeeting();
 var orig=document.title;
 document.title=which===‘ops’?“Huey Luey’s - Operations Chart”:“Huey Luey’s - Manager Meeting Notes”;
-document.body.className=‘print-’+which;
-window.print();
-setTimeout(function(){document.body.className=’’;document.title=orig;},600);
+document.body.setAttribute(‘data-print’,which);
+document.body.classList.add(‘print-’+which);
+function afterPrint(){
+document.body.classList.remove(‘print-ops’,‘print-meet’);
+document.body.removeAttribute(‘data-print’);
+document.title=orig;
+window.removeEventListener(‘afterprint’,afterPrint);
+}
+window.addEventListener(‘afterprint’,afterPrint);
+setTimeout(function(){window.print();},100);
 }
 
 function showTab(tab,btnEl,idx){

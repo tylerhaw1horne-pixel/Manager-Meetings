@@ -528,472 +528,711 @@ var _editMode = false;
 var _opsLocked = false;
 
 function gi(id){ return document.getElementById(id); }
-function gv(id){ var e=gi(id); return e ? e.value||’’ : ‘’; }
-function gn(id){ return parseFloat(gv(id))||0; }
-function sv(id,v){ var e=gi(id); if(e) e.value = v||’’; }
-function fD(n){ if((!n && n!==0)||isNaN(n)) return ‘-’; return ‘$’+Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,’,’); }
-function fP(n){ if(n==null||isNaN(n)) return ‘-’; return n.toFixed(1)+’%’; }
-function fN(n){ if(!n||isNaN(n)) return ‘-’; return Number(n).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,’,’); }
-function chip(actual,ref){
-if(!actual||!ref) return ‘<span class="chip nt">-</span>’;
-var p=((actual-ref)/ref)*100, c=p>=0?‘up’:‘dn’;
-return ‘<span class="chip '+c+'">’+(p>=0?’+’:’’)+p.toFixed(1)+’%</span>’;
+function gv(id){ var e = gi(id); return e ? (e.value || '') : ''; }
+function gn(id){ return parseFloat(gv(id)) || 0; }
+function sv(id,v){ var e = gi(id); if(e) e.value = (v ?? ''); }
+
+function fD(n){
+  if((!n && n !== 0) || isNaN(n)) return '-';
+  return '$' + Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
-function setTxt(id,v){ var e=gi(id); if(e) e.textContent=v||’-’; }
-function setHtm(id,v){ var e=gi(id); if(e) e.innerHTML=v||’-’; }
+function fP(n){
+  if(n == null || isNaN(n)) return '-';
+  return Number(n).toFixed(1) + '%';
+}
+function fN(n){
+  if((!n && n !== 0) || isNaN(n)) return '-';
+  return Number(n).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+function chip(actual, ref){
+  if(!actual || !ref) return '<span class="chip nt">-</span>';
+  var p = ((actual - ref) / ref) * 100;
+  var c = p >= 0 ? 'up' : 'dn';
+  return '<span class="chip ' + c + '">' + (p >= 0 ? '+' : '') + p.toFixed(1) + '%</span>';
+}
+function setTxt(id,v){ var e = gi(id); if(e) e.textContent = v || '-'; }
+function setHtm(id,v){ var e = gi(id); if(e) e.innerHTML = v || '-'; }
+
 function safeTxt(id,v){
-var e=gi(id); if(!e) return;
-if(_editMode && e.dataset.mirror!==undefined && e.innerHTML!==e.dataset.mirror) return;
-e.textContent=v||’-’;
+  var e = gi(id);
+  if(!e) return;
+  if(_editMode && e.dataset.mirror !== undefined && e.innerHTML !== e.dataset.mirror) return;
+  e.textContent = v || '-';
 }
 function safeHtm(id,v){
-var e=gi(id); if(!e) return;
-if(_editMode && e.dataset.mirror!==undefined && e.innerHTML!==e.dataset.mirror) return;
-e.innerHTML=v||’-’;
+  var e = gi(id);
+  if(!e) return;
+  if(_editMode && e.dataset.mirror !== undefined && e.innerHTML !== e.dataset.mirror) return;
+  e.innerHTML = v || '-';
 }
 
 function buildAll(){
-var h=’’;
-for(var i=0;i<7;i++){
-h+=’<div class="wx-day"><div class="wn">’+DAYS[i].slice(0,3).toUpperCase()+’</div>’+
-‘<input type="text" id="wx_icon_'+i+'" value="" style="font-size:13px;text-align:center;padding:1px;border:1px solid #E8D8C4;border-radius:3px;width:100%;margin:2px 0" oninput="live()" placeholder="Icon"/>’+
-‘<input type="text" id="wx_temp_'+i+'" style="font-size:9px;text-align:center;padding:2px 3px;margin-bottom:2px" oninput="live()" placeholder="Hi/Lo F"/>’+
-‘<input type="text" id="wx_cond_'+i+'" style="font-size:9px;text-align:center;padding:1px 3px;margin-bottom:2px;color:#9C8878" oninput="live()" placeholder="Condition"/>’+
-‘<textarea id="wx_itin_'+i+'" oninput="live()" style="font-size:9px;min-height:28px;resize:none;padding:2px 3px" placeholder="Notes..."></textarea></div>’;
-}
-gi(‘m_wxGrid’).innerHTML = h;
-[‘boh_lines’,‘foh_lines’,‘mgr_lines’].forEach(function(id){
-var s=’’; for(var i=0;i<8;i++) s+=’<span class="nb-line"></span>’;
-gi(id).innerHTML=s;
-});
+  var h = '';
+  for(var i=0;i<7;i++){
+    h += '<div class="wx-day"><div class="wn">' + DAYS[i].slice(0,3).toUpperCase() + '</div>' +
+      '<input type="text" id="wx_icon_' + i + '" value="" style="font-size:13px;text-align:center;padding:1px;border:1px solid #E8D8C4;border-radius:3px;width:100%;margin:2px 0" oninput="live()" placeholder="Icon"/>' +
+      '<input type="text" id="wx_temp_' + i + '" style="font-size:9px;text-align:center;padding:2px 3px;margin-bottom:2px" oninput="live()" placeholder="Hi/Lo F"/>' +
+      '<input type="text" id="wx_cond_' + i + '" style="font-size:9px;text-align:center;padding:1px 3px;margin-bottom:2px;color:#9C8878" oninput="live()" placeholder="Condition"/>' +
+      '<textarea id="wx_itin_' + i + '" oninput="live()" style="font-size:9px;min-height:28px;resize:none;padding:2px 3px" placeholder="Notes..."></textarea></div>';
+  }
+  gi('m_wxGrid').innerHTML = h;
+
+  ['boh_lines','foh_lines','mgr_lines'].forEach(function(id){
+    var s = '';
+    for(var i=0;i<8;i++) s += '<span class="nb-line"></span>';
+    gi(id).innerHTML = s;
+  });
 }
 
 function calcDisc(){
-var net = gn(‘disc_total’)-gn(‘disc_ezcater’)-gn(‘disc_rewards’)-gn(‘disc_other’);
-var el = gi(‘disc_net_display’);
-if(el) el.textContent = fD(net);
-mirrorMeeting();
+  var net = gn('disc_total') - gn('disc_ezcater') - gn('disc_rewards') - gn('disc_other');
+  var el = gi('disc_net_display');
+  if(el) el.textContent = fD(net);
+  mirrorMeeting();
 }
 
 function calc(){
-setHtm(‘s_lw_vsly’,   chip(gn(‘s_lw_act’),gn(‘s_lw_ly’)));
-setHtm(‘cat_lw_vsly’, chip(gn(‘cat_lw_act’),gn(‘cat_lw_ly’)));
-setHtm(‘rft_lw_vsly’, chip(gn(‘rft_lw_act’),gn(‘rft_lw_ly’)));
-setHtm(‘togo_lw_vsly’,chip(gn(‘togo_lw_act’),gn(‘togo_lw_ly’)));
-setHtm(‘patio_lw_vsly’,chip(gn(‘patio_lw_act’),gn(‘patio_lw_ly’)));
-setHtm(‘bhb_lw_vsproj’,chip(gn(‘bhb_lw_act’),gn(‘bhb_lw_proj’)));
-setHtm(‘ppa_lw_vsly’, chip(gn(‘ppa_lw_act’),gn(‘ppa_cw_ly’)));
-var labS=gn(‘lab_sales’), labD=gn(‘lab_dollars’), taxR=gn(‘lab_tax’)||TAX_DEFAULT;
-var labAct = labS>0 ? (labD/labS)*100 : null;
-var labWtax = labAct!=null ? labAct*(1+taxR/100) : null;
-gi(‘lab_pct_notax’).textContent = labAct!=null ? fP(labAct) : ‘-’;
-gi(‘lab_pct_notax’)._val = labAct;
-gi(‘lab_pct_wtax’).textContent = labWtax!=null ? fP(labWtax) : ‘-’;
-gi(‘lab_pct_wtax’)._val = labWtax;
-[[‘food’],[‘lbw’],[‘pcc’],[‘nab’]].forEach(function(a){
-var id=a[0], s=gn(id+’_sales’), sp=gn(id+’_spent’);
-var act = s>0 ? (sp/s)*100 : null;
-gi(id+’_lw_act’).textContent = act!=null ? fP(act) : ‘-’;
-gi(id+’_lw_act’)._val = act;
-});
-calcDisc();
-mirrorMeeting();
+  setHtm('s_lw_vsly', chip(gn('s_lw_act'), gn('s_lw_ly')));
+  setHtm('cat_lw_vsly', chip(gn('cat_lw_act'), gn('cat_lw_ly')));
+  setHtm('rft_lw_vsly', chip(gn('rft_lw_act'), gn('rft_lw_ly')));
+  setHtm('togo_lw_vsly', chip(gn('togo_lw_act'), gn('togo_lw_ly')));
+  setHtm('patio_lw_vsly', chip(gn('patio_lw_act'), gn('patio_lw_ly')));
+  setHtm('bhb_lw_vsproj', chip(gn('bhb_lw_act'), gn('bhb_lw_proj')));
+  setHtm('ppa_lw_vsly', chip(gn('ppa_lw_act'), gn('ppa_cw_ly')));
+
+  var labS = gn('lab_sales');
+  var labD = gn('lab_dollars');
+  var taxR = gn('lab_tax') || TAX_DEFAULT;
+  var labAct = labS > 0 ? (labD / labS) * 100 : null;
+  var labWtax = labAct != null ? labAct * (1 + taxR / 100) : null;
+
+  gi('lab_pct_notax').textContent = labAct != null ? fP(labAct) : '-';
+  gi('lab_pct_notax')._val = labAct;
+  gi('lab_pct_wtax').textContent = labWtax != null ? fP(labWtax) : '-';
+  gi('lab_pct_wtax')._val = labWtax;
+
+  [['food'],['lbw'],['pcc'],['nab']].forEach(function(a){
+    var id = a[0], s = gn(id + '_sales'), sp = gn(id + '_spent');
+    var act = s > 0 ? (sp / s) * 100 : null;
+    gi(id + '_lw_act').textContent = act != null ? fP(act) : '-';
+    gi(id + '_lw_act')._val = act;
+  });
+
+  calcDisc();
+  mirrorMeeting();
 }
 
 function live(){
-mirrorMeeting();
+  mirrorMeeting();
 }
 
 function mirrorMeeting(){
-var d = gv(‘weekDate’);
-if(d){
-var dt=new Date(d+‘T12:00:00’), en=new Date(dt); en.setDate(dt.getDate()+6);
-var f=function(x){return x.toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’});};
-setTxt(‘m_weekLabel’, f(dt)+’ - ‘+f(en));
-}
-setTxt(‘m_meetDate’, gv(‘meet_date’)||’-’);
-var sAct=gn(‘s_lw_act’), sLY=gn(‘s_lw_ly’);
-safeHtm(‘m_sales’, sAct ? fD(sAct)+’ ’+chip(sAct,sLY) : ‘-’);
-safeTxt(‘m_sales_ly’, sLY ? fD(sLY) : ‘-’);
-var togoAct=gn(‘togo_lw_act’), togoLY=gn(‘togo_lw_ly’);
-safeHtm(‘m_togo’, togoAct ? fD(togoAct)+’ ’+chip(togoAct,togoLY) : ‘-’);
-var catAct=gn(‘cat_lw_act’), catLY=gn(‘cat_lw_ly’);
-safeHtm(‘m_catering’, catAct ? fD(catAct)+’ ’+chip(catAct,catLY) : ‘-’);
-var patAct=gn(‘patio_lw_act’), patLY=gn(‘patio_lw_ly’);
-safeHtm(‘m_patio’, patAct ? fD(patAct)+’ ’+chip(patAct,patLY) : ‘-’);
-var rftAct=gn(‘rft_lw_act’), rftLY=gn(‘rft_lw_ly’);
-safeHtm(‘m_rooftop’, rftAct ? fD(rftAct)+’ ’+chip(rftAct,rftLY) : ‘-’);
-safeTxt(‘m_bhb’, fD(gn(‘bhb_lw_act’)));
-safeHtm(‘m_bhb_vsproj’, chip(gn(‘bhb_lw_act’),gn(‘bhb_lw_proj’)));
-var discNet=gn(‘disc_total’)-gn(‘disc_ezcater’)-gn(‘disc_rewards’)-gn(‘disc_other’);
-safeTxt(‘m_disc’, fD(discNet));
-safeTxt(‘m_disc_ezcater’, fD(gn(‘disc_ezcater’)));
-safeTxt(‘m_disc_o’, fD(gn(‘disc_other’)));
-var labAct=gi(‘lab_pct_notax’)._val, labWtax=gi(‘lab_pct_wtax’)._val;
-safeTxt(‘m_labor’, labAct!=null ? fP(labAct) : ‘-’);
-safeTxt(‘m_labor_cost’, gn(‘lab_dollars’) ? fD(gn(‘lab_dollars’)) : ‘-’);
-safeTxt(‘m_labor_wt’, labWtax!=null ? fP(labWtax) : ‘-’);
-safeTxt(‘m_food’, gi(‘food_lw_act’)._val!=null ? fP(gi(‘food_lw_act’)._val) : ‘-’);
-safeTxt(‘m_lbw’, gi(‘lbw_lw_act’)._val!=null ? fP(gi(‘lbw_lw_act’)._val) : ‘-’);
-safeTxt(‘m_ppa’, gn(‘ppa_lw_act’) ? fD(gn(‘ppa_lw_act’)) : ‘-’);
-safeHtm(‘m_ppa_vs’, chip(gn(‘ppa_lw_act’),gn(‘ppa_cw_ly’)));
-safeTxt(‘m_splh’, gn(‘splh_lw_act’) ? fD(gn(‘splh_lw_act’)) : ‘-’);
-safeTxt(‘m_loyalty’, fN(gn(‘loyalty’)));
-safeTxt(‘m_rev5’, gn(‘rev5’)||’-’); safeTxt(‘m_rev4’, gn(‘rev4’)||’-’);
-safeTxt(‘m_rating’, gn(‘rev_rating’)||’-’); safeTxt(‘m_rev_total’, gn(‘rev_total’)||’-’);
-safeTxt(‘m_motm’, gv(‘motm_name’)||’-’); safeTxt(‘m_motm_wk’, gn(‘motm_wk’)||’-’); safeTxt(‘m_motm_total’, gn(‘motm_total’)||’-’);
-safeTxt(‘m_emp1’, gv(‘emp1_name’)||’-’); safeTxt(‘m_emp1_wk’, gn(‘emp1_wk’)||’-’); safeTxt(‘m_emp1_total’, gn(‘emp1_total’)||’-’);
-safeTxt(‘m_togo_margs’, gn(‘togo_margs’)||’-’); safeTxt(‘m_floaters’, gn(‘floaters’)||’-’);
-safeTxt(‘m_desserts’, gn(‘desserts’)||’-’); safeTxt(‘m_top_marg’, gv(‘top_marg’)||’-’);
-safeTxt(‘m_marg16’, gn(‘marg16’)||’-’); safeTxt(‘m_marg22’, gn(‘marg22’)||’-’);
-safeTxt(‘m_marg32’, gn(‘marg32’)||’-’); safeTxt(‘m_pitchers’, gn(‘pitchers’)||’-’);
-safeTxt(‘m_bhb_mt’, gn(‘bhb_mt’)||’-’); safeTxt(‘m_bhb_pc’, gn(‘bhb_pc’)||’-’);
-safeTxt(‘m_bhb_ld’, gn(‘bhb_ld’)||’-’); safeTxt(‘m_bhb_br’, gn(‘bhb_br’)||’-’); safeTxt(‘m_bhb_fp’, gn(‘bhb_fp’)||’-’);
-safeTxt(‘m_brunch_hotcakes’, gn(‘brunch_hotcakes’)||’-’);
-safeTxt(‘m_brunch_hotcakes_refill’, gn(‘brunch_hotcakes_refill’)||’-’);
-safeTxt(‘m_brunch_skillet’, gn(‘brunch_skillet’)||’-’);
-safeTxt(‘m_brunch_french_toast’, gn(‘brunch_french_toast’)||’-’);
-safeTxt(‘m_brunch_burrito’, gn(‘brunch_burrito’)||’-’);
-safeTxt(‘m_brunch_chilaquiles’, gn(‘brunch_chilaquiles’)||’-’);
+  var d = gv('weekDate');
+  if(d){
+    var dt = new Date(d + 'T12:00:00');
+    var en = new Date(dt);
+    en.setDate(dt.getDate() + 6);
+    var f = function(x){
+      return x.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    };
+    setTxt('m_weekLabel', f(dt) + ' - ' + f(en));
+  }
+
+  setTxt('m_meetDate', gv('meet_date') || '-');
+
+  var sAct = gn('s_lw_act'), sLY = gn('s_lw_ly');
+  safeHtm('m_sales', sAct ? fD(sAct) + '&nbsp;' + chip(sAct, sLY) : '-');
+  safeTxt('m_sales_ly', sLY ? fD(sLY) : '-');
+
+  var togoAct = gn('togo_lw_act'), togoLY = gn('togo_lw_ly');
+  safeHtm('m_togo', togoAct ? fD(togoAct) + '&nbsp;' + chip(togoAct, togoLY) : '-');
+
+  var catAct = gn('cat_lw_act'), catLY = gn('cat_lw_ly');
+  safeHtm('m_catering', catAct ? fD(catAct) + '&nbsp;' + chip(catAct, catLY) : '-');
+
+  var patAct = gn('patio_lw_act'), patLY = gn('patio_lw_ly');
+  safeHtm('m_patio', patAct ? fD(patAct) + '&nbsp;' + chip(patAct, patLY) : '-');
+
+  var rftAct = gn('rft_lw_act'), rftLY = gn('rft_lw_ly');
+  safeHtm('m_rooftop', rftAct ? fD(rftAct) + '&nbsp;' + chip(rftAct, rftLY) : '-');
+
+  safeTxt('m_bhb', fD(gn('bhb_lw_act')));
+  safeHtm('m_bhb_vsproj', chip(gn('bhb_lw_act'), gn('bhb_lw_proj')));
+
+  var discNet = gn('disc_total') - gn('disc_ezcater') - gn('disc_rewards') - gn('disc_other');
+  safeTxt('m_disc', fD(discNet));
+  safeTxt('m_disc_ezcater', fD(gn('disc_ezcater')));
+  safeTxt('m_disc_o', fD(gn('disc_other')));
+
+  var labAct = gi('lab_pct_notax')._val, labWtax = gi('lab_pct_wtax')._val;
+  safeTxt('m_labor', labAct != null ? fP(labAct) : '-');
+  safeTxt('m_labor_cost', gn('lab_dollars') ? fD(gn('lab_dollars')) : '-');
+  safeTxt('m_labor_wt', labWtax != null ? fP(labWtax) : '-');
+
+  safeTxt('m_food', gi('food_lw_act')._val != null ? fP(gi('food_lw_act')._val) : '-');
+  safeTxt('m_lbw', gi('lbw_lw_act')._val != null ? fP(gi('lbw_lw_act')._val) : '-');
+
+  safeTxt('m_ppa', gn('ppa_lw_act') ? fD(gn('ppa_lw_act')) : '-');
+  safeHtm('m_ppa_vs', chip(gn('ppa_lw_act'), gn('ppa_cw_ly')));
+  safeTxt('m_splh', gn('splh_lw_act') ? fD(gn('splh_lw_act')) : '-');
+
+  safeTxt('m_loyalty', fN(gn('loyalty')));
+  safeTxt('m_rev5', gn('rev5') || '-');
+  safeTxt('m_rev4', gn('rev4') || '-');
+  safeTxt('m_rating', gn('rev_rating') || '-');
+  safeTxt('m_rev_total', gn('rev_total') || '-');
+
+  safeTxt('m_motm', gv('motm_name') || '-');
+  safeTxt('m_motm_wk', gn('motm_wk') || '-');
+  safeTxt('m_motm_total', gn('motm_total') || '-');
+
+  safeTxt('m_emp1', gv('emp1_name') || '-');
+  safeTxt('m_emp1_wk', gn('emp1_wk') || '-');
+  safeTxt('m_emp1_total', gn('emp1_total') || '-');
+
+  safeTxt('m_togo_margs', gn('togo_margs') || '-');
+  safeTxt('m_floaters', gn('floaters') || '-');
+  safeTxt('m_desserts', gn('desserts') || '-');
+  safeTxt('m_top_marg', gv('top_marg') || '-');
+
+  safeTxt('m_marg16', gn('marg16') || '-');
+  safeTxt('m_marg22', gn('marg22') || '-');
+  safeTxt('m_marg32', gn('marg32') || '-');
+  safeTxt('m_pitchers', gn('pitchers') || '-');
+
+  safeTxt('m_bhb_mt', gn('bhb_mt') || '-');
+  safeTxt('m_bhb_pc', gn('bhb_pc') || '-');
+  safeTxt('m_bhb_ld', gn('bhb_ld') || '-');
+  safeTxt('m_bhb_br', gn('bhb_br') || '-');
+  safeTxt('m_bhb_fp', gn('bhb_fp') || '-');
+
+  safeTxt('m_brunch_hotcakes', gn('brunch_hotcakes') || '-');
+  safeTxt('m_brunch_hotcakes_refill', gn('brunch_hotcakes_refill') || '-');
+  safeTxt('m_brunch_skillet', gn('brunch_skillet') || '-');
+  safeTxt('m_brunch_french_toast', gn('brunch_french_toast') || '-');
+  safeTxt('m_brunch_burrito', gn('brunch_burrito') || '-');
+  safeTxt('m_brunch_chilaquiles', gn('brunch_chilaquiles') || '-');
 }
 
 function updateLabel(){
-var d=gv(‘weekDate’);
-if(!d){ gi(‘weekLabel’).textContent=’-’; return; }
-var dt=new Date(d+‘T12:00:00’), en=new Date(dt); en.setDate(dt.getDate()+6);
-var f=function(x){return x.toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’,year:‘numeric’});};
-gi(‘weekLabel’).textContent = f(dt)+’ - ’+f(en);
+  var d = gv('weekDate');
+  if(!d){
+    gi('weekLabel').textContent = '-';
+    return;
+  }
+  var dt = new Date(d + 'T12:00:00');
+  var en = new Date(dt);
+  en.setDate(dt.getDate() + 6);
+  var f = function(x){
+    return x.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  };
+  gi('weekLabel').textContent = f(dt) + ' - ' + f(en);
 }
 
 function onDateChange(){
-updateLabel();
-var key = weekKey();
-if(key){
-var raw = localStorage.getItem(key);
-if(raw){ try{ restoreData(JSON.parse(raw)); calc(); return; }catch(e){} }
-}
-var d=gv(‘weekDate’); if(!d) return;
-var dt=new Date(d+‘T12:00:00’), prev=new Date(dt);
-prev.setDate(dt.getDate()-7);
-autoCarry(‘hl_week_’+prev.toISOString().split(‘T’)[0]);
+  updateLabel();
+  var key = weekKey();
+  if(key){
+    var raw = localStorage.getItem(key);
+    if(raw){
+      try{
+        restoreData(JSON.parse(raw));
+        calc();
+        return;
+      }catch(e){}
+    }
+  }
+
+  var d = gv('weekDate');
+  if(!d) return;
+  var dt = new Date(d + 'T12:00:00');
+  var prev = new Date(dt);
+  prev.setDate(dt.getDate() - 7);
+  autoCarry('hl_week_' + prev.toISOString().split('T')[0]);
 }
 
 function autoCarry(prevKey){
-var raw=localStorage.getItem(prevKey); if(!raw) return;
-var data; try{ data=JSON.parse(raw); }catch(e){ return; }
-var pairs=[[‘s_lw_act’,‘s_lw_ly’],[‘cat_lw_act’,‘cat_lw_ly’],[‘rft_lw_act’,‘rft_lw_ly’],
-[‘togo_lw_act’,‘togo_lw_ly’],[‘patio_lw_act’,‘patio_lw_ly’],[‘s_cw_proj’,‘s_lw_proj’],[‘s_cw_ly’,‘s_lw_ly’]];
-var carried=false;
-pairs.forEach(function(p){
-var el=gi(p[1]);
-if(el && !el.value && data[p[0]]){ el.value=data[p[0]]; carried=true; }
-});
-if(carried){
-calc();
-var n=gi(‘carryNote’); n.classList.add(‘show’);
-setTimeout(function(){ n.classList.remove(‘show’); }, 5000);
-}
+  var raw = localStorage.getItem(prevKey);
+  if(!raw) return;
+
+  var data;
+  try{ data = JSON.parse(raw); }catch(e){ return; }
+
+  var pairs = [
+    ['s_lw_act','s_lw_ly'],
+    ['cat_lw_act','cat_lw_ly'],
+    ['rft_lw_act','rft_lw_ly'],
+    ['togo_lw_act','togo_lw_ly'],
+    ['patio_lw_act','patio_lw_ly'],
+    ['s_cw_proj','s_lw_proj'],
+    ['s_cw_ly','s_lw_ly']
+  ];
+
+  var carried = false;
+  pairs.forEach(function(p){
+    var el = gi(p[1]);
+    if(el && !el.value && data[p[0]]){
+      el.value = data[p[0]];
+      carried = true;
+    }
+  });
+
+  if(carried){
+    calc();
+    var n = gi('carryNote');
+    n.classList.add('show');
+    setTimeout(function(){ n.classList.remove('show'); }, 5000);
+  }
 }
 
 function gatherData(){
-var d = { _v:7, *wd:gv(‘weekDate’), *ts:Date.now() };
-document.querySelectorAll(‘input[id],textarea[id]’).forEach(function(el){
-if(el.id && el.id.indexOf(’*’)!==-1) d[el.id]=el.value;
-});
-document.querySelectorAll(’[id^=“lbl*”]’).forEach(function(el){
-d[el.id]=el.textContent;
-});
-return d;
+  var d = { _v:7, _wd:gv('weekDate'), _ts:Date.now() };
+
+  document.querySelectorAll('input[id],textarea[id],select[id]').forEach(function(el){
+    if(el.id) d[el.id] = el.value;
+  });
+
+  document.querySelectorAll('[id^="lbl_"]').forEach(function(el){
+    d[el.id] = el.textContent;
+  });
+
+  return d;
 }
 
 function restoreData(d){
-if(!d) return;
-Object.keys(d).forEach(function(k){
-if(k===’_v’||k===’_wd’||k===’*ts’) return;
-var el=gi(k); if(!el) return;
-if(el.tagName===‘INPUT’||el.tagName===‘TEXTAREA’) el.value=d[k]||’’;
-else if(k.indexOf(’lbl*’)===0 && d[k]) el.textContent=d[k];
-});
-if(d._wd) sv(‘weekDate’,d._wd);
-var net=gn(‘disc_total’)-gn(‘disc_ezcater’)-gn(‘disc_rewards’)-gn(‘disc_other’);
-var el=gi(‘disc_net_display’); if(el) el.textContent=fD(net);
+  if(!d) return;
+
+  Object.keys(d).forEach(function(k){
+    if(k === '_v' || k === '_wd' || k === '_ts') return;
+    var el = gi(k);
+    if(!el) return;
+
+    if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT'){
+      el.value = d[k] || '';
+    } else if(k.indexOf('lbl_') === 0){
+      el.textContent = d[k] || '';
+    }
+  });
+
+  if(d._wd) sv('weekDate', d._wd);
+
+  var net = gn('disc_total') - gn('disc_ezcater') - gn('disc_rewards') - gn('disc_other');
+  var el = gi('disc_net_display');
+  if(el) el.textContent = fD(net);
 }
 
 function weekKey(){
-var d=gv(‘weekDate’); return d ? ‘hl_week_’+d : null;
+  var d = gv('weekDate');
+  return d ? ('hl_week_' + d) : null;
 }
 
 function saveIdx(key){
-var raw=localStorage.getItem(‘hl_week_index’);
-var idx=raw ? JSON.parse(raw) : [];
-if(idx.indexOf(key)===-1) idx.unshift(key);
-var seen={};
-idx=idx.filter(function(k){ if(seen[k]) return false; seen[k]=true; return true; });
-idx.sort(function(a,b){ return b.localeCompare(a); });
-if(idx.length>104) idx=idx.slice(0,104);
-localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
+  var raw = localStorage.getItem('hl_week_index');
+  var idx = raw ? JSON.parse(raw) : [];
+
+  if(idx.indexOf(key) === -1) idx.unshift(key);
+
+  var seen = {};
+  idx = idx.filter(function(k){
+    if(seen[k]) return false;
+    seen[k] = true;
+    return true;
+  });
+
+  idx.sort(function(a,b){ return b.localeCompare(a); });
+  if(idx.length > 104) idx = idx.slice(0,104);
+
+  localStorage.setItem('hl_week_index', JSON.stringify(idx));
 }
 
 function doSave(){
-var key=weekKey();
-if(!key){ alert(‘Please select a week date first.’); return; }
-var data=gatherData();
-try{
-localStorage.setItem(key, JSON.stringify(data));
-saveIdx(key);
-saveLabels();
-var n=gi(‘savedNote’); n.classList.add(‘show’);
-setTimeout(function(){ n.classList.remove(‘show’); }, 3000);
-gi(‘syncBadge’).textContent=’Saved: ’+new Date().toLocaleTimeString();
-renderHist();
-}catch(e){
-alert(’Save failed: ’+e.message);
-}
+  var key = weekKey();
+  if(!key){
+    alert('Please select a week date first.');
+    return;
+  }
+
+  var data = gatherData();
+
+  try{
+    localStorage.setItem(key, JSON.stringify(data));
+    saveIdx(key);
+    saveLabels();
+
+    var n = gi('savedNote');
+    n.classList.add('show');
+    setTimeout(function(){ n.classList.remove('show'); }, 3000);
+
+    gi('syncBadge').textContent = 'Saved: ' + new Date().toLocaleTimeString();
+    gi('syncBadge').className = 'ss ss-ok';
+    renderHist();
+  }catch(e){
+    gi('syncBadge').textContent = 'Save failed';
+    gi('syncBadge').className = 'ss ss-err';
+    alert('Save failed: ' + e.message);
+  }
 }
 
 function doLoad(){
-var key=weekKey(); if(!key) return;
-var raw=localStorage.getItem(key);
-if(raw){
-try{ restoreData(JSON.parse(raw)); calc(); return; }catch(e){}
-}
-alert(‘No saved data found for this week.’);
+  var key = weekKey();
+  if(!key) return;
+
+  var raw = localStorage.getItem(key);
+  if(raw){
+    try{
+      restoreData(JSON.parse(raw));
+      calc();
+      return;
+    }catch(e){}
+  }
+
+  alert('No saved data found for this week.');
 }
 
 function saveLabels(){
-var labels={};
-document.querySelectorAll(’[id^=“lbl_”]’).forEach(function(el){ labels[el.id]=el.textContent; });
-localStorage.setItem(‘hl_labels’, JSON.stringify(labels));
+  var labels = {};
+  document.querySelectorAll('[id^="lbl_"]').forEach(function(el){
+    labels[el.id] = el.textContent;
+  });
+  localStorage.setItem('hl_labels', JSON.stringify(labels));
 }
 
 function restoreLabels(){
-var raw=localStorage.getItem(‘hl_labels’); if(!raw) return;
-try{
-var labels=JSON.parse(raw);
-Object.keys(labels).forEach(function(k){ var el=gi(k); if(el && labels[k]) el.textContent=labels[k]; });
-}catch(e){}
+  var raw = localStorage.getItem('hl_labels');
+  if(!raw) return;
+
+  try{
+    var labels = JSON.parse(raw);
+    Object.keys(labels).forEach(function(k){
+      var el = gi(k);
+      if(el && labels[k] != null) el.textContent = labels[k];
+    });
+  }catch(e){}
 }
 
 function clearOps(){
-if(!confirm(‘Clear all fields? Saved data will not be deleted.’)) return;
-document.querySelectorAll(‘input[id],textarea[id]’).forEach(function(el){
-if(el.id===‘weekDate’||el.id===‘lab_tax’) return;
-el.value=’’;
-});
-[‘lab_pct_notax’,‘lab_pct_wtax’,‘food_lw_act’,‘lbw_lw_act’,‘pcc_lw_act’,‘nab_lw_act’].forEach(function(id){
-var e=gi(id); if(e){ e.textContent=’-’; e._val=null; }
-});
-[‘s_lw_vsly’,‘cat_lw_vsly’,‘rft_lw_vsly’,‘togo_lw_vsly’,‘patio_lw_vsly’,‘bhb_lw_vsproj’,‘ppa_lw_vsly’].forEach(function(id){
-setHtm(id,’-’);
-});
-var el=gi(‘disc_net_display’); if(el) el.textContent=’$0.00’;
-mirrorMeeting();
+  if(!confirm('Clear all fields? Saved data will not be deleted.')) return;
+
+  document.querySelectorAll('input[id],textarea[id],select[id]').forEach(function(el){
+    if(el.id === 'weekDate' || el.id === 'lab_tax') return;
+    el.value = '';
+  });
+
+  ['lab_pct_notax','lab_pct_wtax','food_lw_act','lbw_lw_act','pcc_lw_act','nab_lw_act'].forEach(function(id){
+    var e = gi(id);
+    if(e){
+      e.textContent = '-';
+      e._val = null;
+    }
+  });
+
+  ['s_lw_vsly','cat_lw_vsly','rft_lw_vsly','togo_lw_vsly','patio_lw_vsly','bhb_lw_vsproj','ppa_lw_vsly'].forEach(function(id){
+    setHtm(id, '-');
+  });
+
+  var el = gi('disc_net_display');
+  if(el) el.textContent = '$0.00';
+
+  mirrorMeeting();
 }
 
 function doExport(){
-try{
-var raw=localStorage.getItem(‘hl_week_index’);
-var idx=raw ? JSON.parse(raw) : [];
-var out={version:7, exported:new Date().toISOString(), weeks:{}, labels:{}};
-idx.forEach(function(k){
-var r=localStorage.getItem(k);
-if(r){ try{ out.weeks[k]=JSON.parse(r); }catch(e){} }
-});
-var labRaw=localStorage.getItem(‘hl_labels’);
-if(labRaw){ try{ out.labels=JSON.parse(labRaw); }catch(e){} }
-var json=JSON.stringify(out,null,2);
-var blob=new Blob([json],{type:‘application/json’});
-var url=window.URL.createObjectURL(blob);
-var fname=‘HLAcworth_’+new Date().toISOString().slice(0,10)+’.json’;
-var a=document.createElement(‘a’);
-a.style.display=‘none’;
-a.href=url;
-a.setAttribute(‘download’,fname);
-document.body.appendChild(a);
-a.click();
-window.URL.revokeObjectURL(url);
-document.body.removeChild(a);
-}catch(e){
-alert(’Export failed: ’+e.message);
-}
+  try{
+    var raw = localStorage.getItem('hl_week_index');
+    var idx = raw ? JSON.parse(raw) : [];
+    var out = { version:7, exported:new Date().toISOString(), weeks:{}, labels:{} };
+
+    idx.forEach(function(k){
+      var r = localStorage.getItem(k);
+      if(r){
+        try{ out.weeks[k] = JSON.parse(r); }catch(e){}
+      }
+    });
+
+    var labRaw = localStorage.getItem('hl_labels');
+    if(labRaw){
+      try{ out.labels = JSON.parse(labRaw); }catch(e){}
+    }
+
+    var json = JSON.stringify(out, null, 2);
+    var blob = new Blob([json], {type:'application/json'});
+    var url = window.URL.createObjectURL(blob);
+    var fname = 'HLAcworth_' + new Date().toISOString().slice(0,10) + '.json';
+
+    var a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = fname;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    setTimeout(function(){
+      window.URL.revokeObjectURL(url);
+    }, 1000);
+  }catch(e){
+    alert('Export failed: ' + e.message);
+  }
 }
 
 function triggerImport(){
-var inp=gi(‘fileImport’);
-inp.value=’’;
-inp.onchange=function(e){
-var file=e.target.files[0]; if(!file) return;
-var reader=new FileReader();
-reader.onload=function(ev){
-try{
-var all=JSON.parse(ev.target.result);
-var count=0;
-var weeks=all.weeks||{};
-Object.keys(all).forEach(function(k){
-if(k.indexOf(‘hl_week_’)===0 && !weeks[k]) weeks[k]=all[k];
-});
-var wkeys=Object.keys(weeks);
-if(wkeys.length===0){ alert(‘No week data found in file.’); return; }
-wkeys.forEach(function(k){
-localStorage.setItem(k, JSON.stringify(weeks[k]));
-count++;
-});
-var raw=localStorage.getItem(‘hl_week_index’);
-var idx=raw ? JSON.parse(raw) : [];
-wkeys.forEach(function(k){ if(idx.indexOf(k)===-1) idx.push(k); });
-idx.sort(function(a,b){ return b.localeCompare(a); });
-localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
-if(all.labels){
-localStorage.setItem(‘hl_labels’,JSON.stringify(all.labels));
-restoreLabels();
-}
-renderHist();
-alert(‘Imported ‘+count+’ week’+(count!==1?‘s’:’’)+’ successfully! Go to History to load.’);
-}catch(err){
-alert(‘Import failed: ‘+err.message);
-}
-inp.value=’’;
-};
-reader.onerror=function(){ alert(‘Could not read file.’); inp.value=’’; };
-reader.readAsText(file);
-};
-inp.click();
+  var inp = gi('fileImport');
+  inp.value = '';
+
+  inp.onchange = function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+
+    var reader = new FileReader();
+
+    reader.onload = function(ev){
+      try{
+        var all = JSON.parse(ev.target.result);
+        var count = 0;
+        var weeks = all.weeks || {};
+
+        Object.keys(all).forEach(function(k){
+          if(k.indexOf('hl_week_') === 0 && !weeks[k]) weeks[k] = all[k];
+        });
+
+        var wkeys = Object.keys(weeks);
+        if(wkeys.length === 0){
+          alert('No week data found in file.');
+          return;
+        }
+
+        wkeys.forEach(function(k){
+          localStorage.setItem(k, JSON.stringify(weeks[k]));
+          count++;
+        });
+
+        var raw = localStorage.getItem('hl_week_index');
+        var idx = raw ? JSON.parse(raw) : [];
+        wkeys.forEach(function(k){
+          if(idx.indexOf(k) === -1) idx.push(k);
+        });
+        idx.sort(function(a,b){ return b.localeCompare(a); });
+        localStorage.setItem('hl_week_index', JSON.stringify(idx));
+
+        if(all.labels){
+          localStorage.setItem('hl_labels', JSON.stringify(all.labels));
+          restoreLabels();
+        }
+
+        renderHist();
+        alert('Imported ' + count + ' week' + (count !== 1 ? 's' : '') + ' successfully! Go to History to load.');
+      }catch(err){
+        alert('Import failed: ' + err.message);
+      }
+
+      inp.value = '';
+    };
+
+    reader.onerror = function(){
+      alert('Could not read file.');
+      inp.value = '';
+    };
+
+    reader.readAsText(file);
+  };
+
+  inp.click();
 }
 
 function doPrint(which){
-mirrorMeeting();
-var origTitle=document.title;
-if(which===‘ops’){
-document.title=“Huey Luey’s - Operations Chart”;
-document.body.className=‘print-ops’;
-} else {
-document.title=“Huey Luey’s - Manager Meeting”;
-document.body.className=‘print-meet’;
-}
-window.print();
-document.body.className=’’;
-document.title=origTitle;
+  mirrorMeeting();
+
+  var origTitle = document.title;
+  document.body.classList.remove('print-ops','print-meet');
+
+  if(which === 'ops'){
+    document.title = "Huey Luey's - Operations Chart";
+    document.body.classList.add('print-ops');
+  } else {
+    document.title = "Huey Luey's - Manager Meeting";
+    document.body.classList.add('print-meet');
+  }
+
+  setTimeout(function(){
+    window.print();
+
+    setTimeout(function(){
+      document.body.classList.remove('print-ops','print-meet');
+      document.title = origTitle;
+    }, 300);
+  }, 50);
 }
 
-function showTab(tab,btn){
-document.querySelectorAll(’.sec’).forEach(function(s){ s.classList.remove(‘active’); });
-document.querySelectorAll(’.tab’).forEach(function(t){ t.classList.remove(‘active’); });
-gi(‘sec-’+tab).classList.add(‘active’);
-if(btn) btn.classList.add(‘active’);
-if(tab===‘meet’) mirrorMeeting();
-if(tab===‘hist’) renderHist();
+function showTab(tab, btn){
+  document.querySelectorAll('.sec').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+
+  gi('sec-' + tab).classList.add('active');
+  if(btn) btn.classList.add('active');
+
+  if(tab === 'meet') mirrorMeeting();
+  if(tab === 'hist') renderHist();
 }
 
 function toggleOpsEdit(){
-_opsLocked=!_opsLocked;
-var btn=gi(‘opsEditBtn’);
-gi(‘sec-ops’).querySelectorAll(‘input,textarea,select’).forEach(function(el){
-el.readOnly=_opsLocked;
-el.style.background=_opsLocked?‘rgba(0,0,0,.04)’:’’;
-el.style.cursor=_opsLocked?‘default’:’’;
-});
-if(_opsLocked){
-btn.textContent=‘Editing: LOCKED’;
-btn.style.background=‘rgba(183,28,28,.55)’;
-} else {
-btn.textContent=‘Editing: ON’;
-btn.style.background=‘rgba(255,255,255,.15)’;
-}
+  _opsLocked = !_opsLocked;
+  var btn = gi('opsEditBtn');
+
+  gi('sec-ops').querySelectorAll('input,textarea,select').forEach(function(el){
+    el.readOnly = _opsLocked;
+    if(el.tagName === 'SELECT') el.disabled = _opsLocked;
+    el.style.background = _opsLocked ? 'rgba(0,0,0,.04)' : '';
+    el.style.cursor = _opsLocked ? 'default' : '';
+  });
+
+  if(_opsLocked){
+    btn.textContent = 'Editing: LOCKED';
+    btn.style.background = 'rgba(183,28,28,.55)';
+  } else {
+    btn.textContent = '🔓 Editing: ON';
+    btn.style.background = 'rgba(255,255,255,.15)';
+  }
 }
 
 function toggleEditMode(){
-_editMode=!_editMode;
-var meet=gi(‘sec-meet’), btn=gi(‘editModeBtn’);
-if(_editMode){
-meet.classList.add(‘edit-mode’);
-btn.textContent=‘Edit Mode: ON’;
-btn.style.background=’#C55A1B’;
-meet.querySelectorAll(’[data-editable]’).forEach(function(el){
-el.contentEditable=‘true’;
-el.setAttribute(‘spellcheck’,‘false’);
-el.dataset.mirror=el.innerHTML;
-});
-} else {
-meet.classList.remove(‘edit-mode’);
-btn.textContent=‘Edit Mode: OFF’;
-btn.style.background=‘rgba(255,255,255,.15)’;
-meet.querySelectorAll(’[data-editable]’).forEach(function(el){
-el.contentEditable=‘false’;
-});
-}
+  _editMode = !_editMode;
+  var meet = gi('sec-meet');
+  var btn = gi('editModeBtn');
+
+  if(_editMode){
+    meet.classList.add('edit-mode');
+    btn.textContent = 'Edit Mode: ON';
+    btn.style.background = '#C55A1B';
+
+    meet.querySelectorAll('[data-editable]').forEach(function(el){
+      el.contentEditable = 'true';
+      el.setAttribute('spellcheck', 'false');
+      el.dataset.mirror = el.innerHTML;
+    });
+  } else {
+    meet.classList.remove('edit-mode');
+    btn.textContent = 'Edit Mode: OFF';
+    btn.style.background = 'rgba(255,255,255,.15)';
+
+    meet.querySelectorAll('[data-editable]').forEach(function(el){
+      el.contentEditable = 'false';
+      delete el.dataset.mirror;
+    });
+  }
 }
 
 function renderHist(){
-var raw=localStorage.getItem(‘hl_week_index’);
-var idx=raw ? JSON.parse(raw) : [];
-var el=gi(‘histList’);
-if(!idx.length){ el.innerHTML=’<p style="color:#9C8878;font-size:12px;padding:8px 0">No saved weeks yet.</p>’; return; }
-var h=’’;
-idx.forEach(function(key){
-var r=localStorage.getItem(key), sales=’’, saved=’’;
-if(r){ try{
-var d=JSON.parse(r);
-var ac=parseFloat(d.s_lw_act); if(ac) sales=fD(ac)+’ sales’;
-if(d._ts) saved=‘Saved ‘+new Date(d.*ts).toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’,year:‘numeric’});
-}catch(e){} }
-h+=’<div class="hi">’+
-’<div><div class="hi-d">Week of ’+key.replace(’hl_week*’,’’)+’</div>’+
-‘<div class="hi-m">’+sales+(sales&&saved?’ · ‘:’’)+saved+’</div></div>’+
-‘<div style="display:flex;gap:5px">’+
-‘<button class="btn xs" onclick="loadHist(\''+key+'\')">Load</button>’+
-‘<button class="btn xs dk" onclick="delHist(\''+key+'\')">Delete</button>’+
-‘</div></div>’;
-});
-el.innerHTML=h;
+  var raw = localStorage.getItem('hl_week_index');
+  var idx = raw ? JSON.parse(raw) : [];
+  var el = gi('histList');
+
+  if(!idx.length){
+    el.innerHTML = '<p style="color:#9C8878;font-size:12px;padding:8px 0">No saved weeks yet.</p>';
+    return;
+  }
+
+  var h = '';
+  idx.forEach(function(key){
+    var r = localStorage.getItem(key), sales = '', saved = '';
+    if(r){
+      try{
+        var d = JSON.parse(r);
+        var ac = parseFloat(d.s_lw_act);
+        if(ac) sales = fD(ac) + ' sales';
+        if(d._ts) saved = 'Saved ' + new Date(d._ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      }catch(e){}
+    }
+
+    h += '<div class="hi">' +
+      '<div><div class="hi-d">Week of ' + key.replace('hl_week_','') + '</div>' +
+      '<div class="hi-m">' + sales + (sales && saved ? ' · ' : '') + saved + '</div></div>' +
+      '<div style="display:flex;gap:5px">' +
+      '<button class="btn xs" onclick="loadHist(\'' + key + '\')">Load</button>' +
+      '<button class="btn xs dk" onclick="delHist(\'' + key + '\')">Delete</button>' +
+      '</div></div>';
+  });
+
+  el.innerHTML = h;
 }
 
 function loadHist(key){
-var raw=localStorage.getItem(key); if(!raw){ alert(‘Week not found.’); return; }
-try{
-var d=JSON.parse(raw);
-sv(‘weekDate’, d.*wd||key.replace(’hl_week*’,’’));
-updateLabel();
-restoreData(d);
-calc();
-showTab(‘ops’, document.querySelectorAll(’.tab’)[0]);
-}catch(e){ alert(‘Error loading week.’); }
+  var raw = localStorage.getItem(key);
+  if(!raw){
+    alert('Week not found.');
+    return;
+  }
+
+  try{
+    var d = JSON.parse(raw);
+    sv('weekDate', d._wd || key.replace('hl_week_',''));
+    updateLabel();
+    restoreData(d);
+    calc();
+    showTab('ops', document.querySelectorAll('.tab')[0]);
+  }catch(e){
+    alert('Error loading week.');
+  }
 }
 
 function delHist(key){
-if(!confirm(‘Remove this week from history?’)) return;
-localStorage.removeItem(key);
-var raw=localStorage.getItem(‘hl_week_index’);
-var idx=raw ? JSON.parse(raw) : [];
-idx=idx.filter(function(k){ return k!==key; });
-localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
-renderHist();
+  if(!confirm('Remove this week from history?')) return;
+
+  localStorage.removeItem(key);
+
+  var raw = localStorage.getItem('hl_week_index');
+  var idx = raw ? JSON.parse(raw) : [];
+  idx = idx.filter(function(k){ return k !== key; });
+  localStorage.setItem('hl_week_index', JSON.stringify(idx));
+
+  renderHist();
 }
 
-document.addEventListener(‘keydown’,function(e){
-if((e.ctrlKey||e.metaKey) && e.key===‘s’){ e.preventDefault(); doSave(); }
+document.addEventListener('keydown', function(e){
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
+    e.preventDefault();
+    doSave();
+  }
 });
 
 function init(){
-buildAll();
-[‘lab_pct_notax’,‘lab_pct_wtax’,‘food_lw_act’,‘lbw_lw_act’,‘pcc_lw_act’,‘nab_lw_act’].forEach(function(id){
-var e=gi(id); if(e) e._val=null;
-});
-var today=new Date(), mon=new Date(today);
-mon.setDate(today.getDate()-((today.getDay()+6)%7));
-var y=mon.getFullYear(), m=String(mon.getMonth()+1).padStart(2,‘0’), day=String(mon.getDate()).padStart(2,‘0’);
-sv(‘weekDate’, y+’-’+m+’-’+day);
-sv(‘lab_tax’, TAX_DEFAULT);
-updateLabel();
-restoreLabels();
-var key=weekKey();
-if(key){
-var raw=localStorage.getItem(key);
-if(raw){ try{ restoreData(JSON.parse(raw)); calc(); }catch(e){ console.warn(e); } }
-}
-renderHist();
+  buildAll();
+
+  ['lab_pct_notax','lab_pct_wtax','food_lw_act','lbw_lw_act','pcc_lw_act','nab_lw_act'].forEach(function(id){
+    var e = gi(id);
+    if(e) e._val = null;
+  });
+
+  var today = new Date();
+  var mon = new Date(today);
+  mon.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+
+  var y = mon.getFullYear();
+  var m = String(mon.getMonth() + 1).padStart(2,'0');
+  var day = String(mon.getDate()).padStart(2,'0');
+
+  sv('weekDate', y + '-' + m + '-' + day);
+  sv('lab_tax', TAX_DEFAULT);
+
+  updateLabel();
+  restoreLabels();
+
+  var key = weekKey();
+  if(key){
+    var raw = localStorage.getItem(key);
+    if(raw){
+      try{
+        restoreData(JSON.parse(raw));
+      }catch(e){
+        console.warn(e);
+      }
+    }
+  }
+
+  calc();
+  renderHist();
 }
 
-window.addEventListener(‘DOMContentLoaded’, init);
+window.addEventListener('DOMContentLoaded', init);
 </script>
 
 </body>

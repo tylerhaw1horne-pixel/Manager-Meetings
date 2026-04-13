@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-
-<html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -295,7 +292,7 @@ body.pr-meet #meet-p2-cols{display:grid!important;grid-template-columns:1fr 1fr!
 
   <div id="ops-p1">
 
-```
+
 <!-- LEFT COL: Summary table -->
 <div>
   <div class="card">
@@ -317,7 +314,7 @@ body.pr-meet #meet-p2-cols{display:grid!important;grid-template-columns:1fr 1fr!
           <th class="pct-col">vs LY %</th>
         </tr>
       </thead>
-      <tbody id="salesTbody"></tbody>
+      <tbody id="saleRows"></tbody>
     </table>
 
     <div class="div"></div>
@@ -402,7 +399,7 @@ body.pr-meet #meet-p2-cols{display:grid!important;grid-template-columns:1fr 1fr!
     <div id="costBoxes"></div>
   </div>
 </div><!-- /right col p1 -->
-```
+
 
   </div><!-- /ops-p1 -->
 
@@ -410,7 +407,7 @@ body.pr-meet #meet-p2-cols{display:grid!important;grid-template-columns:1fr 1fr!
 
   <div id="ops-p2">
 
-```
+
 <!-- LEFT: GM + Guest -->
 <div>
   <div class="card">
@@ -507,7 +504,7 @@ body.pr-meet #meet-p2-cols{display:grid!important;grid-template-columns:1fr 1fr!
     </div>
   </div>
 </div>
-```
+
 
   </div><!-- /ops-p2 -->
 
@@ -578,7 +575,7 @@ body.pr-meet #meet-p2-cols{display:grid!important;grid-template-columns:1fr 1fr!
       <div class="sync-banner" id="m_sync_banner">✓ Synced from Operations — green fields auto-filled.</div>
     </div>
 
-```
+
 <!-- Weather -->
 <div class="card">
   <div class="ct">Weekly Itinerary &amp; Weather Snapshot <span id="wx_status" style="font-size:9px;color:var(--text2);font-weight:400"></span></div>
@@ -704,7 +701,7 @@ body.pr-meet #meet-p2-cols{display:grid!important;grid-template-columns:1fr 1fr!
   <button class="btn gr" onclick="pushToMeeting()">↺ Re-sync from Ops</button>
   <button class="btn" onclick="closeMeetForm()">Cancel</button>
 </div>
-```
+
 
   </div>
 </div><!-- /sec-meet -->
@@ -816,7 +813,7 @@ function setChip(id, val, isPos) {
 // BUILD DOM — Sales table rows
 // ═══════════════════════════════════════════════════
 function buildSaleRows() {
-  const tb = gi('salesTbody'); if (!tb) return;
+  const tb = gi('saleRows'); if (!tb) return;
   tb.innerHTML = SALE_C.map(({id, l, bhb}) => {
     const bg = bhb ? 'background:linear-gradient(90deg,#fff8f0,transparent);' : '';
     const tc = bhb ? 'color:#7a3e00;font-weight:700' : '';
@@ -888,9 +885,9 @@ async function buildWeather() {
         </div>
         <textarea id="wi_${day}" placeholder="Itinerary..." style="min-height:34px;font-size:9.5px"></textarea>
 
-```
+
   </div>`).join('') + '</div>';
-```
+
 
 // Fetch weather for Acworth, GA
 const ws = gi(‘wx_status’);
@@ -1468,7 +1465,7 @@ return `<tr>
 <td>${fD(w.cat_actual)}</td><td>${fD(w.rft_actual)}</td>
 <td>${fD(w.togo_actual)}</td><td>${fD(w.patio_actual)}</td>
 
-```
+
   <td>${w.lab_pct ? w.lab_pct + '%' : '—'}</td>
   <td>${w.lab_wtax ? w.lab_wtax + '%' : '—'}</td>
   <td>${w.food_pct_calc ? w.food_pct_calc + '%' : '—'}</td>
@@ -1477,7 +1474,7 @@ return `<tr>
   <td>${w.ppa_actual ? fD(w.ppa_actual) : '—'}</td>
   <td>${w.loyalty || '—'}</td>
 </tr>`;
-```
+
 
 }).join(’’);
 }

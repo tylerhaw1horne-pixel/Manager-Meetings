@@ -97,7 +97,15 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 .hi-d{font-family:'Oswald',sans-serif;font-weight:600;font-size:13px}
 .hi-m{font-size:11px;color:var(--t3)}
 
-/* ── EDIT MODE ── */
+/* ── EDITABLE TITLES & LABELS ── */
+.card-hdr span[contenteditable]:hover,
+.sec-title[contenteditable]:hover,
+.fl[contenteditable]:hover{border-bottom:1px dashed rgba(255,255,255,.4);margin-bottom:-1px}
+.card-hdr span[contenteditable]:focus{background:rgba(255,255,255,.12);border-radius:3px;padding:0 4px;margin:0 -4px}
+.sec-title[contenteditable]:focus{color:var(--org);background:rgba(197,90,27,.06);border-radius:3px;padding:2px 4px;margin:0 -4px;border-bottom:1px solid var(--org)}
+.fl[contenteditable]:hover{border-bottom:1px dashed var(--bdr2);margin-bottom:-1px}
+.fl[contenteditable]:focus{color:var(--org);background:rgba(197,90,27,.05);border-radius:2px;padding:0 3px;margin:0 -3px}
+
 .edit-mode .met-v[data-editable]{
   cursor:pointer;
   background:rgba(255,255,255,.8);
@@ -132,34 +140,59 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   body.print-meet #sec-ops,body.print-meet #sec-hist{display:none!important}
   body.print-meet #sec-meet{display:block!important}
   .hdr,.dbar{display:none!important}
-  .card{box-shadow:none!important;margin:3pt 0;padding:5pt 6pt;border:.4pt solid #ccc!important;border-radius:2pt!important;break-inside:avoid;page-break-inside:avoid}
-  .card-hdr{padding:4pt 6pt;margin:-5pt -6pt 6pt;font-size:9pt}
-  .fl{font-size:7pt}.fcalc{font-size:8pt;min-height:12pt;padding:1pt 3pt}
-  input,textarea{font-size:7pt!important;padding:1pt 3pt!important;border:.3pt solid #bbb!important}
-  .g2,.g3,.g4,.g5{gap:3pt}.fg{margin-bottom:3pt}
-  .row{gap:4pt;margin-bottom:3pt}.row .lbl{font-size:7pt;min-width:140pt}.row .lbl.w{min-width:180pt}
-  .row input{max-width:70pt}.row .calc{font-size:8pt}
+  [contenteditable]{outline:none!important;cursor:default!important;border-bottom:none!important}
+
+  /* ── SHARED ── */
+  .card{box-shadow:none!important;border:.4pt solid #ccc!important;border-radius:2pt!important;break-inside:avoid;page-break-inside:avoid}
+  .card-hdr{font-size:8pt!important}
   .chip{font-size:6pt;padding:0 3pt}
-  .div{margin:3pt 0}.sec-title{font-size:7pt;margin:5pt 0 3pt}
-  .met{padding:2pt 4pt}.met-l{font-size:6.5pt}.met-v{font-size:11pt}.met-v.sm{font-size:9pt}
-  .nb{padding:4pt 6pt;margin-bottom:3pt}.nb p{font-size:7pt;line-height:1.45}
-  .wx-grid{gap:2pt;margin-top:3pt}.wx-day{padding:2pt 3pt}
-  .wx-day .wi{font-size:12pt;margin:1pt 0}.wx-day .wt{font-size:9pt}.wx-day .wc{font-size:6.5pt}
-  .wx-day textarea{font-size:6.5pt!important;min-height:16pt}
-  .met-grid{gap:3pt}.met-grid.c2{grid-template-columns:1fr 1fr}
-  .met-grid.c3{grid-template-columns:1fr 1fr 1fr}.met-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
+  .div{margin:2pt 0}
+  [contenteditable]{outline:none!important;border-bottom:none!important}
+
+  /* ── OPERATIONS PRINT (standard) ── */
+  body.print-ops .card{margin:3pt 0;padding:5pt 6pt}
+  body.print-ops .card-hdr{padding:4pt 6pt;margin:-5pt -6pt 5pt}
+  body.print-ops .fl{font-size:7pt;margin-bottom:1pt}
+  body.print-ops .fcalc{font-size:8pt;min-height:12pt;padding:1pt 3pt}
+  body.print-ops input,body.print-ops textarea{font-size:7pt!important;padding:1pt 3pt!important;border:.3pt solid #bbb!important}
+  body.print-ops .g2,.g3,.g4,.g5{gap:3pt}
+  body.print-ops .fg{margin-bottom:3pt}
+  body.print-ops .row{gap:4pt;margin-bottom:2pt}
+  body.print-ops .row .lbl{font-size:7pt;min-width:140pt}
+  body.print-ops .row .lbl.w{min-width:170pt}
+  body.print-ops .row input{max-width:65pt}
+  body.print-ops .row .calc{font-size:8pt}
+  body.print-ops .sec-title{font-size:7pt;margin:4pt 0 2pt;padding-bottom:1pt}
+
+  /* ── MEETING PRINT — target 2 pages ── */
+  body.print-meet .card{margin:1.5pt 0;padding:3pt 4pt}
+  body.print-meet .card-hdr{padding:2.5pt 4pt;margin:-3pt -4pt 4pt;font-size:7.5pt!important}
+  body.print-meet .sec-title{font-size:6.5pt;margin:3pt 0 2pt;padding-bottom:1pt}
+  body.print-meet .div{margin:2pt 0}
+  body.print-meet .met{padding:2pt 4pt}
+  body.print-meet .met-l{font-size:6pt;letter-spacing:0;margin-bottom:0}
+  body.print-meet .met-v{font-size:10pt;line-height:1.1}
+  body.print-meet .met-v.sm{font-size:8.5pt}
+  body.print-meet .met-grid{gap:2pt;margin-bottom:3pt}
+  body.print-meet .met-grid.c2{grid-template-columns:1fr 1fr}
+  body.print-meet .met-grid.c3{grid-template-columns:1fr 1fr 1fr}
+  body.print-meet .met-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
+  body.print-meet .met-grid.c5,[style*="grid-template-columns:1fr 1fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+  body.print-meet .g2{gap:2pt;grid-template-columns:1fr 1fr}
+  body.print-meet .g3{gap:2pt;grid-template-columns:1fr 1fr 1fr}
+  body.print-meet .g4{gap:2pt;grid-template-columns:1fr 1fr 1fr 1fr}
+  body.print-meet .g5{gap:2pt;grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+  body.print-meet .fg{margin-bottom:2pt}
+  body.print-meet textarea{font-size:7pt!important;padding:1pt 3pt!important;border:.3pt solid #bbb!important;min-height:0!important}
+  body.print-meet input{font-size:7pt!important;padding:1pt 3pt!important;border:.3pt solid #bbb!important}
+  body.print-meet .wx-grid{gap:2pt;margin-top:2pt}
+  body.print-meet .wx-day{padding:2pt}
+  body.print-meet .wx-day input{font-size:6pt!important;padding:1pt!important;border:.2pt solid #ddd!important}
+  body.print-meet .wx-day textarea{font-size:6pt!important;min-height:14pt;padding:1pt!important}
+  body.print-meet .nb-lines{display:block!important}
+  body.print-meet .nb-line{display:block;border-bottom:.4pt solid #ccc;height:16pt;margin-bottom:1.5pt}
+
   @page{margin:8mm 7mm;size:letter portrait}
-  /* Force tighter layout for 2-page target */
-  .card{margin:2pt 0!important;padding:4pt 5pt!important}
-  .card-hdr{padding:3pt 5pt!important;margin:-4pt -5pt 5pt!important;font-size:8pt!important}
-  .sec-title{margin:4pt 0 2pt!important;font-size:7pt!important;padding-bottom:1pt!important}
-  .div{margin:3pt 0!important}
-  .row{margin-bottom:2pt!important;gap:3pt!important}
-  .g2,.g3,.g4,.g5{gap:2pt!important}
-  .fg{margin-bottom:2pt!important}
-  /* Meeting print — notes get blank lines */
-  .nb-lines{display:block!important}
-  .nb-line{display:block;border-bottom:.4pt solid #ccc;height:18pt;margin-bottom:2pt}
 }
 .nb-lines{display:none}
 </style>
@@ -185,7 +218,6 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   <span id="syncBadge" class="ss ss-ok">☁ Cloud Sync Ready</span>
   <button class="btn xs ghost" onclick="exportJSON()">⬇ Export</button>
   <label class="btn xs ghost" style="cursor:pointer">⬆ Import<input type="file" accept=".json" onchange="importJSON(event)" style="display:none;width:auto;border:none;padding:0"/></label>
-  <span>Saves to cloud on every change · Export weekly as extra backup · Cmd/Ctrl+S to save</span>
 </div>
 
 <!-- ══════════════════════════════════════════════════════
@@ -196,12 +228,12 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
   <!-- HEADER INFO -->
   <div class="card">
-    <div class="card-hdr">📊 <span>Weekly Operations Chart</span> — Huey Luey's Acworth | GM: Tyler Hawthorne
+    <div class="card-hdr">📊 <span id="lbl_0" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Operations Chart</span> — Huey Luey's Acworth | GM: Tyler Hawthorne
       <button id="opsEditBtn" class="btn xs no-print" onclick="toggleOpsEdit()" style="margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff">🔓 Editing: ON</button>
     </div>
     <div class="g3">
-      <div class="fg"><div class="fl">Week (Mon–Sun)</div><input type="date" id="weekDate" onchange="onDateChange()"/></div>
-      <div class="fg"><div class="fl">Week Label</div><div class="fcalc" id="weekLabel">—</div></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Week (Mon–Sun)</div><input type="date" id="weekDate" onchange="onDateChange()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Week Label</div><div class="fcalc" id="weekLabel">—</div></div>
       <div style="display:flex;align-items:flex-end;gap:5px;padding-bottom:1px">
         <button class="btn sm pr" onclick="saveWeek()">💾 Save Week</button>
         <button class="btn sm" onclick="loadWeek()">Load</button>
@@ -214,10 +246,10 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
   <!-- CURRENT / LAST WEEK SUMMARY -->
   <div class="card">
-    <div class="card-hdr">📈 <span>Current Week / Last Week Summary</span></div>
+    <div class="card-hdr">📈 <span id="lbl_1" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Current Week / Last Week Summary</span></div>
 
     <!-- TOTAL SALES -->
-    <div class="sec-title">Total Sales</div>
+    <div id="lbl_20" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total Sales</div>
     <div class="row">
       <span class="lbl w">Sales Last Week (Proj / Last Yr / Actual):</span>
       <span class="sep">$</span><input type="number" id="s_lw_proj" oninput="calc()" placeholder="Proj"/>
@@ -232,7 +264,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     </div>
 
     <!-- CATERING -->
-    <div class="sec-title">Catering Sales</div>
+    <div id="lbl_21" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Catering Sales</div>
     <div class="row">
       <span class="lbl w">Catering Last Week (Proj / Last Yr / Actual):</span>
       <span class="sep">$</span><input type="number" id="cat_lw_proj" oninput="calc()" placeholder="Proj"/>
@@ -247,7 +279,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     </div>
 
     <!-- ROOFTOP -->
-    <div class="sec-title">RFT (Rooftop) Sales</div>
+    <div id="lbl_22" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">RFT (Rooftop) Sales</div>
     <div class="row">
       <span class="lbl w">RFT Last Week (Proj / Last Yr / Actual):</span>
       <span class="sep">$</span><input type="number" id="rft_lw_proj" oninput="calc()" placeholder="Proj"/>
@@ -262,7 +294,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     </div>
 
     <!-- TOGO -->
-    <div class="sec-title">To-Go Sales</div>
+    <div id="lbl_23" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">To-Go Sales</div>
     <div class="row">
       <span class="lbl w">ToGo Last Week (Proj / Last Yr / Actual):</span>
       <span class="sep">$</span><input type="number" id="togo_lw_proj" oninput="calc()" placeholder="Proj"/>
@@ -277,7 +309,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     </div>
 
     <!-- PATIO -->
-    <div class="sec-title">Patio Sales</div>
+    <div id="lbl_24" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Patio Sales</div>
     <div class="row">
       <span class="lbl w">Patio Last Week (Proj / Last Yr / Actual):</span>
       <span class="sep">$</span><input type="number" id="patio_lw_proj" oninput="calc()" placeholder="Proj"/>
@@ -292,7 +324,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     </div>
 
     <!-- BEACH HOUSE BAR -->
-    <div class="sec-title">Beach House Bar Sales</div>
+    <div id="lbl_25" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar Sales</div>
     <div class="row">
       <span class="lbl w">BHB Last Week (Proj / Actual):</span>
       <span class="sep">$</span><input type="number" id="bhb_lw_proj" oninput="calc()" placeholder="Proj"/>
@@ -307,7 +339,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     <div class="div"></div>
 
     <!-- GUEST COUNT / PPA -->
-    <div class="sec-title">Guest Count &amp; PPA</div>
+    <div id="lbl_26" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Count &amp; PPA</div>
     <div class="row">
       <span class="lbl w">Guest Count Last Week (Proj / Actual):</span>
       <input type="number" id="gst_lw_proj" oninput="calc()" placeholder="Proj"/>
@@ -333,17 +365,17 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     <div class="div"></div>
 
     <!-- DISCOUNTS -->
-    <div class="sec-title">Discounts Last Week</div>
+    <div id="lbl_27" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Discounts Last Week</div>
     <div class="g3">
-      <div class="fg"><div class="fl">Restaurant Discounts ($)</div><input type="number" id="disc_r" step=".01" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Employee Discounts ($)</div><input type="number" id="disc_e" step=".01" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Other / Voids ($)</div><input type="number" id="disc_o" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Restaurant Discounts ($)</div><input type="number" id="disc_r" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Employee Discounts ($)</div><input type="number" id="disc_e" step=".01" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Other / Voids ($)</div><input type="number" id="disc_o" step=".01" oninput="live()"/></div>
     </div>
 
     <div class="div"></div>
 
     <!-- LABOR -->
-    <div class="sec-title">Labor</div>
+    <div id="lbl_28" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor</div>
     <div class="row">
       <span class="lbl w">Labor % Last Week (Proj / Actual / W/Taxes):</span>
       <input type="number" id="lab_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/>
@@ -359,10 +391,10 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <div class="fcalc" id="lab_cw_wtax" style="max-width:90px">—</div>
     </div>
     <div class="g4" style="margin-top:4px">
-      <div class="fg"><div class="fl">Labor Sales ($)</div><input type="number" id="lab_sales" oninput="calc()"/></div>
-      <div class="fg"><div class="fl">Labor $ Spent</div><input type="number" id="lab_dollars" oninput="calc()"/></div>
-      <div class="fg"><div class="fl">Tax Rate %</div><input type="number" id="lab_tax" value="14.53" step=".01" oninput="calc()"/></div>
-      <div class="fg"><div class="fl">Budget Labor %</div><input type="number" id="lab_budget" step=".1" oninput="calc()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor Sales ($)</div><input type="number" id="lab_sales" oninput="calc()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor $ Spent</div><input type="number" id="lab_dollars" oninput="calc()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Tax Rate %</div><input type="number" id="lab_tax" value="14.53" step=".01" oninput="calc()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Budget Labor %</div><input type="number" id="lab_budget" step=".1" oninput="calc()"/></div>
     </div>
     <div class="row">
       <span class="lbl w">SPLH Last Week (Proj / Actual):</span>
@@ -386,7 +418,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
     <div class="div"></div>
 
     <!-- COST % -->
-    <div class="sec-title">Cost Percentages</div>
+    <div id="lbl_29" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Cost Percentages</div>
     <div class="row">
       <span class="lbl w">Food Cost % Last Week (Proj / Actual):</span>
       <input type="number" id="food_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/>
@@ -454,91 +486,91 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
   <!-- GM OPERATIONS -->
   <div class="card">
-    <div class="card-hdr">👤 <span>GM Operations</span></div>
+    <div class="card-hdr">👤 <span id="lbl_2" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">GM Operations</span></div>
     <div class="g3">
-      <div class="fg"><div class="fl">GM Hours (Total)</div><input type="number" id="gm_hours" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Videos / Podcasts / Training</div><input type="text" id="gm_videos" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Q&amp;A Walkthroughs Completed</div><input type="text" id="gm_qa" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">GM Hours (Total)</div><input type="number" id="gm_hours" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Videos / Podcasts / Training</div><input type="text" id="gm_videos" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Q&amp;A Walkthroughs Completed</div><input type="text" id="gm_qa" oninput="live()"/></div>
     </div>
     <div class="g2">
-      <div class="fg"><div class="fl">Projects Completed</div><textarea id="gm_projects" rows="2" oninput="live()"></textarea></div>
-      <div class="fg"><div class="fl">Notes</div><textarea id="gm_notes" rows="2" oninput="live()"></textarea></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Projects Completed</div><textarea id="gm_projects" rows="2" oninput="live()"></textarea></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Notes</div><textarea id="gm_notes" rows="2" oninput="live()"></textarea></div>
     </div>
   </div>
 
   <!-- GUEST EXPERIENCE -->
   <div class="card">
-    <div class="card-hdr">⭐ <span>Guest Experience</span></div>
+    <div class="card-hdr">⭐ <span id="lbl_3" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Experience</span></div>
     <div class="g4">
-      <div class="fg"><div class="fl">5-Star Reviews (week)</div><input type="number" id="rev5" oninput="live()"/></div>
-      <div class="fg"><div class="fl">4-Star Reviews (week)</div><input type="number" id="rev4" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Total Reviews (running)</div><input type="number" id="rev_total" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Current Rating ⭐</div><input type="number" id="rev_rating" step=".1" max="5" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">5-Star Reviews (week)</div><input type="number" id="rev5" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">4-Star Reviews (week)</div><input type="number" id="rev4" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Total Reviews (running)</div><input type="number" id="rev_total" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Current Rating ⭐</div><input type="number" id="rev_rating" step=".1" max="5" oninput="live()"/></div>
     </div>
     <div class="g2">
-      <div class="fg"><div class="fl">Loyalty Signups</div><input type="number" id="loyalty" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Weekly Local Sales Marketing Plan</div><input type="text" id="marketing" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Loyalty Signups</div><input type="number" id="loyalty" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Weekly Local Sales Marketing Plan</div><input type="text" id="marketing" oninput="live()"/></div>
     </div>
   </div>
 
   <!-- ITEMS SOLD -->
   <div class="card">
-    <div class="card-hdr">🍹 <span>Items Sold</span></div>
-    <div class="sec-title">Marg of the Month &amp; Employee Contest</div>
+    <div class="card-hdr">🍹 <span id="lbl_4" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold</span></div>
+    <div id="lbl_30" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg of the Month &amp; Employee Contest</div>
     <div class="g4">
-      <div class="fg"><div class="fl">Marg of Month — Name</div><input type="text" id="motm_name" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Qty Sold This Week</div><input type="number" id="motm_wk" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Total Sold Month</div><input type="number" id="motm_total" oninput="live()"/></div>
-      <div class="fg"><div class="fl">1st Place Employee</div><input type="text" id="emp1_name" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Marg of Month — Name</div><input type="text" id="motm_name" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Qty Sold This Week</div><input type="number" id="motm_wk" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Total Sold Month</div><input type="number" id="motm_total" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1st Place Employee</div><input type="text" id="emp1_name" oninput="live()"/></div>
     </div>
     <div class="g4">
-      <div class="fg"><div class="fl">Employee Qty This Week</div><input type="number" id="emp1_wk" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Employee Qty Total</div><input type="number" id="emp1_total" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Employee Qty This Week</div><input type="number" id="emp1_wk" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Employee Qty Total</div><input type="number" id="emp1_total" oninput="live()"/></div>
       <div class="fg"></div><div class="fg"></div>
     </div>
     <div class="div"></div>
 
-    <div class="sec-title">🍹 Liquor Product Mix</div>
+    <div id="lbl_31" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🍹 Liquor Product Mix</div>
     <div class="g5">
-      <div class="fg"><div class="fl">To-Go Margs</div><input type="number" id="togo_margs" oninput="live()"/></div>
-      <div class="fg"><div class="fl">16oz Margs</div><input type="number" id="marg16" oninput="live()"/></div>
-      <div class="fg"><div class="fl">22oz Margs</div><input type="number" id="marg22" oninput="live()"/></div>
-      <div class="fg"><div class="fl">32oz Margs</div><input type="number" id="marg32" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Pitchers</div><input type="number" id="pitchers" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">To-Go Margs</div><input type="number" id="togo_margs" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">16oz Margs</div><input type="number" id="marg16" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">22oz Margs</div><input type="number" id="marg22" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">32oz Margs</div><input type="number" id="marg32" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Pitchers</div><input type="number" id="pitchers" oninput="live()"/></div>
     </div>
     <div class="g5">
-      <div class="fg"><div class="fl">Huey's Floaters</div><input type="number" id="floaters" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Mimosa Flights</div><input type="number" id="mimosa" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Top Margarita</div><input type="text" id="top_marg" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Top Marg Qty</div><input type="number" id="top_marg_qty" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Huey's Floaters</div><input type="number" id="floaters" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Mimosa Flights</div><input type="number" id="mimosa" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top Margarita</div><input type="text" id="top_marg" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top Marg Qty</div><input type="number" id="top_marg_qty" oninput="live()"/></div>
       <div class="fg"></div>
     </div>
     <div class="div"></div>
 
-    <div class="sec-title">🍽 Food Product Mix</div>
+    <div id="lbl_32" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🍽 Food Product Mix</div>
     <div class="g5">
-      <div class="fg"><div class="fl">Total Fajitas</div><input type="number" id="faj_total" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Durango Style</div><input type="number" id="faj_dur" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Huey's Style</div><input type="number" id="faj_huey" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Bacon Shrimp</div><input type="number" id="faj_bacon" oninput="live()"/></div>
-      <div class="fg"><div class="fl">The Big Huey</div><input type="number" id="big_huey" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Total Fajitas</div><input type="number" id="faj_total" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Durango Style</div><input type="number" id="faj_dur" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Huey's Style</div><input type="number" id="faj_huey" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Bacon Shrimp</div><input type="number" id="faj_bacon" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">The Big Huey</div><input type="number" id="big_huey" oninput="live()"/></div>
     </div>
     <div class="g5">
-      <div class="fg"><div class="fl">Desserts Sold</div><input type="number" id="desserts" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Kids Menu Items</div><input type="number" id="kids" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Top Food Item</div><input type="text" id="top_food" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Top Food Qty</div><input type="number" id="top_food_qty" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Steak &amp; Blue Quesadilla</div><input type="number" id="steak_blue" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Desserts Sold</div><input type="number" id="desserts" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Kids Menu Items</div><input type="number" id="kids" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top Food Item</div><input type="text" id="top_food" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top Food Qty</div><input type="number" id="top_food_qty" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Steak &amp; Blue Quesadilla</div><input type="number" id="steak_blue" oninput="live()"/></div>
     </div>
     <div class="div"></div>
 
-    <div class="sec-title">🏖 Beach House Bar — Cocktail Counts</div>
+    <div id="lbl_33" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🏖 Beach House Bar — Cocktail Counts</div>
     <div class="g5">
-      <div class="fg"><div class="fl">Mai Tais</div><input type="number" id="bhb_mt" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Piña Coladas</div><input type="number" id="bhb_pc" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Lemon Drop Shots</div><input type="number" id="bhb_ld" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Blueberry Refresher</div><input type="number" id="bhb_br" oninput="live()"/></div>
-      <div class="fg"><div class="fl">Front Porch Swing</div><input type="number" id="bhb_fp" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Mai Tais</div><input type="number" id="bhb_mt" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Piña Coladas</div><input type="number" id="bhb_pc" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Lemon Drop Shots</div><input type="number" id="bhb_ld" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Blueberry Refresher</div><input type="number" id="bhb_br" oninput="live()"/></div>
+      <div class="fg"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Front Porch Swing</div><input type="number" id="bhb_fp" oninput="live()"/></div>
     </div>
   </div>
 
@@ -575,14 +607,14 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
   <!-- WEATHER SNAPSHOT -->
   <div class="card">
-    <div class="card-hdr">🌤 <span>Weekly Itinerary and Weather Snapshot</span></div>
+    <div class="card-hdr">🌤 <span id="lbl_5" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Itinerary and Weather Snapshot</span></div>
     <div class="wx-grid" id="m_wxGrid"></div>
-    <div class="fg" style="margin-top:8px"><div class="fl">Weather / Event Notes</div><textarea id="wx_notes" rows="2" oninput="live()"></textarea></div>
+    <div class="fg" style="margin-top:8px"><div class="fl" contenteditable="true" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Weather / Event Notes</div><textarea id="wx_notes" rows="2" oninput="live()"></textarea></div>
   </div>
 
   <!-- LAST WEEK METRICS -->
   <div class="card">
-    <div class="card-hdr">📈 <span>Last Week Metrics</span></div>
+    <div class="card-hdr">📈 <span id="lbl_6" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Last Week Metrics</span></div>
 
     <div class="met-grid c2">
       <div class="met"><div class="met-l">Sales</div><div class="met-v" id="m_sales" data-editable contenteditable="false">—</div></div>
@@ -627,7 +659,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
   <!-- GUEST METRICS -->
   <div class="card">
-    <div class="card-hdr">⭐ <span>Guest Metrics</span></div>
+    <div class="card-hdr">⭐ <span id="lbl_7" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Metrics</span></div>
     <div class="met-grid c5" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr">
       <div class="met"><div class="met-l">Loyalty Signups</div><div class="met-v" id="m_loyalty" data-editable contenteditable="false">—</div></div>
       <div class="met"><div class="met-l">5-Star Reviews</div><div class="met-v" id="m_rev5" data-editable contenteditable="false">—</div></div>
@@ -639,21 +671,21 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
   <!-- ITEMS SOLD / RECOGNITION -->
   <div class="card">
-    <div class="card-hdr">🍹 <span>Items Sold &amp; Employee Recognition</span></div>
-    <div class="sec-title">Marg of the Month</div>
+    <div class="card-hdr">🍹 <span id="lbl_8" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold &amp; Employee Recognition</span></div>
+    <div id="lbl_34" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg of the Month</div>
     <div class="met-grid c3">
       <div class="met"><div class="met-l">Marg Name</div><div class="met-v sm" id="m_motm" data-editable contenteditable="false">—</div></div>
       <div class="met"><div class="met-l">Sold This Week</div><div class="met-v" id="m_motm_wk" data-editable contenteditable="false">—</div></div>
       <div class="met"><div class="met-l">Total Sold Month</div><div class="met-v" id="m_motm_total" data-editable contenteditable="false">—</div></div>
     </div>
-    <div class="sec-title" style="margin-top:8px">Winner / Employee Recognition</div>
+    <div id="lbl_35" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" style="margin-top:8px" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Winner / Employee Recognition</div>
     <div class="met-grid c3">
       <div class="met"><div class="met-l">1st Place Employee</div><div class="met-v sm" id="m_emp1" data-editable contenteditable="false">—</div></div>
       <div class="met"><div class="met-l">Qty This Week</div><div class="met-v" id="m_emp1_wk" data-editable contenteditable="false">—</div></div>
       <div class="met"><div class="met-l">Qty Total</div><div class="met-v" id="m_emp1_total" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="div"></div>
-    <div class="sec-title">Product Mix Highlights</div>
+    <div id="lbl_36" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Product Mix Highlights</div>
     <div class="met-grid c4">
       <div class="met"><div class="met-l">To-Go Margs</div><div class="met-v" id="m_togo_margs" data-editable contenteditable="false">—</div></div>
       <div class="met"><div class="met-l">Huey's Floaters</div><div class="met-v" id="m_floaters" data-editable contenteditable="false">—</div></div>
@@ -667,7 +699,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <div class="met"><div class="met-l">Pitchers</div><div class="met-v" id="m_pitchers" data-editable contenteditable="false">—</div></div>
     </div>
     <div class="div"></div>
-    <div class="sec-title">🏖 Beach House Bar</div>
+    <div id="lbl_37" class="sec-title" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">🏖 Beach House Bar</div>
     <div class="met-grid c5" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr">
       <div class="met"><div class="met-l">Mai Tais</div><div class="met-v" id="m_bhb_mt" data-editable contenteditable="false">—</div></div>
       <div class="met"><div class="met-l">Piña Coladas</div><div class="met-v" id="m_bhb_pc" data-editable contenteditable="false">—</div></div>
@@ -679,21 +711,21 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 
   <!-- BOH FOCUS -->
   <div class="card">
-    <div class="card-hdr">🍳 <span>BOH Focus</span></div>
+    <div class="card-hdr">🍳 <span id="lbl_9" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BOH Focus</span></div>
     <textarea id="boh_focus" rows="4" oninput="live()" placeholder="BOH notes, focus areas, issues..."></textarea>
     <div class="nb-lines" id="boh_lines"></div>
   </div>
 
   <!-- FOH FOCUS -->
   <div class="card">
-    <div class="card-hdr">🍽 <span>FOH Focus</span></div>
+    <div class="card-hdr">🍽 <span id="lbl_10" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">FOH Focus</span></div>
     <textarea id="foh_focus" rows="4" oninput="live()" placeholder="FOH notes, focus areas, issues..."></textarea>
     <div class="nb-lines" id="foh_lines"></div>
   </div>
 
   <!-- MANAGER NOTES -->
   <div class="card">
-    <div class="card-hdr">📋 <span>Manager Notes</span></div>
+    <div class="card-hdr">📋 <span id="lbl_11" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Manager Notes</span></div>
     <textarea id="mgr_notes" rows="5" oninput="live()" placeholder="Additional notes, shoutouts, discussion..."></textarea>
     <div class="nb-lines" id="mgr_lines"></div>
   </div>
@@ -703,7 +735,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 <!-- HISTORY TAB -->
 <div id="sec-hist" class="sec">
   <div class="card">
-    <div class="card-hdr">🗂 <span>Saved Weeks</span></div>
+    <div class="card-hdr">🗂 <span id="lbl_12" contenteditable="true" spellcheck="false" title="Click to rename" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Saved Weeks</span></div>
     <div id="histList"><p style="color:var(--t3);font-size:12px;padding:8px 0">No saved weeks yet. Save a week from the Operations tab.</p></div>
   </div>
 </div>
@@ -932,6 +964,10 @@ function gatherData(){
   document.querySelectorAll('input[id],textarea[id]').forEach(el=>{
     if(el.id&&!el.id.startsWith('_'))d[el.id]=el.value;
   });
+  // Save all editable labels (card titles + sec-titles)
+  document.querySelectorAll('[id^="lbl_"]').forEach(el=>{
+    d[el.id]=el.textContent;
+  });
   return d;
 }
 function restoreData(d){
@@ -939,9 +975,36 @@ function restoreData(d){
   Object.keys(d).forEach(k=>{
     if(k.startsWith('_'))return;
     const el=gi(k);
-    if(el&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA'))el.value=d[k]||'';
+    if(!el) return;
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') el.value=d[k]||'';
+    else if(el.id.startsWith('lbl_')&&d[k]) el.textContent=d[k];
   });
   if(d._wd)sv('weekDate',d._wd);
+}
+
+/* ══════════════════════════════════════════════
+   LABEL PERSISTENCE — saves title edits to
+   localStorage immediately (separate from week data
+   so they persist across all weeks)
+══════════════════════════════════════════════ */
+function saveLabels(){
+  const labels={};
+  document.querySelectorAll('[id^="lbl_"]').forEach(el=>{
+    labels[el.id]=el.textContent;
+  });
+  localStorage.setItem('hl_labels',JSON.stringify(labels));
+}
+
+function restoreLabels(){
+  const raw=localStorage.getItem('hl_labels');
+  if(!raw) return;
+  try{
+    const labels=JSON.parse(raw);
+    Object.keys(labels).forEach(k=>{
+      const el=gi(k);
+      if(el&&labels[k]) el.textContent=labels[k];
+    });
+  }catch(e){}
 }
 
 /* ══════════════════════════════════════════════
@@ -1299,6 +1362,9 @@ async function init(){
     setSS('local'); // shows "Local Only" message
   }
 
+  // Restore any saved title edits (persist across all weeks)
+  restoreLabels();
+
   // Load this week's data from localStorage
   const key=weekKey();
   const raw=key?localStorage.getItem(key):null;
@@ -1306,8 +1372,6 @@ async function init(){
     try{restoreData(JSON.parse(raw));calc();}catch(e){console.warn('Restore error',e);}
   }
 
-  // Always auto-fetch weather on load
-  
   renderHist();
 }
 

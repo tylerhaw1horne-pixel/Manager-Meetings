@@ -128,38 +128,99 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   body.print-ops .row .calc{font-size:7pt}
   body.print-ops .sec-title{font-size:6.5pt;margin:3pt 0 2pt;padding-bottom:1pt}
   body.print-ops .disc-net{padding:2pt 5pt;margin-top:2pt}
-  body.print-meet #sec-meet{display:block!important;column-count:2;column-gap:5pt;font-size:6.5pt}
-  body.print-meet .card{margin:1pt 0;padding:2pt 3pt;break-inside:avoid;page-break-inside:avoid;display:inline-block;width:100%}
-  body.print-meet .card-hdr{padding:2pt 3pt;margin:-2pt -3pt 2.5pt;font-size:6.5pt!important;letter-spacing:.3px}
-  body.print-meet .sec-title{font-size:5.5pt;margin:1.5pt 0 1pt;padding-bottom:.5pt}
-  body.print-meet .div{margin:1pt 0}
-  body.print-meet .met{padding:1pt 2.5pt}
-  body.print-meet .met-l{font-size:5pt;letter-spacing:0;margin-bottom:0}
-  body.print-meet .met-v{font-size:8.5pt;line-height:1}
-  body.print-meet .met-v.sm{font-size:7pt}
-  body.print-meet .met-v .chip{font-size:5pt;padding:0 2pt}
-  body.print-meet .met-grid{gap:1pt;margin-bottom:1.5pt}
-  body.print-meet .met-grid.c2{grid-template-columns:1fr 1fr}
-  body.print-meet .met-grid.c3{grid-template-columns:1fr 1fr 1fr}
-  body.print-meet .met-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
-  body.print-meet [style*="grid-template-columns:1fr 1fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr 1fr 1fr 1fr}
-  body.print-meet [style*="grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr"]{grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr}
-  body.print-meet .g2{gap:1pt;grid-template-columns:1fr 1fr}
-  body.print-meet .g3{gap:1pt;grid-template-columns:1fr 1fr 1fr}
-  body.print-meet .g4{gap:1pt;grid-template-columns:1fr 1fr 1fr 1fr}
-  body.print-meet .g5{gap:1pt;grid-template-columns:1fr 1fr 1fr 1fr 1fr}
-  body.print-meet .g6{gap:1pt;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr}
-  body.print-meet .fg{margin-bottom:1pt}
-  body.print-meet textarea{font-size:6pt!important;padding:.5pt 2pt!important;border:.3pt solid #bbb!important;min-height:0!important;height:auto}
-  body.print-meet input{font-size:6pt!important;padding:.5pt 2pt!important;border:.3pt solid #bbb!important}
-  body.print-meet .wx-grid{gap:1pt;margin-top:1pt;grid-template-columns:repeat(7,1fr)}
-  body.print-meet .wx-day{padding:1pt 1.5pt}
-  body.print-meet .wx-day input{font-size:5pt!important;padding:.5pt!important}
-  body.print-meet .wx-day textarea{font-size:5pt!important;min-height:10pt;padding:.5pt!important}
-  body.print-meet .nb-lines{display:block!important}
-  body.print-meet .nb-line{display:block;border-bottom:.4pt solid #ccc;height:13pt;margin-bottom:1pt}
-  body.print-meet #sec-meet > .card:first-child{column-span:all;margin-bottom:2pt}
-  @page{margin:7mm 6mm;size:letter portrait}
+  body.print-meet #sec-meet{
+  display:block !important;
+  column-count:1 !important;
+  column-gap:0 !important;
+  font-size:10.5pt !important;
+}
+body.print-meet .print-break{
+  break-before: page !important;
+  page-break-before: always !important;
+}
+body.print-meet .card{
+  margin:0 0 8pt 0 !important;
+  padding:8pt 10pt !important;
+  break-inside:avoid;
+  page-break-inside:avoid;
+  display:block !important;
+  width:100% !important;
+  background:#fff !important;
+  color:#000 !important;
+  border:1pt solid #999 !important;
+}
+
+body.print-meet .card-hdr{
+  padding:5pt 8pt !important;
+  margin:-8pt -10pt 8pt !important;
+  font-size:10pt !important;
+  letter-spacing:.2px !important;
+  background:#f2f2f2 !important;
+  color:#000 !important;
+}
+
+body.print-meet .sec-title{
+  font-size:9pt !important;
+  margin:6pt 0 4pt !important;
+  padding-bottom:2pt !important;
+  color:#000 !important;
+}
+
+body.print-meet .div{margin:4pt 0 !important}
+
+body.print-meet .met{padding:4pt 6pt !important}
+body.print-meet .met-l{font-size:8pt !important;letter-spacing:0;margin-bottom:2pt;color:#333 !important}
+body.print-meet .met-v{font-size:11pt !important;line-height:1.15 !important;color:#000 !important}
+body.print-meet .met-v.sm{font-size:10pt !important}
+body.print-meet .met-v .chip{font-size:7pt !important;padding:1pt 4pt !important}
+
+body.print-meet .met-grid{gap:4pt !important;margin-bottom:6pt !important}
+body.print-meet .met-grid.c2{grid-template-columns:1fr 1fr}
+body.print-meet .met-grid.c3{grid-template-columns:1fr 1fr 1fr}
+body.print-meet .met-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
+
+body.print-meet .g2{gap:4pt !important;grid-template-columns:1fr 1fr}
+body.print-meet .g3{gap:4pt !important;grid-template-columns:1fr 1fr 1fr}
+body.print-meet .g4{gap:4pt !important;grid-template-columns:1fr 1fr 1fr 1fr}
+body.print-meet .g5{gap:4pt !important;grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+body.print-meet .g6{gap:4pt !important;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr}
+
+body.print-meet .fg{margin-bottom:5pt !important}
+body.print-meet textarea,
+body.print-meet input{
+  font-size:9pt !important;
+  padding:4pt 6pt !important;
+  border:1pt solid #bbb !important;
+  color:#000 !important;
+  background:#fff !important;
+}
+
+body.print-meet .wx-grid{
+  gap:4pt !important;
+  margin-top:4pt !important;
+  grid-template-columns:repeat(7,1fr);
+}
+
+body.print-meet .wx-day{
+  padding:4pt !important;
+  border:1pt solid #ccc !important;
+  background:#fff !important;
+}
+
+body.print-meet .wx-day input,
+body.print-meet .wx-day textarea{
+  font-size:8pt !important;
+  padding:3pt !important;
+}
+
+body.print-meet .nb-lines{display:block !important}
+body.print-meet .nb-line{
+  display:block;
+  border-bottom:.8pt solid #bbb;
+  height:18pt;
+  margin-bottom:2pt;
+}
+    @page{margin:7mm 6mm;size:letter portrait}
 }
 </style>
 </head>
@@ -180,7 +241,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
   </div>
 </div>
 <div class="dbar no-print">
-  <span id="syncBadge" class="ss ss-ok">💾 Local Storage Ready</span>
+  <span id="syncBadge" class="ss ss-ok">Firebase Ready</span>
   <button class="btn xs ghost" onclick="doExport()">⬇ Export JSON</button>
   <button class="btn xs ghost" onclick="triggerImport()">⬆ Import JSON</button>
 </div>
@@ -494,7 +555,7 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
       <div class="met"><div id="lbl_342" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Front Porch Swing</div><div class="met-v" id="m_bhb_fp" data-editable contenteditable="false">-</div></div>
     </div>
   </div>
-  <div class="card">
+  <div class="card print-break">
     <div class="card-hdr">&#127859; <span id="lbl_9" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BOH Focus</span></div>
     <textarea id="boh_focus" rows="4" oninput="live()" placeholder="BOH notes, focus areas, issues..."></textarea>
     <div class="nb-lines" id="boh_lines"></div>
@@ -521,6 +582,29 @@ button{cursor:pointer;font-family:'Oswald',sans-serif;font-size:12px;font-weight
 </div>
 
 </div><!-- /app -->
+<!-- FIREBASE (WORKING VERSION FOR YOUR APP) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyALS_ixEzj13Z3WAKfalMxMr9iAZrFTWI8",
+    authDomain: "hueysdashboard.firebaseapp.com",
+    projectId: "hueysdashboard",
+    storageBucket: "hueysdashboard.firebasestorage.app",
+    messagingSenderId: "929084173637",
+    appId: "1:929084173637:web:9f8efcd71602e645fbe22c",
+    measurementId: "G-3QC9BDCJ6C"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const db = firebase.firestore();
+
+  // make globally accessible
+  window.db = db;
+  window.firebaseReady = true;
+</script>
 <script>
 var TAX_DEFAULT = 14.53;
 var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
@@ -729,34 +813,63 @@ function updateLabel(){
   gi('weekLabel').textContent = f(dt) + ' - ' + f(en);
 }
 
-function onDateChange(){
+async function onDateChange(){
   updateLabel();
+
   var key = weekKey();
-  if(key){
-    var raw = localStorage.getItem(key);
-    if(raw){
-      try{
-        restoreData(JSON.parse(raw));
-        calc();
-        return;
-      }catch(e){}
+  if(!key) return;
+
+  try{
+    var data = null;
+
+    if(window.firebaseReady){
+      data = await fbLoadWeek(key);
     }
+
+    if(!data){
+      var raw = localStorage.getItem(key);
+      if(raw){
+        data = JSON.parse(raw);
+      }
+    }
+
+    if(data){
+      restoreData(data);
+      calc();
+      return;
+    }
+  }catch(e){
+    console.warn('Date change load failed', e);
   }
 
   var d = gv('weekDate');
   if(!d) return;
+
   var dt = new Date(d + 'T12:00:00');
   var prev = new Date(dt);
   prev.setDate(dt.getDate() - 7);
-  autoCarry('hl_week_' + prev.toISOString().split('T')[0]);
-}
 
-function autoCarry(prevKey){
-  var raw = localStorage.getItem(prevKey);
-  if(!raw) return;
+  await autoCarry('hl_week_' + prev.toISOString().split('T')[0]);
+} 
+async function autoCarry(prevKey){
+  var data = null;
 
-  var data;
-  try{ data = JSON.parse(raw); }catch(e){ return; }
+  try{
+    if(window.firebaseReady){
+      data = await fbLoadWeek(prevKey);
+    }
+
+    if(!data){
+      var raw = localStorage.getItem(prevKey);
+      if(raw){
+        data = JSON.parse(raw);
+      }
+    }
+  }catch(e){
+    console.warn('Auto-carry load failed', e);
+  }
+
+  if(!data) return;
 
   var pairs = [
     ['s_lw_act','s_lw_ly'],
@@ -769,10 +882,14 @@ function autoCarry(prevKey){
   ];
 
   var carried = false;
+
   pairs.forEach(function(p){
-    var el = gi(p[1]);
-    if(el && !el.value && data[p[0]]){
-      el.value = data[p[0]];
+    var fromKey = p[0];
+    var toKey = p[1];
+    var el = gi(toKey);
+
+    if(el && !el.value && data[fromKey]){
+      el.value = data[fromKey];
       carried = true;
     }
   });
@@ -844,8 +961,43 @@ function saveIdx(key){
 
   localStorage.setItem('hl_week_index', JSON.stringify(idx));
 }
+async function fbSaveWeek(key, data){
+  if(!window.db) throw new Error('Firebase not ready');
 
-function doSave(){
+  await db.collection('managerMeetings').doc(key).set({
+    key: key,
+    updatedAt: new Date().toISOString(),
+    data: data
+  }, { merge:true });
+}
+
+async function fbLoadWeek(key){
+  if(!window.db) throw new Error('Firebase not ready');
+
+  const snap = await db.collection('managerMeetings').doc(key).get();
+  if(!snap.exists) return null;
+
+  return snap.data().data || null;
+}
+
+async function fbSaveLabels(labels){
+  if(!window.db) throw new Error('Firebase not ready');
+
+  await db.collection('managerMeetings_meta').doc('labels').set({
+    labels: labels,
+    updatedAt: new Date().toISOString()
+  }, { merge:true });
+}
+
+async function fbLoadLabels(){
+  if(!window.db) throw new Error('Firebase not ready');
+
+  const snap = await db.collection('managerMeetings_meta').doc('labels').get();
+  if(!snap.exists) return null;
+
+  return snap.data().labels || null;
+}
+async function doSave(){
   var key = weekKey();
   if(!key){
     alert('Please select a week date first.');
@@ -857,15 +1009,28 @@ function doSave(){
   try{
     localStorage.setItem(key, JSON.stringify(data));
     saveIdx(key);
-    saveLabels();
+
+    var labels = {};
+    document.querySelectorAll('[id^="lbl_"]').forEach(function(el){
+      labels[el.id] = el.textContent;
+    });
+    localStorage.setItem('hl_labels', JSON.stringify(labels));
+
+    if(window.firebaseReady){
+      await fbSaveWeek(key, data);
+      await fbSaveLabels(labels);
+      gi('syncBadge').textContent = 'Firebase Saved: ' + new Date().toLocaleTimeString();
+    } else {
+      gi('syncBadge').textContent = 'Saved locally only';
+    }
+
+    gi('syncBadge').className = 'ss ss-ok';
 
     var n = gi('savedNote');
     n.classList.add('show');
     setTimeout(function(){ n.classList.remove('show'); }, 3000);
 
-    gi('syncBadge').textContent = 'Saved: ' + new Date().toLocaleTimeString();
-    gi('syncBadge').className = 'ss ss-ok';
-    renderHist();
+    await renderHist();
   }catch(e){
     gi('syncBadge').textContent = 'Save failed';
     gi('syncBadge').className = 'ss ss-err';
@@ -873,31 +1038,69 @@ function doSave(){
   }
 }
 
-function doLoad(){
+async function doLoad(){
   var key = weekKey();
   if(!key) return;
 
-  var raw = localStorage.getItem(key);
-  if(raw){
-    try{
-      restoreData(JSON.parse(raw));
-      calc();
-      return;
-    }catch(e){}
-  }
+  try{
+    var data = null;
 
-  alert('No saved data found for this week.');
+    if(window.firebaseReady){
+      data = await fbLoadWeek(key);
+    }
+
+    if(!data){
+      var raw = localStorage.getItem(key);
+      if(raw){
+        data = JSON.parse(raw);
+      }
+    }
+
+    if(data){
+      restoreData(data);
+      calc();
+      gi('syncBadge').textContent = window.firebaseReady ? 'Loaded from Firebase' : 'Loaded locally';
+      gi('syncBadge').className = 'ss ss-ok';
+      return;
+    }
+
+    alert('No saved data found for this week.');
+  }catch(e){
+    gi('syncBadge').textContent = 'Load failed';
+    gi('syncBadge').className = 'ss ss-err';
+    alert('Load failed: ' + e.message);
+  }
 }
 
-function saveLabels(){
+async function saveLabels(){
   var labels = {};
   document.querySelectorAll('[id^="lbl_"]').forEach(function(el){
     labels[el.id] = el.textContent;
   });
+
   localStorage.setItem('hl_labels', JSON.stringify(labels));
+
+  try{
+    if(window.firebaseReady){
+      await fbSaveLabels(labels);
+    }
+  }catch(e){}
 }
 
-function restoreLabels(){
+async function restoreLabels(){
+  try{
+    if(window.firebaseReady){
+      var fbLabels = await fbLoadLabels();
+      if(fbLabels){
+        Object.keys(fbLabels).forEach(function(k){
+          var el = gi(k);
+          if(el && fbLabels[k] != null) el.textContent = fbLabels[k];
+        });
+        return;
+      }
+    }
+  }catch(e){}
+
   var raw = localStorage.getItem('hl_labels');
   if(!raw) return;
 
@@ -985,7 +1188,7 @@ function triggerImport(){
 
     var reader = new FileReader();
 
-    reader.onload = function(ev){
+    reader.onload = async function(ev){
       try{
         var all = JSON.parse(ev.target.result);
         var count = 0;
@@ -1001,10 +1204,13 @@ function triggerImport(){
           return;
         }
 
-        wkeys.forEach(function(k){
+        for (const k of wkeys){
           localStorage.setItem(k, JSON.stringify(weeks[k]));
+          if(window.firebaseReady){
+            await fbSaveWeek(k, weeks[k]);
+          }
           count++;
-        });
+        }
 
         var raw = localStorage.getItem('hl_week_index');
         var idx = raw ? JSON.parse(raw) : [];
@@ -1016,10 +1222,13 @@ function triggerImport(){
 
         if(all.labels){
           localStorage.setItem('hl_labels', JSON.stringify(all.labels));
-          restoreLabels();
+          if(window.firebaseReady){
+            await fbSaveLabels(all.labels);
+          }
+          await restoreLabels();
         }
 
-        renderHist();
+        await renderHist();
         alert('Imported ' + count + ' week' + (count !== 1 ? 's' : '') + ' successfully! Go to History to load.');
       }catch(err){
         alert('Import failed: ' + err.message);
@@ -1124,11 +1333,56 @@ function toggleEditMode(){
     });
   }
 }
+async function renderHist(){
+  var el = gi('histList');
 
-function renderHist(){
+  try{
+    if(window.firebaseReady){
+      const snap = await db.collection('managerMeetings')
+        .orderBy('updatedAt','desc')
+        .limit(50)
+        .get();
+
+      if(snap.empty){
+        el.innerHTML = '<p style="color:#9C8878;font-size:12px;padding:8px 0">No saved weeks yet.</p>';
+        return;
+      }
+
+      var h = '';
+
+      snap.forEach(function(doc){
+        var key = doc.id;
+        var d = doc.data().data || {};
+        var sales = '';
+        var saved = '';
+
+        if(d.s_lw_act){
+          sales = fD(parseFloat(d.s_lw_act)) + ' sales';
+        }
+
+        if(doc.data().updatedAt){
+          saved = 'Saved ' + new Date(doc.data().updatedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+        }
+
+        h += '<div class="hi">' +
+          '<div><div class="hi-d">Week of ' + key.replace('hl_week_','') + '</div>' +
+          '<div class="hi-m">' + sales + (sales && saved ? ' · ' : '') + saved + '</div></div>' +
+          '<div style="display:flex;gap:5px">' +
+          '<button class="btn xs" onclick="loadHist(\'' + key + '\')">Load</button>' +
+          '<button class="btn xs dk" onclick="delHist(\'' + key + '\')">Delete</button>' +
+          '</div></div>';
+      });
+
+      el.innerHTML = h;
+      return;
+    }
+  }catch(e){
+    console.warn('Firebase history load failed', e);
+  }
+
+  // fallback to local
   var raw = localStorage.getItem('hl_week_index');
   var idx = raw ? JSON.parse(raw) : [];
-  var el = gi('histList');
 
   if(!idx.length){
     el.innerHTML = '<p style="color:#9C8878;font-size:12px;padding:8px 0">No saved weeks yet.</p>';
@@ -1141,8 +1395,7 @@ function renderHist(){
     if(r){
       try{
         var d = JSON.parse(r);
-        var ac = parseFloat(d.s_lw_act);
-        if(ac) sales = fD(ac) + ' sales';
+        if(d.s_lw_act) sales = fD(parseFloat(d.s_lw_act)) + ' sales';
         if(d._ts) saved = 'Saved ' + new Date(d._ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
       }catch(e){}
     }
@@ -1159,15 +1412,24 @@ function renderHist(){
   el.innerHTML = h;
 }
 
-function loadHist(key){
-  var raw = localStorage.getItem(key);
-  if(!raw){
-    alert('Week not found.');
-    return;
-  }
-
+async function loadHist(key){
   try{
-    var d = JSON.parse(raw);
+    var d = null;
+
+    if(window.firebaseReady){
+      d = await fbLoadWeek(key);
+    }
+
+    if(!d){
+      var raw = localStorage.getItem(key);
+      if(raw) d = JSON.parse(raw);
+    }
+
+    if(!d){
+      alert('Week not found.');
+      return;
+    }
+
     sv('weekDate', d._wd || key.replace('hl_week_',''));
     updateLabel();
     restoreData(d);
@@ -1178,17 +1440,25 @@ function loadHist(key){
   }
 }
 
-function delHist(key){
+async function delHist(key){
   if(!confirm('Remove this week from history?')) return;
 
-  localStorage.removeItem(key);
+  try{
+    if(window.firebaseReady){
+      await db.collection('managerMeetings').doc(key).delete();
+    }
 
-  var raw = localStorage.getItem('hl_week_index');
-  var idx = raw ? JSON.parse(raw) : [];
-  idx = idx.filter(function(k){ return k !== key; });
-  localStorage.setItem('hl_week_index', JSON.stringify(idx));
+    localStorage.removeItem(key);
 
-  renderHist();
+    var raw = localStorage.getItem('hl_week_index');
+    var idx = raw ? JSON.parse(raw) : [];
+    idx = idx.filter(function(k){ return k !== key; });
+    localStorage.setItem('hl_week_index', JSON.stringify(idx));
+
+    await renderHist();
+  }catch(e){
+    alert('Delete failed: ' + e.message);
+  }
 }
 
 document.addEventListener('keydown', function(e){
@@ -1198,7 +1468,7 @@ document.addEventListener('keydown', function(e){
   }
 });
 
-function init(){
+async function init(){
   buildAll();
 
   ['lab_pct_notax','lab_pct_wtax','food_lw_act','lbw_lw_act','pcc_lw_act','nab_lw_act'].forEach(function(id){
@@ -1218,23 +1488,37 @@ function init(){
   sv('lab_tax', TAX_DEFAULT);
 
   updateLabel();
-  restoreLabels();
+  await restoreLabels();
 
   var key = weekKey();
+
   if(key){
-    var raw = localStorage.getItem(key);
-    if(raw){
-      try{
-        restoreData(JSON.parse(raw));
-      }catch(e){
-        console.warn(e);
+    try{
+      var data = null;
+
+      if(window.firebaseReady){
+        data = await fbLoadWeek(key);
       }
+
+      if(!data){
+        var raw = localStorage.getItem(key);
+        if(raw){
+          data = JSON.parse(raw);
+        }
+      }
+
+      if(data){
+        restoreData(data);
+      }
+    }catch(e){
+      console.warn(e);
     }
   }
 
   calc();
-  renderHist();
+  await renderHist();
 }
+ 
 
 window.addEventListener('DOMContentLoaded', init);
 </script>

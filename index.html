@@ -9,23 +9,23 @@
 <style>
 :root{
   --org:#E46E1B;
-  --org2:#F28C28;
-  --grn:#5E8E3E;
+  --org2:#F39A2B;
+  --grn:#6E9F3A;
 
   --bg:#F7F1E7;
   --card:#FFFDF9;
-  --bdr:#E8D7C3;
-  --bdr2:#D9C2A6;
+  --bdr:#E7D6C2;
+  --bdr2:#D7BFA0;
 
-  --t1:#3F2A1D;
-  --t2:#6B4A33;
-  --t3:#9A7A5E;
+  --t1:#3B281C;
+  --t2:#684731;
+  --t3:#96775D;
 
-  --hdr:#6B3A1E;
-  --hdr2:#8A4A22;
+  --hdr:#5C3218;
+  --hdr2:#7A4320;
   --r:7px;
   --sh:0 2px 8px rgba(0,0,0,.08);
-}y
+}
 
 *{box-sizing:border-box;margin:0;padding:0}
 
@@ -680,10 +680,8 @@ button{
   display:block!important;
   column-count:1!important;
   column-gap:0!important;
-  font-size:9.8pt!important;
-  transform:scale(.94);
-  transform-origin:top left;
-  width:106.5%;
+  font-size:10.2pt!important;
+  width:100%!important;
 }
 
   body.print-meet .print-break{
@@ -692,13 +690,15 @@ button{
   }
 
   body.print-meet .card{
-    margin:0 0 4pt 0 !important;
-    padding:5pt 7pt !important;
-    width:100% !important;
-    background:#fff !important;
-    color:#000 !important;
-    border:.8pt solid #999 !important;
-  }
+  margin:0 0 4pt 0 !important;
+  padding:5pt 7pt !important;
+  width:100% !important;
+  background:#fff !important;
+  color:#000 !important;
+  border:.8pt solid #999 !important;
+  break-inside:avoid !important;
+  page-break-inside:avoid !important;
+}
 
   body.print-meet .card-hdr{
     padding:3.5pt 6pt !important;
@@ -727,10 +727,10 @@ button{
   }
 
   body.print-meet .met-v{
-    font-size:9.2pt !important;
-    line-height:1!important;
-    color:#000 !important;
-  }
+  font-size:9.6pt !important;
+  line-height:1.08 !important;
+  color:#000 !important;
+}
 
   body.print-meet .met-v.sm{
     font-size:8pt !important;
@@ -758,12 +758,12 @@ button{
 
   body.print-meet textarea,
   body.print-meet input{
-    font-size:7.6pt !important;
-    padding:1.5pt 3pt !important;
+    font-size:8pt !important;
+    padding:2pt 3pt !important;
     border:.8pt solid #bbb !important;
     color:#000 !important;
     background:#fff !important;
-  }
+}
 
   body.print-meet .wx-grid{
     gap:2.5pt !important;
@@ -798,6 +798,7 @@ button{
 @page{
   margin:4mm 4mm;
   size:letter portrait;
+}
 }
 </style>
 </head>
@@ -1013,12 +1014,12 @@ button{
   <div class="card" style="background:var(--hdr);border-color:var(--hdr)">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
       <div>
-        <div style="font-family:'Alfa Slab One',serif;font-size:21px;color:var(--org2)">
-        <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:var(--org2)" id="m_weekLabel">
+        <div style="font-family:'Alfa Slab One',serif;font-size:21px;color:var(--org2)">Huey Luey's Acworth <span class="edit-badge">EDIT MODE ON</span></div>
+        <div style="font-family:'Oswald',sans-serif;font-size:13px;color:rgba(255,255,255,.6);letter-spacing:1.5px;margin-top:2px">MANAGER MEETING NOTES</div>
       </div>
       <div style="text-align:right">
         <div style="font-family:'Oswald',sans-serif;font-size:10px;color:rgba(255,255,255,.45)">WEEK OF</div>
-        <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:#FF6B0B" id="m_weekLabel">-</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:var(--org2)" id="m_weekLabel">-</div>
         <div style="font-family:'Oswald',sans-serif;font-size:11px;color:rgba(255,255,255,.45);margin-top:2px">Meeting Date: <span id="m_meetDate">-</span></div>
       </div>
     </div>

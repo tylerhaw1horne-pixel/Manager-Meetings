@@ -8,24 +8,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --org:#B74818;
-  --org2:#E66A2C;
-  --grn:#2E6B57;
+  --org:#E46E1B;
+  --org2:#F28C28;
+  --grn:#5E8E3E;
 
-  --bg:#F4F1EC;
-  --card:#FFFDFC;
-  --bdr:#DDD3C5;
-  --bdr2:#CBBEAE;
+  --bg:#F7F1E7;
+  --card:#FFFDF9;
+  --bdr:#E8D7C3;
+  --bdr2:#D9C2A6;
 
-  --t1:#181411;
-  --t2:#4F4338;
-  --t3:#8C7D6D;
+  --t1:#3F2A1D;
+  --t2:#6B4A33;
+  --t3:#9A7A5E;
 
-  --hdr:#1F1712;
-  --hdr2:#2C221B;
+  --hdr:#6B3A1E;
+  --hdr2:#8A4A22;
   --r:7px;
   --sh:0 2px 8px rgba(0,0,0,.08);
-}
+}y
 
 *{box-sizing:border-box;margin:0;padding:0}
 
@@ -101,7 +101,7 @@ button{
 }
 
 .hdr{
-  background:var(--hdr);
+  background:linear-gradient(90deg,#7A3F1D,#9A5122);
   padding:0 14px;
   display:flex;
   align-items:center;
@@ -154,7 +154,7 @@ button{
 .tab:hover:not(.active){color:#fff;background:rgba(255,255,255,.1)}
 
 .dbar{
-  background:var(--hdr2);
+  background:linear-gradient(90deg,#9A5122,#B85F26);
   padding:4px 14px;
   display:flex;
   align-items:center;
@@ -496,151 +496,308 @@ button{
 .nb-lines{display:none}
 
 @media print{
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  .no-print{display:none!important}
-  body{background:#fff;font-size:7.5pt;margin:0}
-  .app{max-width:100%;padding:0}
-  body.print-ops #sec-meet,body.print-ops #sec-hist{display:none!important}
-  body.print-ops #sec-ops{display:block!important}
-  body.print-meet #sec-ops,body.print-meet #sec-hist{display:none!important}
-  body.print-meet #sec-meet{display:block!important}
-  .hdr,.dbar{display:none!important}
-  [contenteditable]{outline:none!important;cursor:default!important;border-bottom:none!important}
-  .card{box-shadow:none!important;border:.4pt solid #ccc!important;border-radius:2pt!important;break-inside:avoid;page-break-inside:avoid}
-  .card-hdr{font-size:7.5pt!important}
-  .chip{font-size:5.5pt;padding:0 3pt}
-  .div{margin:2pt 0}
-
-  body.print-ops .card{margin:2pt 0;padding:4pt 5pt}
-  body.print-ops .card-hdr{padding:3pt 5pt;margin:-4pt -5pt 4pt}
-  body.print-ops .fl{font-size:6.5pt;margin-bottom:1pt}
-  body.print-ops .fcalc{font-size:7pt;min-height:11pt;padding:1pt 3pt}
-  body.print-ops input,body.print-ops textarea{font-size:6.5pt!important;padding:1pt 3pt!important;border:.3pt solid #bbb!important}
-  body.print-ops .g2,body.print-ops .g3,body.print-ops .g4,body.print-ops .g5,body.print-ops .g6{gap:2.5pt}
-  body.print-ops .fg{margin-bottom:2.5pt}
-  body.print-ops .row{gap:3.5pt;margin-bottom:2pt}
-  body.print-ops .row .lbl{font-size:6.5pt;min-width:130pt}
-  body.print-ops .row .lbl.w{min-width:155pt}
-  body.print-ops .row input{width:60pt;flex:0 0 60pt}
-  body.print-ops .row .calc{font-size:7pt}
-  body.print-ops .sec-title{font-size:6.5pt;margin:3pt 0 2pt;padding-bottom:1pt}
-  body.print-ops .disc-net{padding:2pt 5pt;margin-top:2pt}
-
-  body.print-meet #sec-meet{
-    display:block!important;
-    column-count:1!important;
-    column-gap:0!important;
-    font-size:9.4pt!important;
+  *{
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
   }
 
+  .no-print{display:none !important;}
+
+  body{
+    background:#fff !important;
+    font-size:7pt !important;
+    margin:0 !important;
+  }
+
+  .app{
+    max-width:100% !important;
+    padding:0 !important;
+  }
+
+  .hdr,.dbar{
+    display:none !important;
+  }
+
+  [contenteditable]{
+    outline:none !important;
+    cursor:default !important;
+    border-bottom:none !important;
+  }
+
+  body.print-ops #sec-meet,
+  body.print-ops #sec-hist{
+    display:none !important;
+  }
+
+  body.print-ops #sec-ops{
+    display:block !important;
+  }
+
+  body.print-meet #sec-ops,
+  body.print-meet #sec-hist{
+    display:none !important;
+  }
+
+  body.print-meet #sec-meet{
+    display:block !important;
+  }
+
+  .card{
+    box-shadow:none !important;
+    border:.4pt solid #bbb !important;
+    border-radius:2pt !important;
+    break-inside:avoid !important;
+    page-break-inside:avoid !important;
+  }
+
+  .card-hdr{
+    font-size:7pt !important;
+  }
+
+  .chip{
+    font-size:5pt !important;
+    padding:0 2.5pt !important;
+  }
+
+  .div{
+    margin:1.5pt 0 !important;
+  }
+
+  /* OPS PRINT — tighter so it fits in 2 pages */
+  body.print-ops{
+    font-size:6.6pt !important;
+  }
+
+  body.print-ops .card{
+    margin:1.5pt 0 !important;
+    padding:3pt 4pt !important;
+  }
+
+  body.print-ops .card-hdr{
+    padding:2.5pt 4pt !important;
+    margin:-3pt -4pt 3pt !important;
+    font-size:6.5pt !important;
+    letter-spacing:.15px !important;
+  }
+
+  body.print-ops .fl{
+    font-size:5.7pt !important;
+    margin-bottom:.5pt !important;
+  }
+
+  body.print-ops .sec-title{
+    font-size:5.9pt !important;
+    margin:2pt 0 1.2pt !important;
+    padding-bottom:.6pt !important;
+  }
+
+  body.print-ops .fcalc{
+    font-size:6.2pt !important;
+    min-height:9pt !important;
+    padding:.5pt 2pt !important;
+  }
+
+  body.print-ops input,
+  body.print-ops textarea,
+  body.print-ops select{
+    font-size:5.9pt !important;
+    line-height:1 !important;
+    padding:.5pt 2pt !important;
+    min-height:9pt !important;
+    height:auto !important;
+    border:.3pt solid #bbb !important;
+    border-radius:1.5pt !important;
+  }
+
+  body.print-ops textarea{
+    min-height:12pt !important;
+  }
+
+  body.print-ops .g2,
+  body.print-ops .g3,
+  body.print-ops .g4,
+  body.print-ops .g5,
+  body.print-ops .g6{
+    gap:1.8pt !important;
+  }
+
+  body.print-ops .fg{
+    margin-bottom:1.3pt !important;
+  }
+
+  body.print-ops .row{
+    gap:2pt !important;
+    margin-bottom:1pt !important;
+    flex-wrap:nowrap !important;
+  }
+
+  body.print-ops .row .lbl{
+    font-size:5.8pt !important;
+    min-width:112pt !important;
+  }
+
+  body.print-ops .row .lbl.w{
+    min-width:140pt !important;
+  }
+
+  body.print-ops .row .sep{
+    font-size:5.6pt !important;
+    padding:0 1pt !important;
+  }
+
+  body.print-ops .row input{
+    width:46pt !important;
+    min-width:46pt !important;
+    flex:0 0 46pt !important;
+  }
+
+  body.print-ops .row .calc{
+    font-size:6pt !important;
+    min-width:48pt !important;
+  }
+
+  body.print-ops .disc-net{
+    padding:1pt 3pt !important;
+    margin-top:1pt !important;
+    gap:4pt !important;
+  }
+
+  body.print-ops .disc-net .dn-lbl{
+    font-size:5.8pt !important;
+  }
+
+  body.print-ops .disc-net .dn-val{
+    font-size:7pt !important;
+  }
+
+  body.print-ops #carryNote,
+  body.print-ops #savedNote{
+    display:none !important;
+  }
+
+  /* MEETING PRINT */
+  body.print-meet #sec-meet{
+  display:block!important;
+  column-count:1!important;
+  column-gap:0!important;
+  font-size:9.8pt!important;
+  transform:scale(.94);
+  transform-origin:top left;
+  width:106.5%;
+}
+
   body.print-meet .print-break{
-    break-before:auto!important;
-    page-break-before:auto!important;
+    break-before:auto !important;
+    page-break-before:auto !important;
   }
 
   body.print-meet .card{
-    margin:0 0 5pt 0!important;
-    padding:6pt 8pt!important;
-    break-inside:avoid;
-    page-break-inside:avoid;
-    display:block!important;
-    width:100%!important;
-    background:#fff!important;
-    color:#000!important;
-    border:.8pt solid #999!important;
+    margin:0 0 4pt 0 !important;
+    padding:5pt 7pt !important;
+    width:100% !important;
+    background:#fff !important;
+    color:#000 !important;
+    border:.8pt solid #999 !important;
   }
 
   body.print-meet .card-hdr{
-    padding:4pt 7pt!important;
-    margin:-6pt -8pt 6pt!important;
-    font-size:8.8pt!important;
-    letter-spacing:.15px!important;
-    background:#f2f2f2!important;
-    color:#000!important;
+    padding:3.5pt 6pt !important;
+    margin:-5pt -7pt 4pt !important;
+    font-size:8.9pt !important;
+    letter-spacing:.1px !important;
+    background:#f2f2f2 !important;
+    color:#000 !important;
   }
 
   body.print-meet .sec-title{
-    font-size:8pt!important;
-    margin:4pt 0 3pt!important;
-    padding-bottom:1.5pt!important;
-    color:#000!important;
+    font-size:8pt !important;
+    margin:3pt 0 2pt !important;
+    padding-bottom:1pt !important;
+    color:#000 !important;
   }
 
-  body.print-meet .div{margin:3pt 0!important}
+  body.print-meet .met{
+    padding:2.5pt 4pt !important;
+  }
 
-  body.print-meet .met{padding:3pt 5pt!important}
   body.print-meet .met-l{
-    font-size:7pt!important;
-    letter-spacing:0!important;
-    margin-bottom:1pt!important;
-    color:#333!important;
+    font-size:6.5pt !important;
+    margin-bottom:.5pt !important;
+    color:#333 !important;
   }
 
   body.print-meet .met-v{
-    font-size:9.5pt!important;
-    line-height:1.05!important;
-    color:#000!important;
+    font-size:9.2pt !important;
+    line-height:1!important;
+    color:#000 !important;
   }
 
-  body.print-meet .met-v.sm{font-size:8.7pt!important}
-  body.print-meet .met-v .chip{font-size:6pt!important;padding:0 3pt!important}
+  body.print-meet .met-v.sm{
+    font-size:8pt !important;
+  }
+
+  body.print-meet .met-v .chip{
+    font-size:5.6pt !important;
+    padding:0 2pt !important;
+  }
 
   body.print-meet .met-grid{
-    gap:3pt!important;
-    margin-bottom:4pt!important;
+    gap:2.5pt !important;
+    margin-bottom:3pt !important;
   }
 
-  body.print-meet .met-grid.c2{grid-template-columns:1fr 1fr}
-  body.print-meet .met-grid.c3{grid-template-columns:1fr 1fr 1fr}
-  body.print-meet .met-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
+  body.print-meet .g2{gap:2.5pt !important;}
+  body.print-meet .g3{gap:2.5pt !important;}
+  body.print-meet .g4{gap:2.5pt !important;}
+  body.print-meet .g5{gap:2.5pt !important;}
+  body.print-meet .g6{gap:2.5pt !important;}
 
-  body.print-meet .g2{gap:3pt!important;grid-template-columns:1fr 1fr}
-  body.print-meet .g3{gap:3pt!important;grid-template-columns:1fr 1fr 1fr}
-  body.print-meet .g4{gap:3pt!important;grid-template-columns:1fr 1fr 1fr 1fr}
-  body.print-meet .g5{gap:3pt!important;grid-template-columns:1fr 1fr 1fr 1fr 1fr}
-  body.print-meet .g6{gap:3pt!important;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr}
-
-  body.print-meet .fg{margin-bottom:3pt!important}
+  body.print-meet .fg{
+    margin-bottom:2pt !important;
+  }
 
   body.print-meet textarea,
   body.print-meet input{
-    font-size:7.8pt!important;
-    padding:2pt 4pt!important;
-    border:.8pt solid #bbb!important;
-    color:#000!important;
-    background:#fff!important;
+    font-size:7.6pt !important;
+    padding:1.5pt 3pt !important;
+    border:.8pt solid #bbb !important;
+    color:#000 !important;
+    background:#fff !important;
   }
 
   body.print-meet .wx-grid{
-    gap:3pt!important;
-    margin-top:3pt!important;
-    grid-template-columns:repeat(7,1fr);
+    gap:2.5pt !important;
+    margin-top:2pt !important;
+    grid-template-columns:repeat(7,1fr) !important;
   }
 
   body.print-meet .wx-day{
-    padding:3pt!important;
-    border:.8pt solid #ccc!important;
-    background:#fff!important;
+    padding:2pt !important;
+    border:.8pt solid #ccc !important;
+    background:#fff !important;
   }
 
   body.print-meet .wx-day input,
   body.print-meet .wx-day textarea{
-    font-size:7pt!important;
-    padding:2pt!important;
+    font-size:6.4pt !important;
+    padding:1.5pt !important;
   }
 
-  body.print-meet .nb-lines{display:block!important}
+  body.print-meet .nb-lines{
+    display:block !important;
+  }
+
   body.print-meet .nb-line{
-    display:block;
-    border-bottom:.6pt solid #bbb;
-    height:13pt;
-    margin-bottom:1pt;
+    display:block !important;
+    border-bottom:.6pt solid #bbb !important;
+    height:10pt !important;
+    margin-bottom:5pt !important;
   }
 
-  @page{
-    margin:5mm 5mm;
-    size:letter portrait;
-  }
+  
+@page{
+  margin:4mm 4mm;
+  size:letter portrait;
 }
 </style>
 </head>

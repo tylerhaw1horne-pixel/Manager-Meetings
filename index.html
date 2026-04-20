@@ -65,15 +65,13 @@
    ================================================================ */
 *{box-sizing:border-box;margin:0;padding:0}
 
-html,body{height:100%}
+html,body{margin:0;padding:0}
 
 body{
   font-family:var(--body-font);
   background:var(--bg);
   color:var(--text);
   font-size:var(--body-font-size);
-  display:flex;
-  flex-direction:column;
 }
 
 input,textarea,select{
@@ -141,13 +139,13 @@ button{
 .hdr{
   background:var(--hdr-bg);
   border-bottom:2px solid var(--hdr-border);
-  height:var(--hdr-height);
+  min-height:var(--hdr-height);
   padding:0 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  overflow:hidden;             /* prevents any child from causing height jitter */
+  overflow:visible;
 }
 
 .logo{
@@ -166,7 +164,7 @@ button{
   align-items:center;
   gap:6px;
   flex-shrink:0;
-  overflow:hidden;
+  overflow:visible;
 }
 
 .tabs{
@@ -228,11 +226,6 @@ button{
 /* ================================================================
    SCROLLABLE CONTENT AREA
    ================================================================ */
-#chrome-spacer{
-  /* will be set by JS to match #chrome height */
-  flex-shrink:0;
-}
-
 .app{
   max-width:1240px;
   margin:0 auto;
@@ -510,8 +503,8 @@ button{
     text-shadow:none !important;
     color:#000 !important;
   }
-  body{background:#fff !important;margin:0 !important}
-  #chrome,#chrome-spacer,.no-print,.panel-overlay{display:none !important}
+  body{background:#fff !important;margin:0 !important;padding-top:0 !important}
+  #chrome,.no-print,.panel-overlay{display:none !important}
   .app{max-width:100% !important;padding:0 !important}
 
   body.print-ops #sec-meet,body.print-ops #sec-hist{display:none !important}
@@ -567,10 +560,6 @@ button{
     <button class="btn-s xs" onclick="openThemeSettings()">🎨 Theme Settings</button>
   </div>
 </div>
-
-<!-- spacer pushed by JS to match chrome height -->
-
-<div id="chrome-spacer"></div>
 
 <input type="file" id="fileImport" accept=".json" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none" />
 
@@ -1404,11 +1393,12 @@ window.firebaseReady = true;
 </script>
 
 <script>
-// Chrome height spacer — keeps content below the fixed header+dbar
+// Push body content below fixed chrome using padding-top — bulletproof on iOS Safari
 function updateChromeSpacer(){
   const chrome = document.getElementById('chrome');
-  const spacer = document.getElementById('chrome-spacer');
-  if(chrome && spacer) spacer.style.height = chrome.offsetHeight + 'px';
+  if(chrome){
+    document.body.style.paddingTop = chrome.offsetHeight + 'px';
+  }
 }
 window.addEventListener('resize', updateChromeSpacer);
 

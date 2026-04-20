@@ -5,29 +5,75 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>Huey Luey's Acworth — Ops Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&family=Roboto:wght@400;500;700&family=Lato:wght@400;700&family=Montserrat:wght@400;600;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet" />
 
 <style>
+/* ================================================================
+   CSS CUSTOM PROPERTIES — all controllable via Theme Settings
+   ================================================================ */
 :root{
+  /* Page */
   --bg:#f4f4f4;
-  --card:#fff;
+  --body-font-size:13px;
+
+  /* Header */
+  --hdr-bg:#000000;
+  --hdr-border:#333333;
+  --hdr-height:52px;
+  --logo-color:#ffffff;
+  --logo-size:20px;
+
+  /* Dbar */
+  --dbar-bg:#0a0a0a;
+  --dbar-border:#222222;
+
+  /* Tabs */
+  --tab-bg:#1a1a1a;
+  --tab-border:#333333;
+  --tab-inactive-color:#aaaaaa;
+  --tab-active-bg:#ffffff;
+  --tab-active-color:#000000;
+
+  /* Buttons */
+  --btn-primary-bg:#ffffff;
+  --btn-primary-color:#000000;
+  --btn-secondary-bg:#1e1e1e;
+  --btn-secondary-color:#cccccc;
+  --btn-secondary-border:#444444;
+
+  /* Cards */
+  --card-bg:#ffffff;
+  --card-border:#c9c9c9;
+  --card-radius:7px;
+  --card-hdr-bg:#111111;
+  --card-hdr-color:#ffffff;
+
+  /* Content */
+  --text:#000000;
+  --muted:#555555;
   --line:#c9c9c9;
   --line2:#9d9d9d;
-  --text:#000;
-  --muted:#555;
-  --dark:#111;
-  --dark2:#222;
   --soft:#f8f8f8;
-  --radius:7px;
+
+  /* Body font */
+  --body-font:'Open Sans',sans-serif;
+  --heading-font:'Oswald',sans-serif;
 }
 
+/* ================================================================
+   RESET & BASE
+   ================================================================ */
 *{box-sizing:border-box;margin:0;padding:0}
 
+html,body{height:100%}
+
 body{
-  font-family:'Open Sans',sans-serif;
+  font-family:var(--body-font);
   background:var(--bg);
   color:var(--text);
-  font-size:13px;
+  font-size:var(--body-font-size);
+  display:flex;
+  flex-direction:column;
 }
 
 input,textarea,select{
@@ -51,84 +97,111 @@ input:focus,textarea:focus,select:focus{
 
 button{
   cursor:pointer;
-  font-family:'Oswald',sans-serif;
+  font-family:var(--heading-font);
   font-size:12px;
   border:none;
   border-radius:4px;
   padding:5px 10px;
 }
 
-.btn{background:#222;color:#fff}
-.btn:hover{background:#000}
-.btn.alt{background:#fff;color:#111;border:1px solid #888}
-.btn.alt:hover{background:#f1f1f1}
-.btn.sm{font-size:11px;padding:4px 8px}
-.btn.xs{font-size:10px;padding:3px 7px}
+.btn-p{
+  background:var(--btn-primary-bg);
+  color:var(--btn-primary-color);
+  font-weight:700;
+  border:none;
+}
+.btn-p:hover{filter:brightness(.9)}
 
-.app{max-width:1240px;margin:0 auto;padding:0 8px 60px}
+.btn-s{
+  background:var(--btn-secondary-bg);
+  color:var(--btn-secondary-color);
+  border:1px solid var(--btn-secondary-border);
+}
+.btn-s:hover{filter:brightness(1.3)}
+
+/* Legacy btn classes kept so existing HTML still works */
+.btn{background:var(--btn-primary-bg);color:var(--btn-primary-color);font-weight:700}
+.btn:hover{filter:brightness(.9)}
+.btn.alt{background:var(--btn-secondary-bg);color:var(--btn-secondary-color);border:1px solid var(--btn-secondary-border)}
+.btn.alt:hover{filter:brightness(1.3)}
+.btn.sm,.btn-p.sm,.btn-s.sm{font-size:11px;padding:4px 9px}
+.btn.xs,.btn-p.xs,.btn-s.xs{font-size:10px;padding:3px 7px}
+
+/* ================================================================
+   FIXED CHROME — header + dbar live outside .app-wrap
+   ================================================================ */
+#chrome{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+}
 
 .hdr{
-  background:#000;
+  background:var(--hdr-bg);
+  border-bottom:2px solid var(--hdr-border);
+  height:var(--hdr-height);
   padding:0 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  min-height:52px;
-  position:sticky;
-  top:0;
-  z-index:100;
-  gap:10px;
-  flex-wrap:nowrap;
-  border-bottom:2px solid #333;
+  gap:12px;
+  overflow:hidden;             /* prevents any child from causing height jitter */
 }
 
 .logo{
-  font-family:'Oswald',sans-serif;
-  font-size:20px;
+  font-family:var(--heading-font);
+  font-size:var(--logo-size);
   font-weight:700;
-  color:#fff;
+  color:var(--logo-color);
   letter-spacing:.5px;
   white-space:nowrap;
   flex-shrink:0;
+  line-height:1;
 }
 
 .hdr-r{
   display:flex;
   align-items:center;
   gap:6px;
-  flex-wrap:nowrap;
   flex-shrink:0;
+  overflow:hidden;
 }
 
 .tabs{
   display:flex;
   gap:2px;
-  background:#1a1a1a;
+  background:var(--tab-bg);
   border-radius:5px;
   padding:2px;
-  border:1px solid #333;
+  border:1px solid var(--tab-border);
 }
 
 .tab{
   background:transparent;
-  color:#aaa;
+  color:var(--tab-inactive-color);
   padding:5px 12px;
   border-radius:4px;
   font-size:11px;
-  font-family:'Oswald',sans-serif;
+  font-family:var(--heading-font);
   letter-spacing:.4px;
   white-space:nowrap;
+  border:none;
 }
-.tab.active{background:#fff;color:#000;font-weight:600}
-.tab:hover:not(.active){background:#2a2a2a;color:#fff}
-
-.btn{background:#fff;color:#000;font-weight:600}
-.btn:hover{background:#e8e8e8}
-.btn.alt{background:#1e1e1e;color:#ccc;border:1px solid #444}
-.btn.alt:hover{background:#2a2a2a;color:#fff}
+.tab.active{
+  background:var(--tab-active-bg);
+  color:var(--tab-active-color);
+  font-weight:700;
+}
+.tab:hover:not(.active){
+  background:#2a2a2a;
+  color:#fff;
+}
 
 .dbar{
-  background:#0a0a0a;
+  background:var(--dbar-bg);
+  border-bottom:1px solid var(--dbar-border);
   padding:4px 16px;
   display:flex;
   align-items:center;
@@ -136,39 +209,61 @@ button{
   flex-wrap:wrap;
   font-size:10px;
   color:#888;
-  border-bottom:1px solid #222;
+  min-height:30px;
 }
 
 .ss{
   font-size:10px;
   padding:2px 9px;
   border-radius:10px;
-  font-family:'Oswald',sans-serif;
+  font-family:var(--heading-font);
   font-weight:600;
   letter-spacing:.3px;
+  white-space:nowrap;
 }
-.ss-ok{background:#1a1a1a;color:#7ccc7c;border:1px solid #2e5c2e}
-.ss-err{background:#1a1a1a;color:#ff6b6b;border:1px solid #5c2e2e}
+.ss-ok  {background:#1a1a1a;color:#7ccc7c;border:1px solid #2e5c2e}
+.ss-err {background:#1a1a1a;color:#ff6b6b;border:1px solid #5c2e2e}
 .ss-busy{background:#1a1a1a;color:#cca83c;border:1px solid #5c4a1a}
 
+/* ================================================================
+   SCROLLABLE CONTENT AREA
+   ================================================================ */
+#chrome-spacer{
+  /* will be set by JS to match #chrome height */
+  flex-shrink:0;
+}
+
+.app{
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 8px 60px;
+  width:100%;
+}
+
+/* ================================================================
+   SECTIONS
+   ================================================================ */
 .sec{display:none}
 .sec.active{display:block}
 
+/* ================================================================
+   CARDS
+   ================================================================ */
 .card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--card-radius);
   padding:11px 13px;
   margin:8px 0;
 }
 
 .card-hdr{
-  background:#111;
-  color:#fff;
-  border-radius:7px 7px 0 0;
+  background:var(--card-hdr-bg);
+  color:var(--card-hdr-color);
+  border-radius:calc(var(--card-radius) - 1px) calc(var(--card-radius) - 1px) 0 0;
   padding:7px 12px;
   margin:-11px -13px 10px;
-  font-family:'Oswald',sans-serif;
+  font-family:var(--heading-font);
   font-weight:600;
   font-size:13px;
   letter-spacing:.7px;
@@ -180,7 +275,7 @@ button{
 }
 
 .sec-title{
-  font-family:'Oswald',sans-serif;
+  font-family:var(--heading-font);
   font-weight:600;
   font-size:11px;
   color:#222;
@@ -213,11 +308,14 @@ button{
   min-height:26px;
   display:flex;
   align-items:center;
-  font-family:'Oswald',sans-serif;
+  font-family:var(--heading-font);
   font-weight:600;
   color:#000;
 }
 
+/* ================================================================
+   ROWS / GRIDS
+   ================================================================ */
 .row{
   display:flex;
   align-items:center;
@@ -225,31 +323,11 @@ button{
   margin-bottom:5px;
   flex-wrap:wrap;
 }
-
-.row .lbl{
-  font-size:11px;
-  color:#111;
-  white-space:nowrap;
-  min-width:180px;
-  flex-shrink:0;
-}
+.row .lbl{font-size:11px;color:#111;white-space:nowrap;min-width:180px;flex-shrink:0}
 .row .lbl.w{min-width:260px}
-.row .sep{
-  font-size:11px;
-  color:#444;
-  padding:0 2px;
-}
-.row input{
-  width:110px;
-  min-width:80px;
-  flex:0 0 110px;
-}
-.row .calc{
-  font-family:'Oswald',sans-serif;
-  font-size:12px;
-  font-weight:600;
-  min-width:80px;
-}
+.row .sep{font-size:11px;color:#444;padding:0 2px}
+.row input{width:110px;min-width:80px;flex:0 0 110px}
+.row .calc{font-family:var(--heading-font);font-size:12px;font-weight:600;min-width:80px}
 
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
@@ -262,174 +340,147 @@ button{
 .met-grid.c3{grid-template-columns:1fr 1fr 1fr}
 .met-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
 
-.met{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:5px;
-  padding:5px 9px;
-}
-.met-l{
-  font-size:9px;
-  font-weight:700;
-  color:#444;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  margin-bottom:1px;
-}
-.met-v{
-  font-family:'Oswald',sans-serif;
-  font-size:15px;
-  font-weight:600;
-  color:#000;
-  line-height:1.2;
-}
+/* ================================================================
+   METRICS
+   ================================================================ */
+.met{background:#fff;border:1px solid var(--line);border-radius:5px;padding:5px 9px}
+.met-l{font-size:9px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px}
+.met-v{font-family:var(--heading-font);font-size:15px;font-weight:600;color:#000;line-height:1.2}
 .met-v.sm{font-size:13px}
 
+/* ================================================================
+   CHIPS / BADGES
+   ================================================================ */
 .chip{
-  display:inline-flex;
-  align-items:center;
-  font-size:10px;
-  font-family:'Oswald',sans-serif;
-  font-weight:600;
-  padding:1px 7px;
-  border-radius:10px;
-  white-space:nowrap;
-  background:#fff;
-  color:#000;
-  border:1px solid #888;
+  display:inline-flex;align-items:center;
+  font-size:10px;font-family:var(--heading-font);font-weight:600;
+  padding:1px 7px;border-radius:10px;white-space:nowrap;
+  background:#fff;color:#000;border:1px solid #888;
 }
 .up,.dn,.nt{background:#fff;color:#000;border:1px solid #888}
 
-.wx-grid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:4px;
-  margin-top:5px;
-}
-.wx-day{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:6px;
-  padding:5px 4px;
-  text-align:center;
-}
-.wx-day .wn{
-  font-family:'Oswald',sans-serif;
-  font-size:10px;
-  font-weight:600;
-  color:#111;
-}
+/* ================================================================
+   WEATHER GRID
+   ================================================================ */
+.wx-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:5px}
+.wx-day{background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px 4px;text-align:center}
+.wx-day .wn{font-family:var(--heading-font);font-size:10px;font-weight:600;color:#111}
 
+/* ================================================================
+   HISTORY LIST
+   ================================================================ */
 .hi{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:8px 12px;
-  border:1px solid var(--line);
-  border-radius:5px;
-  margin-bottom:5px;
-  background:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:8px 12px;border:1px solid var(--line);
+  border-radius:5px;margin-bottom:5px;background:#fff;
 }
-.hi-d{font-family:'Oswald',sans-serif;font-weight:600;font-size:13px}
+.hi-d{font-family:var(--heading-font);font-weight:600;font-size:13px}
 .hi-m{font-size:11px;color:#555}
 
-.review-table{
-  display:grid;
-  grid-template-columns:100px 90px 90px 1fr;
-  gap:6px;
-  align-items:center;
-}
-.review-h{
-  font-family:'Oswald',sans-serif;
-  font-size:11px;
-  color:#111;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-  padding-bottom:2px;
-  border-bottom:1px solid var(--line);
-  margin-bottom:2px;
-}
+/* ================================================================
+   REVIEW TABLE
+   ================================================================ */
+.review-table{display:grid;grid-template-columns:100px 90px 90px 1fr;gap:6px;align-items:center}
+.review-h{font-family:var(--heading-font);font-size:11px;color:#111;text-transform:uppercase;letter-spacing:.4px;padding-bottom:2px;border-bottom:1px solid var(--line);margin-bottom:2px}
 .review-cell{min-width:0}
 .review-comment{width:100%}
 
-.custom-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:6px;
-  margin-top:6px;
-}
-.custom-box{
-  border:1px solid var(--line2);
-  border-radius:5px;
-  padding:6px;
-  background:#fff;
-}
-.custom-row{
-  display:flex;
-  gap:4px;
-  align-items:center;
-}
+/* ================================================================
+   CUSTOM METRICS
+   ================================================================ */
+.custom-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px}
+.custom-box{border:1px solid var(--line2);border-radius:5px;padding:6px;background:#fff}
+.custom-row{display:flex;gap:4px;align-items:center}
 .custom-row input{width:100%}
 
-.notice{
-  font-size:11px;
-  padding:5px 9px;
-  border-radius:5px;
-  margin-top:5px;
-  display:none;
-  border:1px solid #999;
-  background:#fff;
-  color:#000;
-}
+/* ================================================================
+   NOTICES / UTILITY
+   ================================================================ */
+.notice{font-size:11px;padding:5px 9px;border-radius:5px;margin-top:5px;display:none;border:1px solid #999;background:#fff;color:#000}
 .notice.show{display:block}
 
-.disc-net{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:4px;
-  padding:4px 8px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:4px;
-  flex-wrap:wrap;
-}
-.disc-net .dn-lbl{
-  font-size:10px;
-  font-weight:700;
-  color:#111;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-}
-.disc-net .dn-val{
-  font-family:'Oswald',sans-serif;
-  font-size:14px;
-  font-weight:700;
-  color:#000;
-}
+.disc-net{background:#fff;border:1px solid var(--line);border-radius:4px;padding:4px 8px;display:flex;align-items:center;gap:10px;margin-top:4px;flex-wrap:wrap}
+.disc-net .dn-lbl{font-size:10px;font-weight:700;color:#111;text-transform:uppercase;letter-spacing:.4px}
+.disc-net .dn-val{font-family:var(--heading-font);font-size:14px;font-weight:700;color:#000}
 
 .nb-lines{display:none}
 .nb-line{display:block}
 
-.edit-mode [data-editable]{
-  outline:none;
-  background:#fff;
-  border:1px dashed #999;
-  border-radius:4px;
-  padding:2px 4px;
-  display:block;
-  min-height:24px;
-}
-
-[contenteditable]:focus{
-  outline:none;
-  background:#f3f3f3;
-  border-radius:3px;
-}
+/* ================================================================
+   EDIT MODE
+   ================================================================ */
+.edit-mode [data-editable]{outline:none;background:#fff;border:1px dashed #999;border-radius:4px;padding:2px 4px;display:block;min-height:24px}
+[contenteditable]:focus{outline:none;background:#f3f3f3;border-radius:3px}
 
 .no-print{display:initial}
 
+/* ================================================================
+   OVERLAY PANELS (Print Settings + Theme Settings)
+   ================================================================ */
+.panel-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9000;
+  align-items:center;
+  justify-content:center;
+}
+.panel-overlay.open{display:flex}
+.panel-box{
+  background:#fff;border-radius:8px;
+  width:min(740px,96vw);max-height:90vh;
+  overflow-y:auto;
+  box-shadow:0 8px 40px rgba(0,0,0,.4);
+  display:flex;flex-direction:column;
+}
+.panel-head{
+  background:#111;color:#fff;
+  padding:11px 16px;
+  border-radius:8px 8px 0 0;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--heading-font);font-weight:600;font-size:14px;
+  letter-spacing:.6px;text-transform:uppercase;
+  position:sticky;top:0;z-index:1;
+}
+.panel-close{background:transparent;color:#fff;font-size:18px;line-height:1;padding:2px 7px;border:1px solid #555;border-radius:4px}
+.panel-close:hover{background:#333}
+.panel-body{padding:14px 16px 18px;overflow-y:auto}
+
+.ps-section{
+  font-family:var(--heading-font);font-size:11px;font-weight:600;color:#111;
+  text-transform:uppercase;letter-spacing:.6px;
+  border-bottom:1px solid #ddd;padding-bottom:3px;margin:12px 0 8px;
+}
+.ps-section:first-child{margin-top:0}
+.ps-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.ps-grid.c2{grid-template-columns:1fr 1fr}
+.ps-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
+.ps-field{margin-bottom:4px}
+.ps-label{font-size:10px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.ps-field input[type=number],.ps-field select,.ps-field input[type=text],.ps-field input[type=color]{
+  width:100%;font-size:12px;padding:4px 6px;border:1px solid #bbb;border-radius:4px;background:#fff;color:#000;
+}
+.ps-field input[type=color]{height:32px;padding:2px 4px;cursor:pointer}
+.ps-field input[type=range]{width:100%;accent-color:#111}
+.ps-val{font-family:var(--heading-font);font-size:12px;font-weight:600;color:#111;margin-left:5px;white-space:nowrap}
+.ps-row{display:flex;align-items:center;gap:6px;margin-bottom:0}
+.ps-preview{
+  background:#f4f4f4;border:1px solid #ddd;border-radius:5px;
+  padding:8px 12px;font-size:11px;color:#333;margin-top:10px;
+  font-family:var(--heading-font);letter-spacing:.3px;line-height:1.7;
+}
+.ps-preview b{color:#000}
+.ps-actions{display:flex;gap:7px;margin-top:14px;flex-wrap:wrap}
+.ps-actions button{font-size:11px;padding:5px 12px}
+
+/* Color swatch row */
+.swatch-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.swatch-row label{font-size:11px;color:#333;min-width:180px;flex-shrink:0}
+.swatch-row input[type=color]{width:44px;height:28px;padding:1px 3px;border:1px solid #bbb;border-radius:4px;cursor:pointer;flex-shrink:0}
+.swatch-row input[type=text]{width:90px;font-size:11px;font-family:monospace;flex-shrink:0}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
 @media (max-width:1100px){
   .g6{grid-template-columns:1fr 1fr 1fr}
   .g5{grid-template-columns:1fr 1fr 1fr}
@@ -439,142 +490,17 @@ button{
   .wx-grid{grid-template-columns:repeat(4,1fr)}
 }
 @media (max-width:760px){
+  .hdr-r .tabs-wrap{display:none}
   .g3,.g2,.g4,.g5,.g6,.met-grid.c2,.met-grid.c3,.met-grid.c4,.custom-grid,.wx-grid,.review-table{
     grid-template-columns:1fr !important;
   }
   .row .lbl,.row .lbl.w{min-width:100%;white-space:normal}
+  .ps-grid,.ps-grid.c2,.ps-grid.c4{grid-template-columns:1fr 1fr !important}
 }
 
-/* ---- print settings panel ---- */
-.ps-overlay{
-  display:none;
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:9000;
-  align-items:center;
-  justify-content:center;
-}
-.ps-overlay.open{display:flex}
-.ps-panel{
-  background:#fff;
-  border-radius:8px;
-  width:min(720px,96vw);
-  max-height:92vh;
-  overflow-y:auto;
-  box-shadow:0 8px 40px rgba(0,0,0,.35);
-}
-.ps-head{
-  background:#111;
-  color:#fff;
-  padding:11px 16px;
-  border-radius:8px 8px 0 0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  font-family:'Oswald',sans-serif;
-  font-weight:600;
-  font-size:14px;
-  letter-spacing:.6px;
-  text-transform:uppercase;
-  position:sticky;top:0;z-index:1;
-}
-.ps-close{
-  background:transparent;
-  color:#fff;
-  font-size:18px;
-  line-height:1;
-  padding:2px 6px;
-  border:1px solid #555;
-  border-radius:4px;
-}
-.ps-close:hover{background:#333}
-.ps-body{padding:14px 16px 18px}
-.ps-section{
-  font-family:'Oswald',sans-serif;
-  font-size:11px;
-  font-weight:600;
-  color:#111;
-  text-transform:uppercase;
-  letter-spacing:.6px;
-  border-bottom:1px solid #ddd;
-  padding-bottom:3px;
-  margin:12px 0 8px;
-}
-.ps-section:first-child{margin-top:0}
-.ps-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:8px;
-}
-.ps-grid.c2{grid-template-columns:1fr 1fr}
-.ps-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
-.ps-field{margin-bottom:2px}
-.ps-label{
-  font-size:10px;
-  font-weight:700;
-  color:#555;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-  margin-bottom:3px;
-}
-.ps-field input[type=number],
-.ps-field select{
-  width:100%;
-  font-size:12px;
-  padding:4px 6px;
-  border:1px solid #bbb;
-  border-radius:4px;
-  background:#fff;
-  color:#000;
-}
-.ps-field input[type=range]{
-  width:100%;
-  accent-color:#111;
-}
-.ps-val{
-  font-family:'Oswald',sans-serif;
-  font-size:12px;
-  font-weight:600;
-  color:#111;
-  margin-left:6px;
-}
-.ps-row{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  margin-bottom:6px;
-}
-.ps-row .ps-lbl{
-  font-size:11px;
-  color:#111;
-  min-width:190px;
-  flex-shrink:0;
-}
-.ps-row input[type=number]{
-  width:70px;
-  min-width:60px;
-  flex:0 0 70px;
-}
-.ps-unit{font-size:11px;color:#444}
-.ps-preview{
-  background:#f4f4f4;
-  border:1px solid #ddd;
-  border-radius:5px;
-  padding:8px 12px;
-  font-size:11px;
-  color:#333;
-  margin-top:10px;
-  font-family:'Oswald',sans-serif;
-  letter-spacing:.3px;
-}
-.ps-preview b{color:#000}
-.ps-actions{
-  display:flex;
-  gap:7px;
-  margin-top:14px;
-  flex-wrap:wrap;
-}
-
+/* ================================================================
+   PRINT
+   ================================================================ */
 @media print{
   *{
     -webkit-print-color-adjust:exact !important;
@@ -583,35 +509,22 @@ button{
     text-shadow:none !important;
     color:#000 !important;
   }
-
-  body{
-    background:#fff !important;
-    margin:0 !important;
-  }
-
+  body{background:#fff !important;margin:0 !important}
+  #chrome,#chrome-spacer,.no-print,.panel-overlay{display:none !important}
   .app{max-width:100% !important;padding:0 !important}
-  .hdr,.dbar,.no-print,.ps-overlay{display:none !important}
 
-  body.print-ops #sec-meet,
-  body.print-ops #sec-hist{display:none !important}
+  body.print-ops #sec-meet,body.print-ops #sec-hist{display:none !important}
   body.print-ops #sec-ops{display:block !important}
-
-  body.print-meet #sec-ops,
-  body.print-meet #sec-hist{display:none !important}
+  body.print-meet #sec-ops,body.print-meet #sec-hist{display:none !important}
   body.print-meet #sec-meet{display:block !important}
 
   .card,.met,.wx-day,.fcalc,input,textarea,select,.disc-net,.custom-box{
-    background:#fff !important;
-    border-color:#999 !important;
+    background:#fff !important;border-color:#999 !important;
   }
-
   .card{
-    border:.5pt solid #999 !important;
-    border-radius:2pt !important;
-    break-inside:avoid !important;
-    page-break-inside:avoid !important;
+    border:.5pt solid #999 !important;border-radius:2pt !important;
+    break-inside:avoid !important;page-break-inside:avoid !important;
   }
-
   .nb-lines{display:block !important}
   .nb-line{border-bottom:.6pt solid #bbb !important;margin-bottom:2pt !important}
   .wx-grid{grid-template-columns:repeat(7,1fr) !important}
@@ -621,9 +534,16 @@ button{
 
 <style id="printSettingsStyle"></style>
 
-<body>
-<div class="app">
+<style id="themeSettingsStyle"></style>
 
+</head>
+<body>
+
+<!-- ================================================================
+     FIXED CHROME
+     ================================================================ -->
+
+<div id="chrome">
   <div class="hdr no-print">
     <div class="logo">Huey Luey's Acworth</div>
     <div class="hdr-r">
@@ -632,203 +552,210 @@ button{
         <button class="tab" onclick="showTab('meet',this)">Manager Meeting</button>
         <button class="tab" onclick="showTab('hist',this)">History</button>
       </div>
-      <button class="btn sm" onclick="doSave()" style="background:#fff;color:#000;font-weight:700">Save</button>
-      <button class="btn sm" onclick="doPrint('ops')" style="background:#1e1e1e;color:#ccc;border:1px solid #444">Print Ops</button>
-      <button class="btn sm" onclick="doPrint('meet')" style="background:#1e1e1e;color:#ccc;border:1px solid #444">Print Meeting</button>
+      <button class="btn-p sm" onclick="doSave()">Save</button>
+      <button class="btn-s sm" onclick="doPrint('ops')">Print Ops</button>
+      <button class="btn-s sm" onclick="doPrint('meet')">Print Meeting</button>
     </div>
   </div>
 
   <div class="dbar no-print">
     <span id="syncBadge" class="ss ss-ok">Firebase Ready</span>
-    <button class="btn xs alt" onclick="doExport()">Export JSON</button>
-    <button class="btn xs alt" onclick="triggerImport()">Import JSON</button>
-    <button class="btn xs" onclick="openPrintSettings()" style="background:#333;color:#ddd;border:1px solid #555">⚙ Print Settings</button>
+    <button class="btn alt xs" onclick="doExport()">Export JSON</button>
+    <button class="btn alt xs" onclick="triggerImport()">Import JSON</button>
+    <button class="btn-s xs" onclick="openPrintSettings()">⚙ Print Settings</button>
+    <button class="btn-s xs" onclick="openThemeSettings()">🎨 Theme Settings</button>
   </div>
+</div>
 
-  <!-- ===================== PRINT SETTINGS PANEL ===================== -->
+<!-- spacer pushed by JS to match chrome height -->
 
-  <div id="psOverlay" class="ps-overlay no-print" onclick="psOverlayClick(event)">
-    <div class="ps-panel">
-      <div class="ps-head">
-        Print Settings
-        <button class="ps-close" onclick="closePrintSettings()">✕</button>
-      </div>
-      <div class="ps-body">
+<div id="chrome-spacer"></div>
+
+<input type="file" id="fileImport" accept=".json" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;visibility:hidden" />
+
+<!-- ================================================================
+     PRINT SETTINGS PANEL
+     ================================================================ -->
+
+<div id="psOverlay" class="panel-overlay no-print" onclick="psOverlayClick(event)">
+  <div class="panel-box">
+    <div class="panel-head">
+      Print Settings
+      <button class="panel-close" onclick="closePrintSettings()">&#x2715;</button>
+    </div>
+    <div class="panel-body">
 
 ```
-    <div class="ps-section">Page Size &amp; Orientation</div>
-    <div class="ps-grid c4">
-      <div class="ps-field">
-        <div class="ps-label">Paper Size</div>
-        <select id="ps_paper" onchange="applyPrintSettings()">
-          <option value="letter portrait">Letter — Portrait</option>
-          <option value="letter landscape">Letter — Landscape</option>
-          <option value="legal portrait">Legal — Portrait</option>
-          <option value="legal landscape">Legal — Landscape</option>
-          <option value="A4 portrait">A4 — Portrait</option>
-          <option value="A4 landscape">A4 — Landscape</option>
-        </select>
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Margin (mm)</div>
-        <input type="number" id="ps_margin" value="5" min="0" max="25" step="1" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Card Margin (pt)</div>
-        <input type="number" id="ps_card_margin" value="1.2" min="0" max="8" step="0.2" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Card Padding (pt)</div>
-        <input type="number" id="ps_card_pad" value="2.5" min="0" max="10" step="0.2" oninput="applyPrintSettings()" />
-      </div>
+  <div class="ps-section">Page Size &amp; Orientation</div>
+  <div class="ps-grid c4">
+    <div class="ps-field"><div class="ps-label">Paper Size</div>
+      <select id="ps_paper" onchange="applyPrintSettings()">
+        <option value="letter portrait">Letter — Portrait</option>
+        <option value="letter landscape">Letter — Landscape</option>
+        <option value="legal portrait">Legal — Portrait</option>
+        <option value="legal landscape">Legal — Landscape</option>
+        <option value="A4 portrait">A4 — Portrait</option>
+        <option value="A4 landscape">A4 — Landscape</option>
+      </select>
     </div>
+    <div class="ps-field"><div class="ps-label">Margin (mm)</div><input type="number" id="ps_margin" value="5" min="0" max="25" step="1" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Card Margin (pt)</div><input type="number" id="ps_card_margin" value="1.2" min="0" max="8" step="0.2" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Card Padding (pt)</div><input type="number" id="ps_card_pad" value="2.5" min="0" max="10" step="0.2" oninput="applyPrintSettings()" /></div>
+  </div>
 
-    <div class="ps-section">Font Sizes (pt)</div>
-    <div class="ps-grid">
-      <div class="ps-field">
-        <div class="ps-label">Body / Base</div>
-        <div class="ps-row" style="margin-bottom:0">
-          <input type="range" id="ps_fs_body" min="4" max="12" step="0.5" value="7" oninput="applyPrintSettings();gi('ps_fs_body_v').textContent=this.value+'pt'" />
-          <span class="ps-val" id="ps_fs_body_v">7pt</span>
-        </div>
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Inputs &amp; Textareas</div>
-        <div class="ps-row" style="margin-bottom:0">
-          <input type="range" id="ps_fs_input" min="4" max="12" step="0.5" value="5.5" oninput="applyPrintSettings();gi('ps_fs_input_v').textContent=this.value+'pt'" />
-          <span class="ps-val" id="ps_fs_input_v">5.5pt</span>
-        </div>
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Card Headers</div>
-        <div class="ps-row" style="margin-bottom:0">
-          <input type="range" id="ps_fs_card_hdr" min="4" max="14" step="0.5" value="6.4" oninput="applyPrintSettings();gi('ps_fs_card_hdr_v').textContent=this.value+'pt'" />
-          <span class="ps-val" id="ps_fs_card_hdr_v">6.4pt</span>
-        </div>
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Section Titles</div>
-        <div class="ps-row" style="margin-bottom:0">
-          <input type="range" id="ps_fs_sec_title" min="4" max="12" step="0.5" value="5.8" oninput="applyPrintSettings();gi('ps_fs_sec_title_v').textContent=this.value+'pt'" />
-          <span class="ps-val" id="ps_fs_sec_title_v">5.8pt</span>
-        </div>
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Field Labels (FL)</div>
-        <div class="ps-row" style="margin-bottom:0">
-          <input type="range" id="ps_fs_fl" min="3" max="10" step="0.5" value="5.4" oninput="applyPrintSettings();gi('ps_fs_fl_v').textContent=this.value+'pt'" />
-          <span class="ps-val" id="ps_fs_fl_v">5.4pt</span>
-        </div>
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Calc / Met Values</div>
-        <div class="ps-row" style="margin-bottom:0">
-          <input type="range" id="ps_fs_calc" min="4" max="14" step="0.5" value="5.8" oninput="applyPrintSettings();gi('ps_fs_calc_v').textContent=this.value+'pt'" />
-          <span class="ps-val" id="ps_fs_calc_v">5.8pt</span>
-        </div>
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Row Labels</div>
-        <div class="ps-row" style="margin-bottom:0">
-          <input type="range" id="ps_fs_row_lbl" min="3" max="10" step="0.5" value="5.2" oninput="applyPrintSettings();gi('ps_fs_row_lbl_v').textContent=this.value+'pt'" />
-          <span class="ps-val" id="ps_fs_row_lbl_v">5.2pt</span>
-        </div>
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Chips</div>
-        <div class="ps-row" style="margin-bottom:0">
-          <input type="range" id="ps_fs_chip" min="3" max="10" step="0.5" value="5" oninput="applyPrintSettings();gi('ps_fs_chip_v').textContent=this.value+'pt'" />
-          <span class="ps-val" id="ps_fs_chip_v">5pt</span>
-        </div>
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Met Label (small caps)</div>
-        <div class="ps-row" style="margin-bottom:0">
-          <input type="range" id="ps_fs_met_l" min="3" max="10" step="0.5" value="7" oninput="applyPrintSettings();gi('ps_fs_met_l_v').textContent=this.value+'pt'" />
-          <span class="ps-val" id="ps_fs_met_l_v">7pt</span>
-        </div>
-      </div>
-    </div>
+  <div class="ps-section">Font Sizes (pt)</div>
+  <div class="ps-grid">
+    <div class="ps-field"><div class="ps-label">Body / Base</div><div class="ps-row"><input type="range" id="ps_fs_body" min="4" max="12" step="0.5" value="7" oninput="applyPrintSettings();gi('ps_fs_body_v').textContent=this.value+'pt'" /><span class="ps-val" id="ps_fs_body_v">7pt</span></div></div>
+    <div class="ps-field"><div class="ps-label">Inputs &amp; Textareas</div><div class="ps-row"><input type="range" id="ps_fs_input" min="4" max="12" step="0.5" value="5.5" oninput="applyPrintSettings();gi('ps_fs_input_v').textContent=this.value+'pt'" /><span class="ps-val" id="ps_fs_input_v">5.5pt</span></div></div>
+    <div class="ps-field"><div class="ps-label">Card Headers</div><div class="ps-row"><input type="range" id="ps_fs_card_hdr" min="4" max="14" step="0.5" value="6.4" oninput="applyPrintSettings();gi('ps_fs_card_hdr_v').textContent=this.value+'pt'" /><span class="ps-val" id="ps_fs_card_hdr_v">6.4pt</span></div></div>
+    <div class="ps-field"><div class="ps-label">Section Titles</div><div class="ps-row"><input type="range" id="ps_fs_sec_title" min="4" max="12" step="0.5" value="5.8" oninput="applyPrintSettings();gi('ps_fs_sec_title_v').textContent=this.value+'pt'" /><span class="ps-val" id="ps_fs_sec_title_v">5.8pt</span></div></div>
+    <div class="ps-field"><div class="ps-label">Field Labels</div><div class="ps-row"><input type="range" id="ps_fs_fl" min="3" max="10" step="0.5" value="5.4" oninput="applyPrintSettings();gi('ps_fs_fl_v').textContent=this.value+'pt'" /><span class="ps-val" id="ps_fs_fl_v">5.4pt</span></div></div>
+    <div class="ps-field"><div class="ps-label">Calc / Met Values</div><div class="ps-row"><input type="range" id="ps_fs_calc" min="4" max="14" step="0.5" value="5.8" oninput="applyPrintSettings();gi('ps_fs_calc_v').textContent=this.value+'pt'" /><span class="ps-val" id="ps_fs_calc_v">5.8pt</span></div></div>
+    <div class="ps-field"><div class="ps-label">Row Labels</div><div class="ps-row"><input type="range" id="ps_fs_row_lbl" min="3" max="10" step="0.5" value="5.2" oninput="applyPrintSettings();gi('ps_fs_row_lbl_v').textContent=this.value+'pt'" /><span class="ps-val" id="ps_fs_row_lbl_v">5.2pt</span></div></div>
+    <div class="ps-field"><div class="ps-label">Chips</div><div class="ps-row"><input type="range" id="ps_fs_chip" min="3" max="10" step="0.5" value="5" oninput="applyPrintSettings();gi('ps_fs_chip_v').textContent=this.value+'pt'" /><span class="ps-val" id="ps_fs_chip_v">5pt</span></div></div>
+    <div class="ps-field"><div class="ps-label">Met Label Caps</div><div class="ps-row"><input type="range" id="ps_fs_met_l" min="3" max="10" step="0.5" value="7" oninput="applyPrintSettings();gi('ps_fs_met_l_v').textContent=this.value+'pt'" /><span class="ps-val" id="ps_fs_met_l_v">7pt</span></div></div>
+  </div>
 
-    <div class="ps-section">Spacing &amp; Layout (pt)</div>
-    <div class="ps-grid">
-      <div class="ps-field">
-        <div class="ps-label">Card Hdr Padding (pt)</div>
-        <input type="number" id="ps_card_hdr_pad" value="2.3" min="0" max="10" step="0.2" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Row Gap (pt)</div>
-        <input type="number" id="ps_row_gap" value="1.2" min="0" max="6" step="0.2" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Row Margin-Bottom (pt)</div>
-        <input type="number" id="ps_row_mb" value="0.8" min="0" max="6" step="0.2" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Grid Gap (pt)</div>
-        <input type="number" id="ps_grid_gap" value="2" min="0" max="8" step="0.5" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Input Min-Height (pt)</div>
-        <input type="number" id="ps_input_mh" value="7" min="4" max="16" step="0.5" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Row Lbl Min-Width (pt)</div>
-        <input type="number" id="ps_row_lbl_mw" value="110" min="60" max="180" step="2" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Row Lbl.w Min-Width (pt)</div>
-        <input type="number" id="ps_row_lbl_w_mw" value="128" min="80" max="200" step="2" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Row Input Width (pt)</div>
-        <input type="number" id="ps_row_input_w" value="42" min="20" max="80" step="1" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">NB Line Height (pt)</div>
-        <input type="number" id="ps_nb_h" value="8" min="4" max="20" step="0.5" oninput="applyPrintSettings()" />
-      </div>
-    </div>
+  <div class="ps-section">Spacing &amp; Layout (pt)</div>
+  <div class="ps-grid">
+    <div class="ps-field"><div class="ps-label">Card Hdr Padding</div><input type="number" id="ps_card_hdr_pad" value="2.3" min="0" max="10" step="0.2" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Row Gap</div><input type="number" id="ps_row_gap" value="1.2" min="0" max="6" step="0.2" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Row Margin-Bottom</div><input type="number" id="ps_row_mb" value="0.8" min="0" max="6" step="0.2" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Grid Gap</div><input type="number" id="ps_grid_gap" value="2" min="0" max="8" step="0.5" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Input Min-Height</div><input type="number" id="ps_input_mh" value="7" min="4" max="16" step="0.5" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Row Lbl Min-Width</div><input type="number" id="ps_row_lbl_mw" value="110" min="60" max="180" step="2" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Row Lbl.w Min-Width</div><input type="number" id="ps_row_lbl_w_mw" value="128" min="80" max="200" step="2" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Row Input Width</div><input type="number" id="ps_row_input_w" value="42" min="20" max="80" step="1" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">NB Line Height</div><input type="number" id="ps_nb_h" value="8" min="4" max="20" step="0.5" oninput="applyPrintSettings()" /></div>
+  </div>
 
-    <div class="ps-section">Review Table Column Widths (pt)</div>
-    <div class="ps-grid c4">
-      <div class="ps-field">
-        <div class="ps-label">Star Col</div>
-        <input type="number" id="ps_rev_c1" value="75" min="30" max="120" step="1" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Week Col</div>
-        <input type="number" id="ps_rev_c2" value="48" min="20" max="100" step="1" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">YTD Col</div>
-        <input type="number" id="ps_rev_c3" value="48" min="20" max="100" step="1" oninput="applyPrintSettings()" />
-      </div>
-      <div class="ps-field">
-        <div class="ps-label">Comment Col</div>
-        <div class="ps-label" style="text-transform:none;font-size:9px;color:#888;margin-top:2px">Auto (fills remaining)</div>
-      </div>
-    </div>
+  <div class="ps-section">Review Table Column Widths (pt)</div>
+  <div class="ps-grid c4">
+    <div class="ps-field"><div class="ps-label">Star Col</div><input type="number" id="ps_rev_c1" value="75" min="30" max="120" step="1" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Week Col</div><input type="number" id="ps_rev_c2" value="48" min="20" max="100" step="1" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">YTD Col</div><input type="number" id="ps_rev_c3" value="48" min="20" max="100" step="1" oninput="applyPrintSettings()" /></div>
+    <div class="ps-field"><div class="ps-label">Comment Col</div><div style="font-size:9px;color:#888;margin-top:4px">Auto (fills remaining)</div></div>
+  </div>
 
-    <div id="psPreview" class="ps-preview"></div>
+  <div id="psPreview" class="ps-preview"></div>
 
-    <div class="ps-actions">
-      <button class="btn sm" onclick="applyPrintSettings()">Apply</button>
-      <button class="btn sm alt" onclick="resetPrintSettings()">Reset Defaults</button>
-      <button class="btn sm alt" onclick="savePrintSettings()">Save Settings</button>
-      <button class="btn sm alt" onclick="closePrintSettings()">Close</button>
-    </div>
-
+  <div class="ps-actions">
+    <button class="btn sm" onclick="applyPrintSettings()">Apply</button>
+    <button class="btn alt sm" onclick="resetPrintSettings()">Reset Defaults</button>
+    <button class="btn alt sm" onclick="savePrintSettings()">Save Settings</button>
+    <button class="btn alt sm" onclick="closePrintSettings()">Close</button>
   </div>
 </div>
 ```
 
   </div>
+</div>
 
-  <input type="file" id="fileImport" accept=".json" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;visibility:hidden" />
+<!-- ================================================================
+     THEME SETTINGS PANEL
+     ================================================================ -->
 
+<div id="themeOverlay" class="panel-overlay no-print" onclick="themeOverlayClick(event)">
+  <div class="panel-box">
+    <div class="panel-head">
+      Theme Settings
+      <button class="panel-close" onclick="closeThemeSettings()">&#x2715;</button>
+    </div>
+    <div class="panel-body">
+
+```
+  <div class="ps-section">Typography</div>
+  <div class="ps-grid c2">
+    <div class="ps-field">
+      <div class="ps-label">Body Font</div>
+      <select id="ts_body_font" onchange="applyTheme()">
+        <option value="'Open Sans',sans-serif">Open Sans</option>
+        <option value="'Lato',sans-serif">Lato</option>
+        <option value="'Roboto',sans-serif">Roboto</option>
+        <option value="'Montserrat',sans-serif">Montserrat</option>
+        <option value="'Raleway',sans-serif">Raleway</option>
+        <option value="Georgia,serif">Georgia</option>
+        <option value="Arial,sans-serif">Arial</option>
+      </select>
+    </div>
+    <div class="ps-field">
+      <div class="ps-label">Heading / Display Font</div>
+      <select id="ts_heading_font" onchange="applyTheme()">
+        <option value="'Oswald',sans-serif">Oswald</option>
+        <option value="'Montserrat',sans-serif">Montserrat</option>
+        <option value="'Raleway',sans-serif">Raleway</option>
+        <option value="'Roboto',sans-serif">Roboto</option>
+        <option value="Arial,sans-serif">Arial</option>
+        <option value="Georgia,serif">Georgia</option>
+      </select>
+    </div>
+    <div class="ps-field">
+      <div class="ps-label">Base Font Size (px)</div>
+      <div class="ps-row"><input type="range" id="ts_font_size" min="10" max="18" step="1" value="13" oninput="applyTheme();gi('ts_font_size_v').textContent=this.value+'px'" /><span class="ps-val" id="ts_font_size_v">13px</span></div>
+    </div>
+    <div class="ps-field">
+      <div class="ps-label">Logo Font Size (px)</div>
+      <div class="ps-row"><input type="range" id="ts_logo_size" min="14" max="32" step="1" value="20" oninput="applyTheme();gi('ts_logo_size_v').textContent=this.value+'px'" /><span class="ps-val" id="ts_logo_size_v">20px</span></div>
+    </div>
+  </div>
+
+  <div class="ps-section">Header Bar</div>
+  <div class="ps-grid c2">
+    <div class="ps-field"><div class="ps-label">Background Color</div><div class="ps-row"><input type="color" id="ts_hdr_bg" value="#000000" oninput="applyTheme();syncHex('ts_hdr_bg')" /><input type="text" id="ts_hdr_bg_hex" value="#000000" oninput="syncColor('ts_hdr_bg')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Bottom Border Color</div><div class="ps-row"><input type="color" id="ts_hdr_border" value="#333333" oninput="applyTheme();syncHex('ts_hdr_border')" /><input type="text" id="ts_hdr_border_hex" value="#333333" oninput="syncColor('ts_hdr_border')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Logo / Title Color</div><div class="ps-row"><input type="color" id="ts_logo_color" value="#ffffff" oninput="applyTheme();syncHex('ts_logo_color')" /><input type="text" id="ts_logo_color_hex" value="#ffffff" oninput="syncColor('ts_logo_color')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Header Height (px)</div><div class="ps-row"><input type="range" id="ts_hdr_height" min="36" max="72" step="2" value="52" oninput="applyTheme();gi('ts_hdr_height_v').textContent=this.value+'px';updateChromeSpacer()" /><span class="ps-val" id="ts_hdr_height_v">52px</span></div></div>
+  </div>
+
+  <div class="ps-section">Tabs</div>
+  <div class="ps-grid c2">
+    <div class="ps-field"><div class="ps-label">Tab Strip Background</div><div class="ps-row"><input type="color" id="ts_tab_bg" value="#1a1a1a" oninput="applyTheme();syncHex('ts_tab_bg')" /><input type="text" id="ts_tab_bg_hex" value="#1a1a1a" oninput="syncColor('ts_tab_bg')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Tab Strip Border</div><div class="ps-row"><input type="color" id="ts_tab_border" value="#333333" oninput="applyTheme();syncHex('ts_tab_border')" /><input type="text" id="ts_tab_border_hex" value="#333333" oninput="syncColor('ts_tab_border')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Inactive Tab Color</div><div class="ps-row"><input type="color" id="ts_tab_inactive" value="#aaaaaa" oninput="applyTheme();syncHex('ts_tab_inactive')" /><input type="text" id="ts_tab_inactive_hex" value="#aaaaaa" oninput="syncColor('ts_tab_inactive')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Active Tab Background</div><div class="ps-row"><input type="color" id="ts_tab_active_bg" value="#ffffff" oninput="applyTheme();syncHex('ts_tab_active_bg')" /><input type="text" id="ts_tab_active_bg_hex" value="#ffffff" oninput="syncColor('ts_tab_active_bg')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Active Tab Text Color</div><div class="ps-row"><input type="color" id="ts_tab_active_color" value="#000000" oninput="applyTheme();syncHex('ts_tab_active_color')" /><input type="text" id="ts_tab_active_color_hex" value="#000000" oninput="syncColor('ts_tab_active_color')" /></div></div>
+  </div>
+
+  <div class="ps-section">Buttons</div>
+  <div class="ps-grid c2">
+    <div class="ps-field"><div class="ps-label">Primary Button BG</div><div class="ps-row"><input type="color" id="ts_btn_p_bg" value="#ffffff" oninput="applyTheme();syncHex('ts_btn_p_bg')" /><input type="text" id="ts_btn_p_bg_hex" value="#ffffff" oninput="syncColor('ts_btn_p_bg')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Primary Button Text</div><div class="ps-row"><input type="color" id="ts_btn_p_color" value="#000000" oninput="applyTheme();syncHex('ts_btn_p_color')" /><input type="text" id="ts_btn_p_color_hex" value="#000000" oninput="syncColor('ts_btn_p_color')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Secondary Button BG</div><div class="ps-row"><input type="color" id="ts_btn_s_bg" value="#1e1e1e" oninput="applyTheme();syncHex('ts_btn_s_bg')" /><input type="text" id="ts_btn_s_bg_hex" value="#1e1e1e" oninput="syncColor('ts_btn_s_bg')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Secondary Button Text</div><div class="ps-row"><input type="color" id="ts_btn_s_color" value="#cccccc" oninput="applyTheme();syncHex('ts_btn_s_color')" /><input type="text" id="ts_btn_s_color_hex" value="#cccccc" oninput="syncColor('ts_btn_s_color')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Secondary Button Border</div><div class="ps-row"><input type="color" id="ts_btn_s_border" value="#444444" oninput="applyTheme();syncHex('ts_btn_s_border')" /><input type="text" id="ts_btn_s_border_hex" value="#444444" oninput="syncColor('ts_btn_s_border')" /></div></div>
+  </div>
+
+  <div class="ps-section">Cards &amp; Content Area</div>
+  <div class="ps-grid c2">
+    <div class="ps-field"><div class="ps-label">Page Background</div><div class="ps-row"><input type="color" id="ts_bg" value="#f4f4f4" oninput="applyTheme();syncHex('ts_bg')" /><input type="text" id="ts_bg_hex" value="#f4f4f4" oninput="syncColor('ts_bg')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Card Background</div><div class="ps-row"><input type="color" id="ts_card_bg" value="#ffffff" oninput="applyTheme();syncHex('ts_card_bg')" /><input type="text" id="ts_card_bg_hex" value="#ffffff" oninput="syncColor('ts_card_bg')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Card Border Color</div><div class="ps-row"><input type="color" id="ts_card_border" value="#c9c9c9" oninput="applyTheme();syncHex('ts_card_border')" /><input type="text" id="ts_card_border_hex" value="#c9c9c9" oninput="syncColor('ts_card_border')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Card Border Radius (px)</div><div class="ps-row"><input type="range" id="ts_card_radius" min="0" max="16" step="1" value="7" oninput="applyTheme();gi('ts_card_radius_v').textContent=this.value+'px'" /><span class="ps-val" id="ts_card_radius_v">7px</span></div></div>
+    <div class="ps-field"><div class="ps-label">Card Header BG</div><div class="ps-row"><input type="color" id="ts_card_hdr_bg" value="#111111" oninput="applyTheme();syncHex('ts_card_hdr_bg')" /><input type="text" id="ts_card_hdr_bg_hex" value="#111111" oninput="syncColor('ts_card_hdr_bg')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Card Header Text</div><div class="ps-row"><input type="color" id="ts_card_hdr_color" value="#ffffff" oninput="applyTheme();syncHex('ts_card_hdr_color')" /><input type="text" id="ts_card_hdr_color_hex" value="#ffffff" oninput="syncColor('ts_card_hdr_color')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Body Text Color</div><div class="ps-row"><input type="color" id="ts_text" value="#000000" oninput="applyTheme();syncHex('ts_text')" /><input type="text" id="ts_text_hex" value="#000000" oninput="syncColor('ts_text')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Muted / Label Color</div><div class="ps-row"><input type="color" id="ts_muted" value="#555555" oninput="applyTheme();syncHex('ts_muted')" /><input type="text" id="ts_muted_hex" value="#555555" oninput="syncColor('ts_muted')" /></div></div>
+    <div class="ps-field"><div class="ps-label">Dbar Background</div><div class="ps-row"><input type="color" id="ts_dbar_bg" value="#0a0a0a" oninput="applyTheme();syncHex('ts_dbar_bg')" /><input type="text" id="ts_dbar_bg_hex" value="#0a0a0a" oninput="syncColor('ts_dbar_bg')" /></div></div>
+  </div>
+
+  <div class="ps-actions">
+    <button class="btn sm" onclick="applyTheme()">Apply</button>
+    <button class="btn alt sm" onclick="resetTheme()">Reset Defaults</button>
+    <button class="btn alt sm" onclick="saveTheme()">Save Theme</button>
+    <button class="btn alt sm" onclick="closeThemeSettings()">Close</button>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ================================================================
+     SCROLLABLE CONTENT
+     ================================================================ -->
+
+<div class="app">
   <!-- ===================== OPS TAB ===================== -->
-
   <div id="sec-ops" class="sec active">
 
 ```
@@ -1469,7 +1396,6 @@ const firebaseConfig = {
   appId: "1:929084173637:web:9f8efcd71602e645fbe22c",
   measurementId: "G-3QC9BDCJ6C"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 window.db = db;
@@ -1477,6 +1403,14 @@ window.firebaseReady = true;
 </script>
 
 <script>
+// Chrome height spacer — keeps content below the fixed header+dbar
+function updateChromeSpacer(){
+  const chrome = document.getElementById('chrome');
+  const spacer = document.getElementById('chrome-spacer');
+  if(chrome && spacer) spacer.style.height = chrome.offsetHeight + 'px';
+}
+window.addEventListener('resize', updateChromeSpacer);
+
 const TAX_DEFAULT = 14.53;
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 let _editMode = false;
@@ -2348,156 +2282,8 @@ alert(’Delete failed: ’ + e.message);
 }
 }
 
-/* =====================================================================
-PRINT SETTINGS
-===================================================================== */
-
-const PS_DEFAULTS = {
-ps_paper:        ‘letter portrait’,
-ps_margin:       ‘5’,
-ps_card_margin:  ‘1.2’,
-ps_card_pad:     ‘2.5’,
-ps_card_hdr_pad: ‘2.3’,
-ps_fs_body:      ‘7’,
-ps_fs_input:     ‘5.5’,
-ps_fs_card_hdr:  ‘6.4’,
-ps_fs_sec_title: ‘5.8’,
-ps_fs_fl:        ‘5.4’,
-ps_fs_calc:      ‘5.8’,
-ps_fs_row_lbl:   ‘5.2’,
-ps_fs_chip:      ‘5’,
-ps_fs_met_l:     ‘7’,
-ps_row_gap:      ‘1.2’,
-ps_row_mb:       ‘0.8’,
-ps_grid_gap:     ‘2’,
-ps_input_mh:     ‘7’,
-ps_row_lbl_mw:   ‘110’,
-ps_row_lbl_w_mw: ‘128’,
-ps_row_input_w:  ‘42’,
-ps_nb_h:         ‘8’,
-ps_rev_c1:       ‘75’,
-ps_rev_c2:       ‘48’,
-ps_rev_c3:       ‘48’
-};
-
-function openPrintSettings(){
-gi(‘psOverlay’).classList.add(‘open’);
-loadPrintSettingsFromStorage();
-applyPrintSettings();
-}
-function closePrintSettings(){
-gi(‘psOverlay’).classList.remove(‘open’);
-}
-function psOverlayClick(e){
-if(e.target === gi(‘psOverlay’)) closePrintSettings();
-}
-
-function getPSVal(id){
-const el = gi(id);
-return el ? el.value : PS_DEFAULTS[id];
-}
-
-function loadPrintSettingsFromStorage(){
-const saved = localStorage.getItem(‘hl_print_settings’);
-if(!saved) return;
-try{
-const s = JSON.parse(saved);
-Object.keys(PS_DEFAULTS).forEach(id=>{
-const el = gi(id);
-if(el && s[id] !== undefined) el.value = s[id];
-});
-// Sync slider display values
-const sliders = [‘ps_fs_body’,‘ps_fs_input’,‘ps_fs_card_hdr’,‘ps_fs_sec_title’,
-‘ps_fs_fl’,‘ps_fs_calc’,‘ps_fs_row_lbl’,‘ps_fs_chip’,‘ps_fs_met_l’];
-sliders.forEach(id=>{
-const vEl = gi(id + ‘_v’);
-if(vEl && gi(id)) vEl.textContent = gi(id).value + ‘pt’;
-});
-}catch(e){}
-}
-
-function savePrintSettings(){
-const s = {};
-Object.keys(PS_DEFAULTS).forEach(id=>{ s[id] = getPSVal(id); });
-localStorage.setItem(‘hl_print_settings’, JSON.stringify(s));
-// Flash the badge
-const badge = gi(‘syncBadge’);
-const prev = badge.textContent;
-badge.textContent = ‘Print settings saved’;
-badge.className = ‘ss ss-ok’;
-setTimeout(()=>{ badge.textContent = prev; }, 2000);
-}
-
-function resetPrintSettings(){
-Object.keys(PS_DEFAULTS).forEach(id=>{
-const el = gi(id);
-if(el) el.value = PS_DEFAULTS[id];
-});
-// Sync slider labels
-const sliders = [‘ps_fs_body’,‘ps_fs_input’,‘ps_fs_card_hdr’,‘ps_fs_sec_title’,
-‘ps_fs_fl’,‘ps_fs_calc’,‘ps_fs_row_lbl’,‘ps_fs_chip’,‘ps_fs_met_l’];
-sliders.forEach(id=>{
-const vEl = gi(id + ‘_v’);
-if(vEl) vEl.textContent = PS_DEFAULTS[id] + ‘pt’;
-});
-applyPrintSettings();
-}
-
-function applyPrintSettings(){
-const paper   = getPSVal(‘ps_paper’);
-const margin  = getPSVal(‘ps_margin’);
-const cardMrg = getPSVal(‘ps_card_margin’);
-const cardPad = getPSVal(‘ps_card_pad’);
-const cHdrPad = getPSVal(‘ps_card_hdr_pad’);
-
-const fsBody    = getPSVal(‘ps_fs_body’);
-const fsInput   = getPSVal(‘ps_fs_input’);
-const fsCHdr    = getPSVal(‘ps_fs_card_hdr’);
-const fsSecT    = getPSVal(‘ps_fs_sec_title’);
-const fsFl      = getPSVal(‘ps_fs_fl’);
-const fsCalc    = getPSVal(‘ps_fs_calc’);
-const fsRowLbl  = getPSVal(‘ps_fs_row_lbl’);
-const fsChip    = getPSVal(‘ps_fs_chip’);
-const fsMetL    = getPSVal(‘ps_fs_met_l’);
-
-const rowGap    = getPSVal(‘ps_row_gap’);
-const rowMb     = getPSVal(‘ps_row_mb’);
-const gridGap   = getPSVal(‘ps_grid_gap’);
-const inputMh   = getPSVal(‘ps_input_mh’);
-const rowLblMw  = getPSVal(‘ps_row_lbl_mw’);
-const rowLblWMw = getPSVal(‘ps_row_lbl_w_mw’);
-const rowInpW   = getPSVal(‘ps_row_input_w’);
-const nbH       = getPSVal(‘ps_nb_h’);
-
-const revC1     = getPSVal(‘ps_rev_c1’);
-const revC2     = getPSVal(‘ps_rev_c2’);
-const revC3     = getPSVal(‘ps_rev_c3’);
-
-const css = ` @media print { @page { margin: ${margin}mm; size: ${paper}; } body { font-size: ${fsBody}pt !important; } .card { margin: ${cardMrg}pt 0 !important; padding: ${cardPad}pt ${parseFloat(cardPad)*1.4}pt !important; } .card-hdr { margin: -${cardPad}pt -${parseFloat(cardPad)*1.4}pt ${parseFloat(cHdrPad)}pt !important; padding: ${cHdrPad}pt ${parseFloat(cHdrPad)*1.3}pt !important; font-size: ${fsCHdr}pt !important; background:#fff !important; color:#000 !important; border:1px solid #999 !important; } .sec-title { font-size: ${fsSecT}pt !important; margin: 1.2pt 0 .8pt !important; padding-bottom: .5pt !important; color:#000 !important; } .fl { font-size: ${fsFl}pt !important; color:#000 !important; } .met-l { font-size: ${fsMetL}pt !important; color:#000 !important; } .fcalc, .met-v, .row .calc { font-size: ${fsCalc}pt !important; } input, textarea, select { font-size: ${fsInput}pt !important; padding: 1pt 1.5pt !important; min-height: ${inputMh}pt !important; } .row { gap: ${rowGap}pt !important; margin-bottom: ${rowMb}pt !important; flex-wrap: nowrap !important; } .row .lbl { font-size: ${fsRowLbl}pt !important; min-width: ${rowLblMw}pt !important; } .row .lbl.w { min-width: ${rowLblWMw}pt !important; } .row input { width: ${rowInpW}pt !important; min-width: ${rowInpW}pt !important; flex: 0 0 ${rowInpW}pt !important; } .g2,.g3,.g4,.g5,.g6,.met-grid,.custom-grid,.review-table { gap: ${gridGap}pt !important; } .review-table { grid-template-columns: ${revC1}pt ${revC2}pt ${revC3}pt 1fr !important; } .chip { font-size: ${fsChip}pt !important; padding: 0 3pt !important; } .nb-line { height: ${nbH}pt !important; margin-bottom: 2pt !important; } }`;
-
-gi(‘printSettingsStyle’).textContent = css;
-
-// Update preview
-gi(‘psPreview’).innerHTML =
-`<b>Page:</b> ${paper} &nbsp;|&nbsp; <b>Margin:</b> ${margin}mm &nbsp;|&nbsp; ` +
-`<b>Body font:</b> ${fsBody}pt &nbsp;|&nbsp; <b>Input font:</b> ${fsInput}pt &nbsp;|&nbsp; ` +
-`<b>Card hdr font:</b> ${fsCHdr}pt &nbsp;|&nbsp; <b>Calc/Met values:</b> ${fsCalc}pt<br>` +
-`<b>Card padding:</b> ${cardPad}pt &nbsp;|&nbsp; <b>Grid gap:</b> ${gridGap}pt &nbsp;|&nbsp; ` +
-`<b>Row label min-width:</b> ${rowLblMw}pt (wide: ${rowLblWMw}pt) &nbsp;|&nbsp; <b>NB line height:</b> ${nbH}pt`;
-}
-
-document.addEventListener(‘keydown’, function(e){
-if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === ‘s’){
-e.preventDefault();
-doSave();
-}
-if(e.key === ‘Escape’) closePrintSettings();
-});
-
-async function init(){
+async function _coreInit(){
 buildAll();
-loadPrintSettingsFromStorage();
-applyPrintSettings();
 
 [‘lab_pct_notax’,‘lab_pct_wtax’,‘food_lw_act’,‘lbw_lw_act’,‘pcc_lw_act’,‘nab_lw_act’].forEach(id=>{
 gi(id)._val = null;
@@ -2548,6 +2334,155 @@ gi(‘syncBadge’).textContent = ‘Loaded latest cloud save’;
 calc();
 await updateReviewRollups();
 await renderHist();
+}
+
+/* =====================================================================
+PRINT SETTINGS
+===================================================================== */
+const PS_DEFAULTS = {
+ps_paper:‘letter portrait’,ps_margin:‘5’,ps_card_margin:‘1.2’,
+ps_card_pad:‘2.5’,ps_card_hdr_pad:‘2.3’,
+ps_fs_body:‘7’,ps_fs_input:‘5.5’,ps_fs_card_hdr:‘6.4’,
+ps_fs_sec_title:‘5.8’,ps_fs_fl:‘5.4’,ps_fs_calc:‘5.8’,
+ps_fs_row_lbl:‘5.2’,ps_fs_chip:‘5’,ps_fs_met_l:‘7’,
+ps_row_gap:‘1.2’,ps_row_mb:‘0.8’,ps_grid_gap:‘2’,
+ps_input_mh:‘7’,ps_row_lbl_mw:‘110’,ps_row_lbl_w_mw:‘128’,
+ps_row_input_w:‘42’,ps_nb_h:‘8’,ps_rev_c1:‘75’,ps_rev_c2:‘48’,ps_rev_c3:‘48’
+};
+
+function openPrintSettings(){ gi(‘psOverlay’).classList.add(‘open’); loadPrintSettingsFromStorage(); applyPrintSettings(); }
+function closePrintSettings(){ gi(‘psOverlay’).classList.remove(‘open’); }
+function psOverlayClick(e){ if(e.target===gi(‘psOverlay’)) closePrintSettings(); }
+function getPSVal(id){ const e=gi(id); return e ? e.value : PS_DEFAULTS[id]; }
+
+function loadPrintSettingsFromStorage(){
+const s = JSON.parse(localStorage.getItem(‘hl_print_settings’)||‘null’);
+if(!s) return;
+Object.keys(PS_DEFAULTS).forEach(id=>{ const e=gi(id); if(e&&s[id]!==undefined) e.value=s[id]; });
+[‘ps_fs_body’,‘ps_fs_input’,‘ps_fs_card_hdr’,‘ps_fs_sec_title’,‘ps_fs_fl’,‘ps_fs_calc’,‘ps_fs_row_lbl’,‘ps_fs_chip’,‘ps_fs_met_l’].forEach(id=>{
+const v=gi(id+’_v’); if(v&&gi(id)) v.textContent=gi(id).value+‘pt’;
+});
+}
+function savePrintSettings(){
+const s={}; Object.keys(PS_DEFAULTS).forEach(id=>{ s[id]=getPSVal(id); });
+localStorage.setItem(‘hl_print_settings’,JSON.stringify(s));
+flashBadge(‘Print settings saved’);
+}
+function resetPrintSettings(){
+Object.keys(PS_DEFAULTS).forEach(id=>{ const e=gi(id); if(e) e.value=PS_DEFAULTS[id]; });
+[‘ps_fs_body’,‘ps_fs_input’,‘ps_fs_card_hdr’,‘ps_fs_sec_title’,‘ps_fs_fl’,‘ps_fs_calc’,‘ps_fs_row_lbl’,‘ps_fs_chip’,‘ps_fs_met_l’].forEach(id=>{
+const v=gi(id+’_v’); if(v) v.textContent=PS_DEFAULTS[id]+‘pt’;
+});
+applyPrintSettings();
+}
+function applyPrintSettings(){
+const p=getPSVal,f=parseFloat;
+const paper=p(‘ps_paper’),margin=p(‘ps_margin’),cardMrg=p(‘ps_card_margin’);
+const cardPad=p(‘ps_card_pad’),cHdrPad=p(‘ps_card_hdr_pad’);
+const fsBody=p(‘ps_fs_body’),fsInput=p(‘ps_fs_input’),fsCHdr=p(‘ps_fs_card_hdr’);
+const fsSecT=p(‘ps_fs_sec_title’),fsFl=p(‘ps_fs_fl’),fsCalc=p(‘ps_fs_calc’);
+const fsRowLbl=p(‘ps_fs_row_lbl’),fsChip=p(‘ps_fs_chip’),fsMetL=p(‘ps_fs_met_l’);
+const rowGap=p(‘ps_row_gap’),rowMb=p(‘ps_row_mb’),gridGap=p(‘ps_grid_gap’);
+const inputMh=p(‘ps_input_mh’),rowLblMw=p(‘ps_row_lbl_mw’),rowLblWMw=p(‘ps_row_lbl_w_mw’);
+const rowInpW=p(‘ps_row_input_w’),nbH=p(‘ps_nb_h’);
+const revC1=p(‘ps_rev_c1’),revC2=p(‘ps_rev_c2’),revC3=p(‘ps_rev_c3’);
+const css=`@media print{@page{margin:${margin}mm;size:${paper}}body{font-size:${fsBody}pt !important}.card{margin:${cardMrg}pt 0 !important;padding:${cardPad}pt ${f(cardPad)*1.4}pt !important}.card-hdr{margin:-${cardPad}pt -${f(cardPad)*1.4}pt ${f(cHdrPad)}pt !important;padding:${cHdrPad}pt ${f(cHdrPad)*1.3}pt !important;font-size:${fsCHdr}pt !important;background:#fff !important;color:#000 !important;border:1px solid #999 !important}.sec-title{font-size:${fsSecT}pt !important;color:#000 !important}.fl{font-size:${fsFl}pt !important;color:#000 !important}.met-l{font-size:${fsMetL}pt !important;color:#000 !important}.fcalc,.met-v,.row .calc{font-size:${fsCalc}pt !important}input,textarea,select{font-size:${fsInput}pt !important;padding:1pt 1.5pt !important;min-height:${inputMh}pt !important}.row{gap:${rowGap}pt !important;margin-bottom:${rowMb}pt !important;flex-wrap:nowrap !important}.row .lbl{font-size:${fsRowLbl}pt !important;min-width:${rowLblMw}pt !important}.row .lbl.w{min-width:${rowLblWMw}pt !important}.row input{width:${rowInpW}pt !important;min-width:${rowInpW}pt !important;flex:0 0 ${rowInpW}pt !important}.g2,.g3,.g4,.g5,.g6,.met-grid,.custom-grid,.review-table{gap:${gridGap}pt !important}.review-table{grid-template-columns:${revC1}pt ${revC2}pt ${revC3}pt 1fr !important}.chip{font-size:${fsChip}pt !important;padding:0 3pt !important}.nb-line{height:${nbH}pt !important;margin-bottom:2pt !important}}`;
+gi(‘printSettingsStyle’).textContent=css;
+const prev=gi(‘psPreview’); if(prev) prev.innerHTML=`<b>Page:</b> ${paper} | <b>Margin:</b> ${margin}mm | <b>Body:</b> ${fsBody}pt | <b>Input:</b> ${fsInput}pt | <b>Card Hdr:</b> ${fsCHdr}pt | <b>Met Values:</b> ${fsCalc}pt<br><b>Card pad:</b> ${cardPad}pt | <b>Grid gap:</b> ${gridGap}pt | <b>Row lbl:</b> ${rowLblMw}pt (wide:${rowLblWMw}pt) | <b>NB line:</b> ${nbH}pt`;
+}
+
+/* =====================================================================
+THEME SETTINGS
+===================================================================== */
+const TS_DEFAULTS = {
+ts_body_font:’'Open Sans',sans-serif’,
+ts_heading_font:’'Oswald',sans-serif’,
+ts_font_size:‘13’,ts_logo_size:‘20’,ts_hdr_height:‘52’,
+ts_hdr_bg:’#000000’,ts_hdr_border:’#333333’,ts_logo_color:’#ffffff’,
+ts_tab_bg:’#1a1a1a’,ts_tab_border:’#333333’,ts_tab_inactive:’#aaaaaa’,
+ts_tab_active_bg:’#ffffff’,ts_tab_active_color:’#000000’,
+ts_btn_p_bg:’#ffffff’,ts_btn_p_color:’#000000’,
+ts_btn_s_bg:’#1e1e1e’,ts_btn_s_color:’#cccccc’,ts_btn_s_border:’#444444’,
+ts_bg:’#f4f4f4’,ts_card_bg:’#ffffff’,ts_card_border:’#c9c9c9’,
+ts_card_radius:‘7’,ts_card_hdr_bg:’#111111’,ts_card_hdr_color:’#ffffff’,
+ts_text:’#000000’,ts_muted:’#555555’,ts_dbar_bg:’#0a0a0a’
+};
+
+function openThemeSettings(){ gi(‘themeOverlay’).classList.add(‘open’); loadThemeFromStorage(); applyTheme(); }
+function closeThemeSettings(){ gi(‘themeOverlay’).classList.remove(‘open’); }
+function themeOverlayClick(e){ if(e.target===gi(‘themeOverlay’)) closeThemeSettings(); }
+function getTSVal(id){ const e=gi(id); return e ? e.value : TS_DEFAULTS[id]; }
+
+function syncHex(id){
+const colorEl=gi(id), hexEl=gi(id+’_hex’);
+if(colorEl&&hexEl) hexEl.value=colorEl.value;
+}
+function syncColor(id){
+const hexEl=gi(id+’_hex’), colorEl=gi(id);
+if(hexEl&&colorEl&&/^#[0-9a-fA-F]{6}$/.test(hexEl.value)){
+colorEl.value=hexEl.value;
+applyTheme();
+}
+}
+
+function loadThemeFromStorage(){
+const s=JSON.parse(localStorage.getItem(‘hl_theme_settings’)||‘null’);
+if(!s) return;
+Object.keys(TS_DEFAULTS).forEach(id=>{
+const e=gi(id); if(e&&s[id]!==undefined) e.value=s[id];
+// sync hex fields
+const hex=gi(id+’_hex’); if(hex&&s[id]!==undefined) hex.value=s[id];
+});
+// sync slider labels
+[‘ts_font_size’,‘ts_logo_size’,‘ts_hdr_height’,‘ts_card_radius’].forEach(id=>{
+const v=gi(id+’_v’),e=gi(id);
+if(v&&e) v.textContent=e.value+(id===‘ts_hdr_height’||id===‘ts_font_size’||id===‘ts_logo_size’?‘px’:‘px’);
+});
+}
+function saveTheme(){
+const s={}; Object.keys(TS_DEFAULTS).forEach(id=>{ s[id]=getTSVal(id); });
+localStorage.setItem(‘hl_theme_settings’,JSON.stringify(s));
+flashBadge(‘Theme saved’);
+}
+function resetTheme(){
+Object.keys(TS_DEFAULTS).forEach(id=>{
+const e=gi(id); if(e) e.value=TS_DEFAULTS[id];
+const hex=gi(id+’_hex’); if(hex) hex.value=TS_DEFAULTS[id];
+});
+gi(‘ts_font_size_v’).textContent=‘13px’;
+gi(‘ts_logo_size_v’).textContent=‘20px’;
+gi(‘ts_hdr_height_v’).textContent=‘52px’;
+gi(‘ts_card_radius_v’).textContent=‘7px’;
+applyTheme();
+}
+function applyTheme(){
+const t=getTSVal;
+const css=` :root{ --bg:${t('ts_bg')}; --body-font-size:${t('ts_font_size')}px; --body-font:${t('ts_body_font')}; --heading-font:${t('ts_heading_font')}; --hdr-bg:${t('ts_hdr_bg')}; --hdr-border:${t('ts_hdr_border')}; --hdr-height:${t('ts_hdr_height')}px; --logo-color:${t('ts_logo_color')}; --logo-size:${t('ts_logo_size')}px; --dbar-bg:${t('ts_dbar_bg')}; --tab-bg:${t('ts_tab_bg')}; --tab-border:${t('ts_tab_border')}; --tab-inactive-color:${t('ts_tab_inactive')}; --tab-active-bg:${t('ts_tab_active_bg')}; --tab-active-color:${t('ts_tab_active_color')}; --btn-primary-bg:${t('ts_btn_p_bg')}; --btn-primary-color:${t('ts_btn_p_color')}; --btn-secondary-bg:${t('ts_btn_s_bg')}; --btn-secondary-color:${t('ts_btn_s_color')}; --btn-secondary-border:${t('ts_btn_s_border')}; --card-bg:${t('ts_card_bg')}; --card-border:${t('ts_card_border')}; --card-radius:${t('ts_card_radius')}px; --card-hdr-bg:${t('ts_card_hdr_bg')}; --card-hdr-color:${t('ts_card_hdr_color')}; --text:${t('ts_text')}; --muted:${t('ts_muted')}; }`;
+gi(‘themeSettingsStyle’).textContent=css;
+updateChromeSpacer();
+}
+
+function flashBadge(msg){
+const badge=gi(‘syncBadge’);
+const prev=badge.textContent;
+badge.textContent=msg;
+badge.className=‘ss ss-ok’;
+setTimeout(()=>{ badge.textContent=prev; },2000);
+}
+
+document.addEventListener(‘keydown’,function(e){
+if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()===‘s’){ e.preventDefault(); doSave(); }
+if(e.key===‘Escape’){ closePrintSettings(); closeThemeSettings(); }
+});
+
+async function init(){
+updateChromeSpacer();
+loadPrintSettingsFromStorage();
+applyPrintSettings();
+loadThemeFromStorage();
+applyTheme();
+await _coreInit();
+updateChromeSpacer();
 }
 
 window.addEventListener(‘DOMContentLoaded’, init);

@@ -126,17 +126,12 @@ button{
 .btn.xs,.btn-p.xs,.btn-s.xs{font-size:10px;padding:3px 7px}
 
 /* ================================================================
-   FIXED CHROME — header + dbar live outside .app-wrap
+   FIXED HEADER & DBAR — direct fixed elements, no wrapper needed
    ================================================================ */
-#chrome{
+#site-hdr{
   position:fixed;
   top:0;left:0;right:0;
-  z-index:200;
-  display:flex;
-  flex-direction:column;
-}
-
-.hdr{
+  z-index:500;
   background:var(--hdr-bg);
   border-bottom:2px solid var(--hdr-border);
   min-height:var(--hdr-height);
@@ -145,7 +140,23 @@ button{
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  overflow:visible;
+}
+
+#site-dbar{
+  position:fixed;
+  left:0;right:0;
+  z-index:499;
+  background:var(--dbar-bg);
+  border-bottom:1px solid var(--dbar-border);
+  padding:4px 16px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  font-size:10px;
+  color:#888;
+  min-height:30px;
+  /* top is set by JS after measuring #site-hdr height */
 }
 
 .logo{
@@ -164,7 +175,6 @@ button{
   align-items:center;
   gap:6px;
   flex-shrink:0;
-  overflow:visible;
 }
 
 .tabs{
@@ -192,23 +202,7 @@ button{
   color:var(--tab-active-color);
   font-weight:700;
 }
-.tab:hover:not(.active){
-  background:#2a2a2a;
-  color:#fff;
-}
-
-.dbar{
-  background:var(--dbar-bg);
-  border-bottom:1px solid var(--dbar-border);
-  padding:4px 16px;
-  display:flex;
-  align-items:center;
-  gap:7px;
-  flex-wrap:wrap;
-  font-size:10px;
-  color:#888;
-  min-height:30px;
-}
+.tab:hover:not(.active){background:#2a2a2a;color:#fff}
 
 .ss{
   font-size:10px;
@@ -504,7 +498,7 @@ button{
     color:#000 !important;
   }
   body{background:#fff !important;margin:0 !important;padding-top:0 !important}
-  #chrome,.no-print,.panel-overlay{display:none !important}
+  #site-hdr,#site-dbar,.no-print,.panel-overlay{display:none !important}
   .app{max-width:100% !important;padding:0 !important}
 
   body.print-ops #sec-meet,body.print-ops #sec-hist{display:none !important}
@@ -533,32 +527,26 @@ button{
 </head>
 <body>
 
-<!-- ================================================================
-     FIXED CHROME
-     ================================================================ -->
-
-<div id="chrome">
-  <div class="hdr no-print">
-    <div class="logo">Huey Luey's Acworth</div>
-    <div class="hdr-r">
-      <div class="tabs">
-        <button class="tab active" onclick="showTab('ops',this)">Operations Chart</button>
-        <button class="tab" onclick="showTab('meet',this)">Manager Meeting</button>
-        <button class="tab" onclick="showTab('hist',this)">History</button>
-      </div>
-      <button class="btn-p sm" onclick="doSave()">Save</button>
-      <button class="btn-s sm" onclick="doPrint('ops')">Print Ops</button>
-      <button class="btn-s sm" onclick="doPrint('meet')">Print Meeting</button>
+<header id="site-hdr" class="no-print">
+  <div class="logo">Huey Luey's Acworth</div>
+  <div class="hdr-r">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('ops',this)">Operations Chart</button>
+      <button class="tab" onclick="showTab('meet',this)">Manager Meeting</button>
+      <button class="tab" onclick="showTab('hist',this)">History</button>
     </div>
+    <button class="btn-p sm" onclick="doSave()">Save</button>
+    <button class="btn-s sm" onclick="doPrint('ops')">Print Ops</button>
+    <button class="btn-s sm" onclick="doPrint('meet')">Print Meeting</button>
   </div>
+</header>
 
-  <div class="dbar no-print">
-    <span id="syncBadge" class="ss ss-ok">Firebase Ready</span>
-    <button class="btn alt xs" onclick="doExport()">Export JSON</button>
-    <button class="btn alt xs" onclick="triggerImport()">Import JSON</button>
-    <button class="btn-s xs" onclick="openPrintSettings()">⚙ Print Settings</button>
-    <button class="btn-s xs" onclick="openThemeSettings()">🎨 Theme Settings</button>
-  </div>
+<div id="site-dbar" class="no-print">
+  <span id="syncBadge" class="ss ss-ok">Firebase Ready</span>
+  <button class="btn alt xs" onclick="doExport()">Export JSON</button>
+  <button class="btn alt xs" onclick="triggerImport()">Import JSON</button>
+  <button class="btn-s xs" onclick="openPrintSettings()">⚙ Print Settings</button>
+  <button class="btn-s xs" onclick="openThemeSettings()">🎨 Theme Settings</button>
 </div>
 
 <input type="file" id="fileImport" accept=".json" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none" />
@@ -1393,12 +1381,14 @@ window.firebaseReady = true;
 </script>
 
 <script>
-// Push body content below fixed chrome using padding-top — bulletproof on iOS Safari
+// Position dbar below header and push body content below both
 function updateChromeSpacer(){
-  const chrome = document.getElementById('chrome');
-  if(chrome){
-    document.body.style.paddingTop = chrome.offsetHeight + 'px';
-  }
+  const hdr  = document.getElementById('site-hdr');
+  const dbar = document.getElementById('site-dbar');
+  if(!hdr || !dbar) return;
+  const hdrH = hdr.offsetHeight;
+  dbar.style.top = hdrH + 'px';
+  document.body.style.paddingTop = (hdrH + dbar.offsetHeight) + 'px';
 }
 window.addEventListener('resize', updateChromeSpacer);
 

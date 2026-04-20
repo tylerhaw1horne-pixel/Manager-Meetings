@@ -423,8 +423,9 @@ button{
   z-index:9000;
   align-items:center;
   justify-content:center;
+  pointer-events:none;
 }
-.panel-overlay.open{display:flex}
+.panel-overlay.open{display:flex;pointer-events:auto}
 .panel-box{
   background:#fff;border-radius:8px;
   width:min(740px,96vw);max-height:90vh;
@@ -571,7 +572,7 @@ button{
 
 <div id="chrome-spacer"></div>
 
-<input type="file" id="fileImport" accept=".json" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;visibility:hidden" />
+<input type="file" id="fileImport" accept=".json" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none" />
 
 <!-- ================================================================
      PRINT SETTINGS PANEL

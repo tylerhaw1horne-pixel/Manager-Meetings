@@ -2,29 +2,23 @@
 
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>Huey Luey's Acworth — Ops Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
 <style>
 :root{
-  --org:#E46E1B;
-  --org2:#F39A2B;
-  --grn:#6E9F3A;
-
-  --bg:#F7F1E7;
-  --card:#FFFDF9;
-  --bdr:#E7D6C2;
-  --bdr2:#D7BFA0;
-
-  --t1:#3B281C;
-  --t2:#684731;
-  --t3:#96775D;
-
-  --hdr:#5C3218;
-  --hdr2:#7A4320;
-  --r:7px;
-  --sh:0 2px 8px rgba(0,0,0,.08);
+  --bg:#f4f4f4;
+  --card:#fff;
+  --line:#c9c9c9;
+  --line2:#9d9d9d;
+  --text:#000;
+  --muted:#555;
+  --dark:#111;
+  --dark2:#222;
+  --soft:#f8f8f8;
+  --radius:7px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -32,7 +26,7 @@
 body{
   font-family:'Open Sans',sans-serif;
   background:var(--bg);
-  color:var(--t1);
+  color:var(--text);
   font-size:13px;
 }
 
@@ -40,129 +34,90 @@ input,textarea,select{
   font-family:inherit;
   font-size:12px;
   background:#fff;
-  border:1px solid var(--bdr2);
+  border:1px solid var(--line2);
   border-radius:4px;
-  padding:3px 6px;
-  color:var(--t1);
-  transition:border .15s, box-shadow .15s;
+  padding:4px 6px;
+  color:#000;
+  width:100%;
 }
+
+textarea{resize:vertical}
 
 input:focus,textarea:focus,select:focus{
   outline:none;
-  border-color:var(--org);
-  box-shadow:0 0 0 2px rgba(183,72,24,.13);
+  border-color:#000;
+  box-shadow:0 0 0 2px rgba(0,0,0,.08);
 }
-
-input[type=number]{-moz-appearance:textfield}
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
 
 button{
   cursor:pointer;
   font-family:'Oswald',sans-serif;
   font-size:12px;
-  font-weight:500;
   border:none;
   border-radius:4px;
   padding:5px 10px;
-  transition:all .15s;
-  letter-spacing:.3px;
 }
 
-.btn{background:var(--t2);color:#fff}
-.btn:hover{background:var(--t1)}
-
-.btn.pr{background:var(--org);color:#fff}
-.btn.pr:hover{background:var(--org2)}
-
-.btn.ghost{
-  background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.65);
-  color:#fff;
-  font-weight:600;
-  letter-spacing:.3px;
-}
-.btn.ghost:hover{background:rgba(255,255,255,.32)}
-
-.btn.dk{
-  background:transparent;
-  border:1px solid var(--bdr2);
-  color:var(--t2);
-}
-.btn.dk:hover{background:var(--bdr)}
-
+.btn{background:#222;color:#fff}
+.btn:hover{background:#000}
+.btn.alt{background:#fff;color:#111;border:1px solid #888}
+.btn.alt:hover{background:#f1f1f1}
 .btn.sm{font-size:11px;padding:4px 8px}
 .btn.xs{font-size:10px;padding:3px 7px}
 
-.app{
-  max-width:1180px;
-  margin:0 auto;
-  padding:0 8px 60px;
-}
+.app{max-width:1240px;margin:0 auto;padding:0 8px 60px}
 
 .hdr{
-  background:linear-gradient(90deg,#7A3F1D,#9A5122);
+  background:#111;
   padding:0 14px;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  min-height:54px;
   position:sticky;
   top:0;
   z-index:100;
-  box-shadow:0 3px 14px rgba(0,0,0,.3);
-  min-height:50px;
-  gap:8px;
+  gap:10px;
   flex-wrap:wrap;
 }
 
 .logo{
-  font-family:'Alfa Slab One',serif;
-  font-size:18px;
+  font-family:'Oswald',sans-serif;
+  font-size:22px;
+  font-weight:700;
   color:#fff;
-  flex-shrink:0;
+  letter-spacing:.3px;
 }
-.logo span{color:var(--org2)}
 
-.hdr-r{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  flex-wrap:wrap;
-  padding:5px 0;
-}
+.hdr-r{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px 0}
 
 .tabs{
   display:flex;
-  gap:2px;
-  background:rgba(255,255,255,.1);
+  gap:3px;
+  background:#2a2a2a;
   border-radius:5px;
   padding:2px;
 }
 
 .tab{
   background:transparent;
-  color:rgba(255,255,255,.65);
-  font-family:'Oswald',sans-serif;
-  font-size:11px;
-  padding:4px 12px;
+  color:#d4d4d4;
+  padding:5px 11px;
   border-radius:4px;
-  border:none;
-  white-space:nowrap;
-  letter-spacing:.4px;
+  font-size:11px;
 }
-.tab.active{background:var(--org);color:#fff}
-.tab:hover:not(.active){color:#fff;background:rgba(255,255,255,.1)}
+.tab.active{background:#000;color:#fff}
+.tab:hover:not(.active){background:#3a3a3a;color:#fff}
 
 .dbar{
-  background:linear-gradient(90deg,#9A5122,#B85F26);
-  padding:4px 14px;
+  background:#222;
+  padding:5px 14px;
   display:flex;
   align-items:center;
   gap:7px;
   flex-wrap:wrap;
   font-size:10px;
-  color:rgba(255,255,255,.55);
-  min-height:28px;
+  color:#e0e0e0;
 }
 
 .ss{
@@ -170,31 +125,24 @@ button{
   padding:2px 8px;
   border-radius:10px;
   font-family:'Oswald',sans-serif;
-  letter-spacing:.3px;
 }
-.ss-ok{background:rgba(46,125,50,.35);color:#C8E6C9}
-.ss-err{background:rgba(183,28,28,.35);color:#FFCDD2}
-.ss-busy{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);animation:pulse 1s infinite}
-
-@keyframes pulse{
-  0%,100%{opacity:1}
-  50%{opacity:.4}
-}
+.ss-ok{background:#eaeaea;color:#000;border:1px solid #999}
+.ss-err{background:#fff;color:#000;border:1px solid #000}
+.ss-busy{background:#f3f3f3;color:#111;border:1px solid #999}
 
 .sec{display:none}
 .sec.active{display:block}
 
 .card{
   background:var(--card);
-  border:1px solid var(--bdr);
-  border-radius:var(--r);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
   padding:11px 13px;
-  margin:7px 0;
-  box-shadow:var(--sh);
+  margin:8px 0;
 }
 
 .card-hdr{
-  background:var(--hdr);
+  background:#111;
   color:#fff;
   border-radius:7px 7px 0 0;
   padding:7px 12px;
@@ -202,60 +150,51 @@ button{
   font-family:'Oswald',sans-serif;
   font-weight:600;
   font-size:13px;
-  letter-spacing:.8px;
+  letter-spacing:.7px;
   text-transform:uppercase;
   display:flex;
   align-items:center;
   gap:8px;
+  flex-wrap:wrap;
 }
-.card-hdr span{color:var(--org2)}
 
 .sec-title{
   font-family:'Oswald',sans-serif;
   font-weight:600;
   font-size:11px;
-  color:var(--t3);
+  color:#222;
   text-transform:uppercase;
   letter-spacing:.6px;
   margin:10px 0 5px;
   padding-bottom:3px;
-  border-bottom:1px solid var(--bdr);
+  border-bottom:1px solid var(--line);
 }
 
-.div{
-  border-top:1px solid var(--bdr);
-  margin:8px 0;
+.div{border-top:1px solid var(--line);margin:8px 0}
+
+.fl{
+  font-size:10px;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.45px;
+  margin-bottom:2px;
 }
 
 .fg{margin-bottom:5px}
 
-.fl{
-  font-size:10px;
-  font-weight:600;
-  color:var(--t3);
-  text-transform:uppercase;
-  letter-spacing:.4px;
-  margin-bottom:2px;
-}
-
 .fcalc{
   font-size:12px;
-  background:rgba(0,0,0,.03);
-  border:1px solid var(--bdr);
+  background:var(--soft);
+  border:1px solid var(--line);
   border-radius:4px;
   padding:3px 7px;
-  min-height:24px;
+  min-height:26px;
   display:flex;
   align-items:center;
   font-family:'Oswald',sans-serif;
   font-weight:600;
-  color:var(--t1);
-}
-
-.fcalc-hi{
-  background:rgba(46,107,87,.08);
-  border-color:rgba(46,107,87,.26);
-  color:var(--grn);
+  color:#000;
 }
 
 .row{
@@ -265,30 +204,30 @@ button{
   margin-bottom:5px;
   flex-wrap:wrap;
 }
+
 .row .lbl{
   font-size:11px;
-  color:var(--t2);
+  color:#111;
   white-space:nowrap;
   min-width:180px;
-  width:auto;
   flex-shrink:0;
 }
 .row .lbl.w{min-width:260px}
-.row input{width:110px;min-width:80px;flex:0 0 110px}
 .row .sep{
   font-size:11px;
-  color:var(--t3);
+  color:#444;
   padding:0 2px;
-  flex-shrink:0;
-  width:auto;
+}
+.row input{
+  width:110px;
+  min-width:80px;
+  flex:0 0 110px;
 }
 .row .calc{
   font-family:'Oswald',sans-serif;
   font-size:12px;
   font-weight:600;
   min-width:80px;
-  color:var(--t1);
-  width:auto;
 }
 
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -297,35 +236,21 @@ button{
 .g5{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px}
 .g6{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr;gap:6px}
 
-.chip{
-  display:inline-flex;
-  align-items:center;
-  font-size:10px;
-  font-family:'Oswald',sans-serif;
-  font-weight:500;
-  padding:1px 7px;
-  border-radius:10px;
-  white-space:nowrap;
-}
-.up{background:#E8F5E9;color:#2E7D32;border:1px solid #A5D6A7}
-.dn{background:#FFF3E0;color:#BF360C;border:1px solid #FFCC80}
-.nt{background:#F5F5F5;color:#757575;border:1px solid #E0E0E0}
-
 .met-grid{display:grid;gap:6px;margin-bottom:8px}
 .met-grid.c2{grid-template-columns:1fr 1fr}
 .met-grid.c3{grid-template-columns:1fr 1fr 1fr}
 .met-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
 
 .met{
-  background:rgba(183,72,24,.06);
-  border:1px solid rgba(183,72,24,.18);
+  background:#fff;
+  border:1px solid var(--line);
   border-radius:5px;
   padding:5px 9px;
 }
 .met-l{
   font-size:9px;
   font-weight:700;
-  color:var(--t3);
+  color:#444;
   text-transform:uppercase;
   letter-spacing:.5px;
   margin-bottom:1px;
@@ -334,16 +259,25 @@ button{
   font-family:'Oswald',sans-serif;
   font-size:15px;
   font-weight:600;
-  color:var(--t1);
+  color:#000;
   line-height:1.2;
 }
 .met-v.sm{font-size:13px}
-.met-v .chip{
-  font-size:9px;
-  padding:0 5px;
-  margin-left:4px;
-  vertical-align:middle;
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  font-size:10px;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  padding:1px 7px;
+  border-radius:10px;
+  white-space:nowrap;
+  background:#fff;
+  color:#000;
+  border:1px solid #888;
 }
+.up,.dn,.nt{background:#fff;color:#000;border:1px solid #888}
 
 .wx-grid{
   display:grid;
@@ -352,8 +286,8 @@ button{
   margin-top:5px;
 }
 .wx-day{
-  background:rgba(0,0,0,.03);
-  border:1px solid var(--bdr);
+  background:#fff;
+  border:1px solid var(--line);
   border-radius:6px;
   padding:5px 4px;
   text-align:center;
@@ -362,101 +296,60 @@ button{
   font-family:'Oswald',sans-serif;
   font-size:10px;
   font-weight:600;
-  color:var(--org);
-}
-.wx-day textarea{
-  font-size:9px;
-  min-height:30px;
-  resize:none;
-  padding:2px 3px;
+  color:#111;
 }
 
 .hi{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:10px;
   padding:8px 12px;
-  border:1px solid var(--bdr);
+  border:1px solid var(--line);
   border-radius:5px;
   margin-bottom:5px;
   background:#fff;
 }
-.hi:hover{border-color:var(--org)}
 .hi-d{font-family:'Oswald',sans-serif;font-weight:600;font-size:13px}
-.hi-m{font-size:11px;color:var(--t3)}
+.hi-m{font-size:11px;color:#555}
 
-.card-hdr span[contenteditable]:focus{
-  background:rgba(255,255,255,.12);
-  border-radius:3px;
-  padding:0 4px;
-  margin:0 -4px;
+.review-table{
+  display:grid;
+  grid-template-columns:100px 90px 90px 1fr;
+  gap:6px;
+  align-items:center;
 }
-.sec-title[contenteditable]:focus{
-  color:var(--org);
-  background:rgba(183,72,24,.06);
-  border-radius:3px;
-  padding:2px 4px;
-  margin:0 -4px;
-  border-bottom:1px solid var(--org);
-}
-.fl[contenteditable]:focus{
-  color:var(--org);
-  background:rgba(183,72,24,.05);
-  border-radius:2px;
-  padding:0 3px;
-  margin:0 -3px;
-}
-.lbl[contenteditable]:focus{
-  outline:none;
-  background:rgba(183,72,24,.07);
-  border-radius:3px;
-  color:var(--org);
-  padding:1px 4px;
-  margin:0 -4px;
-}
-.met-l[contenteditable]:focus{
-  outline:none;
-  color:var(--org);
-  background:rgba(183,72,24,.07);
-  border-radius:2px;
-  padding:0 3px;
-  margin:0 -3px;
-}
-
-.edit-mode .met-v[data-editable]{
-  cursor:pointer;
-  background:rgba(255,255,255,.8);
-  border:1.5px dashed var(--org);
-  border-radius:4px;
-  padding:2px 6px;
-  min-width:60px;
-  display:inline-block;
-  transition:background .15s;
-}
-.edit-mode .met-v[data-editable]:hover{
-  background:#fff;
-  border-color:var(--org2);
-}
-.edit-mode .met-v[data-editable]:focus{
-  outline:none;
-  background:#fff;
-  border-color:var(--org2);
-  box-shadow:0 0 0 2px rgba(183,72,24,.15);
-}
-
-.edit-badge{display:none}
-.edit-mode .edit-badge{
-  display:inline-block;
-  background:var(--org2);
-  color:#fff;
-  font-size:9px;
+.review-h{
   font-family:'Oswald',sans-serif;
-  padding:1px 6px;
-  border-radius:10px;
+  font-size:11px;
+  color:#111;
+  text-transform:uppercase;
   letter-spacing:.4px;
-  margin-left:6px;
-  vertical-align:middle;
+  padding-bottom:2px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:2px;
 }
+.review-cell{min-width:0}
+.review-comment{width:100%}
+
+.custom-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+  margin-top:6px;
+}
+.custom-box{
+  border:1px solid var(--line2);
+  border-radius:5px;
+  padding:6px;
+  background:#fff;
+}
+.custom-row{
+  display:flex;
+  gap:4px;
+  align-items:center;
+}
+.custom-row input{width:100%}
 
 .notice{
   font-size:11px;
@@ -464,25 +357,27 @@ button{
   border-radius:5px;
   margin-top:5px;
   display:none;
+  border:1px solid #999;
+  background:#fff;
+  color:#000;
 }
 .notice.show{display:block}
-.notice.info{background:#E3F2FD;color:#0D47A1;border:1px solid #BBDEFB}
-.notice.ok{background:#E8F5E9;color:#1B5E20;border:1px solid #C8E6C9}
 
 .disc-net{
-  background:rgba(183,72,24,.06);
-  border:1px solid rgba(183,72,24,.18);
+  background:#fff;
+  border:1px solid var(--line);
   border-radius:4px;
   padding:4px 8px;
   display:flex;
   align-items:center;
   gap:10px;
   margin-top:4px;
+  flex-wrap:wrap;
 }
 .disc-net .dn-lbl{
   font-size:10px;
   font-weight:700;
-  color:var(--org);
+  color:#111;
   text-transform:uppercase;
   letter-spacing:.4px;
 }
@@ -490,741 +385,1086 @@ button{
   font-family:'Oswald',sans-serif;
   font-size:14px;
   font-weight:700;
-  color:var(--t1);
+  color:#000;
 }
 
 .nb-lines{display:none}
+.nb-line{display:block}
+
+.edit-mode [data-editable]{
+  outline:none;
+  background:#fff;
+  border:1px dashed #999;
+  border-radius:4px;
+  padding:2px 4px;
+  display:block;
+  min-height:24px;
+}
+
+[contenteditable]:focus{
+  outline:none;
+  background:#f3f3f3;
+  border-radius:3px;
+}
+
+.no-print{display:initial}
+
+@media (max-width:1100px){
+  .g6{grid-template-columns:1fr 1fr 1fr}
+  .g5{grid-template-columns:1fr 1fr 1fr}
+  .g4{grid-template-columns:1fr 1fr}
+  .custom-grid{grid-template-columns:1fr 1fr}
+  .met-grid.c4{grid-template-columns:1fr 1fr}
+  .wx-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media (max-width:760px){
+  .g3,.g2,.g4,.g5,.g6,.met-grid.c2,.met-grid.c3,.met-grid.c4,.custom-grid,.wx-grid,.review-table{
+    grid-template-columns:1fr !important;
+  }
+  .row .lbl,.row .lbl.w{min-width:100%;white-space:normal}
+}
+
+/* ---- print settings panel ---- */
+.ps-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9000;
+  align-items:center;
+  justify-content:center;
+}
+.ps-overlay.open{display:flex}
+.ps-panel{
+  background:#fff;
+  border-radius:8px;
+  width:min(720px,96vw);
+  max-height:92vh;
+  overflow-y:auto;
+  box-shadow:0 8px 40px rgba(0,0,0,.35);
+}
+.ps-head{
+  background:#111;
+  color:#fff;
+  padding:11px 16px;
+  border-radius:8px 8px 0 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  position:sticky;top:0;z-index:1;
+}
+.ps-close{
+  background:transparent;
+  color:#fff;
+  font-size:18px;
+  line-height:1;
+  padding:2px 6px;
+  border:1px solid #555;
+  border-radius:4px;
+}
+.ps-close:hover{background:#333}
+.ps-body{padding:14px 16px 18px}
+.ps-section{
+  font-family:'Oswald',sans-serif;
+  font-size:11px;
+  font-weight:600;
+  color:#111;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  border-bottom:1px solid #ddd;
+  padding-bottom:3px;
+  margin:12px 0 8px;
+}
+.ps-section:first-child{margin-top:0}
+.ps-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+}
+.ps-grid.c2{grid-template-columns:1fr 1fr}
+.ps-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
+.ps-field{margin-bottom:2px}
+.ps-label{
+  font-size:10px;
+  font-weight:700;
+  color:#555;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  margin-bottom:3px;
+}
+.ps-field input[type=number],
+.ps-field select{
+  width:100%;
+  font-size:12px;
+  padding:4px 6px;
+  border:1px solid #bbb;
+  border-radius:4px;
+  background:#fff;
+  color:#000;
+}
+.ps-field input[type=range]{
+  width:100%;
+  accent-color:#111;
+}
+.ps-val{
+  font-family:'Oswald',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  color:#111;
+  margin-left:6px;
+}
+.ps-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:6px;
+}
+.ps-row .ps-lbl{
+  font-size:11px;
+  color:#111;
+  min-width:190px;
+  flex-shrink:0;
+}
+.ps-row input[type=number]{
+  width:70px;
+  min-width:60px;
+  flex:0 0 70px;
+}
+.ps-unit{font-size:11px;color:#444}
+.ps-preview{
+  background:#f4f4f4;
+  border:1px solid #ddd;
+  border-radius:5px;
+  padding:8px 12px;
+  font-size:11px;
+  color:#333;
+  margin-top:10px;
+  font-family:'Oswald',sans-serif;
+  letter-spacing:.3px;
+}
+.ps-preview b{color:#000}
+.ps-actions{
+  display:flex;
+  gap:7px;
+  margin-top:14px;
+  flex-wrap:wrap;
+}
 
 @media print{
   *{
     -webkit-print-color-adjust:exact !important;
     print-color-adjust:exact !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+    color:#000 !important;
   }
-
-  .no-print{display:none !important;}
 
   body{
     background:#fff !important;
-    font-size:7pt !important;
     margin:0 !important;
   }
 
-  .app{
-    max-width:100% !important;
-    padding:0 !important;
-  }
-
-  .hdr,.dbar{
-    display:none !important;
-  }
-
-  [contenteditable]{
-    outline:none !important;
-    cursor:default !important;
-    border-bottom:none !important;
-  }
+  .app{max-width:100% !important;padding:0 !important}
+  .hdr,.dbar,.no-print,.ps-overlay{display:none !important}
 
   body.print-ops #sec-meet,
-  body.print-ops #sec-hist{
-    display:none !important;
-  }
-
-  body.print-ops #sec-ops{
-    display:block !important;
-  }
+  body.print-ops #sec-hist{display:none !important}
+  body.print-ops #sec-ops{display:block !important}
 
   body.print-meet #sec-ops,
-  body.print-meet #sec-hist{
-    display:none !important;
-  }
+  body.print-meet #sec-hist{display:none !important}
+  body.print-meet #sec-meet{display:block !important}
 
-  body.print-meet #sec-meet{
-    display:block !important;
+  .card,.met,.wx-day,.fcalc,input,textarea,select,.disc-net,.custom-box{
+    background:#fff !important;
+    border-color:#999 !important;
   }
 
   .card{
-    box-shadow:none !important;
-    border:.4pt solid #bbb !important;
+    border:.5pt solid #999 !important;
     border-radius:2pt !important;
     break-inside:avoid !important;
     page-break-inside:avoid !important;
   }
 
-  .card-hdr{
-    font-size:6.4pt !important;
-  }
-
-  .chip{
-    font-size:5pt !important;
-    padding:0 2.5pt !important;
-  }
-
-  .div{
-    margin:1.5pt 0 !important;
-  }
-
-  /* OPS PRINT — tighter so it fits in 2 pages */
-  /* OPS PRINT — force to 2 portrait pages */
-  body.print-ops #sec-ops > .card:first-child{
-  margin:.5pt 0 !important;
-  padding:1.5pt 2pt !important;
-}
-
-body.print-ops #sec-ops > .card:first-child .card-hdr{
-  margin:-1.5pt -2pt 1pt !important;
-  padding:1.5pt 2pt !important;
-  font-size:5.7pt !important;
-}
-
-body.print-ops #sec-ops > .card:first-child .g3{
-  gap:.8pt !important;
-}
-
-body.print-ops #sec-ops > .card:first-child .fg{
-  margin-bottom:.3pt !important;
-}
-
-body.print-ops #sec-ops > .card:first-child .fcalc{
-  min-height:6.5pt !important;
-  padding:0 1pt !important;
-}
-
-body.print-ops #sec-ops > .card:first-child button{
-  display:none !important;
-}
-body.print-ops{
-  font-size:6.15pt !important;
-}
-
-body.print-ops .card{
-  margin:1pt 0 !important;
-  padding:2.2pt 3pt !important;
-  break-inside:auto !important;
-  page-break-inside:auto !important;
-}
-
-body.print-ops .card-hdr{
-  padding:2pt 3pt !important;
-  margin:-2.2pt -3pt 2pt !important;
-  font-size:6pt !important;
-  letter-spacing:0 !important;
-}
-
-body.print-ops .fl{
-  font-size:5.35pt !important;
-  margin-bottom:0 !important;
-}
-
-body.print-ops .sec-title{
-  font-size:5.55pt !important;
-  margin:1.2pt 0 .6pt !important;
-  padding-bottom:.4pt !important;
-}
-
-body.print-ops .fcalc{
-  font-size:5.8pt !important;
-  min-height:7.5pt !important;
-  padding:0 1.5pt !important;
-}
-
-body.print-ops input,
-body.print-ops textarea,
-body.print-ops select{
-  font-size:5.45pt !important;
-  line-height:1 !important;
-  padding:0 1.5pt !important;
-  min-height:7.5pt !important;
-  height:auto !important;
-  border:.3pt solid #bbb !important;
-  border-radius:1pt !important;
-}
-
-body.print-ops textarea{
-  min-height:9pt !important;
-}
-
-body.print-ops .g2,
-body.print-ops .g3,
-body.print-ops .g4,
-body.print-ops .g5,
-body.print-ops .g6{
-  gap:1pt !important;
-}
-
-body.print-ops .fg{
-  margin-bottom:.6pt !important;
-}
-
-body.print-ops .row{
-  gap:1.2pt !important;
-  margin-bottom:.5pt !important;
-  flex-wrap:nowrap !important;
-}
-
-body.print-ops .row .lbl{
-  font-size:5.3pt !important;
-  min-width:100pt !important;
-}
-
-body.print-ops .row .lbl.w{
-  min-width:122pt !important;
-}
-
-body.print-ops .row .sep{
-  font-size:5pt !important;
-  padding:0 .5pt !important;
-}
-
-body.print-ops .row input{
-  width:39pt !important;
-  min-width:39pt !important;
-  flex:0 0 39pt !important;
-}
-
-body.print-ops .row .calc{
-  font-size:5.4pt !important;
-  min-width:38pt !important;
-}
-
-body.print-ops .disc-net{
-  padding:.5pt 2pt !important;
-  margin-top:.5pt !important;
-  gap:2pt !important;
-}
-
-body.print-ops .disc-net .dn-lbl{
-  font-size:5.15pt !important;
-}
-
-body.print-ops .disc-net .dn-val{
-  font-size:6pt !important;
-}
-
-body.print-ops #carryNote,
-body.print-ops #savedNote{
-  display:none !important;
-}
-
-  /* MEETING PRINT */
-  body.print-meet #sec-meet{
-  display:block !important;
-  column-count:1 !important;
-  column-gap:0 !important;
-  font-size:9.2pt !important;
-  transform:scale(.92) !important;
-  transform-origin:top left !important;
-  width:108.7% !important;
-}
-
-  body.print-meet .print-break{
-    break-before:auto !important;
-    page-break-before:auto !important;
-  }
-
-  body.print-meet .card{
-  margin:0 0 3pt 0 !important;
-  padding:4pt 6pt !important;
-  width:100% !important;
-  background:#fff !important;
-  color:#000 !important;
-  border:.8pt solid #999 !important;
-  break-inside:avoid !important;
-  page-break-inside:avoid !important;
-}
-
-  body.print-meet .card-hdr{
-  padding:3pt 5pt !important;
-  margin:-4pt -6pt 3pt !important;
-  font-size:8.2pt !important;
-  letter-spacing:.05px !important;
-  background:#f2f2f2 !important;
-  color:#000 !important;
-}
-
-  body.print-meet .sec-title{
-    font-size:8pt !important;
-    margin:3pt 0 2pt !important;
-    padding-bottom:1pt !important;
-    color:#000 !important;
-  }
-
-  body.print-meet .met{
-    padding:2.5pt 4pt !important;
-  }
-
-  body.print-meet .met-l{
-    font-size:6.5pt !important;
-    margin-bottom:.5pt !important;
-    color:#333 !important;
-  }
-
-  body.print-meet .met-v{
-  font-size:8.7pt !important;
-  line-height:1 !important;
-  color:#000 !important;
-}
-
-  body.print-meet .met-v.sm{
-    font-size:8pt !important;
-  }
-
-  body.print-meet .met-v .chip{
-    font-size:5.6pt !important;
-    padding:0 2pt !important;
-  }
-
-  body.print-meet .met-grid{
-    gap:2.5pt !important;
-    margin-bottom:3pt !important;
-  }
-
-  body.print-meet .g2{gap:2.5pt !important;}
-  body.print-meet .g3{gap:2.5pt !important;}
-  body.print-meet .g4{gap:2.5pt !important;}
-  body.print-meet .g5{gap:2.5pt !important;}
-  body.print-meet .g6{gap:2.5pt !important;}
-
-  body.print-meet .fg{
-    margin-bottom:2pt !important;
-  }
-
-  body.print-meet textarea,
-  body.print-meet input{
-    font-size:7pt !important;
-    padding:1pt 2pt !important;
-    border:.8pt solid #bbb !important;
-    color:#000 !important;
-    background:#fff !important;
-}
-
-  body.print-meet .wx-grid{
-    gap:2.5pt !important;
-    margin-top:2pt !important;
-    grid-template-columns:repeat(7,1fr) !important;
-  }
-
-  body.print-meet .wx-day{
-    padding:2pt !important;
-    border:.8pt solid #ccc !important;
-    background:#fff !important;
-  }
-
-  body.print-meet .wx-day input,
-  body.print-meet .wx-day textarea{
-    font-size:5.8pt !important;
-    padding:1pt !important;
-}
-
-  body.print-meet .nb-lines{
-    display:block !important;
-  }
-
-  body.print-meet .nb-line{
-    display:block !important;
-    border-bottom:.6pt solid #bbb !important;
-    height:7pt !important;
-    margin-bottom:2pt !important;
-}
-
-  
-@page{
-  margin:4mm 4mm;
-  size:letter portrait;
-}
+  .nb-lines{display:block !important}
+  .nb-line{border-bottom:.6pt solid #bbb !important;margin-bottom:2pt !important}
+  .wx-grid{grid-template-columns:repeat(7,1fr) !important}
+  .custom-grid{grid-template-columns:repeat(4,1fr) !important}
 }
 </style>
-</head>
+
+<style id="printSettingsStyle"></style>
+
 <body>
 <div class="app">
 
-<div class="hdr no-print">
-  <div class="logo"><span>Huey Luey's</span> Acworth</div>
-  <div class="hdr-r">
-    <div class="tabs">
-      <button class="tab active" onclick="showTab('ops',this)">📊 Operations Chart</button>
-      <button class="tab" onclick="showTab('meet',this)">📋 Manager Meeting</button>
-      <button class="tab" onclick="showTab('hist',this)">🗂 History</button>
+  <div class="hdr no-print">
+    <div class="logo">Huey Luey's Acworth</div>
+    <div class="hdr-r">
+      <div class="tabs">
+        <button class="tab active" onclick="showTab('ops',this)">Operations Chart</button>
+        <button class="tab" onclick="showTab('meet',this)">Manager Meeting</button>
+        <button class="tab" onclick="showTab('hist',this)">History</button>
+      </div>
+      <button class="btn sm" onclick="doSave()">Save</button>
+      <button class="btn sm alt" onclick="doPrint('ops')">Print Ops</button>
+      <button class="btn sm alt" onclick="doPrint('meet')">Print Meeting</button>
     </div>
-    <button class="btn sm pr no-print" onclick="doSave()">💾 Save</button>
-    <button class="btn sm no-print" onclick="doPrint('ops')">🖨 Print Ops</button>
-    <button class="btn sm no-print" onclick="doPrint('meet')">🖨 Print Meeting</button>
   </div>
-</div>
-<div class="dbar no-print">
-  <span id="syncBadge" class="ss ss-ok">Firebase Ready</span>
-  <button class="btn xs ghost" onclick="doExport()">⬇ Export JSON</button>
-  <button class="btn xs ghost" onclick="triggerImport()">⬆ Import JSON</button>
-</div>
-<input type="file" id="fileImport" accept=".json" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;visibility:hidden"/>
 
-<!-- OPERATIONS TAB -->
+  <div class="dbar no-print">
+    <span id="syncBadge" class="ss ss-ok">Firebase Ready</span>
+    <button class="btn xs alt" onclick="doExport()">Export JSON</button>
+    <button class="btn xs alt" onclick="triggerImport()">Import JSON</button>
+    <button class="btn xs" onclick="openPrintSettings()" style="background:#444;color:#fff;border:none">⚙ Print Settings</button>
+  </div>
 
-<div id="sec-ops" class="sec active">
-  <div class="card">
-    <div class="card-hdr">📊 <span id="lbl_0" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Operations Chart</span> — Huey Luey's Acworth | GM: Tyler Hawthorne
-      <button id="opsEditBtn" class="btn xs no-print" onclick="toggleOpsEdit()" style="margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff">🔓 Editing: ON</button>
-    </div>
-    <div class="g3">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Week (Mon-Sun)</div><input type="date" id="weekDate" onchange="onDateChange()"/></div>
-      <div class="fg"><div class="fl">Week Label</div><div class="fcalc" id="weekLabel">-</div></div>
-      <div style="display:flex;align-items:flex-end;gap:5px;padding-bottom:1px">
-        <button class="btn sm pr" onclick="doSave()">💾 Save Week</button>
-        <button class="btn sm" onclick="doLoad()">Load</button>
-        <button class="btn sm dk" onclick="clearOps()">Clear</button>
+  <!-- ===================== PRINT SETTINGS PANEL ===================== -->
+
+  <div id="psOverlay" class="ps-overlay no-print" onclick="psOverlayClick(event)">
+    <div class="ps-panel">
+      <div class="ps-head">
+        Print Settings
+        <button class="ps-close" onclick="closePrintSettings()">✕</button>
+      </div>
+      <div class="ps-body">
+
+```
+    <div class="ps-section">Page Size &amp; Orientation</div>
+    <div class="ps-grid c4">
+      <div class="ps-field">
+        <div class="ps-label">Paper Size</div>
+        <select id="ps_paper" onchange="applyPrintSettings()">
+          <option value="letter portrait">Letter — Portrait</option>
+          <option value="letter landscape">Letter — Landscape</option>
+          <option value="legal portrait">Legal — Portrait</option>
+          <option value="legal landscape">Legal — Landscape</option>
+          <option value="A4 portrait">A4 — Portrait</option>
+          <option value="A4 landscape">A4 — Landscape</option>
+        </select>
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Margin (mm)</div>
+        <input type="number" id="ps_margin" value="5" min="0" max="25" step="1" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Card Margin (pt)</div>
+        <input type="number" id="ps_card_margin" value="1.2" min="0" max="8" step="0.2" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Card Padding (pt)</div>
+        <input type="number" id="ps_card_pad" value="2.5" min="0" max="10" step="0.2" oninput="applyPrintSettings()" />
       </div>
     </div>
-    <div id="carryNote" class="notice info">Last week actuals loaded as Last Year values.</div>
-    <div id="savedNote" class="notice ok">Week saved successfully.</div>
+
+    <div class="ps-section">Font Sizes (pt)</div>
+    <div class="ps-grid">
+      <div class="ps-field">
+        <div class="ps-label">Body / Base</div>
+        <div class="ps-row" style="margin-bottom:0">
+          <input type="range" id="ps_fs_body" min="4" max="12" step="0.5" value="7" oninput="applyPrintSettings();gi('ps_fs_body_v').textContent=this.value+'pt'" />
+          <span class="ps-val" id="ps_fs_body_v">7pt</span>
+        </div>
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Inputs &amp; Textareas</div>
+        <div class="ps-row" style="margin-bottom:0">
+          <input type="range" id="ps_fs_input" min="4" max="12" step="0.5" value="5.5" oninput="applyPrintSettings();gi('ps_fs_input_v').textContent=this.value+'pt'" />
+          <span class="ps-val" id="ps_fs_input_v">5.5pt</span>
+        </div>
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Card Headers</div>
+        <div class="ps-row" style="margin-bottom:0">
+          <input type="range" id="ps_fs_card_hdr" min="4" max="14" step="0.5" value="6.4" oninput="applyPrintSettings();gi('ps_fs_card_hdr_v').textContent=this.value+'pt'" />
+          <span class="ps-val" id="ps_fs_card_hdr_v">6.4pt</span>
+        </div>
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Section Titles</div>
+        <div class="ps-row" style="margin-bottom:0">
+          <input type="range" id="ps_fs_sec_title" min="4" max="12" step="0.5" value="5.8" oninput="applyPrintSettings();gi('ps_fs_sec_title_v').textContent=this.value+'pt'" />
+          <span class="ps-val" id="ps_fs_sec_title_v">5.8pt</span>
+        </div>
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Field Labels (FL)</div>
+        <div class="ps-row" style="margin-bottom:0">
+          <input type="range" id="ps_fs_fl" min="3" max="10" step="0.5" value="5.4" oninput="applyPrintSettings();gi('ps_fs_fl_v').textContent=this.value+'pt'" />
+          <span class="ps-val" id="ps_fs_fl_v">5.4pt</span>
+        </div>
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Calc / Met Values</div>
+        <div class="ps-row" style="margin-bottom:0">
+          <input type="range" id="ps_fs_calc" min="4" max="14" step="0.5" value="5.8" oninput="applyPrintSettings();gi('ps_fs_calc_v').textContent=this.value+'pt'" />
+          <span class="ps-val" id="ps_fs_calc_v">5.8pt</span>
+        </div>
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Row Labels</div>
+        <div class="ps-row" style="margin-bottom:0">
+          <input type="range" id="ps_fs_row_lbl" min="3" max="10" step="0.5" value="5.2" oninput="applyPrintSettings();gi('ps_fs_row_lbl_v').textContent=this.value+'pt'" />
+          <span class="ps-val" id="ps_fs_row_lbl_v">5.2pt</span>
+        </div>
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Chips</div>
+        <div class="ps-row" style="margin-bottom:0">
+          <input type="range" id="ps_fs_chip" min="3" max="10" step="0.5" value="5" oninput="applyPrintSettings();gi('ps_fs_chip_v').textContent=this.value+'pt'" />
+          <span class="ps-val" id="ps_fs_chip_v">5pt</span>
+        </div>
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Met Label (small caps)</div>
+        <div class="ps-row" style="margin-bottom:0">
+          <input type="range" id="ps_fs_met_l" min="3" max="10" step="0.5" value="7" oninput="applyPrintSettings();gi('ps_fs_met_l_v').textContent=this.value+'pt'" />
+          <span class="ps-val" id="ps_fs_met_l_v">7pt</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ps-section">Spacing &amp; Layout (pt)</div>
+    <div class="ps-grid">
+      <div class="ps-field">
+        <div class="ps-label">Card Hdr Padding (pt)</div>
+        <input type="number" id="ps_card_hdr_pad" value="2.3" min="0" max="10" step="0.2" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Row Gap (pt)</div>
+        <input type="number" id="ps_row_gap" value="1.2" min="0" max="6" step="0.2" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Row Margin-Bottom (pt)</div>
+        <input type="number" id="ps_row_mb" value="0.8" min="0" max="6" step="0.2" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Grid Gap (pt)</div>
+        <input type="number" id="ps_grid_gap" value="2" min="0" max="8" step="0.5" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Input Min-Height (pt)</div>
+        <input type="number" id="ps_input_mh" value="7" min="4" max="16" step="0.5" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Row Lbl Min-Width (pt)</div>
+        <input type="number" id="ps_row_lbl_mw" value="110" min="60" max="180" step="2" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Row Lbl.w Min-Width (pt)</div>
+        <input type="number" id="ps_row_lbl_w_mw" value="128" min="80" max="200" step="2" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Row Input Width (pt)</div>
+        <input type="number" id="ps_row_input_w" value="42" min="20" max="80" step="1" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">NB Line Height (pt)</div>
+        <input type="number" id="ps_nb_h" value="8" min="4" max="20" step="0.5" oninput="applyPrintSettings()" />
+      </div>
+    </div>
+
+    <div class="ps-section">Review Table Column Widths (pt)</div>
+    <div class="ps-grid c4">
+      <div class="ps-field">
+        <div class="ps-label">Star Col</div>
+        <input type="number" id="ps_rev_c1" value="75" min="30" max="120" step="1" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Week Col</div>
+        <input type="number" id="ps_rev_c2" value="48" min="20" max="100" step="1" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">YTD Col</div>
+        <input type="number" id="ps_rev_c3" value="48" min="20" max="100" step="1" oninput="applyPrintSettings()" />
+      </div>
+      <div class="ps-field">
+        <div class="ps-label">Comment Col</div>
+        <div class="ps-label" style="text-transform:none;font-size:9px;color:#888;margin-top:2px">Auto (fills remaining)</div>
+      </div>
+    </div>
+
+    <div id="psPreview" class="ps-preview"></div>
+
+    <div class="ps-actions">
+      <button class="btn sm" onclick="applyPrintSettings()">Apply</button>
+      <button class="btn sm alt" onclick="resetPrintSettings()">Reset Defaults</button>
+      <button class="btn sm alt" onclick="savePrintSettings()">Save Settings</button>
+      <button class="btn sm alt" onclick="closePrintSettings()">Close</button>
+    </div>
+
+  </div>
+</div>
+```
+
   </div>
 
-  <div class="card">
-    <div class="card-hdr">📈 <span id="lbl_1" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Current Week / Last Week Summary</span></div>
-    <div id="lbl_20" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total Sales</div>
-    <div class="row"><span id="lbl_100" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Sales Last Week (Proj / Last Yr / Actual):</span><span class="sep">$</span><input type="number" id="s_lw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><input type="number" id="s_lw_ly" oninput="calc()" placeholder="Last Yr"/><span class="sep">/</span><input type="number" id="s_lw_act" oninput="calc()" placeholder="Actual"/><span class="calc" id="s_lw_vsly"></span></div>
-    <div class="row"><span id="lbl_101" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Sales Current Week (Proj / Last Yr):</span><span class="sep">$</span><input type="number" id="s_cw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="s_cw_ly" oninput="calc()" placeholder="Last Yr"/></div>
-    <div id="lbl_21" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Catering Sales</div>
-    <div class="row"><span id="lbl_102" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Catering Last Week (Proj / Last Yr / Actual):</span><span class="sep">$</span><input type="number" id="cat_lw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="cat_lw_ly" oninput="calc()" placeholder="Last Yr"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="cat_lw_act" oninput="calc()" placeholder="Actual"/><span class="calc" id="cat_lw_vsly"></span></div>
-    <div class="row"><span id="lbl_103" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Catering Current Week (Proj / Last Yr):</span><span class="sep">$</span><input type="number" id="cat_cw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="cat_cw_ly" oninput="calc()" placeholder="Last Yr"/></div>
-    <div id="lbl_22" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">RFT (Rooftop) Sales</div>
-    <div class="row"><span id="lbl_104" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">RFT Last Week (Proj / Last Yr / Actual):</span><span class="sep">$</span><input type="number" id="rft_lw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="rft_lw_ly" oninput="calc()" placeholder="Last Yr"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="rft_lw_act" oninput="calc()" placeholder="Actual"/><span class="calc" id="rft_lw_vsly"></span></div>
-    <div class="row"><span id="lbl_105" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">RFT Current Week (Proj / Last Yr):</span><span class="sep">$</span><input type="number" id="rft_cw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="rft_cw_ly" oninput="calc()" placeholder="Last Yr"/></div>
-    <div id="lbl_23" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">To-Go Sales</div>
-    <div class="row"><span id="lbl_106" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">ToGo Last Week (Proj / Last Yr / Actual):</span><span class="sep">$</span><input type="number" id="togo_lw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="togo_lw_ly" oninput="calc()" placeholder="Last Yr"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="togo_lw_act" oninput="calc()" placeholder="Actual"/><span class="calc" id="togo_lw_vsly"></span></div>
-    <div class="row"><span id="lbl_107" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">ToGo Current Week (Proj / Last Yr):</span><span class="sep">$</span><input type="number" id="togo_cw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="togo_cw_ly" oninput="calc()" placeholder="Last Yr"/></div>
-    <div id="lbl_24" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Patio Sales</div>
-    <div class="row"><span id="lbl_108" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Patio Last Week (Proj / Last Yr / Actual):</span><span class="sep">$</span><input type="number" id="patio_lw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="patio_lw_ly" oninput="calc()" placeholder="Last Yr"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="patio_lw_act" oninput="calc()" placeholder="Actual"/><span class="calc" id="patio_lw_vsly"></span></div>
-    <div class="row"><span id="lbl_109" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Patio Current Week (Proj / Last Yr):</span><span class="sep">$</span><input type="number" id="patio_cw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="patio_cw_ly" oninput="calc()" placeholder="Last Yr"/></div>
-    <div id="lbl_25" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar Sales</div>
-    <div class="row"><span id="lbl_110" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BHB Last Week (Proj / Actual):</span><span class="sep">$</span><input type="number" id="bhb_lw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="bhb_lw_act" oninput="calc()" placeholder="Actual"/><span class="calc" id="bhb_lw_vsproj"></span></div>
-    <div class="row"><span id="lbl_111" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BHB Current Week (Proj):</span><span class="sep">$</span><input type="number" id="bhb_cw_proj" oninput="calc()" placeholder="Proj"/></div>
-    <div class="div"></div>
-    <div id="lbl_26" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Count &amp; PPA</div>
-    <div class="row"><span id="lbl_112" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Count Last Week (Proj / Actual):</span><input type="number" id="gst_lw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><input type="number" id="gst_lw_act" oninput="calc()" placeholder="Actual"/></div>
-    <div class="row"><span id="lbl_113" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Count Current Week (Proj / Last Yr):</span><input type="number" id="gst_cw_proj" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><input type="number" id="gst_cw_ly" oninput="calc()" placeholder="Last Yr"/></div>
-    <div class="row"><span id="lbl_114" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">PPA Last Week (Proj / Actual):</span><span class="sep">$</span><input type="number" id="ppa_lw_proj" step=".01" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="ppa_lw_act" step=".01" oninput="calc()" placeholder="Actual"/><span class="calc" id="ppa_lw_vsly"></span></div>
-    <div class="row"><span id="lbl_115" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">PPA Current Week (Proj / Last Yr):</span><span class="sep">$</span><input type="number" id="ppa_cw_proj" step=".01" oninput="calc()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="ppa_cw_ly" step=".01" oninput="calc()" placeholder="Last Yr"/></div>
-    <div class="div"></div>
-    <div id="lbl_27" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Discounts Last Week</div>
-    <div class="g4">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Discounts $</div><input type="number" id="disc_total" step=".01" oninput="calcDisc()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">EZ Cater $</div><input type="number" id="disc_ezcater" step=".01" oninput="calcDisc()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Rewards $</div><input type="number" id="disc_rewards" step=".01" oninput="calcDisc()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Other $</div><input type="number" id="disc_other" step=".01" oninput="calcDisc()"/></div>
-    </div>
-    <div class="disc-net"><span class="dn-lbl">Net Discounts:</span><span class="dn-val" id="disc_net_display">$0.00</span><span style="font-size:10px;color:#9C8878;margin-left:4px">(Discounts minus EZ Cater, Rewards, Other)</span></div>
-    <div class="div"></div>
-    <div id="lbl_28" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor</div>
-    <div class="g3" style="margin-bottom:5px">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor % w/o Taxes</div><div class="fcalc" id="lab_pct_notax">-</div></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor Cost $</div><input type="number" id="lab_dollars" oninput="calc()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor w/ Taxes %</div><div class="fcalc fcalc-hi" id="lab_pct_wtax">-</div></div>
-    </div>
-    <div class="g4" style="margin-bottom:4px">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Labor Sales ($)</div><input type="number" id="lab_sales" oninput="calc()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Tax Rate %</div><input type="number" id="lab_tax" value="14.53" step=".01" oninput="calc()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Budget Labor %</div><input type="number" id="lab_budget" step=".1" oninput="calc()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Proj Labor %</div><input type="number" id="lab_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/></div>
-    </div>
-    <div class="row"><span id="lbl_118" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">SPLH Last Week (Proj / Actual):</span><span class="sep">$</span><input type="number" id="splh_lw_proj" step=".01" oninput="live()" placeholder="Proj"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="splh_lw_act" step=".01" oninput="live()" placeholder="Actual"/></div>
-    <div class="row"><span id="lbl_119" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">SPLH Current Week (Proj):</span><span class="sep">$</span><input type="number" id="splh_cw_proj" step=".01" oninput="live()" placeholder="Proj"/></div>
-    <div class="row"><span id="lbl_120" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total OT Hours Last Week (Sched / Actual):</span><input type="number" id="ot_lw_sched" oninput="live()" placeholder="Sched"/><span class="sep">/</span><input type="number" id="ot_lw_act" oninput="live()" placeholder="Actual"/></div>
-    <div class="row"><span id="lbl_121" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total OT Hours Current Week (Sched):</span><input type="number" id="ot_cw_sched" oninput="live()" placeholder="Sched"/></div>
-    <div class="div"></div>
-    <div id="lbl_29" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Cost Percentages</div>
-    <div class="row"><span id="lbl_122" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Cost % Last Week (Proj / Actual):</span><input type="number" id="food_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="food_lw_act" style="max-width:90px">-</div></div>
-    <div class="row" style="margin-bottom:2px"><span id="lbl_200" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="food_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="food_spent" oninput="calc()" placeholder="Spent"/></div>
-    <div class="row"><span id="lbl_123" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Cost % Current Week (Proj):</span><input type="number" id="food_cw_proj" step=".1" oninput="live()" placeholder="Proj %"/></div>
-    <div class="row" style="margin-top:4px"><span id="lbl_124" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Cost % Last Week (Proj / Actual):</span><input type="number" id="lbw_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="lbw_lw_act" style="max-width:90px">-</div></div>
-    <div class="row" style="margin-bottom:2px"><span id="lbl_201" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="lbw_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="lbw_spent" oninput="calc()" placeholder="Spent"/></div>
-    <div class="row"><span id="lbl_125" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Cost % Current Week (Proj):</span><input type="number" id="lbw_cw_proj" step=".1" oninput="live()" placeholder="Proj %"/></div>
-    <div class="row" style="margin-top:4px"><span id="lbl_126" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Paper/Catering/Cleaning % Last Week (Proj / Actual):</span><input type="number" id="pcc_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="pcc_lw_act" style="max-width:90px">-</div></div>
-    <div class="row" style="margin-bottom:2px"><span id="lbl_202" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">PCC Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="pcc_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="pcc_spent" oninput="calc()" placeholder="Spent"/></div>
-    <div class="row"><span id="lbl_127" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">PCC % Current Week (Proj):</span><input type="number" id="pcc_cw_proj" step=".1" oninput="live()" placeholder="Proj %"/></div>
-    <div class="row" style="margin-top:4px"><span id="lbl_128" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">N/A Bev % Last Week (Proj / Actual):</span><input type="number" id="nab_lw_proj" step=".1" oninput="calc()" placeholder="Proj %"/><span class="sep">/</span><div class="fcalc" id="nab_lw_act" style="max-width:90px">-</div></div>
-    <div class="row" style="margin-bottom:2px"><span id="lbl_203" class="lbl" style="min-width:180px;font-size:10px;color:#9C8878" contenteditable="true" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">NAB Sales / $ Spent:</span><span class="sep">$</span><input type="number" id="nab_sales" oninput="calc()" placeholder="Sales"/><span class="sep">/</span><span class="sep">$</span><input type="number" id="nab_spent" oninput="calc()" placeholder="Spent"/></div>
-    <div class="row"><span id="lbl_129" class="lbl w" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">N/A Bev % Current Week (Proj):</span><input type="number" id="nab_cw_proj" step=".1" oninput="live()" placeholder="Proj %"/></div>
+  <input type="file" id="fileImport" accept=".json" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;visibility:hidden" />
+
+  <!-- ===================== OPS TAB ===================== -->
+
+  <div id="sec-ops" class="sec active">
+
+```
+<div class="card">
+  <div class="card-hdr">
+    Weekly Operations Chart — Huey Luey's Acworth | GM: Tyler Hawthorne
+    <button id="opsEditBtn" class="btn xs no-print" onclick="toggleOpsEdit()" style="margin-left:auto;background:#fff;color:#111;border:1px solid #999">Editing: ON</button>
   </div>
 
-  <div class="card">
-    <div class="card-hdr">👤 <span id="lbl_2" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">GM Operations</span></div>
-    <div class="g3">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">GM Hours (Total)</div><input type="number" id="gm_hours" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Videos / Podcasts / Training</div><input type="text" id="gm_videos" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Q&amp;A Walkthroughs Completed</div><input type="text" id="gm_qa" oninput="live()"/></div>
+  <div class="g3">
+    <div class="fg">
+      <div class="fl">Week (Mon-Sun)</div>
+      <input type="date" id="weekDate" onchange="onDateChange()" />
     </div>
-    <div class="g2">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Projects Completed</div><textarea id="gm_projects" rows="2" oninput="live()"></textarea></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Notes</div><textarea id="gm_notes" rows="2" oninput="live()"></textarea></div>
+    <div class="fg">
+      <div class="fl">Week Label</div>
+      <div class="fcalc" id="weekLabel">-</div>
+    </div>
+    <div style="display:flex;align-items:flex-end;gap:5px;padding-bottom:1px">
+      <button class="btn sm" onclick="doSave()">Save Week</button>
+      <button class="btn sm alt" onclick="doLoad()">Load</button>
+      <button class="btn sm alt" onclick="clearOps()">Clear</button>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-hdr">&#11088; <span id="lbl_3" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Experience</span></div>
-    <div class="g4">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">5-Star Reviews (week)</div><input type="number" id="rev5" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">4-Star Reviews (week)</div><input type="number" id="rev4" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Total Reviews (running)</div><input type="number" id="rev_total" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Current Rating</div><input type="number" id="rev_rating" step=".1" max="5" oninput="live()"/></div>
-    </div>
-    <div class="g2">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Loyalty Signups</div><input type="number" id="loyalty" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Weekly Local Sales Marketing Plan</div><input type="text" id="marketing" oninput="live()"/></div>
-    </div>
+  <div id="carryNote" class="notice">Last week actuals loaded as last year values where blank.</div>
+  <div id="savedNote" class="notice">Week saved successfully.</div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">Current Week / Last Week Summary</div>
+
+  <div class="sec-title">Total Sales</div>
+  <div class="row">
+    <span class="lbl w">Sales Last Week (Proj / Last Yr / Actual):</span>
+    <span class="sep">$</span><input type="number" id="s_lw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="s_lw_ly" oninput="calc()" placeholder="Last Yr" />
+    <span class="sep">/</span>
+    <input type="number" id="s_lw_act" oninput="calc()" placeholder="Actual" />
+    <span class="calc" id="s_lw_vsly">-</span>
+  </div>
+  <div class="row">
+    <span class="lbl w">Sales Current Week (Proj / Last Yr):</span>
+    <span class="sep">$</span><input type="number" id="s_cw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="s_cw_ly" oninput="calc()" placeholder="Last Yr" />
   </div>
 
-  <div class="card">
-    <div class="card-hdr">&#127369; <span id="lbl_4" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold</span></div>
-    <div id="lbl_30" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg of the Month &amp; Employee Contest</div>
-    <div class="g4">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Marg of Month - Name</div><input type="text" id="motm_name" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Qty Sold This Week</div><input type="number" id="motm_wk" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Total Sold Month</div><input type="number" id="motm_total" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1st Place Employee</div><input type="text" id="emp1_name" oninput="live()"/></div>
-    </div>
-    <div class="g4">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Employee Qty This Week</div><input type="number" id="emp1_wk" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Employee Qty Total</div><input type="number" id="emp1_total" oninput="live()"/></div>
-      <div class="fg"></div><div class="fg"></div>
-    </div>
-    <div class="div"></div>
-    <div id="lbl_31" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Liquor Product Mix</div>
-    <div class="g5">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">To-Go Margs</div><input type="number" id="togo_margs" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">16oz Margs</div><input type="number" id="marg16" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">22oz Margs</div><input type="number" id="marg22" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">32oz Margs</div><input type="number" id="marg32" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Pitchers</div><input type="number" id="pitchers" oninput="live()"/></div>
-    </div>
-    <div class="g5">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Huey's Floaters</div><input type="number" id="floaters" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Mimosa Flights</div><input type="number" id="mimosa" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top Margarita</div><input type="text" id="top_marg" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top Marg Qty</div><input type="number" id="top_marg_qty" oninput="live()"/></div>
-      <div class="fg"></div>
-    </div>
-    <div class="div"></div>
-    <div id="lbl_32" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Product Mix</div>
-    <div class="g5">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Total Fajitas</div><input type="number" id="faj_total" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Durango Style</div><input type="number" id="faj_dur" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Huey's Style</div><input type="number" id="faj_huey" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Bacon Shrimp</div><input type="number" id="faj_bacon" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">The Big Huey</div><input type="number" id="big_huey" oninput="live()"/></div>
-    </div>
-    <div class="g5">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Desserts Sold</div><input type="number" id="desserts" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Kids Menu Items</div><input type="number" id="kids" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top Food Item</div><input type="text" id="top_food" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top Food Qty</div><input type="number" id="top_food_qty" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Steak &amp; Blue Quesadilla</div><input type="number" id="steak_blue" oninput="live()"/></div>
-    </div>
-    <div class="div"></div>
-    <div id="lbl_38" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Brunch Product Mix</div>
-    <div class="g6">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Hot Cakes</div><input type="number" id="brunch_hotcakes" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">HotCakes Refill</div><input type="number" id="brunch_hotcakes_refill" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Brunch Skillet</div><input type="number" id="brunch_skillet" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">French Toast Ench.</div><input type="number" id="brunch_french_toast" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Breakfast Burrito</div><input type="number" id="brunch_burrito" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Chilaquiles</div><input type="number" id="brunch_chilaquiles" oninput="live()"/></div>
-    </div>
-    <div class="div"></div>
-    <div id="lbl_33" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar - Cocktail Counts</div>
-    <div class="g5">
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Mai Tais</div><input type="number" id="bhb_mt" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Pina Coladas</div><input type="number" id="bhb_pc" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Lemon Drop Shots</div><input type="number" id="bhb_ld" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Blueberry Refresher</div><input type="number" id="bhb_br" oninput="live()"/></div>
-      <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Front Porch Swing</div><input type="number" id="bhb_fp" oninput="live()"/></div>
-    </div>
+  <div class="sec-title">Catering Sales</div>
+  <div class="row">
+    <span class="lbl w">Catering Last Week (Proj / Last Yr / Actual):</span>
+    <span class="sep">$</span><input type="number" id="cat_lw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="cat_lw_ly" oninput="calc()" placeholder="Last Yr" />
+    <span class="sep">/</span>
+    <input type="number" id="cat_lw_act" oninput="calc()" placeholder="Actual" />
+    <span class="calc" id="cat_lw_vsly">-</span>
+  </div>
+  <div class="row">
+    <span class="lbl w">Catering Current Week (Proj / Last Yr):</span>
+    <span class="sep">$</span><input type="number" id="cat_cw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="cat_cw_ly" oninput="calc()" placeholder="Last Yr" />
+  </div>
+
+  <div class="sec-title">Rooftop Sales</div>
+  <div class="row">
+    <span class="lbl w">Rooftop Last Week (Proj / Last Yr / Actual):</span>
+    <span class="sep">$</span><input type="number" id="rft_lw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="rft_lw_ly" oninput="calc()" placeholder="Last Yr" />
+    <span class="sep">/</span>
+    <input type="number" id="rft_lw_act" oninput="calc()" placeholder="Actual" />
+    <span class="calc" id="rft_lw_vsly">-</span>
+  </div>
+  <div class="row">
+    <span class="lbl w">Rooftop Current Week (Proj / Last Yr):</span>
+    <span class="sep">$</span><input type="number" id="rft_cw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="rft_cw_ly" oninput="calc()" placeholder="Last Yr" />
+  </div>
+
+  <div class="sec-title">To-Go Sales</div>
+  <div class="row">
+    <span class="lbl w">To-Go Last Week (Proj / Last Yr / Actual):</span>
+    <span class="sep">$</span><input type="number" id="togo_lw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="togo_lw_ly" oninput="calc()" placeholder="Last Yr" />
+    <span class="sep">/</span>
+    <input type="number" id="togo_lw_act" oninput="calc()" placeholder="Actual" />
+    <span class="calc" id="togo_lw_vsly">-</span>
+  </div>
+  <div class="row">
+    <span class="lbl w">To-Go Current Week (Proj / Last Yr):</span>
+    <span class="sep">$</span><input type="number" id="togo_cw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="togo_cw_ly" oninput="calc()" placeholder="Last Yr" />
+  </div>
+
+  <div class="sec-title">Patio Sales</div>
+  <div class="row">
+    <span class="lbl w">Patio Last Week (Proj / Last Yr / Actual):</span>
+    <span class="sep">$</span><input type="number" id="patio_lw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="patio_lw_ly" oninput="calc()" placeholder="Last Yr" />
+    <span class="sep">/</span>
+    <input type="number" id="patio_lw_act" oninput="calc()" placeholder="Actual" />
+    <span class="calc" id="patio_lw_vsly">-</span>
+  </div>
+  <div class="row">
+    <span class="lbl w">Patio Current Week (Proj / Last Yr):</span>
+    <span class="sep">$</span><input type="number" id="patio_cw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="patio_cw_ly" oninput="calc()" placeholder="Last Yr" />
+  </div>
+
+  <div class="sec-title">Beach House Bar Sales</div>
+  <div class="row">
+    <span class="lbl w">BHB Last Week (Proj / Actual):</span>
+    <span class="sep">$</span><input type="number" id="bhb_lw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="bhb_lw_act" oninput="calc()" placeholder="Actual" />
+    <span class="calc" id="bhb_lw_vsproj">-</span>
+  </div>
+  <div class="row">
+    <span class="lbl w">BHB Current Week (Proj):</span>
+    <span class="sep">$</span><input type="number" id="bhb_cw_proj" oninput="calc()" placeholder="Proj" />
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-title">Guest Count & PPA</div>
+
+  <div class="row">
+    <span class="lbl w">Guest Count Last Week (Proj / Actual):</span>
+    <input type="number" id="gst_lw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="gst_lw_act" oninput="calc()" placeholder="Actual" />
+    <span class="calc" id="gst_lw_diff">-</span>
+  </div>
+
+  <div class="row">
+    <span class="lbl w">Guest Count Current Week (Proj / Last Yr):</span>
+    <input type="number" id="gst_cw_proj" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="gst_cw_ly" oninput="calc()" placeholder="Last Yr" />
+    <span class="calc" id="gst_cw_diff">-</span>
+  </div>
+
+  <div class="row">
+    <span class="lbl w">PPA Last Week (Proj / Last Yr / Actual):</span>
+    <span class="sep">$</span><input type="number" id="ppa_lw_proj" step=".01" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="ppa_lw_ly" step=".01" oninput="calc()" placeholder="Last Yr" />
+    <span class="sep">/</span>
+    <input type="number" id="ppa_lw_act" step=".01" oninput="calc()" placeholder="Actual" />
+    <span class="calc" id="ppa_lw_vsly">-</span>
+  </div>
+
+  <div class="row">
+    <span class="lbl w">PPA Current Week (Proj / Last Yr):</span>
+    <span class="sep">$</span><input type="number" id="ppa_cw_proj" step=".01" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="ppa_cw_ly" step=".01" oninput="calc()" placeholder="Last Yr" />
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-title">Discounts Last Week</div>
+
+  <div class="g4">
+    <div class="fg"><div class="fl">Discounts $</div><input type="number" id="disc_total" step=".01" oninput="calcDisc()" /></div>
+    <div class="fg"><div class="fl">EZ Cater $</div><input type="number" id="disc_ezcater" step=".01" oninput="calcDisc()" /></div>
+    <div class="fg"><div class="fl">Rewards $</div><input type="number" id="disc_rewards" step=".01" oninput="calcDisc()" /></div>
+    <div class="fg"><div class="fl">Other $</div><input type="number" id="disc_other" step=".01" oninput="calcDisc()" /></div>
+  </div>
+
+  <div class="disc-net">
+    <span class="dn-lbl">Net Discounts:</span>
+    <span class="dn-val" id="disc_net_display">$0.00</span>
+    <span style="font-size:10px;color:#555">Discounts minus EZ Cater, Rewards, Other</span>
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-title">Labor</div>
+
+  <div class="g3" style="margin-bottom:5px">
+    <div class="fg"><div class="fl">Labor % w/o Taxes</div><div class="fcalc" id="lab_pct_notax">-</div></div>
+    <div class="fg"><div class="fl">Labor Cost $</div><input type="number" id="lab_dollars" oninput="calc()" /></div>
+    <div class="fg"><div class="fl">Labor w/ Taxes %</div><div class="fcalc" id="lab_pct_wtax">-</div></div>
+  </div>
+
+  <div class="g4" style="margin-bottom:4px">
+    <div class="fg"><div class="fl">Labor Sales ($)</div><input type="number" id="lab_sales" oninput="calc()" /></div>
+    <div class="fg"><div class="fl">Tax Rate %</div><input type="number" id="lab_tax" value="14.53" step=".01" oninput="calc()" /></div>
+    <div class="fg"><div class="fl">Budget Labor %</div><input type="number" id="lab_budget" step=".1" oninput="calc()" /></div>
+    <div class="fg"><div class="fl">Proj Labor %</div><input type="number" id="lab_lw_proj" step=".1" oninput="calc()" /></div>
+  </div>
+
+  <div class="row">
+    <span class="lbl w">SPLH Last Week (Proj / Actual):</span>
+    <span class="sep">$</span><input type="number" id="splh_lw_proj" step=".01" oninput="calc()" placeholder="Proj" />
+    <span class="sep">/</span>
+    <input type="number" id="splh_lw_act" step=".01" oninput="calc()" placeholder="Actual" />
+    <span class="calc" id="splh_lw_diff">-</span>
+  </div>
+
+  <div class="row">
+    <span class="lbl w">SPLH Current Week (Proj):</span>
+    <span class="sep">$</span><input type="number" id="splh_cw_proj" step=".01" oninput="calc()" placeholder="Proj" />
+  </div>
+
+  <div class="row">
+    <span class="lbl w">Total OT Hours Last Week (Sched / Actual):</span>
+    <input type="number" id="ot_lw_sched" oninput="mirrorMeeting()" placeholder="Sched" />
+    <span class="sep">/</span>
+    <input type="number" id="ot_lw_act" oninput="mirrorMeeting()" placeholder="Actual" />
+  </div>
+
+  <div class="row">
+    <span class="lbl w">Total OT Hours Current Week (Sched):</span>
+    <input type="number" id="ot_cw_sched" oninput="mirrorMeeting()" placeholder="Sched" />
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-title">Cost Percentages</div>
+
+  <div class="row">
+    <span class="lbl w">Food Cost % Last Week (Proj / Actual):</span>
+    <input type="number" id="food_lw_proj" step=".1" oninput="calc()" placeholder="Proj %" />
+    <span class="sep">/</span>
+    <div class="fcalc" id="food_lw_act" style="max-width:90px">-</div>
+  </div>
+  <div class="row">
+    <span class="lbl">Food Sales / $ Spent:</span>
+    <span class="sep">$</span><input type="number" id="food_sales" oninput="calc()" placeholder="Sales" />
+    <span class="sep">/</span>
+    <input type="number" id="food_spent" oninput="calc()" placeholder="Spent" />
+  </div>
+
+  <div class="row">
+    <span class="lbl w">LBW Cost % Last Week (Proj / Actual):</span>
+    <input type="number" id="lbw_lw_proj" step=".1" oninput="calc()" placeholder="Proj %" />
+    <span class="sep">/</span>
+    <div class="fcalc" id="lbw_lw_act" style="max-width:90px">-</div>
+  </div>
+  <div class="row">
+    <span class="lbl">LBW Sales / $ Spent:</span>
+    <span class="sep">$</span><input type="number" id="lbw_sales" oninput="calc()" placeholder="Sales" />
+    <span class="sep">/</span>
+    <input type="number" id="lbw_spent" oninput="calc()" placeholder="Spent" />
+  </div>
+
+  <div class="row">
+    <span class="lbl w">PCC % Last Week (Proj / Actual):</span>
+    <input type="number" id="pcc_lw_proj" step=".1" oninput="calc()" placeholder="Proj %" />
+    <span class="sep">/</span>
+    <div class="fcalc" id="pcc_lw_act" style="max-width:90px">-</div>
+  </div>
+  <div class="row">
+    <span class="lbl">PCC Sales / $ Spent:</span>
+    <span class="sep">$</span><input type="number" id="pcc_sales" oninput="calc()" placeholder="Sales" />
+    <span class="sep">/</span>
+    <input type="number" id="pcc_spent" oninput="calc()" placeholder="Spent" />
+  </div>
+
+  <div class="row">
+    <span class="lbl w">N/A Bev % Last Week (Proj / Actual):</span>
+    <input type="number" id="nab_lw_proj" step=".1" oninput="calc()" placeholder="Proj %" />
+    <span class="sep">/</span>
+    <div class="fcalc" id="nab_lw_act" style="max-width:90px">-</div>
+  </div>
+  <div class="row">
+    <span class="lbl">NAB Sales / $ Spent:</span>
+    <span class="sep">$</span><input type="number" id="nab_sales" oninput="calc()" placeholder="Sales" />
+    <span class="sep">/</span>
+    <input type="number" id="nab_spent" oninput="calc()" placeholder="Spent" />
   </div>
 </div>
 
-<!-- MANAGER MEETING TAB -->
-
-<div id="sec-meet" class="sec">
-  <div class="card" style="background:var(--hdr);border-color:var(--hdr)">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
-      <div>
-        <div style="font-family:'Alfa Slab One',serif;font-size:21px;color:var(--org2)">Huey Luey's Acworth <span class="edit-badge">EDIT MODE ON</span></div>
-        <div style="font-family:'Oswald',sans-serif;font-size:13px;color:rgba(255,255,255,.6);letter-spacing:1.5px;margin-top:2px">MANAGER MEETING NOTES</div>
-      </div>
-      <div style="text-align:right">
-        <div style="font-family:'Oswald',sans-serif;font-size:10px;color:rgba(255,255,255,.45)">WEEK OF</div>
-        <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:var(--org2)" id="m_weekLabel">-</div>
-        <div style="font-family:'Oswald',sans-serif;font-size:11px;color:rgba(255,255,255,.45);margin-top:2px">Meeting Date: <span id="m_meetDate">-</span></div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:flex-end;gap:10px;margin-top:8px;flex-wrap:wrap">
-      <div>
-        <div class="fl" style="color:rgba(255,255,255,.4)">Meeting Date</div>
-        <input type="text" id="meet_date" placeholder="e.g. Monday April 14 2026" oninput="live()" style="max-width:280px;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff"/>
-      </div>
-      <button id="editModeBtn" class="btn sm no-print" onclick="toggleEditMode()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;margin-bottom:1px">Edit Mode: OFF</button>
-    </div>
+<div class="card">
+  <div class="card-hdr">GM Operations</div>
+  <div class="g3">
+    <div class="fg"><div class="fl">GM Hours (Total)</div><input type="number" id="gm_hours" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Videos / Podcasts / Training</div><input type="text" id="gm_videos" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Q&A Walkthroughs Completed</div><input type="text" id="gm_qa" oninput="mirrorMeeting()" /></div>
   </div>
-  <div class="card">
-    <div class="card-hdr">&#127780; <span id="lbl_5" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Itinerary and Weather Snapshot</span></div>
-    <div class="wx-grid" id="m_wxGrid"></div>
-    <div class="fg" style="margin-top:8px"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Weather / Event Notes</div><textarea id="wx_notes" rows="2" oninput="live()"></textarea></div>
-  </div>
-  <div class="card">
-    <div class="card-hdr">&#128200; <span id="lbl_6" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Last Week Metrics</span></div>
-    <div class="met-grid c2">
-      <div class="met"><div id="lbl_300" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Sales</div><div class="met-v" id="m_sales" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_301" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Up Against (Last Yr)</div><div class="met-v" id="m_sales_ly" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="met-grid c4" style="margin-bottom:4px">
-      <div class="met"><div id="lbl_302" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">To-Go Sales</div><div class="met-v sm" id="m_togo" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_303" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Catering Sales</div><div class="met-v sm" id="m_catering" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_304" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Patio Sales</div><div class="met-v sm" id="m_patio" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_305" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Rooftop Sales</div><div class="met-v sm" id="m_rooftop" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="met-grid c2" style="margin-bottom:4px">
-      <div class="met"><div id="lbl_306" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar</div><div class="met-v sm" id="m_bhb" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_307" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BHB vs Proj</div><div class="met-v sm" id="m_bhb_vsproj" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="div"></div>
-    <div class="met-grid c3">
-      <div class="met"><div id="lbl_308" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Net Discounts</div><div class="met-v" id="m_disc" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_309" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">EZ Cater</div><div class="met-v" id="m_disc_ezcater" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_310" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Other / Voids</div><div class="met-v" id="m_disc_o" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="div"></div>
-    <div class="met-grid c3">
-      <div class="met"><div id="lbl_311" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor % w/o Taxes</div><div class="met-v" id="m_labor" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_312" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor Cost $</div><div class="met-v" id="m_labor_cost" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_313" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Labor w/ Taxes %</div><div class="met-v" id="m_labor_wt" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="met-grid c2" style="margin-top:6px">
-      <div class="met"><div id="lbl_314" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Food Cost %</div><div class="met-v" id="m_food" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_315" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">LBW Cost %</div><div class="met-v" id="m_lbw" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="div"></div>
-    <div class="met-grid c3">
-      <div class="met"><div id="lbl_316" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">PPA</div><div class="met-v" id="m_ppa" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_317" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">vs Last Year</div><div class="met-v" id="m_ppa_vs" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_318" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">SPLH (Actual)</div><div class="met-v" id="m_splh" data-editable contenteditable="false">-</div></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-hdr">&#11088; <span id="lbl_7" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Metrics</span></div>
-    <div class="met-grid" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px">
-      <div class="met"><div id="lbl_319" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Loyalty Signups</div><div class="met-v" id="m_loyalty" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_320" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">5-Star Reviews</div><div class="met-v" id="m_rev5" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_321" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">4-Star Reviews</div><div class="met-v" id="m_rev4" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_322" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total Reviews</div><div class="met-v" id="m_rev_total" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_323" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Current Rating</div><div class="met-v" id="m_rating" data-editable contenteditable="false">-</div></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-hdr">&#127369; <span id="lbl_8" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold &amp; Employee Recognition</span></div>
-    <div id="lbl_34" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg of the Month</div>
-    <div class="met-grid c3">
-      <div class="met"><div id="lbl_324" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg Name</div><div class="met-v sm" id="m_motm" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_325" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Sold This Week</div><div class="met-v" id="m_motm_wk" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_326" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total Sold Month</div><div class="met-v" id="m_motm_total" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div id="lbl_35" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;margin-top:8px" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Winner / Employee Recognition</div>
-    <div class="met-grid c3">
-      <div class="met"><div id="lbl_327" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">1st Place Employee</div><div class="met-v sm" id="m_emp1" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_328" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Qty This Week</div><div class="met-v" id="m_emp1_wk" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_329" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Qty Total</div><div class="met-v" id="m_emp1_total" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="div"></div>
-    <div id="lbl_36" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Product Mix Highlights</div>
-    <div class="met-grid c4">
-      <div class="met"><div id="lbl_330" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">To-Go Margs</div><div class="met-v" id="m_togo_margs" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_331" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Huey's Floaters</div><div class="met-v" id="m_floaters" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_332" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Desserts</div><div class="met-v" id="m_desserts" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_333" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Top Margarita</div><div class="met-v sm" id="m_top_marg" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="met-grid c4" style="margin-top:6px">
-      <div class="met"><div id="lbl_334" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">16oz Margs</div><div class="met-v" id="m_marg16" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_335" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">22oz Margs</div><div class="met-v" id="m_marg22" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_336" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">32oz Margs</div><div class="met-v" id="m_marg32" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_337" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Pitchers</div><div class="met-v" id="m_pitchers" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="div"></div>
-    <div id="lbl_39" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Brunch Product Mix</div>
-    <div class="met-grid" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr;gap:6px">
-      <div class="met"><div id="lbl_350" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Hot Cakes</div><div class="met-v" id="m_brunch_hotcakes" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_351" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">HotCakes Refill</div><div class="met-v" id="m_brunch_hotcakes_refill" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_352" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Brunch Skillet</div><div class="met-v" id="m_brunch_skillet" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_353" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">French Toast Ench.</div><div class="met-v" id="m_brunch_french_toast" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_354" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Breakfast Burrito</div><div class="met-v" id="m_brunch_burrito" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_355" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Chilaquiles</div><div class="met-v" id="m_brunch_chilaquiles" data-editable contenteditable="false">-</div></div>
-    </div>
-    <div class="div"></div>
-    <div id="lbl_37" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar</div>
-    <div class="met-grid" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px">
-      <div class="met"><div id="lbl_338" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Mai Tais</div><div class="met-v" id="m_bhb_mt" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_339" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Pina Coladas</div><div class="met-v" id="m_bhb_pc" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_340" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Lemon Drop</div><div class="met-v" id="m_bhb_ld" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_341" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Blueberry Refresher</div><div class="met-v" id="m_bhb_br" data-editable contenteditable="false">-</div></div>
-      <div class="met"><div id="lbl_342" class="met-l" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Front Porch Swing</div><div class="met-v" id="m_bhb_fp" data-editable contenteditable="false">-</div></div>
-    </div>
-  </div>
-  <div class="card print-break">
-    <div class="card-hdr">&#127859; <span id="lbl_9" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BOH Focus</span></div>
-    <textarea id="boh_focus" rows="4" oninput="live()" placeholder="BOH notes, focus areas, issues..."></textarea>
-    <div class="nb-lines" id="boh_lines"></div>
-  </div>
-  <div class="card">
-    <div class="card-hdr">&#127869; <span id="lbl_10" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">FOH Focus</span></div>
-    <textarea id="foh_focus" rows="4" oninput="live()" placeholder="FOH notes, focus areas, issues..."></textarea>
-    <div class="nb-lines" id="foh_lines"></div>
-  </div>
-  <div class="card">
-    <div class="card-hdr">&#128203; <span id="lbl_11" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Manager Notes</span></div>
-    <textarea id="mgr_notes" rows="5" oninput="live()" placeholder="Additional notes, shoutouts, discussion..."></textarea>
-    <div class="nb-lines" id="mgr_lines"></div>
+  <div class="g2">
+    <div class="fg"><div class="fl">Projects Completed</div><textarea id="gm_projects" rows="2" oninput="mirrorMeeting()"></textarea></div>
+    <div class="fg"><div class="fl">Notes</div><textarea id="gm_notes" rows="2" oninput="mirrorMeeting()"></textarea></div>
   </div>
 </div>
 
-<!-- HISTORY TAB -->
+<div class="card">
+  <div class="card-hdr">Guest Experience</div>
 
-<div id="sec-hist" class="sec">
-  <div class="card">
-    <div class="card-hdr">&#128193; <span id="lbl_12" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Saved Weeks</span></div>
-    <div id="histList"><p style="color:#9C8878;font-size:12px;padding:8px 0">No saved weeks yet.</p></div>
+  <div class="review-table">
+    <div class="review-h">Star Level</div>
+    <div class="review-h">This Week</div>
+    <div class="review-h">YTD Total</div>
+    <div class="review-h">Comment</div>
+
+    <div class="review-cell"><div class="fl">5-Star</div></div>
+    <div class="review-cell"><input type="number" id="rev5_week" oninput="updateReviewRollups()" /></div>
+    <div class="review-cell"><div class="fcalc" id="rev5_ytd">0</div></div>
+    <div class="review-cell"><input type="text" id="rev5_comment" class="review-comment" oninput="mirrorMeeting()" /></div>
+
+    <div class="review-cell"><div class="fl">4-Star</div></div>
+    <div class="review-cell"><input type="number" id="rev4_week" oninput="updateReviewRollups()" /></div>
+    <div class="review-cell"><div class="fcalc" id="rev4_ytd">0</div></div>
+    <div class="review-cell"><input type="text" id="rev4_comment" class="review-comment" oninput="mirrorMeeting()" /></div>
+
+    <div class="review-cell"><div class="fl">3-Star</div></div>
+    <div class="review-cell"><input type="number" id="rev3_week" oninput="updateReviewRollups()" /></div>
+    <div class="review-cell"><div class="fcalc" id="rev3_ytd">0</div></div>
+    <div class="review-cell"><input type="text" id="rev3_comment" class="review-comment" oninput="mirrorMeeting()" /></div>
+
+    <div class="review-cell"><div class="fl">2-Star</div></div>
+    <div class="review-cell"><input type="number" id="rev2_week" oninput="updateReviewRollups()" /></div>
+    <div class="review-cell"><div class="fcalc" id="rev2_ytd">0</div></div>
+    <div class="review-cell"><input type="text" id="rev2_comment" class="review-comment" oninput="mirrorMeeting()" /></div>
+
+    <div class="review-cell"><div class="fl">1-Star</div></div>
+    <div class="review-cell"><input type="number" id="rev1_week" oninput="updateReviewRollups()" /></div>
+    <div class="review-cell"><div class="fcalc" id="rev1_ytd">0</div></div>
+    <div class="review-cell"><input type="text" id="rev1_comment" class="review-comment" oninput="mirrorMeeting()" /></div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="g2">
+    <div class="fg"><div class="fl">Loyalty Signups</div><input type="number" id="loyalty" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Weekly Local Sales Marketing Plan</div><input type="text" id="marketing" oninput="mirrorMeeting()" /></div>
   </div>
 </div>
 
-</div><!-- /app -->
-<!-- FIREBASE (WORKING VERSION FOR YOUR APP) -->
+<div class="card">
+  <div class="card-hdr">Items Sold</div>
+
+  <div class="sec-title">Marg of the Month & Employee Contest</div>
+  <div class="g4">
+    <div class="fg"><div class="fl">Marg of Month - Name</div><input type="text" id="motm_name" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Qty Sold This Week</div><input type="number" id="motm_wk" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Total Sold Month</div><input type="number" id="motm_total" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">1st Place Employee</div><input type="text" id="emp1_name" oninput="mirrorMeeting()" /></div>
+  </div>
+  <div class="g4">
+    <div class="fg"><div class="fl">Employee Qty This Week</div><input type="number" id="emp1_wk" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Employee Qty Total</div><input type="number" id="emp1_total" oninput="mirrorMeeting()" /></div>
+    <div class="fg"></div><div class="fg"></div>
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-title">Liquor Product Mix</div>
+  <div class="g6">
+    <div class="fg"><div class="fl">To-Go Margs</div><input type="number" id="togo_margs" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">16oz Margs</div><input type="number" id="marg16" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">22oz Margs</div><input type="number" id="marg22" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">32oz Margs</div><input type="number" id="marg32" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Pitchers</div><input type="number" id="pitchers" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Total Floaters</div><input type="number" id="floaters" oninput="mirrorMeeting()" /></div>
+  </div>
+  <div class="g4">
+    <div class="fg"><div class="fl">Top Margarita</div><input type="text" id="top_marg" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Top Marg Qty</div><input type="number" id="top_marg_qty" oninput="mirrorMeeting()" /></div>
+    <div class="fg no-print" style="display:flex;align-items:flex-end"><button class="btn xs alt" onclick="addCustomMetric('liquor')">Add Liquor Box</button></div>
+    <div class="fg"></div>
+  </div>
+  <div id="opsCustom_liquor" class="custom-grid"></div>
+
+  <div class="div"></div>
+  <div class="sec-title">Food Product Mix</div>
+  <div class="g5">
+    <div class="fg"><div class="fl">Total Fajitas</div><input type="number" id="faj_total" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Durango Style</div><input type="number" id="faj_dur" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Huey's Style</div><input type="number" id="faj_huey" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Bacon Shrimp</div><input type="number" id="faj_bacon" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">The Big Huey</div><input type="number" id="big_huey" oninput="mirrorMeeting()" /></div>
+  </div>
+  <div class="g5">
+    <div class="fg"><div class="fl">Desserts Sold</div><input type="number" id="desserts" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Kids Menu Items</div><input type="number" id="kids" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Top Food Item</div><input type="text" id="top_food" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Top Food Qty</div><input type="number" id="top_food_qty" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Steak &amp; Blue Quesadilla</div><input type="number" id="steak_blue" oninput="mirrorMeeting()" /></div>
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-title">Brunch Product Mix</div>
+  <div class="g4">
+    <div class="fg"><div class="fl">Hot Cakes</div><input type="number" id="brunch_hotcakes" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">HotCakes Refill</div><input type="number" id="brunch_hotcakes_refill" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Brunch Skillet</div><input type="number" id="brunch_skillet" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">French Toast Ench.</div><input type="number" id="brunch_french_toast" oninput="mirrorMeeting()" /></div>
+  </div>
+  <div class="g4">
+    <div class="fg"><div class="fl">Breakfast Burrito</div><input type="number" id="brunch_burrito" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Chilaquiles</div><input type="number" id="brunch_chilaquiles" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Mimosa Qty</div><input type="number" id="brunch_mimosa_qty" oninput="mirrorMeeting()" /></div>
+    <div class="fg no-print" style="display:flex;align-items:flex-end"><button class="btn xs alt" onclick="addCustomMetric('brunch')">Add Brunch Box</button></div>
+  </div>
+  <div id="opsCustom_brunch" class="custom-grid"></div>
+
+  <div class="div"></div>
+  <div class="sec-title">Beach House Bar - Cocktail Counts</div>
+  <div class="g5">
+    <div class="fg"><div class="fl">Mai Tais</div><input type="number" id="bhb_mt" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Pina Coladas</div><input type="number" id="bhb_pc" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Lemon Drop Shots</div><input type="number" id="bhb_ld" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Blueberry Refresher</div><input type="number" id="bhb_br" oninput="mirrorMeeting()" /></div>
+    <div class="fg"><div class="fl">Front Porch Swing</div><input type="number" id="bhb_fp" oninput="mirrorMeeting()" /></div>
+  </div>
+</div>
+```
+
+  </div><!-- end #sec-ops -->
+
+  <!-- ===================== MANAGER MEETING TAB ===================== -->
+
+  <div id="sec-meet" class="sec">
+
+```
+<div class="card" style="background:#111;border-color:#111">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div>
+      <div style="font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;color:#fff">Huey Luey's Acworth</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:13px;color:#d7d7d7;letter-spacing:1.3px;margin-top:2px">Manager Meeting Notes</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-family:'Oswald',sans-serif;font-size:10px;color:#d7d7d7">Week Of</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:16px;font-weight:600;color:#fff" id="m_weekLabel">-</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:11px;color:#d7d7d7;margin-top:2px">Meeting Date: <span id="m_meetDate">-</span></div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:flex-end;gap:10px;margin-top:8px;flex-wrap:wrap">
+    <div>
+      <div class="fl" style="color:#d7d7d7">Meeting Date</div>
+      <input type="text" id="meet_date" placeholder="e.g. Monday April 14 2026" oninput="mirrorMeeting()" style="max-width:280px;background:#fff;border-color:#999;color:#000" />
+    </div>
+    <button id="editModeBtn" class="btn sm no-print" onclick="toggleEditMode()" style="background:#fff;color:#111;border:1px solid #999;margin-bottom:1px">Edit Mode: OFF</button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">Weekly Itinerary and Weather Snapshot</div>
+  <div class="wx-grid" id="m_wxGrid"></div>
+  <div class="fg" style="margin-top:8px"><div class="fl">Weather / Event Notes</div><textarea id="wx_notes" rows="2" oninput="mirrorMeeting()"></textarea></div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">Last Week Metrics</div>
+
+  <div class="met-grid c2">
+    <div class="met"><div class="met-l">Sales</div><div class="met-v" id="m_sales" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Up Against (Last Yr)</div><div class="met-v" id="m_sales_ly" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="met-grid c4">
+    <div class="met"><div class="met-l">To-Go Sales</div><div class="met-v sm" id="m_togo" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Catering Sales</div><div class="met-v sm" id="m_catering" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Patio Sales</div><div class="met-v sm" id="m_patio" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Rooftop Sales</div><div class="met-v sm" id="m_rooftop" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="met-grid c2">
+    <div class="met"><div class="met-l">Beach House Bar</div><div class="met-v sm" id="m_bhb" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">BHB vs Proj</div><div class="met-v sm" id="m_bhb_vsproj" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="met-grid c3">
+    <div class="met"><div class="met-l">Net Discounts</div><div class="met-v" id="m_disc" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">EZ Cater</div><div class="met-v" id="m_disc_ezcater" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Other / Voids</div><div class="met-v" id="m_disc_o" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="met-grid c3">
+    <div class="met"><div class="met-l">Labor % w/o Taxes</div><div class="met-v" id="m_labor" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Labor Cost $</div><div class="met-v" id="m_labor_cost" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Labor w/ Taxes %</div><div class="met-v" id="m_labor_wt" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="met-grid c2">
+    <div class="met"><div class="met-l">Food Cost %</div><div class="met-v" id="m_food" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">LBW Cost %</div><div class="met-v" id="m_lbw" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="met-grid c4">
+    <div class="met"><div class="met-l">Guest Count</div><div class="met-v" id="m_guest" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Guest Count Diff</div><div class="met-v" id="m_guest_diff" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">PPA</div><div class="met-v" id="m_ppa" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">PPA vs Last Year</div><div class="met-v" id="m_ppa_vs" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="met-grid c2">
+    <div class="met"><div class="met-l">SPLH (Actual)</div><div class="met-v" id="m_splh" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">SPLH Diff</div><div class="met-v" id="m_splh_diff" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">Guest Metrics</div>
+
+  <div class="review-table">
+    <div class="review-h">Star</div>
+    <div class="review-h">Week</div>
+    <div class="review-h">YTD</div>
+    <div class="review-h">Comment</div>
+
+    <div class="review-cell"><div class="fl">5-Star</div></div><div class="review-cell"><div class="fcalc" id="m_rev5_week">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev5_ytd">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev5_comment">-</div></div>
+    <div class="review-cell"><div class="fl">4-Star</div></div><div class="review-cell"><div class="fcalc" id="m_rev4_week">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev4_ytd">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev4_comment">-</div></div>
+    <div class="review-cell"><div class="fl">3-Star</div></div><div class="review-cell"><div class="fcalc" id="m_rev3_week">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev3_ytd">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev3_comment">-</div></div>
+    <div class="review-cell"><div class="fl">2-Star</div></div><div class="review-cell"><div class="fcalc" id="m_rev2_week">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev2_ytd">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev2_comment">-</div></div>
+    <div class="review-cell"><div class="fl">1-Star</div></div><div class="review-cell"><div class="fcalc" id="m_rev1_week">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev1_ytd">-</div></div><div class="review-cell"><div class="fcalc" id="m_rev1_comment">-</div></div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="met-grid c2">
+    <div class="met"><div class="met-l">Loyalty Signups</div><div class="met-v" id="m_loyalty" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Marketing Plan</div><div class="met-v sm" id="m_marketing" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">Items Sold &amp; Employee Recognition</div>
+
+  <div class="sec-title">Marg of the Month</div>
+  <div class="met-grid c3">
+    <div class="met"><div class="met-l">Marg Name</div><div class="met-v sm" id="m_motm" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Sold This Week</div><div class="met-v" id="m_motm_wk" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Total Sold Month</div><div class="met-v" id="m_motm_total" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="sec-title">Winner / Employee Recognition</div>
+  <div class="met-grid c3">
+    <div class="met"><div class="met-l">1st Place Employee</div><div class="met-v sm" id="m_emp1" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Qty This Week</div><div class="met-v" id="m_emp1_wk" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Qty Total</div><div class="met-v" id="m_emp1_total" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="div"></div>
+  <div class="sec-title">Product Mix Highlights</div>
+  <div class="met-grid c4">
+    <div class="met"><div class="met-l">To-Go Margs</div><div class="met-v" id="m_togo_margs" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Total Floaters</div><div class="met-v" id="m_floaters" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Desserts</div><div class="met-v" id="m_desserts" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Top Margarita</div><div class="met-v sm" id="m_top_marg" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div class="met-grid c4">
+    <div class="met"><div class="met-l">16oz Margs</div><div class="met-v" id="m_marg16" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">22oz Margs</div><div class="met-v" id="m_marg22" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">32oz Margs</div><div class="met-v" id="m_marg32" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Pitchers</div><div class="met-v" id="m_pitchers" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+
+  <div id="meetCustom_liquor" class="met-grid c4" style="margin-top:6px"></div>
+
+  <div class="div"></div>
+  <div class="sec-title">Brunch Product Mix</div>
+  <div class="met-grid c4">
+    <div class="met"><div class="met-l">Hot Cakes</div><div class="met-v" id="m_brunch_hotcakes" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">HotCakes Refill</div><div class="met-v" id="m_brunch_hotcakes_refill" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Brunch Skillet</div><div class="met-v" id="m_brunch_skillet" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">French Toast Ench.</div><div class="met-v" id="m_brunch_french_toast" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+  <div class="met-grid c4">
+    <div class="met"><div class="met-l">Breakfast Burrito</div><div class="met-v" id="m_brunch_burrito" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Chilaquiles</div><div class="met-v" id="m_brunch_chilaquiles" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Mimosa Qty</div><div class="met-v" id="m_brunch_mimosa_qty" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"></div>
+  </div>
+
+  <div id="meetCustom_brunch" class="met-grid c4" style="margin-top:6px"></div>
+
+  <div class="div"></div>
+  <div class="sec-title">Beach House Bar</div>
+  <div class="met-grid c4">
+    <div class="met"><div class="met-l">Mai Tais</div><div class="met-v" id="m_bhb_mt" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Pina Coladas</div><div class="met-v" id="m_bhb_pc" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Lemon Drop</div><div class="met-v" id="m_bhb_ld" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Blueberry Refresher</div><div class="met-v" id="m_bhb_br" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+  <div class="met-grid c4">
+    <div class="met"><div class="met-l">Front Porch Swing</div><div class="met-v" id="m_bhb_fp" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Top Food Item</div><div class="met-v sm" id="m_top_food" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Top Food Qty</div><div class="met-v" id="m_top_food_qty" data-editable="1" contenteditable="false">-</div></div>
+    <div class="met"><div class="met-l">Steak &amp; Blue Quesadilla</div><div class="met-v" id="m_steak_blue" data-editable="1" contenteditable="false">-</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">BOH Focus</div>
+  <textarea id="boh_focus" rows="4" oninput="mirrorMeeting()" placeholder="BOH notes, focus areas, issues..."></textarea>
+  <div class="nb-lines" id="boh_lines"></div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">FOH Focus</div>
+  <textarea id="foh_focus" rows="4" oninput="mirrorMeeting()" placeholder="FOH notes, focus areas, issues..."></textarea>
+  <div class="nb-lines" id="foh_lines"></div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">Manager Notes</div>
+  <textarea id="mgr_notes" rows="5" oninput="mirrorMeeting()" placeholder="Additional notes, shoutouts, discussion..."></textarea>
+  <div class="nb-lines" id="mgr_lines"></div>
+</div>
+```
+
+  </div><!-- end #sec-meet -->
+
+  <!-- ===================== HISTORY TAB ===================== -->
+
+  <div id="sec-hist" class="sec">
+    <div class="card">
+      <div class="card-hdr">Saved Weeks</div>
+      <div id="histList"><p style="color:#555;font-size:12px;padding:8px 0">No saved weeks yet.</p></div>
+    </div>
+  </div>
+
+</div><!-- end .app -->
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyALS_ixEzj13Z3WAKfalMxMr9iAZrFTWI8",
-    authDomain: "hueysdashboard.firebaseapp.com",
-    projectId: "hueysdashboard",
-    storageBucket: "hueysdashboard.firebasestorage.app",
-    messagingSenderId: "929084173637",
-    appId: "1:929084173637:web:9f8efcd71602e645fbe22c",
-    measurementId: "G-3QC9BDCJ6C"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyALS_ixEzj13Z3WAKfalMxMr9iAZrFTWI8",
+  authDomain: "hueysdashboard.firebaseapp.com",
+  projectId: "hueysdashboard",
+  storageBucket: "hueysdashboard.firebasestorage.app",
+  messagingSenderId: "929084173637",
+  appId: "1:929084173637:web:9f8efcd71602e645fbe22c",
+  measurementId: "G-3QC9BDCJ6C"
+};
 
-  firebase.initializeApp(firebaseConfig);
-
-  const db = firebase.firestore();
-
-  // make globally accessible
-  window.db = db;
-  window.firebaseReady = true;
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+window.db = db;
+window.firebaseReady = true;
 </script>
+
 <script>
-var TAX_DEFAULT = 14.53;
-var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-var _editMode = false;
-var _opsLocked = false;
+const TAX_DEFAULT = 14.53;
+const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+let _editMode = false;
+let _opsLocked = false;
 
 function gi(id){ return document.getElementById(id); }
-function gv(id){ var e = gi(id); return e ? (e.value || '') : ''; }
+function gv(id){ const e = gi(id); return e ? (e.value || '') : ''; }
 function gn(id){ return parseFloat(gv(id)) || 0; }
-function sv(id,v){ var e = gi(id); if(e) e.value = (v ?? ''); }
+function sv(id,v){ const e = gi(id); if(e) e.value = (v ?? ''); }
 
 function fD(n){
   if((!n && n !== 0) || isNaN(n)) return '-';
@@ -1240,946 +1480,1056 @@ function fN(n){
 }
 function chip(actual, ref){
   if(!actual || !ref) return '<span class="chip nt">-</span>';
-  var p = ((actual - ref) / ref) * 100;
-  var c = p >= 0 ? 'up' : 'dn';
+  const p = ((actual - ref) / ref) * 100;
+  const c = p >= 0 ? 'up' : 'dn';
   return '<span class="chip ' + c + '">' + (p >= 0 ? '+' : '') + p.toFixed(1) + '%</span>';
 }
-function setTxt(id,v){
-  var e = gi(id);
-  if(e) e.textContent = v || '-';
-}
-function setHtm(id,v){
-  var e = gi(id);
-  if(e) e.innerHTML = v || '-';
-}
+function setTxt(id,v){ const e = gi(id); if(e) e.textContent = v || '-'; }
+function setHtm(id,v){ const e = gi(id); if(e) e.innerHTML = v || '-'; }
 
 function safeTxt(id,v){
-  var e = gi(id);
+  const e = gi(id);
   if(!e) return;
-  if(_editMode && e.dataset.mirror !== undefined && e.innerHTML !== e.dataset.mirror) return;
+  if(_editMode && e.dataset.userEdited === '1') return;
   e.textContent = v || '-';
 }
 function safeHtm(id,v){
-  var e = gi(id);
+  const e = gi(id);
   if(!e) return;
-  if(_editMode && e.dataset.mirror !== undefined && e.innerHTML !== e.dataset.mirror) return;
+  if(_editMode && e.dataset.userEdited === '1') return;
   e.innerHTML = v || '-';
 }
 
 function buildAll(){
-  var h = '';
-  for(var i=0;i<7;i++){
-    h += '<div class="wx-day">' +
-      '<div class="wn">' + DAYS[i].slice(0,3).toUpperCase() + '</div>' +
-      '<input type="text" id="wx_icon_' + i + '" value="" style="font-size:13px;text-align:center;padding:1px;border:1px solid var(--bdr);border-radius:3px;width:100%;margin:2px 0" oninput="live()" placeholder="Icon"/>' +
-      '<input type="text" id="wx_temp_' + i + '" style="font-size:9px;text-align:center;padding:2px 3px;margin-bottom:2px" oninput="live()" placeholder="Hi/Lo F"/>' +
-      '<input type="text" id="wx_cond_' + i + '" style="font-size:9px;text-align:center;padding:1px 3px;margin-bottom:2px;color:var(--t3)" oninput="live()" placeholder="Condition"/>' +
-      '<textarea id="wx_itin_' + i + '" oninput="live()" style="font-size:9px;min-height:28px;resize:none;padding:2px 3px" placeholder="Notes..."></textarea>' +
-    '</div>';
-  }
-  gi('m_wxGrid').innerHTML = h;
+  let h = '';
+  for(let i=0;i<7;i++){
+    h += `
+      <div class="wx-day">
+        <div class="wn">${DAYS[i].slice(0,3).toUpperCase()}</div>
+        <input type="text" id="wx_icon_${i}" oninput="mirrorMeeting()" placeholder="Icon" style="text-align:center;margin:2px 0" />
+        <input type="text" id="wx_temp_${i}" oninput="mirrorMeeting()" placeholder="Hi/Lo F" style="margin-bottom:2px" />
+        <input type="text" id="wx_cond_${i}" oninput="mirrorMeeting()" placeholder="Condition" style="margin-bottom:2px" />
+        <textarea id="wx_itin_${i}" oninput="mirrorMeeting()" placeholder="Notes..." style="min-height:28px"></textarea>
 
-  ['boh_lines','foh_lines','mgr_lines'].forEach(function(id){
-    var s = '';
-    for(var i=0;i<8;i++) s += '<span class="nb-line"></span>';
-    gi(id).innerHTML = s;
-  });
+```
+  </div>`;
+```
+
 }
+gi(‘m_wxGrid’).innerHTML = h;
 
-function calcDisc(){
-  var net = gn('disc_total') - gn('disc_ezcater') - gn('disc_rewards') - gn('disc_other');
-  var el = gi('disc_net_display');
-  if(el) el.textContent = fD(net);
-  mirrorMeeting();
-}
-
-function calc(){
-  setHtm('s_lw_vsly', chip(gn('s_lw_act'), gn('s_lw_ly')));
-  setHtm('cat_lw_vsly', chip(gn('cat_lw_act'), gn('cat_lw_ly')));
-  setHtm('rft_lw_vsly', chip(gn('rft_lw_act'), gn('rft_lw_ly')));
-  setHtm('togo_lw_vsly', chip(gn('togo_lw_act'), gn('togo_lw_ly')));
-  setHtm('patio_lw_vsly', chip(gn('patio_lw_act'), gn('patio_lw_ly')));
-  setHtm('bhb_lw_vsproj', chip(gn('bhb_lw_act'), gn('bhb_lw_proj')));
-  setHtm('ppa_lw_vsly', chip(gn('ppa_lw_act'), gn('ppa_cw_ly')));
-
-  var labS = gn('lab_sales');
-  var labD = gn('lab_dollars');
-  var taxR = gn('lab_tax') || TAX_DEFAULT;
-  var labAct = labS > 0 ? (labD / labS) * 100 : null;
-  var labWtax = labAct != null ? labAct * (1 + taxR / 100) : null;
-
-  gi('lab_pct_notax').textContent = labAct != null ? fP(labAct) : '-';
-  gi('lab_pct_notax')._val = labAct;
-  gi('lab_pct_wtax').textContent = labWtax != null ? fP(labWtax) : '-';
-  gi('lab_pct_wtax')._val = labWtax;
-
-  ['food','lbw','pcc','nab'].forEach(function(id){
-    var s = gn(id + '_sales');
-    var sp = gn(id + '_spent');
-    var act = s > 0 ? (sp / s) * 100 : null;
-    gi(id + '_lw_act').textContent = act != null ? fP(act) : '-';
-    gi(id + '_lw_act')._val = act;
-  });
-
-  calcDisc();
-  mirrorMeeting();
-}
-
-function live(){
-  mirrorMeeting();
-}
-
-function mirrorMeeting(){
-  var d = gv('weekDate');
-  if(d){
-    var dt = new Date(d + 'T12:00:00');
-    var en = new Date(dt);
-    en.setDate(dt.getDate() + 6);
-    var f = function(x){
-      return x.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    };
-    setTxt('m_weekLabel', f(dt) + ' - ' + f(en));
-  } else {
-    setTxt('m_weekLabel', '-');
-  }
-
-  setTxt('m_meetDate', gv('meet_date') || '-');
-
-  var sAct = gn('s_lw_act'), sLY = gn('s_lw_ly');
-  safeHtm('m_sales', sAct ? fD(sAct) + '&nbsp;' + chip(sAct, sLY) : '-');
-  safeTxt('m_sales_ly', sLY ? fD(sLY) : '-');
-
-  var togoAct = gn('togo_lw_act'), togoLY = gn('togo_lw_ly');
-  safeHtm('m_togo', togoAct ? fD(togoAct) + '&nbsp;' + chip(togoAct, togoLY) : '-');
-
-  var catAct = gn('cat_lw_act'), catLY = gn('cat_lw_ly');
-  safeHtm('m_catering', catAct ? fD(catAct) + '&nbsp;' + chip(catAct, catLY) : '-');
-
-  var patAct = gn('patio_lw_act'), patLY = gn('patio_lw_ly');
-  safeHtm('m_patio', patAct ? fD(patAct) + '&nbsp;' + chip(patAct, patLY) : '-');
-
-  var rftAct = gn('rft_lw_act'), rftLY = gn('rft_lw_ly');
-  safeHtm('m_rooftop', rftAct ? fD(rftAct) + '&nbsp;' + chip(rftAct, rftLY) : '-');
-
-  safeTxt('m_bhb', gn('bhb_lw_act') ? fD(gn('bhb_lw_act')) : '-');
-  safeHtm('m_bhb_vsproj', chip(gn('bhb_lw_act'), gn('bhb_lw_proj')));
-
-  var discNet = gn('disc_total') - gn('disc_ezcater') - gn('disc_rewards') - gn('disc_other');
-  safeTxt('m_disc', fD(discNet));
-  safeTxt('m_disc_ezcater', gn('disc_ezcater') ? fD(gn('disc_ezcater')) : '-');
-  safeTxt('m_disc_o', gn('disc_other') ? fD(gn('disc_other')) : '-');
-
-  var labAct = gi('lab_pct_notax')._val;
-  var labWtax = gi('lab_pct_wtax')._val;
-  safeTxt('m_labor', labAct != null ? fP(labAct) : '-');
-  safeTxt('m_labor_cost', gn('lab_dollars') ? fD(gn('lab_dollars')) : '-');
-  safeTxt('m_labor_wt', labWtax != null ? fP(labWtax) : '-');
-
-  safeTxt('m_food', gi('food_lw_act')._val != null ? fP(gi('food_lw_act')._val) : '-');
-  safeTxt('m_lbw', gi('lbw_lw_act')._val != null ? fP(gi('lbw_lw_act')._val) : '-');
-
-  safeTxt('m_ppa', gn('ppa_lw_act') ? fD(gn('ppa_lw_act')) : '-');
-  safeHtm('m_ppa_vs', chip(gn('ppa_lw_act'), gn('ppa_cw_ly')));
-  safeTxt('m_splh', gn('splh_lw_act') ? fD(gn('splh_lw_act')) : '-');
-
-  safeTxt('m_loyalty', gn('loyalty') ? fN(gn('loyalty')) : '-');
-  safeTxt('m_rev5', gn('rev5') || '-');
-  safeTxt('m_rev4', gn('rev4') || '-');
-  safeTxt('m_rating', gn('rev_rating') || '-');
-  safeTxt('m_rev_total', gn('rev_total') || '-');
-
-  safeTxt('m_motm', gv('motm_name') || '-');
-  safeTxt('m_motm_wk', gn('motm_wk') || '-');
-  safeTxt('m_motm_total', gn('motm_total') || '-');
-
-  safeTxt('m_emp1', gv('emp1_name') || '-');
-  safeTxt('m_emp1_wk', gn('emp1_wk') || '-');
-  safeTxt('m_emp1_total', gn('emp1_total') || '-');
-
-  safeTxt('m_togo_margs', gn('togo_margs') || '-');
-  safeTxt('m_floaters', gn('floaters') || '-');
-  safeTxt('m_desserts', gn('desserts') || '-');
-  safeTxt('m_top_marg', gv('top_marg') || '-');
-
-  safeTxt('m_marg16', gn('marg16') || '-');
-  safeTxt('m_marg22', gn('marg22') || '-');
-  safeTxt('m_marg32', gn('marg32') || '-');
-  safeTxt('m_pitchers', gn('pitchers') || '-');
-
-  safeTxt('m_bhb_mt', gn('bhb_mt') || '-');
-  safeTxt('m_bhb_pc', gn('bhb_pc') || '-');
-  safeTxt('m_bhb_ld', gn('bhb_ld') || '-');
-  safeTxt('m_bhb_br', gn('bhb_br') || '-');
-  safeTxt('m_bhb_fp', gn('bhb_fp') || '-');
-
-  safeTxt('m_brunch_hotcakes', gn('brunch_hotcakes') || '-');
-  safeTxt('m_brunch_hotcakes_refill', gn('brunch_hotcakes_refill') || '-');
-  safeTxt('m_brunch_skillet', gn('brunch_skillet') || '-');
-  safeTxt('m_brunch_french_toast', gn('brunch_french_toast') || '-');
-  safeTxt('m_brunch_burrito', gn('brunch_burrito') || '-');
-  safeTxt('m_brunch_chilaquiles', gn('brunch_chilaquiles') || '-');
+[‘boh_lines’,‘foh_lines’,‘mgr_lines’].forEach(id=>{
+let s = ‘’;
+for(let i=0;i<8;i++) s += ‘<span class="nb-line"></span>’;
+gi(id).innerHTML = s;
+});
 }
 
 function updateLabel(){
-  var d = gv('weekDate');
-  if(!d){
-    gi('weekLabel').textContent = '-';
-    return;
-  }
-  var dt = new Date(d + 'T12:00:00');
-  var en = new Date(dt);
-  en.setDate(dt.getDate() + 6);
-  var f = function(x){
-    return x.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  };
-  gi('weekLabel').textContent = f(dt) + ' - ' + f(en);
+const d = gv(‘weekDate’);
+if(!d){ gi(‘weekLabel’).textContent = ‘-’; return; }
+const dt = new Date(d + ‘T12:00:00’);
+const en = new Date(dt);
+en.setDate(dt.getDate() + 6);
+const f = x => x.toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’,year:‘numeric’});
+gi(‘weekLabel’).textContent = f(dt) + ’ - ’ + f(en);
 }
 
-async function onDateChange(){
-  updateLabel();
-
-  var key = weekKey();
-  if(!key) return;
-
-  try{
-    var data = null;
-
-    if(window.firebaseReady){
-      data = await fbLoadWeek(key);
-    }
-
-    if(!data){
-      var raw = localStorage.getItem(key);
-      if(raw) data = JSON.parse(raw);
-    }
-
-    if(data){
-      restoreData(data);
-      calc();
-      gi('syncBadge').textContent = window.firebaseReady ? 'Loaded from Firebase' : 'Loaded locally';
-      gi('syncBadge').className = 'ss ss-ok';
-      return;
-    }
-  }catch(e){
-    console.warn('Date change load failed', e);
-  }
-
-  var d = gv('weekDate');
-  if(!d) return;
-
-  var dt = new Date(d + 'T12:00:00');
-  var prev = new Date(dt);
-  prev.setDate(dt.getDate() - 7);
-
-  await autoCarry('hl_week_' + prev.toISOString().split('T')[0]);
+function calcDisc(){
+const net = gn(‘disc_total’) - gn(‘disc_ezcater’) - gn(‘disc_rewards’) - gn(‘disc_other’);
+gi(‘disc_net_display’).textContent = fD(net);
+mirrorMeeting();
 }
 
-async function autoCarry(prevKey){
-  var data = null;
+function calc(){
+setHtm(‘s_lw_vsly’,    chip(gn(‘s_lw_act’),    gn(‘s_lw_ly’)));
+setHtm(‘cat_lw_vsly’,  chip(gn(‘cat_lw_act’),  gn(‘cat_lw_ly’)));
+setHtm(‘rft_lw_vsly’,  chip(gn(‘rft_lw_act’),  gn(‘rft_lw_ly’)));
+setHtm(‘togo_lw_vsly’, chip(gn(‘togo_lw_act’), gn(‘togo_lw_ly’)));
+setHtm(‘patio_lw_vsly’,chip(gn(‘patio_lw_act’),gn(‘patio_lw_ly’)));
+setHtm(‘bhb_lw_vsproj’,chip(gn(‘bhb_lw_act’),  gn(‘bhb_lw_proj’)));
+// FIX: use dedicated ppa_lw_ly field for last-week PPA vs last year comparison
+setHtm(‘ppa_lw_vsly’,  chip(gn(‘ppa_lw_act’),  gn(‘ppa_lw_ly’)));
+setHtm(‘gst_lw_diff’,  chip(gn(‘gst_lw_act’),  gn(‘gst_lw_proj’)));
+setHtm(‘gst_cw_diff’,  chip(gn(‘gst_cw_proj’), gn(‘gst_cw_ly’)));
+setHtm(‘splh_lw_diff’, chip(gn(‘splh_lw_act’), gn(‘splh_lw_proj’)));
 
-  try{
-    if(window.firebaseReady){
-      data = await fbLoadWeek(prevKey);
-    }
+const labS = gn(‘lab_sales’);
+const labD = gn(‘lab_dollars’);
+const taxR = gn(‘lab_tax’) || TAX_DEFAULT;
+const labAct = labS > 0 ? (labD / labS) * 100 : null;
+const labWtax = labAct != null ? labAct * (1 + taxR / 100) : null;
 
-    if(!data){
-      var raw = localStorage.getItem(prevKey);
-      if(raw) data = JSON.parse(raw);
-    }
-  }catch(e){
-    console.warn('Auto-carry load failed', e);
-  }
+gi(‘lab_pct_notax’).textContent = labAct != null ? fP(labAct) : ‘-’;
+gi(‘lab_pct_notax’)._val = labAct;
+gi(‘lab_pct_wtax’).textContent = labWtax != null ? fP(labWtax) : ‘-’;
+gi(‘lab_pct_wtax’)._val = labWtax;
 
-  if(!data) return;
+[‘food’,‘lbw’,‘pcc’,‘nab’].forEach(id=>{
+const s = gn(id + ‘_sales’);
+const sp = gn(id + ‘_spent’);
+const act = s > 0 ? (sp / s) * 100 : null;
+gi(id + ‘_lw_act’).textContent = act != null ? fP(act) : ‘-’;
+gi(id + ‘_lw_act’)._val = act;
+});
 
-  var pairs = [
-    ['s_lw_act','s_lw_ly'],
-    ['cat_lw_act','cat_lw_ly'],
-    ['rft_lw_act','rft_lw_ly'],
-    ['togo_lw_act','togo_lw_ly'],
-    ['patio_lw_act','patio_lw_ly'],
-    ['s_cw_proj','s_lw_proj'],
-    ['s_cw_ly','s_lw_ly']
-  ];
+calcDisc();
+mirrorMeeting();
+}
 
-  var carried = false;
+function collectCustomMetrics(){
+const out = { liquor:[], brunch:[] };
+[‘liquor’,‘brunch’].forEach(section=>{
+const wrap = gi(‘opsCustom_’ + section);
+if(!wrap) return;
+wrap.querySelectorAll(’.custom-box’).forEach(box=>{
+out[section].push({
+label: box.querySelector(’.custom-label’).value || ‘’,
+value: box.querySelector(’.custom-value’).value || ‘’
+});
+});
+});
+return out;
+}
 
-  pairs.forEach(function(p){
-    var fromKey = p[0];
-    var toKey = p[1];
-    var el = gi(toKey);
+function renderCustomMetrics(section, items){
+const ops  = gi(‘opsCustom_’ + section);
+const meet = gi(‘meetCustom_’ + section);
 
-    if(el && !el.value && data[fromKey] !== undefined && data[fromKey] !== ''){
-      el.value = data[fromKey];
-      carried = true;
-    }
-  });
+if(ops){
+ops.innerHTML = ‘’;
+(items || []).forEach((item, idx)=>{
+const box = document.createElement(‘div’);
+box.className = ‘custom-box’;
+box.innerHTML = ` <div class="fl">Custom Box</div> <div class="custom-row" style="margin-bottom:4px"> <input type="text" class="custom-label" placeholder="Label" value="${escapeHtml(item.label || '')}" oninput="mirrorMeeting()" /> </div> <div class="custom-row"> <input type="text" class="custom-value" placeholder="Value" value="${escapeHtml(item.value || '')}" oninput="mirrorMeeting()" /> <button class="btn xs alt no-print" onclick="removeCustomMetric('${section}',${idx})">X</button> </div>`;
+ops.appendChild(box);
+});
+}
 
-  if(carried){
-    calc();
-    var n = gi('carryNote');
-    n.classList.add('show');
-    setTimeout(function(){ n.classList.remove('show'); }, 5000);
-  }
+if(meet){
+meet.innerHTML = ‘’;
+(items || []).forEach(item=>{
+const box = document.createElement(‘div’);
+box.className = ‘met’;
+box.innerHTML = `<div class="met-l">${escapeHtml(item.label || '-')}</div><div class="met-v">${escapeHtml(item.value || '-')}</div>`;
+meet.appendChild(box);
+});
+}
+}
+
+function addCustomMetric(section){
+const current = collectCustomMetrics();
+current[section].push({label:‘New Box’, value:’’});
+renderCustomMetrics(section, current[section]);
+mirrorMeeting();
+}
+
+function removeCustomMetric(section, idx){
+const current = collectCustomMetrics();
+current[section].splice(idx,1);
+renderCustomMetrics(section, current[section]);
+mirrorMeeting();
+}
+
+function escapeHtml(str){
+return String(str)
+.replaceAll(’&’,’&’)
+.replaceAll(’<’,’<’)
+.replaceAll(’>’,’>’)
+.replaceAll(’”’,’"’)
+.replaceAll(”’”,”'”);
+}
+
+async function getAllWeeksForReviews(){
+const weeks = [];
+
+try{
+if(window.firebaseReady){
+const snap = await db.collection(‘managerMeetings’).get();
+snap.forEach(doc=>{
+const d = doc.data().data || null;
+if(d) weeks.push(d);
+});
+if(weeks.length) return weeks;
+}
+}catch(e){}
+
+const raw = localStorage.getItem(‘hl_week_index’);
+const idx = raw ? JSON.parse(raw) : [];
+idx.forEach(key=>{
+const r = localStorage.getItem(key);
+if(r){
+try{ weeks.push(JSON.parse(r)); }catch(e){}
+}
+});
+return weeks;
+}
+
+async function updateReviewRollups(){
+const currentWeek = gv(‘weekDate’);
+if(!currentWeek) return;
+
+const currentDate = new Date(currentWeek + ‘T12:00:00’);
+const currentYear = currentDate.getFullYear();
+const weeks = await getAllWeeksForReviews();
+
+const totals = {1:0,2:0,3:0,4:0,5:0};
+
+weeks.forEach(w=>{
+if(!w || !w._wd) return;
+const wd = new Date(w._wd + ‘T12:00:00’);
+if(wd.getFullYear() !== currentYear) return;
+if(wd > currentDate) return;
+
+```
+totals[5] += parseFloat(w.rev5_week) || 0;
+totals[4] += parseFloat(w.rev4_week) || 0;
+totals[3] += parseFloat(w.rev3_week) || 0;
+totals[2] += parseFloat(w.rev2_week) || 0;
+totals[1] += parseFloat(w.rev1_week) || 0;
+```
+
+});
+
+setTxt(‘rev5_ytd’, fN(totals[5]));
+setTxt(‘rev4_ytd’, fN(totals[4]));
+setTxt(‘rev3_ytd’, fN(totals[3]));
+setTxt(‘rev2_ytd’, fN(totals[2]));
+setTxt(‘rev1_ytd’, fN(totals[1]));
+
+mirrorMeeting();
+}
+
+function mirrorMeeting(){
+const d = gv(‘weekDate’);
+if(d){
+const dt = new Date(d + ‘T12:00:00’);
+const en = new Date(dt);
+en.setDate(dt.getDate() + 6);
+const f = x => x.toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’});
+setTxt(‘m_weekLabel’, f(dt) + ’ - ’ + f(en));
+} else {
+setTxt(‘m_weekLabel’, ‘-’);
+}
+
+setTxt(‘m_meetDate’, gv(‘meet_date’) || ‘-’);
+
+safeHtm(‘m_sales’,    gn(‘s_lw_act’)    ? fD(gn(‘s_lw_act’))    + ’ ’ + chip(gn(‘s_lw_act’),    gn(‘s_lw_ly’))    : ‘-’);
+safeTxt(‘m_sales_ly’, gn(‘s_lw_ly’)     ? fD(gn(‘s_lw_ly’))     : ‘-’);
+safeHtm(‘m_togo’,     gn(‘togo_lw_act’) ? fD(gn(‘togo_lw_act’)) + ’ ’ + chip(gn(‘togo_lw_act’), gn(‘togo_lw_ly’)) : ‘-’);
+safeHtm(‘m_catering’, gn(‘cat_lw_act’)  ? fD(gn(‘cat_lw_act’))  + ’ ’ + chip(gn(‘cat_lw_act’),  gn(‘cat_lw_ly’))  : ‘-’);
+safeHtm(‘m_patio’,    gn(‘patio_lw_act’)? fD(gn(‘patio_lw_act’))+ ’ ’ + chip(gn(‘patio_lw_act’),gn(‘patio_lw_ly’)): ‘-’);
+safeHtm(‘m_rooftop’,  gn(‘rft_lw_act’)  ? fD(gn(‘rft_lw_act’))  + ’ ’ + chip(gn(‘rft_lw_act’),  gn(‘rft_lw_ly’))  : ‘-’);
+
+safeTxt(‘m_bhb’,        gn(‘bhb_lw_act’) ? fD(gn(‘bhb_lw_act’)) : ‘-’);
+safeHtm(‘m_bhb_vsproj’, chip(gn(‘bhb_lw_act’), gn(‘bhb_lw_proj’)));
+
+const discNet = gn(‘disc_total’) - gn(‘disc_ezcater’) - gn(‘disc_rewards’) - gn(‘disc_other’);
+safeTxt(‘m_disc’,        fD(discNet));
+safeTxt(‘m_disc_ezcater’,gn(‘disc_ezcater’) ? fD(gn(‘disc_ezcater’)) : ‘-’);
+safeTxt(‘m_disc_o’,      gn(‘disc_other’)   ? fD(gn(‘disc_other’))   : ‘-’);
+
+safeTxt(‘m_labor’,      gi(‘lab_pct_notax’)._val != null ? fP(gi(‘lab_pct_notax’)._val) : ‘-’);
+safeTxt(‘m_labor_cost’, gn(‘lab_dollars’)  ? fD(gn(‘lab_dollars’))  : ‘-’);
+safeTxt(‘m_labor_wt’,   gi(‘lab_pct_wtax’)._val  != null ? fP(gi(‘lab_pct_wtax’)._val)  : ‘-’);
+safeTxt(‘m_food’,       gi(‘food_lw_act’)._val   != null ? fP(gi(‘food_lw_act’)._val)   : ‘-’);
+safeTxt(‘m_lbw’,        gi(‘lbw_lw_act’)._val    != null ? fP(gi(‘lbw_lw_act’)._val)    : ‘-’);
+
+safeTxt(‘m_guest’,      gn(‘gst_lw_act’) ? fN(gn(‘gst_lw_act’)) : ‘-’);
+safeHtm(‘m_guest_diff’, chip(gn(‘gst_lw_act’), gn(‘gst_lw_proj’)));
+safeTxt(‘m_ppa’,        gn(‘ppa_lw_act’) ? fD(gn(‘ppa_lw_act’)) : ‘-’);
+// FIX: use ppa_lw_ly for the correct last-week vs last-year PPA comparison
+safeHtm(‘m_ppa_vs’,     chip(gn(‘ppa_lw_act’), gn(‘ppa_lw_ly’)));
+safeTxt(‘m_splh’,       gn(‘splh_lw_act’) ? fD(gn(‘splh_lw_act’)) : ‘-’);
+safeHtm(‘m_splh_diff’,  chip(gn(‘splh_lw_act’), gn(‘splh_lw_proj’)));
+
+safeTxt(‘m_loyalty’,    gn(‘loyalty’)   ? fN(gn(‘loyalty’))   : ‘-’);
+safeTxt(‘m_marketing’,  gv(‘marketing’) || ‘-’);
+
+safeTxt(‘m_rev5_week’, gn(‘rev5_week’) || ‘-’);
+safeTxt(‘m_rev4_week’, gn(‘rev4_week’) || ‘-’);
+safeTxt(‘m_rev3_week’, gn(‘rev3_week’) || ‘-’);
+safeTxt(‘m_rev2_week’, gn(‘rev2_week’) || ‘-’);
+safeTxt(‘m_rev1_week’, gn(‘rev1_week’) || ‘-’);
+
+safeTxt(‘m_rev5_ytd’, gi(‘rev5_ytd’).textContent || ‘-’);
+safeTxt(‘m_rev4_ytd’, gi(‘rev4_ytd’).textContent || ‘-’);
+safeTxt(‘m_rev3_ytd’, gi(‘rev3_ytd’).textContent || ‘-’);
+safeTxt(‘m_rev2_ytd’, gi(‘rev2_ytd’).textContent || ‘-’);
+safeTxt(‘m_rev1_ytd’, gi(‘rev1_ytd’).textContent || ‘-’);
+
+safeTxt(‘m_rev5_comment’, gv(‘rev5_comment’) || ‘-’);
+safeTxt(‘m_rev4_comment’, gv(‘rev4_comment’) || ‘-’);
+safeTxt(‘m_rev3_comment’, gv(‘rev3_comment’) || ‘-’);
+safeTxt(‘m_rev2_comment’, gv(‘rev2_comment’) || ‘-’);
+safeTxt(‘m_rev1_comment’, gv(‘rev1_comment’) || ‘-’);
+
+safeTxt(‘m_motm’,       gv(‘motm_name’)  || ‘-’);
+safeTxt(‘m_motm_wk’,    gn(‘motm_wk’)    || ‘-’);
+safeTxt(‘m_motm_total’, gn(‘motm_total’) || ‘-’);
+safeTxt(‘m_emp1’,       gv(‘emp1_name’)  || ‘-’);
+safeTxt(‘m_emp1_wk’,    gn(‘emp1_wk’)    || ‘-’);
+safeTxt(‘m_emp1_total’, gn(‘emp1_total’) || ‘-’);
+
+safeTxt(‘m_togo_margs’, gn(‘togo_margs’) || ‘-’);
+safeTxt(‘m_floaters’,   gn(‘floaters’)   || ‘-’);
+safeTxt(‘m_desserts’,   gn(‘desserts’)   || ‘-’);
+safeTxt(‘m_top_marg’,   gv(‘top_marg’)   || ‘-’);
+safeTxt(‘m_marg16’,     gn(‘marg16’)     || ‘-’);
+safeTxt(‘m_marg22’,     gn(‘marg22’)     || ‘-’);
+safeTxt(‘m_marg32’,     gn(‘marg32’)     || ‘-’);
+safeTxt(‘m_pitchers’,   gn(‘pitchers’)   || ‘-’);
+
+safeTxt(‘m_brunch_hotcakes’,        gn(‘brunch_hotcakes’)        || ‘-’);
+safeTxt(‘m_brunch_hotcakes_refill’, gn(‘brunch_hotcakes_refill’) || ‘-’);
+safeTxt(‘m_brunch_skillet’,         gn(‘brunch_skillet’)         || ‘-’);
+safeTxt(‘m_brunch_french_toast’,    gn(‘brunch_french_toast’)    || ‘-’);
+safeTxt(‘m_brunch_burrito’,         gn(‘brunch_burrito’)         || ‘-’);
+safeTxt(‘m_brunch_chilaquiles’,     gn(‘brunch_chilaquiles’)     || ‘-’);
+safeTxt(‘m_brunch_mimosa_qty’,      gn(‘brunch_mimosa_qty’)      || ‘-’);
+
+safeTxt(‘m_bhb_mt’,        gn(‘bhb_mt’)        || ‘-’);
+safeTxt(‘m_bhb_pc’,        gn(‘bhb_pc’)        || ‘-’);
+safeTxt(‘m_bhb_ld’,        gn(‘bhb_ld’)        || ‘-’);
+safeTxt(‘m_bhb_br’,        gn(‘bhb_br’)        || ‘-’);
+safeTxt(‘m_bhb_fp’,        gn(‘bhb_fp’)        || ‘-’);
+safeTxt(‘m_top_food’,      gv(‘top_food’)      || ‘-’);
+safeTxt(‘m_top_food_qty’,  gn(‘top_food_qty’)  || ‘-’);
+safeTxt(‘m_steak_blue’,    gn(‘steak_blue’)    || ‘-’);
+
+const custom = collectCustomMetrics();
+renderCustomMetrics(‘liquor’, custom.liquor || []);
+renderCustomMetrics(‘brunch’, custom.brunch || []);
 }
 
 function gatherData(){
-  var d = { _v:8, _wd:gv('weekDate'), _ts:Date.now() };
+const d = {_v:10, _wd:gv(‘weekDate’), _ts:Date.now()};
+document.querySelectorAll(‘input[id],textarea[id],select[id]’).forEach(el=>{
+d[el.id] = el.value;
+});
+d._customMetrics = collectCustomMetrics();
 
-  document.querySelectorAll('input[id],textarea[id],select[id]').forEach(function(el){
-    if(el.id) d[el.id] = el.value;
-  });
+document.querySelectorAll(’#sec-meet [data-editable]’).forEach(el=>{
+if(el.dataset.userEdited === ‘1’){
+d[’*edited*’ + el.id] = el.innerHTML;
+}
+});
 
-  document.querySelectorAll('[id^="lbl_"]').forEach(function(el){
-    d[el.id] = el.textContent;
-  });
-
-  return d;
+return d;
 }
 
 function restoreData(d){
-  if(!d) return;
+if(!d) return;
 
-  Object.keys(d).forEach(function(k){
-    if(k === '_v' || k === '_wd' || k === '_ts') return;
-    var el = gi(k);
-    if(!el) return;
+document.querySelectorAll(‘input[id],textarea[id],select[id]’).forEach(el=>{
+if(d[el.id] !== undefined) el.value = d[el.id] || ‘’;
+});
 
-    if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT'){
-      el.value = d[k] || '';
-    } else if(k.indexOf('lbl_') === 0){
-      el.textContent = d[k] || '';
-    }
-  });
+if(d._wd) sv(‘weekDate’, d._wd);
 
-  if(d._wd) sv('weekDate', d._wd);
+if(d._customMetrics){
+renderCustomMetrics(‘liquor’, d._customMetrics.liquor || []);
+renderCustomMetrics(‘brunch’, d._customMetrics.brunch || []);
+}else{
+renderCustomMetrics(‘liquor’, []);
+renderCustomMetrics(‘brunch’, []);
+}
 
-  var net = gn('disc_total') - gn('disc_ezcater') - gn('disc_rewards') - gn('disc_other');
-  var el = gi('disc_net_display');
-  if(el) el.textContent = fD(net);
+document.querySelectorAll(’#sec-meet [data-editable]’).forEach(el=>{
+const key = ‘*edited*’ + el.id;
+if(d[key] !== undefined){
+el.innerHTML = d[key] || ‘-’;
+el.dataset.userEdited = ‘1’;
+}else{
+delete el.dataset.userEdited;
+}
+});
+
+calcDisc();
 }
 
 function weekKey(){
-  var d = gv('weekDate');
-  return d ? ('hl_week_' + d) : null;
+const d = gv(‘weekDate’);
+return d ? (‘hl_week_’ + d) : null;
 }
 
 function saveIdx(key){
-  var raw = localStorage.getItem('hl_week_index');
-  var idx = raw ? JSON.parse(raw) : [];
-
-  if(idx.indexOf(key) === -1) idx.unshift(key);
-
-  var seen = {};
-  idx = idx.filter(function(k){
-    if(seen[k]) return false;
-    seen[k] = true;
-    return true;
-  });
-
-  idx.sort(function(a,b){ return b.localeCompare(a); });
-  if(idx.length > 104) idx = idx.slice(0,104);
-
-  localStorage.setItem('hl_week_index', JSON.stringify(idx));
+const raw = localStorage.getItem(‘hl_week_index’);
+let idx = raw ? JSON.parse(raw) : [];
+if(!idx.includes(key)) idx.unshift(key);
+idx = […new Set(idx)].sort((a,b)=>b.localeCompare(a)).slice(0,104);
+localStorage.setItem(‘hl_week_index’, JSON.stringify(idx));
 }
 
 async function fbSaveWeek(key, data){
-  if(!window.db) throw new Error('Firebase not ready');
-
-  await db.collection('managerMeetings').doc(key).set({
-    key: key,
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    data: data
-  }, { merge:true });
+await db.collection(‘managerMeetings’).doc(key).set({
+key:key,
+updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+data:data
+},{merge:true});
 }
 
 async function fbLoadWeek(key){
-  if(!window.db) throw new Error('Firebase not ready');
-
-  const snap = await db.collection('managerMeetings').doc(key).get();
-  if(!snap.exists) return null;
-
-  return snap.data().data || null;
-}
-
-async function fbSaveLabels(labels){
-  if(!window.db) throw new Error('Firebase not ready');
-
-  await db.collection('managerMeetings_meta').doc('labels').set({
-    labels: labels,
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-  }, { merge:true });
-}
-
-async function fbLoadLabels(){
-  if(!window.db) throw new Error('Firebase not ready');
-
-  const snap = await db.collection('managerMeetings_meta').doc('labels').get();
-  if(!snap.exists) return null;
-
-  return snap.data().labels || null;
+const snap = await db.collection(‘managerMeetings’).doc(key).get();
+if(!snap.exists) return null;
+return snap.data().data || null;
 }
 
 async function fbLoadLatestWeek(){
-  if(!window.db) throw new Error('Firebase not ready');
-
-  const snap = await db.collection('managerMeetings')
-    .orderBy('updatedAt', 'desc')
-    .limit(1)
-    .get();
-
-  if(snap.empty) return null;
-
-  const doc = snap.docs[0];
-  return {
-    key: doc.id,
-    data: doc.data().data || null
-  };
+const snap = await db.collection(‘managerMeetings’).orderBy(‘updatedAt’,‘desc’).limit(1).get();
+if(snap.empty) return null;
+const doc = snap.docs[0];
+return { key:doc.id, data:doc.data().data || null };
 }
 
 async function doSave(){
-  var key = weekKey();
-  if(!key){
-    alert('Please select a week date first.');
-    return;
-  }
+const key = weekKey();
+if(!key){ alert(‘Please select a week date first.’); return; }
 
-  var data = gatherData();
+const data = gatherData();
 
-  try{
-    localStorage.setItem(key, JSON.stringify(data));
-    saveIdx(key);
+try{
+localStorage.setItem(key, JSON.stringify(data));
+saveIdx(key);
 
-    var labels = {};
-    document.querySelectorAll('[id^="lbl_"]').forEach(function(el){
-      labels[el.id] = el.textContent;
-    });
-    localStorage.setItem('hl_labels', JSON.stringify(labels));
+```
+gi('syncBadge').textContent = 'Saving...';
+gi('syncBadge').className = 'ss ss-busy';
 
-    gi('syncBadge').textContent = window.firebaseReady ? 'Saving...' : 'Saved locally only';
-    gi('syncBadge').className = 'ss ss-busy';
+if(window.firebaseReady){
+  await fbSaveWeek(key, data);
+  gi('syncBadge').textContent = 'Firebase Saved: ' + new Date().toLocaleTimeString();
+}else{
+  gi('syncBadge').textContent = 'Saved locally only';
+}
 
-    if(window.firebaseReady){
-      await fbSaveWeek(key, data);
-      await fbSaveLabels(labels);
-      gi('syncBadge').textContent = 'Firebase Saved: ' + new Date().toLocaleTimeString();
-    } else {
-      gi('syncBadge').textContent = 'Saved locally only';
-    }
+gi('syncBadge').className = 'ss ss-ok';
+gi('savedNote').classList.add('show');
+setTimeout(()=>gi('savedNote').classList.remove('show'), 3000);
 
-    gi('syncBadge').className = 'ss ss-ok';
+await updateReviewRollups();
+await renderHist();
+```
 
-    var n = gi('savedNote');
-    n.classList.add('show');
-    setTimeout(function(){ n.classList.remove('show'); }, 3000);
-
-    await renderHist();
-  }catch(e){
-    gi('syncBadge').textContent = 'Save failed';
-    gi('syncBadge').className = 'ss ss-err';
-    alert('Save failed: ' + e.message);
-  }
+}catch(e){
+gi(‘syncBadge’).textContent = ‘Save failed’;
+gi(‘syncBadge’).className = ‘ss ss-err’;
+alert(’Save failed: ’ + e.message);
+}
 }
 
 async function doLoad(){
-  var key = weekKey();
-  if(!key) return;
+const key = weekKey();
+if(!key) return;
 
-  try{
-    var data = null;
-
-    if(window.firebaseReady){
-      data = await fbLoadWeek(key);
-    }
-
-    if(!data){
-      var raw = localStorage.getItem(key);
-      if(raw) data = JSON.parse(raw);
-    }
-
-    if(data){
-      restoreData(data);
-      calc();
-      gi('syncBadge').textContent = window.firebaseReady ? 'Loaded from Firebase' : 'Loaded locally';
-      gi('syncBadge').className = 'ss ss-ok';
-      return;
-    }
-
-    alert('No saved data found for this week.');
-  }catch(e){
-    gi('syncBadge').textContent = 'Load failed';
-    gi('syncBadge').className = 'ss ss-err';
-    alert('Load failed: ' + e.message);
-  }
+try{
+let data = null;
+if(window.firebaseReady) data = await fbLoadWeek(key);
+if(!data){
+const raw = localStorage.getItem(key);
+if(raw) data = JSON.parse(raw);
 }
 
-async function saveLabels(){
-  var labels = {};
-  document.querySelectorAll('[id^="lbl_"]').forEach(function(el){
-    labels[el.id] = el.textContent;
-  });
+```
+if(data){
+  restoreData(data);
+  calc();
+  await updateReviewRollups();
+  gi('syncBadge').textContent = 'Loaded';
+  gi('syncBadge').className = 'ss ss-ok';
+  return;
+}
+alert('No saved data found for this week.');
+```
 
-  localStorage.setItem('hl_labels', JSON.stringify(labels));
-
-  try{
-    if(window.firebaseReady){
-      await fbSaveLabels(labels);
-    }
-  }catch(e){}
+}catch(e){
+gi(‘syncBadge’).textContent = ‘Load failed’;
+gi(‘syncBadge’).className = ‘ss ss-err’;
+alert(’Load failed: ’ + e.message);
+}
 }
 
-async function restoreLabels(){
-  try{
-    if(window.firebaseReady){
-      var fbLabels = await fbLoadLabels();
-      if(fbLabels){
-        Object.keys(fbLabels).forEach(function(k){
-          var el = gi(k);
-          if(el && fbLabels[k] != null) el.textContent = fbLabels[k];
-        });
-        return;
-      }
-    }
-  }catch(e){}
+async function onDateChange(){
+updateLabel();
+const key = weekKey();
+if(!key) return;
 
-  var raw = localStorage.getItem('hl_labels');
-  if(!raw) return;
+try{
+let data = null;
+if(window.firebaseReady) data = await fbLoadWeek(key);
+if(!data){
+const raw = localStorage.getItem(key);
+if(raw) data = JSON.parse(raw);
+}
+if(data){
+restoreData(data);
+calc();
+await updateReviewRollups();
+return;
+}
+}catch(e){}
 
-  try{
-    var labels = JSON.parse(raw);
-    Object.keys(labels).forEach(function(k){
-      var el = gi(k);
-      if(el && labels[k] != null) el.textContent = labels[k];
-    });
-  }catch(e){}
+const d = gv(‘weekDate’);
+if(!d) return;
+const dt = new Date(d + ‘T12:00:00’);
+const prev = new Date(dt);
+prev.setDate(dt.getDate() - 7);
+await autoCarry(‘hl_week_’ + prev.toISOString().split(‘T’)[0]);
+await updateReviewRollups();
+}
+
+async function autoCarry(prevKey){
+let data = null;
+
+try{
+if(window.firebaseReady) data = await fbLoadWeek(prevKey);
+if(!data){
+const raw = localStorage.getItem(prevKey);
+if(raw) data = JSON.parse(raw);
+}
+}catch(e){}
+
+if(!data) return;
+
+// Carry last week’s actual sales → this week’s Last Year fields
+// Carry last week’s proj fields → this week’s proj fields where blank
+const pairs = [
+[‘s_lw_act’,    ‘s_lw_ly’],
+[‘cat_lw_act’,  ‘cat_lw_ly’],
+[‘rft_lw_act’,  ‘rft_lw_ly’],
+[‘togo_lw_act’, ‘togo_lw_ly’],
+[‘patio_lw_act’,‘patio_lw_ly’],
+[‘s_cw_proj’,   ‘s_lw_proj’],
+[‘s_cw_ly’,     ‘s_lw_ly’],
+[‘ppa_lw_act’,  ‘ppa_lw_ly’]
+];
+
+let carried = false;
+
+pairs.forEach(([fromKey, toKey])=>{
+const el = gi(toKey);
+if(el && !el.value && data[fromKey] !== undefined && data[fromKey] !== ‘’){
+el.value = data[fromKey];
+carried = true;
+}
+});
+
+if(carried){
+calc();
+gi(‘carryNote’).classList.add(‘show’);
+setTimeout(()=>gi(‘carryNote’).classList.remove(‘show’), 5000);
+}
 }
 
 function clearOps(){
-  if(!confirm('Clear all fields? Saved data will not be deleted.')) return;
+if(!confirm(‘Clear all fields? Saved data will not be deleted.’)) return;
 
-  document.querySelectorAll('input[id],textarea[id],select[id]').forEach(function(el){
-    if(el.id === 'weekDate' || el.id === 'lab_tax') return;
-    el.value = '';
-  });
+document.querySelectorAll(‘input[id],textarea[id],select[id]’).forEach(el=>{
+if(el.id === ‘weekDate’ || el.id === ‘lab_tax’) return;
+el.value = ‘’;
+});
 
-  ['lab_pct_notax','lab_pct_wtax','food_lw_act','lbw_lw_act','pcc_lw_act','nab_lw_act'].forEach(function(id){
-    var e = gi(id);
-    if(e){
-      e.textContent = '-';
-      e._val = null;
-    }
-  });
+[‘lab_pct_notax’,‘lab_pct_wtax’,‘food_lw_act’,‘lbw_lw_act’,‘pcc_lw_act’,‘nab_lw_act’].forEach(id=>{
+gi(id).textContent = ‘-’;
+gi(id)._val = null;
+});
 
-  ['s_lw_vsly','cat_lw_vsly','rft_lw_vsly','togo_lw_vsly','patio_lw_vsly','bhb_lw_vsproj','ppa_lw_vsly'].forEach(function(id){
-    setHtm(id, '-');
-  });
+[‘s_lw_vsly’,‘cat_lw_vsly’,‘rft_lw_vsly’,‘togo_lw_vsly’,‘patio_lw_vsly’,‘bhb_lw_vsproj’,‘ppa_lw_vsly’,‘gst_lw_diff’,‘gst_cw_diff’,‘splh_lw_diff’].forEach(id=>setHtm(id,’-’));
 
-  var el = gi('disc_net_display');
-  if(el) el.textContent = '$0.00';
+[‘rev5_ytd’,‘rev4_ytd’,‘rev3_ytd’,‘rev2_ytd’,‘rev1_ytd’].forEach(id=>setTxt(id,‘0’));
 
-  mirrorMeeting();
+renderCustomMetrics(‘liquor’, []);
+renderCustomMetrics(‘brunch’, []);
+document.querySelectorAll(’#sec-meet [data-editable]’).forEach(el=>{
+delete el.dataset.userEdited;
+el.innerHTML = ‘-’;
+});
+
+gi(‘disc_net_display’).textContent = ‘$0.00’;
+mirrorMeeting();
 }
 
 function doExport(){
-  try{
-    var raw = localStorage.getItem('hl_week_index');
-    var idx = raw ? JSON.parse(raw) : [];
-    var out = { version:8, exported:new Date().toISOString(), weeks:{}, labels:{} };
+const raw = localStorage.getItem(‘hl_week_index’);
+const idx = raw ? JSON.parse(raw) : [];
+const out = { version:10, exported:new Date().toISOString(), weeks:{} };
 
-    idx.forEach(function(k){
-      var r = localStorage.getItem(k);
-      if(r){
-        try{ out.weeks[k] = JSON.parse(r); }catch(e){}
-      }
-    });
+idx.forEach(k=>{
+const r = localStorage.getItem(k);
+if(r){
+try{ out.weeks[k] = JSON.parse(r); }catch(e){}
+}
+});
 
-    var labRaw = localStorage.getItem('hl_labels');
-    if(labRaw){
-      try{ out.labels = JSON.parse(labRaw); }catch(e){}
-    }
-
-    var json = JSON.stringify(out, null, 2);
-    var blob = new Blob([json], {type:'application/json'});
-    var url = window.URL.createObjectURL(blob);
-    var fname = 'HLAcworth_' + new Date().toISOString().slice(0,10) + '.json';
-
-    var a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    a.download = fname;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    setTimeout(function(){
-      window.URL.revokeObjectURL(url);
-    }, 1000);
-  }catch(e){
-    alert('Export failed: ' + e.message);
-  }
+const json = JSON.stringify(out, null, 2);
+const blob = new Blob([json], {type:‘application/json’});
+const url = URL.createObjectURL(blob);
+const a = document.createElement(‘a’);
+a.href = url;
+a.download = ‘HLAcworth_’ + new Date().toISOString().slice(0,10) + ‘.json’;
+a.click();
+setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
 function triggerImport(){
-  var inp = gi('fileImport');
-  inp.value = '';
+const inp = gi(‘fileImport’);
+inp.value = ‘’;
+inp.onchange = async function(e){
+const file = e.target.files[0];
+if(!file) return;
 
-  inp.onchange = function(e){
-    var file = e.target.files[0];
-    if(!file) return;
-
-    var reader = new FileReader();
-
-    reader.onload = async function(ev){
-      try{
-        var all = JSON.parse(ev.target.result);
-        var count = 0;
-        var weeks = all.weeks || {};
-
-        Object.keys(all).forEach(function(k){
-          if(k.indexOf('hl_week_') === 0 && !weeks[k]) weeks[k] = all[k];
-        });
-
-        var wkeys = Object.keys(weeks);
-        if(wkeys.length === 0){
-          alert('No week data found in file.');
-          return;
-        }
-
-        for (const k of wkeys){
-          localStorage.setItem(k, JSON.stringify(weeks[k]));
-          if(window.firebaseReady){
-            await fbSaveWeek(k, weeks[k]);
-          }
-          count++;
-        }
-
-        var raw = localStorage.getItem('hl_week_index');
-        var idx = raw ? JSON.parse(raw) : [];
-        wkeys.forEach(function(k){
-          if(idx.indexOf(k) === -1) idx.push(k);
-        });
-        idx.sort(function(a,b){ return b.localeCompare(a); });
-        localStorage.setItem('hl_week_index', JSON.stringify(idx));
-
-        if(all.labels){
-          localStorage.setItem('hl_labels', JSON.stringify(all.labels));
-          if(window.firebaseReady){
-            await fbSaveLabels(all.labels);
-          }
-          await restoreLabels();
-        }
-
-        await renderHist();
-        alert('Imported ' + count + ' week' + (count !== 1 ? 's' : '') + ' successfully! Go to History to load.');
-      }catch(err){
-        alert('Import failed: ' + err.message);
-      }
-
-      inp.value = '';
-    };
-
-    reader.onerror = function(){
-      alert('Could not read file.');
-      inp.value = '';
-    };
-
-    reader.readAsText(file);
-  };
-
-  inp.click();
-}
-
-function doPrint(which){
-  mirrorMeeting();
-
-  var origTitle = document.title;
-  document.body.classList.remove('print-ops','print-meet');
-
-  if(which === 'ops'){
-    document.title = "Huey Luey's - Operations Chart";
-    document.body.classList.add('print-ops');
-  } else {
-    document.title = "Huey Luey's - Manager Meeting";
-    document.body.classList.add('print-meet');
-  }
-
-  var cleanup = function(){
-    document.body.classList.remove('print-ops','print-meet');
-    document.title = origTitle;
-    window.removeEventListener('afterprint', cleanup);
-  };
-
-  window.addEventListener('afterprint', cleanup);
-
-  setTimeout(function(){
-    window.print();
-  }, 50);
-}
-
-function showTab(tab, btn){
-  document.querySelectorAll('.sec').forEach(function(s){ s.classList.remove('active'); });
-  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
-
-  gi('sec-' + tab).classList.add('active');
-  if(btn) btn.classList.add('active');
-
-  if(tab === 'meet') mirrorMeeting();
-  if(tab === 'hist') renderHist();
-}
-
-function toggleOpsEdit(){
-  _opsLocked = !_opsLocked;
-  var btn = gi('opsEditBtn');
-
-  gi('sec-ops').querySelectorAll('input,textarea,select').forEach(function(el){
-    el.readOnly = _opsLocked;
-    if(el.tagName === 'SELECT') el.disabled = _opsLocked;
-    el.style.background = _opsLocked ? 'rgba(0,0,0,.04)' : '';
-    el.style.cursor = _opsLocked ? 'default' : '';
-  });
-
-  if(_opsLocked){
-    btn.textContent = 'Editing: LOCKED';
-    btn.style.background = 'rgba(183,28,28,.55)';
-  } else {
-    btn.textContent = '🔓 Editing: ON';
-    btn.style.background = 'rgba(255,255,255,.15)';
-  }
-}
-
-function toggleEditMode(){
-  _editMode = !_editMode;
-  var meet = gi('sec-meet');
-  var btn = gi('editModeBtn');
-
-  if(_editMode){
-    meet.classList.add('edit-mode');
-    btn.textContent = 'Edit Mode: ON';
-    btn.style.background = getComputedStyle(document.documentElement).getPropertyValue('--org').trim();
-
-    meet.querySelectorAll('[data-editable]').forEach(function(el){
-      el.contentEditable = 'true';
-      el.setAttribute('spellcheck', 'false');
-      el.dataset.mirror = el.innerHTML;
-    });
-  } else {
-    meet.classList.remove('edit-mode');
-    btn.textContent = 'Edit Mode: OFF';
-    btn.style.background = 'rgba(255,255,255,.15)';
-
-    meet.querySelectorAll('[data-editable]').forEach(function(el){
-      el.contentEditable = 'false';
-      delete el.dataset.mirror;
-    });
-  }
-}
-
-async function renderHist(){
-  var el = gi('histList');
-
+```
+const reader = new FileReader();
+reader.onload = async function(ev){
   try{
-    if(window.firebaseReady){
-      const snap = await db.collection('managerMeetings')
-        .orderBy('updatedAt','desc')
-        .limit(50)
-        .get();
+    const all = JSON.parse(ev.target.result);
+    const weeks = all.weeks || {};
+    const wkeys = Object.keys(weeks);
+    if(!wkeys.length){ alert('No week data found in file.'); return; }
 
-      if(snap.empty){
-        el.innerHTML = '<p style="color:var(--t3);font-size:12px;padding:8px 0">No saved weeks yet.</p>';
-        return;
-      }
-
-      var h = '';
-
-      snap.forEach(function(doc){
-        var key = doc.id;
-        var dataWrap = doc.data() || {};
-        var d = dataWrap.data || {};
-        var sales = '';
-        var saved = '';
-
-        if(d.s_lw_act){
-          sales = fD(parseFloat(d.s_lw_act)) + ' sales';
-        }
-
-        var updatedAt = dataWrap.updatedAt;
-        if(updatedAt){
-          var jsDate = updatedAt.toDate ? updatedAt.toDate() : new Date(updatedAt);
-          saved = 'Saved ' + jsDate.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-        }
-
-        h += '<div class="hi">' +
-          '<div><div class="hi-d">Week of ' + key.replace('hl_week_','') + '</div>' +
-          '<div class="hi-m">' + sales + (sales && saved ? ' · ' : '') + saved + '</div></div>' +
-          '<div style="display:flex;gap:5px">' +
-          '<button class="btn xs" onclick="loadHist(\'' + key + '\')">Load</button>' +
-          '<button class="btn xs dk" onclick="delHist(\'' + key + '\')">Delete</button>' +
-          '</div>' +
-        '</div>';
-      });
-
-      el.innerHTML = h;
-      return;
-    }
-  }catch(e){
-    console.warn('Firebase history load failed', e);
-  }
-
-  var raw = localStorage.getItem('hl_week_index');
-  var idx = raw ? JSON.parse(raw) : [];
-
-  if(!idx.length){
-    el.innerHTML = '<p style="color:var(--t3);font-size:12px;padding:8px 0">No saved weeks yet.</p>';
-    return;
-  }
-
-  var h = '';
-  idx.forEach(function(key){
-    var r = localStorage.getItem(key), sales = '', saved = '';
-    if(r){
-      try{
-        var d = JSON.parse(r);
-        if(d.s_lw_act) sales = fD(parseFloat(d.s_lw_act)) + ' sales';
-        if(d._ts) saved = 'Saved ' + new Date(d._ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-      }catch(e){}
+    for(const k of wkeys){
+      localStorage.setItem(k, JSON.stringify(weeks[k]));
+      if(window.firebaseReady) await fbSaveWeek(k, weeks[k]);
     }
 
-    h += '<div class="hi">' +
-      '<div><div class="hi-d">Week of ' + key.replace('hl_week_','') + '</div>' +
-      '<div class="hi-m">' + sales + (sales && saved ? ' · ' : '') + saved + '</div></div>' +
-      '<div style="display:flex;gap:5px">' +
-      '<button class="btn xs" onclick="loadHist(\'' + key + '\')">Load</button>' +
-      '<button class="btn xs dk" onclick="delHist(\'' + key + '\')">Delete</button>' +
-      '</div>' +
-    '</div>';
-  });
-
-  el.innerHTML = h;
-}
-
-async function loadHist(key){
-  try{
-    var d = null;
-
-    if(window.firebaseReady){
-      d = await fbLoadWeek(key);
-    }
-
-    if(!d){
-      var raw = localStorage.getItem(key);
-      if(raw) d = JSON.parse(raw);
-    }
-
-    if(!d){
-      alert('Week not found.');
-      return;
-    }
-
-    sv('weekDate', d._wd || key.replace('hl_week_',''));
-    updateLabel();
-    restoreData(d);
-    calc();
-    showTab('ops', document.querySelectorAll('.tab')[0]);
-  }catch(e){
-    alert('Error loading week.');
-  }
-}
-
-async function delHist(key){
-  if(!confirm('Remove this week from history?')) return;
-
-  try{
-    if(window.firebaseReady){
-      await db.collection('managerMeetings').doc(key).delete();
-    }
-
-    localStorage.removeItem(key);
-
-    var raw = localStorage.getItem('hl_week_index');
-    var idx = raw ? JSON.parse(raw) : [];
-    idx = idx.filter(function(k){ return k !== key; });
+    let idx = JSON.parse(localStorage.getItem('hl_week_index') || '[]');
+    wkeys.forEach(k=>{ if(!idx.includes(k)) idx.push(k); });
+    idx.sort((a,b)=>b.localeCompare(a));
     localStorage.setItem('hl_week_index', JSON.stringify(idx));
 
     await renderHist();
-  }catch(e){
-    alert('Delete failed: ' + e.message);
+    await updateReviewRollups();
+    alert('Imported ' + wkeys.length + ' week(s) successfully.');
+  }catch(err){
+    alert('Import failed: ' + err.message);
   }
+  inp.value = '';
+};
+reader.readAsText(file);
+```
+
+};
+inp.click();
 }
 
-document.addEventListener('keydown', function(e){
-  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
-    e.preventDefault();
-    doSave();
-  }
+function doPrint(which){
+mirrorMeeting();
+
+const origTitle = document.title;
+document.body.classList.remove(‘print-ops’,‘print-meet’);
+if(which === ‘ops’){
+document.title = “Huey Luey’s - Operations Chart”;
+document.body.classList.add(‘print-ops’);
+}else{
+document.title = “Huey Luey’s - Manager Meeting”;
+document.body.classList.add(‘print-meet’);
+}
+
+const cleanup = function(){
+document.body.classList.remove(‘print-ops’,‘print-meet’);
+document.title = origTitle;
+window.removeEventListener(‘afterprint’, cleanup);
+};
+window.addEventListener(‘afterprint’, cleanup);
+setTimeout(()=>window.print(), 50);
+}
+
+function showTab(tab, btn){
+document.querySelectorAll(’.sec’).forEach(s=>s.classList.remove(‘active’));
+document.querySelectorAll(’.tab’).forEach(t=>t.classList.remove(‘active’));
+gi(‘sec-’ + tab).classList.add(‘active’);
+if(btn) btn.classList.add(‘active’);
+if(tab === ‘meet’) mirrorMeeting();
+if(tab === ‘hist’) renderHist();
+}
+
+function toggleOpsEdit(){
+_opsLocked = !_opsLocked;
+const btn = gi(‘opsEditBtn’);
+
+gi(‘sec-ops’).querySelectorAll(‘input,textarea,select’).forEach(el=>{
+el.readOnly = _opsLocked;
+if(el.tagName === ‘SELECT’) el.disabled = _opsLocked;
+});
+
+if(_opsLocked){
+btn.textContent = ‘Editing: LOCKED’;
+btn.style.background = ‘#111’;
+btn.style.color = ‘#fff’;
+}else{
+btn.textContent = ‘Editing: ON’;
+btn.style.background = ‘#fff’;
+btn.style.color = ‘#111’;
+}
+}
+
+function toggleEditMode(){
+_editMode = !_editMode;
+const meet = gi(‘sec-meet’);
+const btn = gi(‘editModeBtn’);
+
+if(_editMode){
+meet.classList.add(‘edit-mode’);
+btn.textContent = ‘Edit Mode: ON’;
+btn.style.background = ‘#111’;
+btn.style.color = ‘#fff’;
+
+```
+meet.querySelectorAll('[data-editable]').forEach(el=>{
+  el.contentEditable = 'true';
+  el.setAttribute('spellcheck', 'false');
+  el.addEventListener('input', markMeetingFieldEdited);
+});
+```
+
+}else{
+meet.classList.remove(‘edit-mode’);
+btn.textContent = ‘Edit Mode: OFF’;
+btn.style.background = ‘#fff’;
+btn.style.color = ‘#111’;
+
+```
+meet.querySelectorAll('[data-editable]').forEach(el=>{
+  el.contentEditable = 'false';
+  el.removeEventListener('input', markMeetingFieldEdited);
+});
+```
+
+}
+}
+
+function markMeetingFieldEdited(e){
+e.target.dataset.userEdited = ‘1’;
+}
+
+async function renderHist(){
+const el = gi(‘histList’);
+
+try{
+if(window.firebaseReady){
+const snap = await db.collection(‘managerMeetings’).orderBy(‘updatedAt’,‘desc’).limit(50).get();
+if(snap.empty){
+el.innerHTML = ‘<p style="color:#555;font-size:12px;padding:8px 0">No saved weeks yet.</p>’;
+return;
+}
+
+```
+  let h = '';
+  snap.forEach(doc=>{
+    const key = doc.id;
+    const dataWrap = doc.data() || {};
+    const d = dataWrap.data || {};
+    let sales = d.s_lw_act ? fD(parseFloat(d.s_lw_act)) + ' sales' : '';
+    let saved = '';
+    if(dataWrap.updatedAt){
+      const jsDate = dataWrap.updatedAt.toDate ? dataWrap.updatedAt.toDate() : new Date(dataWrap.updatedAt);
+      saved = 'Saved ' + jsDate.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    }
+    h += `
+      <div class="hi">
+        <div>
+          <div class="hi-d">Week of ${key.replace('hl_week_','')}</div>
+          <div class="hi-m">${sales}${sales && saved ? ' · ' : ''}${saved}</div>
+        </div>
+        <div style="display:flex;gap:5px">
+          <button class="btn xs" onclick="loadHist('${key}')">Load</button>
+          <button class="btn xs alt" onclick="delHist('${key}')">Delete</button>
+        </div>
+      </div>`;
+  });
+  el.innerHTML = h;
+  return;
+}
+```
+
+}catch(e){}
+
+const raw = localStorage.getItem(‘hl_week_index’);
+const idx = raw ? JSON.parse(raw) : [];
+if(!idx.length){
+el.innerHTML = ‘<p style="color:#555;font-size:12px;padding:8px 0">No saved weeks yet.</p>’;
+return;
+}
+
+let h = ‘’;
+idx.forEach(key=>{
+const r = localStorage.getItem(key);
+let sales = ‘’, saved = ‘’;
+if(r){
+try{
+const d = JSON.parse(r);
+if(d.s_lw_act) sales = fD(parseFloat(d.s_lw_act)) + ’ sales’;
+if(d._ts) saved = ’Saved ’ + new Date(d._ts).toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’,year:‘numeric’});
+}catch(e){}
+}
+
+```
+h += `
+  <div class="hi">
+    <div>
+      <div class="hi-d">Week of ${key.replace('hl_week_','')}</div>
+      <div class="hi-m">${sales}${sales && saved ? ' · ' : ''}${saved}</div>
+    </div>
+    <div style="display:flex;gap:5px">
+      <button class="btn xs" onclick="loadHist('${key}')">Load</button>
+      <button class="btn xs alt" onclick="delHist('${key}')">Delete</button>
+    </div>
+  </div>`;
+```
+
+});
+
+el.innerHTML = h;
+}
+
+async function loadHist(key){
+try{
+let d = null;
+if(window.firebaseReady) d = await fbLoadWeek(key);
+if(!d){
+const raw = localStorage.getItem(key);
+if(raw) d = JSON.parse(raw);
+}
+if(!d){ alert(‘Week not found.’); return; }
+
+```
+sv('weekDate', d._wd || key.replace('hl_week_',''));
+updateLabel();
+restoreData(d);
+calc();
+await updateReviewRollups();
+showTab('ops', document.querySelectorAll('.tab')[0]);
+```
+
+}catch(e){
+alert(‘Error loading week.’);
+}
+}
+
+async function delHist(key){
+if(!confirm(‘Remove this week from history?’)) return;
+
+try{
+if(window.firebaseReady) await db.collection(‘managerMeetings’).doc(key).delete();
+localStorage.removeItem(key);
+
+```
+let idx = JSON.parse(localStorage.getItem('hl_week_index') || '[]');
+idx = idx.filter(k=>k !== key);
+localStorage.setItem('hl_week_index', JSON.stringify(idx));
+
+await renderHist();
+await updateReviewRollups();
+```
+
+}catch(e){
+alert(’Delete failed: ’ + e.message);
+}
+}
+
+/* =====================================================================
+PRINT SETTINGS
+===================================================================== */
+
+const PS_DEFAULTS = {
+ps_paper:        ‘letter portrait’,
+ps_margin:       ‘5’,
+ps_card_margin:  ‘1.2’,
+ps_card_pad:     ‘2.5’,
+ps_card_hdr_pad: ‘2.3’,
+ps_fs_body:      ‘7’,
+ps_fs_input:     ‘5.5’,
+ps_fs_card_hdr:  ‘6.4’,
+ps_fs_sec_title: ‘5.8’,
+ps_fs_fl:        ‘5.4’,
+ps_fs_calc:      ‘5.8’,
+ps_fs_row_lbl:   ‘5.2’,
+ps_fs_chip:      ‘5’,
+ps_fs_met_l:     ‘7’,
+ps_row_gap:      ‘1.2’,
+ps_row_mb:       ‘0.8’,
+ps_grid_gap:     ‘2’,
+ps_input_mh:     ‘7’,
+ps_row_lbl_mw:   ‘110’,
+ps_row_lbl_w_mw: ‘128’,
+ps_row_input_w:  ‘42’,
+ps_nb_h:         ‘8’,
+ps_rev_c1:       ‘75’,
+ps_rev_c2:       ‘48’,
+ps_rev_c3:       ‘48’
+};
+
+function openPrintSettings(){
+gi(‘psOverlay’).classList.add(‘open’);
+loadPrintSettingsFromStorage();
+applyPrintSettings();
+}
+function closePrintSettings(){
+gi(‘psOverlay’).classList.remove(‘open’);
+}
+function psOverlayClick(e){
+if(e.target === gi(‘psOverlay’)) closePrintSettings();
+}
+
+function getPSVal(id){
+const el = gi(id);
+return el ? el.value : PS_DEFAULTS[id];
+}
+
+function loadPrintSettingsFromStorage(){
+const saved = localStorage.getItem(‘hl_print_settings’);
+if(!saved) return;
+try{
+const s = JSON.parse(saved);
+Object.keys(PS_DEFAULTS).forEach(id=>{
+const el = gi(id);
+if(el && s[id] !== undefined) el.value = s[id];
+});
+// Sync slider display values
+const sliders = [‘ps_fs_body’,‘ps_fs_input’,‘ps_fs_card_hdr’,‘ps_fs_sec_title’,
+‘ps_fs_fl’,‘ps_fs_calc’,‘ps_fs_row_lbl’,‘ps_fs_chip’,‘ps_fs_met_l’];
+sliders.forEach(id=>{
+const vEl = gi(id + ‘_v’);
+if(vEl && gi(id)) vEl.textContent = gi(id).value + ‘pt’;
+});
+}catch(e){}
+}
+
+function savePrintSettings(){
+const s = {};
+Object.keys(PS_DEFAULTS).forEach(id=>{ s[id] = getPSVal(id); });
+localStorage.setItem(‘hl_print_settings’, JSON.stringify(s));
+// Flash the badge
+const badge = gi(‘syncBadge’);
+const prev = badge.textContent;
+badge.textContent = ‘Print settings saved’;
+badge.className = ‘ss ss-ok’;
+setTimeout(()=>{ badge.textContent = prev; }, 2000);
+}
+
+function resetPrintSettings(){
+Object.keys(PS_DEFAULTS).forEach(id=>{
+const el = gi(id);
+if(el) el.value = PS_DEFAULTS[id];
+});
+// Sync slider labels
+const sliders = [‘ps_fs_body’,‘ps_fs_input’,‘ps_fs_card_hdr’,‘ps_fs_sec_title’,
+‘ps_fs_fl’,‘ps_fs_calc’,‘ps_fs_row_lbl’,‘ps_fs_chip’,‘ps_fs_met_l’];
+sliders.forEach(id=>{
+const vEl = gi(id + ‘_v’);
+if(vEl) vEl.textContent = PS_DEFAULTS[id] + ‘pt’;
+});
+applyPrintSettings();
+}
+
+function applyPrintSettings(){
+const paper   = getPSVal(‘ps_paper’);
+const margin  = getPSVal(‘ps_margin’);
+const cardMrg = getPSVal(‘ps_card_margin’);
+const cardPad = getPSVal(‘ps_card_pad’);
+const cHdrPad = getPSVal(‘ps_card_hdr_pad’);
+
+const fsBody    = getPSVal(‘ps_fs_body’);
+const fsInput   = getPSVal(‘ps_fs_input’);
+const fsCHdr    = getPSVal(‘ps_fs_card_hdr’);
+const fsSecT    = getPSVal(‘ps_fs_sec_title’);
+const fsFl      = getPSVal(‘ps_fs_fl’);
+const fsCalc    = getPSVal(‘ps_fs_calc’);
+const fsRowLbl  = getPSVal(‘ps_fs_row_lbl’);
+const fsChip    = getPSVal(‘ps_fs_chip’);
+const fsMetL    = getPSVal(‘ps_fs_met_l’);
+
+const rowGap    = getPSVal(‘ps_row_gap’);
+const rowMb     = getPSVal(‘ps_row_mb’);
+const gridGap   = getPSVal(‘ps_grid_gap’);
+const inputMh   = getPSVal(‘ps_input_mh’);
+const rowLblMw  = getPSVal(‘ps_row_lbl_mw’);
+const rowLblWMw = getPSVal(‘ps_row_lbl_w_mw’);
+const rowInpW   = getPSVal(‘ps_row_input_w’);
+const nbH       = getPSVal(‘ps_nb_h’);
+
+const revC1     = getPSVal(‘ps_rev_c1’);
+const revC2     = getPSVal(‘ps_rev_c2’);
+const revC3     = getPSVal(‘ps_rev_c3’);
+
+const css = ` @media print { @page { margin: ${margin}mm; size: ${paper}; } body { font-size: ${fsBody}pt !important; } .card { margin: ${cardMrg}pt 0 !important; padding: ${cardPad}pt ${parseFloat(cardPad)*1.4}pt !important; } .card-hdr { margin: -${cardPad}pt -${parseFloat(cardPad)*1.4}pt ${parseFloat(cHdrPad)}pt !important; padding: ${cHdrPad}pt ${parseFloat(cHdrPad)*1.3}pt !important; font-size: ${fsCHdr}pt !important; background:#fff !important; color:#000 !important; border:1px solid #999 !important; } .sec-title { font-size: ${fsSecT}pt !important; margin: 1.2pt 0 .8pt !important; padding-bottom: .5pt !important; color:#000 !important; } .fl { font-size: ${fsFl}pt !important; color:#000 !important; } .met-l { font-size: ${fsMetL}pt !important; color:#000 !important; } .fcalc, .met-v, .row .calc { font-size: ${fsCalc}pt !important; } input, textarea, select { font-size: ${fsInput}pt !important; padding: 1pt 1.5pt !important; min-height: ${inputMh}pt !important; } .row { gap: ${rowGap}pt !important; margin-bottom: ${rowMb}pt !important; flex-wrap: nowrap !important; } .row .lbl { font-size: ${fsRowLbl}pt !important; min-width: ${rowLblMw}pt !important; } .row .lbl.w { min-width: ${rowLblWMw}pt !important; } .row input { width: ${rowInpW}pt !important; min-width: ${rowInpW}pt !important; flex: 0 0 ${rowInpW}pt !important; } .g2,.g3,.g4,.g5,.g6,.met-grid,.custom-grid,.review-table { gap: ${gridGap}pt !important; } .review-table { grid-template-columns: ${revC1}pt ${revC2}pt ${revC3}pt 1fr !important; } .chip { font-size: ${fsChip}pt !important; padding: 0 3pt !important; } .nb-line { height: ${nbH}pt !important; margin-bottom: 2pt !important; } }`;
+
+gi(‘printSettingsStyle’).textContent = css;
+
+// Update preview
+gi(‘psPreview’).innerHTML =
+`<b>Page:</b> ${paper} &nbsp;|&nbsp; <b>Margin:</b> ${margin}mm &nbsp;|&nbsp; ` +
+`<b>Body font:</b> ${fsBody}pt &nbsp;|&nbsp; <b>Input font:</b> ${fsInput}pt &nbsp;|&nbsp; ` +
+`<b>Card hdr font:</b> ${fsCHdr}pt &nbsp;|&nbsp; <b>Calc/Met values:</b> ${fsCalc}pt<br>` +
+`<b>Card padding:</b> ${cardPad}pt &nbsp;|&nbsp; <b>Grid gap:</b> ${gridGap}pt &nbsp;|&nbsp; ` +
+`<b>Row label min-width:</b> ${rowLblMw}pt (wide: ${rowLblWMw}pt) &nbsp;|&nbsp; <b>NB line height:</b> ${nbH}pt`;
+}
+
+document.addEventListener(‘keydown’, function(e){
+if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === ‘s’){
+e.preventDefault();
+doSave();
+}
+if(e.key === ‘Escape’) closePrintSettings();
 });
 
 async function init(){
-  buildAll();
+buildAll();
+loadPrintSettingsFromStorage();
+applyPrintSettings();
 
-  ['lab_pct_notax','lab_pct_wtax','food_lw_act','lbw_lw_act','pcc_lw_act','nab_lw_act'].forEach(function(id){
-    var e = gi(id);
-    if(e) e._val = null;
-  });
+[‘lab_pct_notax’,‘lab_pct_wtax’,‘food_lw_act’,‘lbw_lw_act’,‘pcc_lw_act’,‘nab_lw_act’].forEach(id=>{
+gi(id)._val = null;
+});
 
-  var today = new Date();
-  var mon = new Date(today);
-  mon.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+const today = new Date();
+const mon = new Date(today);
+mon.setDate(today.getDate() - ((today.getDay() + 6) % 7));
 
-  var y = mon.getFullYear();
-  var m = String(mon.getMonth() + 1).padStart(2,'0');
-  var day = String(mon.getDate()).padStart(2,'0');
+const y   = mon.getFullYear();
+const m   = String(mon.getMonth() + 1).padStart(2,‘0’);
+const day = String(mon.getDate()).padStart(2,‘0’);
 
-  sv('weekDate', y + '-' + m + '-' + day);
-  sv('lab_tax', TAX_DEFAULT);
+sv(‘weekDate’, y + ‘-’ + m + ‘-’ + day);
+sv(‘lab_tax’, TAX_DEFAULT);
+updateLabel();
 
-  updateLabel();
-  await restoreLabels();
+let loaded = false;
+const key = weekKey();
 
-  var key = weekKey();
-  var loaded = false;
-
-  if(key){
-    try{
-      var data = null;
-
-      if(window.firebaseReady){
-        data = await fbLoadWeek(key);
-      }
-
-      if(!data){
-        var raw = localStorage.getItem(key);
-        if(raw) data = JSON.parse(raw);
-      }
-
-      if(data){
-        restoreData(data);
-        loaded = true;
-      }
-    }catch(e){
-      console.warn(e);
-    }
-  }
-
-  if(!loaded && window.firebaseReady){
-    try{
-      var latest = await fbLoadLatestWeek();
-      if(latest && latest.data){
-        sv('weekDate', latest.data._wd || latest.key.replace('hl_week_',''));
-        updateLabel();
-        restoreData(latest.data);
-        gi('syncBadge').textContent = 'Loaded latest cloud save';
-        gi('syncBadge').className = 'ss ss-ok';
-      }
-    }catch(e){
-      console.warn('Latest cloud load failed', e);
-    }
-  }
-
-  calc();
-  await renderHist();
+if(key){
+try{
+let data = null;
+if(window.firebaseReady) data = await fbLoadWeek(key);
+if(!data){
+const raw = localStorage.getItem(key);
+if(raw) data = JSON.parse(raw);
+}
+if(data){
+restoreData(data);
+loaded = true;
+}
+}catch(e){}
 }
 
-window.addEventListener('DOMContentLoaded', init);
+if(!loaded && window.firebaseReady){
+try{
+const latest = await fbLoadLatestWeek();
+if(latest && latest.data){
+sv(‘weekDate’, latest.data.*wd || latest.key.replace(’hl_week*’,’’));
+updateLabel();
+restoreData(latest.data);
+gi(‘syncBadge’).textContent = ‘Loaded latest cloud save’;
+}
+}catch(e){}
+}
+
+calc();
+await updateReviewRollups();
+await renderHist();
+}
+
+window.addEventListener(‘DOMContentLoaded’, init);
 </script>
 
 </body>

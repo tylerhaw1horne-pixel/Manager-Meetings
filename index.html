@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Huey Luey's Acworth - Ops Dashboard</title>
+<title>v4 | Huey Luey's Acworth - Ops Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -1376,9 +1376,7 @@ try {
 </script>
 
 <script>
-/* ===============================================
-   CORE VARIABLES & HELPERS
-=============================================== */
+
 var TAX_DEFAULT = 14.53;
 var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 var _editMode = false;
@@ -1423,9 +1421,7 @@ function safeHtm(id,v){
   e.innerHTML=v||'-';
 }
 
-/* ===============================================
-   BUILD DYNAMIC ELEMENTS
-=============================================== */
+
 function buildAll(){
   // Weather grid
   var h='';
@@ -1452,9 +1448,6 @@ gi(id).innerHTML=s;
 });
 }
 
-/* ===============================================
-REVIEW ROLLUPS
-=============================================== */
 function updateReviewRollups(){
 [5,4,3,2,1].forEach(function(l){
 var week=parseFloat(gv(‘rev’+l+’_week’))||0;
@@ -1466,9 +1459,6 @@ localStorage.setItem(‘hl_rev’+l+’_ytd’,total);
 });
 }
 
-/* ===============================================
-CUSTOM METRIC BOXES
-=============================================== */
 function addCustomMetric(containerId){
 var container=gi(‘opsCustom_’+containerId.replace(‘ops_’,’’));
 if(!container) container=gi(containerId);
@@ -1483,9 +1473,6 @@ var html=’<div class="custom-box">’+
 container.insertAdjacentHTML(‘beforeend’,html);
 }
 
-/* ===============================================
-CALCULATIONS
-=============================================== */
 function calcDisc(){
 var net=gn(‘disc_total’)-gn(‘disc_ezcater’)-gn(‘disc_rewards’)-gn(‘disc_other’);
 var el=gi(‘disc_net_display’);
@@ -1531,9 +1518,6 @@ calcDisc();
 
 function live(){ mirrorMeeting(); }
 
-/* ===============================================
-MIRROR TO MEETING TAB
-=============================================== */
 function mirrorMeeting(){
 var d=gv(‘weekDate’);
 if(d){
@@ -1632,9 +1616,6 @@ safeTxt(‘m_brunch_burrito’,gv(‘brunch_burrito’)||’-’);
 safeTxt(‘m_brunch_chilaquiles’,gv(‘brunch_chilaquiles’)||’-’);
 }
 
-/* ===============================================
-WEEK LABEL
-=============================================== */
 function updateLabel(){
 var d=gv(‘weekDate’);
 if(!d){ gi(‘weekLabel’).textContent=’-’; return; }
@@ -1645,9 +1626,6 @@ var f=function(x){ return x.toLocaleDateString(‘en-US’,{month:‘short’,da
 gi(‘weekLabel’).textContent=f(dt)+’ - ’+f(en);
 }
 
-/* ===============================================
-DATE CHANGE / AUTO-CARRY
-=============================================== */
 async function onDateChange(){
 updateLabel();
 var key=weekKey();
@@ -1699,9 +1677,6 @@ setTimeout(function(){ n.classList.remove(‘show’); },5000);
 }
 }
 
-/* ===============================================
-DATA GATHER / RESTORE
-=============================================== */
 function gatherData(){
 var d={_v:9,_wd:gv(‘weekDate’),*ts:Date.now()};
 document.querySelectorAll(‘input[id],textarea[id],select[id]’).forEach(function(el){
@@ -1753,9 +1728,6 @@ if(idx.length>104) idx=idx.slice(0,104);
 localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
 }
 
-/* ===============================================
-FIREBASE HELPERS
-=============================================== */
 async function fbSaveWeek(key,data){
 if(!window.db) throw new Error(‘Firebase not ready’);
 await db.collection(‘managerMeetings’).doc(key).set({
@@ -1792,9 +1764,6 @@ const doc=snap.docs[0];
 return {key:doc.id,data:doc.data().data||null};
 }
 
-/* ===============================================
-SAVE / LOAD / CLEAR
-=============================================== */
 async function doSave(){
 var key=weekKey();
 if(!key){ alert(‘Please select a week date first.’); return; }
@@ -1923,9 +1892,6 @@ if(el) el.textContent=’$0.00’;
 mirrorMeeting();
 }
 
-/* ===============================================
-EXPORT / IMPORT
-=============================================== */
 function doExport(){
 try{
 var raw=localStorage.getItem(‘hl_week_index’);
@@ -2011,9 +1977,6 @@ reader.readAsText(file);
 inp.click();
 }
 
-/* ===============================================
-PRINT
-=============================================== */
 function doPrint(which){
 mirrorMeeting();
 var origTitle=document.title;
@@ -2036,9 +1999,6 @@ window.addEventListener(‘afterprint’,cleanup);
 setTimeout(function(){ window.print(); },80);
 }
 
-/* ===============================================
-TAB SWITCHING
-=============================================== */
 function showTab(tab,btn){
 document.querySelectorAll(’.sec’).forEach(function(s){ s.classList.remove(‘active’); });
 document.querySelectorAll(’.tab’).forEach(function(t){ t.classList.remove(‘active’); });
@@ -2051,9 +2011,6 @@ if(tab===‘meet’) mirrorMeeting();
 if(tab===‘hist’) renderHist();
 }
 
-/* ===============================================
-EDIT MODE TOGGLES
-=============================================== */
 function toggleOpsEdit(){
 _opsLocked=!_opsLocked;
 var btn=gi(‘opsEditBtn’);
@@ -2111,9 +2068,6 @@ meet.querySelectorAll('[data-editable]').forEach(function(el){
 }
 }
 
-/* ===============================================
-HISTORY
-=============================================== */
 async function renderHist(){
 var el=gi(‘histList’);
 
@@ -2220,9 +2174,6 @@ await renderHist();
 }catch(e){ alert(’Delete failed: ’+e.message); }
 }
 
-/* ===============================================
-KEYBOARD SHORTCUT
-=============================================== */
 document.addEventListener(‘keydown’,function(e){
 if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()===‘s’){
 e.preventDefault();
@@ -2230,9 +2181,6 @@ doSave();
 }
 });
 
-/* ===============================================
-INIT
-=============================================== */
 async function init(){
 buildAll();
 

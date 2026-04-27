@@ -844,20 +844,20 @@ cursor:default !important;
   <div class="logo"><span>Huey Luey's</span> Acworth</div>
   <div class="hdr-r">
     <div class="tabs">
-      <button class="tab active" onclick="showTab('ops',this)">📊 Operations Chart</button>
-      <button class="tab" onclick="showTab('meet',this)">📋 Manager Meeting</button>
-      <button class="tab" onclick="showTab('hist',this)">🗂 History</button>
+      <button class="tab active" onclick="showTab('ops',this)">&#128202; Operations Chart</button>
+      <button class="tab" onclick="showTab('meet',this)">&#128203; Manager Meeting</button>
+      <button class="tab" onclick="showTab('hist',this)">&#128450; History</button>
     </div>
-    <button class="btn sm pr no-print" onclick="doSave()">💾 Save</button>
-    <button class="btn sm no-print" onclick="doPrint('ops')">🖨 Print Ops</button>
-    <button class="btn sm no-print" onclick="doPrint('meet')">🖨 Print Meeting</button>
+    <button class="btn sm pr no-print" onclick="doSave()">&#128190; Save</button>
+    <button class="btn sm no-print" onclick="doPrint('ops')">&#128424; Print Ops</button>
+    <button class="btn sm no-print" onclick="doPrint('meet')">&#128424; Print Meeting</button>
   </div>
 </div>
 
 <div class="dbar no-print">
   <span id="syncBadge" class="ss ss-ok">Connecting...</span>
-  <button class="btn xs ghost" onclick="doExport()">⬇ Export JSON</button>
-  <button class="btn xs ghost" onclick="triggerImport()">⬆ Import JSON</button>
+  <button class="btn xs ghost" onclick="doExport()">&#11015; Export JSON</button>
+  <button class="btn xs ghost" onclick="triggerImport()">&#11014; Import JSON</button>
 </div>
 
 <input type="file" id="fileImport" accept=".json" style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;visibility:hidden"/>
@@ -870,8 +870,8 @@ cursor:default !important;
 
   <div class="card">
     <div class="card-hdr">
-      📊 <span id="lbl_0" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Operations Chart</span> - Huey Luey's Acworth | GM: Tyler Hawthorne
-      <button id="opsEditBtn" class="btn xs no-print" onclick="toggleOpsEdit()" style="margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff">🔓 Editing: ON</button>
+      &#128202; <span id="lbl_0" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Operations Chart</span> - Huey Luey's Acworth | GM: Tyler Hawthorne
+      <button id="opsEditBtn" class="btn xs no-print" onclick="toggleOpsEdit()" style="margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff">&#128275; Editing: ON</button>
     </div>
     <div class="g3">
       <div class="fg">
@@ -883,7 +883,7 @@ cursor:default !important;
         <div class="fcalc" id="weekLabel">-</div>
       </div>
       <div style="display:flex;align-items:flex-end;gap:5px;padding-bottom:1px">
-        <button class="btn sm pr" onclick="doSave()">💾 Save Week</button>
+        <button class="btn sm pr" onclick="doSave()">&#128190; Save Week</button>
         <button class="btn sm" onclick="doLoad()">Load</button>
         <button class="btn sm dk" onclick="clearOps()">Clear</button>
       </div>
@@ -895,7 +895,7 @@ cursor:default !important;
   <!-- SALES -->
 
   <div class="card">
-    <div class="card-hdr">📈 <span id="lbl_1" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Current Week / Last Week Summary</span></div>
+    <div class="card-hdr">&#128200; <span id="lbl_1" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Current Week / Last Week Summary</span></div>
 
 ```
 <div id="lbl_20" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Total Sales</div>
@@ -990,7 +990,7 @@ cursor:default !important;
   <!-- GM OPS -->
 
   <div class="card">
-    <div class="card-hdr">👤 <span id="lbl_2" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">GM Operations</span></div>
+    <div class="card-hdr">&#128100; <span id="lbl_2" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">GM Operations</span></div>
     <div class="g3">
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">GM Hours (Total)</div><input type="number" id="gm_hours" oninput="live()"/></div>
       <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Videos / Podcasts / Training</div><input type="text" id="gm_videos" oninput="live()"/></div>
@@ -1005,7 +1005,7 @@ cursor:default !important;
   <!-- GUEST EXPERIENCE -->
 
   <div class="card">
-    <div class="card-hdr">⭐ <span id="lbl_3" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Experience</span></div>
+    <div class="card-hdr">&#11088; <span id="lbl_3" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Experience</span></div>
 
 ```
 <div class="review-table">
@@ -1052,7 +1052,7 @@ cursor:default !important;
   <!-- ITEMS SOLD -->
 
   <div class="card">
-    <div class="card-hdr">🍹 <span id="lbl_4" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold</span></div>
+    <div class="card-hdr">&#127865; <span id="lbl_4" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold</span></div>
 
 ```
 <div id="lbl_30" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg of the Month &amp; Employee Contest</div>
@@ -1148,7 +1148,7 @@ cursor:default !important;
   <!-- Weather / Itinerary -->
 
   <div class="card">
-    <div class="card-hdr">🌤 <span id="lbl_5" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Itinerary and Weather Snapshot</span></div>
+    <div class="card-hdr">&#127780; <span id="lbl_5" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Itinerary and Weather Snapshot</span></div>
     <div class="wx-grid" id="m_wxGrid"></div>
     <div class="fg" style="margin-top:8px">
       <div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Weather / Event Notes</div>
@@ -1159,7 +1159,7 @@ cursor:default !important;
   <!-- Last Week Metrics -->
 
   <div class="card">
-    <div class="card-hdr">📈 <span id="lbl_6" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Last Week Metrics</span></div>
+    <div class="card-hdr">&#128200; <span id="lbl_6" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Last Week Metrics</span></div>
 
 ```
 <div class="met-grid c2">
@@ -1205,7 +1205,7 @@ cursor:default !important;
   <!-- Guest Metrics -->
 
   <div class="card">
-    <div class="card-hdr">⭐ <span id="lbl_7" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Metrics</span></div>
+    <div class="card-hdr">&#11088; <span id="lbl_7" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Guest Metrics</span></div>
 
 ```
 <div class="review-table">
@@ -1252,7 +1252,7 @@ cursor:default !important;
   <!-- Items Sold & Recognition -->
 
   <div class="card">
-    <div class="card-hdr">🍹 <span id="lbl_8" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold &amp; Employee Recognition</span></div>
+    <div class="card-hdr">&#127865; <span id="lbl_8" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Items Sold &amp; Employee Recognition</span></div>
 
 ```
 <div id="lbl_34" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Marg of the Month</div>
@@ -1314,7 +1314,7 @@ cursor:default !important;
   <!-- BOH Focus -->
 
   <div class="card">
-    <div class="card-hdr">🍳 <span id="lbl_9" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BOH Focus</span></div>
+    <div class="card-hdr">&#127859; <span id="lbl_9" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">BOH Focus</span></div>
     <textarea id="boh_focus" rows="4" oninput="live()" placeholder="BOH notes, focus areas, issues..."></textarea>
     <div class="nb-lines" id="boh_lines"></div>
   </div>
@@ -1322,7 +1322,7 @@ cursor:default !important;
   <!-- FOH Focus -->
 
   <div class="card">
-    <div class="card-hdr">🍽 <span id="lbl_10" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">FOH Focus</span></div>
+    <div class="card-hdr">&#127869; <span id="lbl_10" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">FOH Focus</span></div>
     <textarea id="foh_focus" rows="4" oninput="live()" placeholder="FOH notes, focus areas, issues..."></textarea>
     <div class="nb-lines" id="foh_lines"></div>
   </div>
@@ -1330,7 +1330,7 @@ cursor:default !important;
   <!-- Manager Notes -->
 
   <div class="card">
-    <div class="card-hdr">📋 <span id="lbl_11" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Manager Notes</span></div>
+    <div class="card-hdr">&#128203; <span id="lbl_11" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Manager Notes</span></div>
     <textarea id="mgr_notes" rows="5" oninput="live()" placeholder="Additional notes, shoutouts, discussion..."></textarea>
     <div class="nb-lines" id="mgr_lines"></div>
   </div>
@@ -1341,7 +1341,7 @@ cursor:default !important;
 
 <div id="sec-hist" class="sec">
   <div class="card">
-    <div class="card-hdr">📁 <span id="lbl_12" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Saved Weeks</span></div>
+    <div class="card-hdr">&#128193; <span id="lbl_12" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Saved Weeks</span></div>
     <div id="histList"><p style="color:#888;font-size:12px;padding:8px 0">No saved weeks yet.</p></div>
   </div>
 </div>

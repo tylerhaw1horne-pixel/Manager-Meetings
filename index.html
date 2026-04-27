@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>v5 | Huey Luey's Acworth - Ops Dashboard</title>
+<title>v6 | Huey Luey's Acworth - Ops Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -1740,7 +1740,7 @@ key:key, updatedAt:firebase.firestore.FieldValue.serverTimestamp(), data:data
 
 async function fbLoadWeek(key){
 if(!window.db) throw new Error(‘Firebase not ready’);
-const snap=await db.collection(‘managerMeetings’).doc(key).get();
+var snap=await db.collection(‘managerMeetings’).doc(key).get();
 if(!snap.exists) return null;
 return snap.data().data||null;
 }
@@ -1754,16 +1754,16 @@ labels:labels, updatedAt:firebase.firestore.FieldValue.serverTimestamp()
 
 async function fbLoadLabels(){
 if(!window.db) throw new Error(‘Firebase not ready’);
-const snap=await db.collection(‘managerMeetings_meta’).doc(‘labels’).get();
+var snap=await db.collection(‘managerMeetings_meta’).doc(‘labels’).get();
 if(!snap.exists) return null;
 return snap.data().labels||null;
 }
 
 async function fbLoadLatestWeek(){
 if(!window.db) throw new Error(‘Firebase not ready’);
-const snap=await db.collection(‘managerMeetings’).orderBy(‘updatedAt’,‘desc’).limit(1).get();
+var snap=await db.collection(‘managerMeetings’).orderBy(‘updatedAt’,‘desc’).limit(1).get();
 if(snap.empty) return null;
-const doc=snap.docs[0];
+var doc=snap.docs[0];
 return {key:doc.id,data:doc.data().data||null};
 }
 
@@ -1949,7 +1949,7 @@ var weeks=all.weeks||{};
     var wkeys=Object.keys(weeks);
     if(!wkeys.length){ alert('No week data found in file.'); return; }
 
-    for(const k of wkeys){
+    for(var _i=0;_i<wkeys.length;_i++){ var k=wkeys[_i];
       localStorage.setItem(k,JSON.stringify(weeks[k]));
       if(window.firebaseReady) await fbSaveWeek(k,weeks[k]);
       count++;
@@ -2076,7 +2076,7 @@ var el=gi(‘histList’);
 
 try{
 if(window.firebaseReady){
-const snap=await db.collection(‘managerMeetings’).orderBy(‘updatedAt’,‘desc’).limit(50).get();
+var snap=await db.collection(‘managerMeetings’).orderBy(‘updatedAt’,‘desc’).limit(50).get();
 
 ```
   if(snap.empty){

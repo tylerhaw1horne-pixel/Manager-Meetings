@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Huey Luey's Acworth — Ops Dashboard</title>
+<title>Huey Luey's Acworth - Ops Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -78,7 +78,7 @@ margin:0 auto;
 padding:0 8px 60px;
 }
 
-/* ─── HEADER ─── */
+/* — HEADER — */
 .hdr{
 background:#111;
 padding:0 14px;
@@ -159,7 +159,7 @@ letter-spacing:.3px;
 50%{opacity:.4}
 }
 
-/* ─── LAYOUT ─── */
+/* — LAYOUT — */
 .sec{display:none}
 .sec.active{display:block}
 
@@ -463,7 +463,7 @@ border-bottom:1px solid var(–bdr);
 .nb-lines{display:none}
 .nb-line{display:none}
 
-/* ─── EDIT MODE ─── */
+/* — EDIT MODE — */
 .edit-badge{display:none}
 
 .edit-mode .edit-badge{
@@ -496,7 +496,7 @@ border-color:var(–org2);
 box-shadow:0 0 0 2px rgba(255,107,11,.15);
 }
 
-/* ─── RESPONSIVE ─── */
+/* — RESPONSIVE — */
 @media(max-width:900px){
 .g2,.g3,.g4,.g5,.g6,
 .met-grid.c2,.met-grid.c3,.met-grid.c4,
@@ -514,10 +514,10 @@ grid-template-columns:1fr;
 }
 }
 
-/* ─────────────────────────────────────────────
+/* ———————————————
 PRINT STYLES
 All print is now 9pt base, readable, 2-page ops
-───────────────────────────────────────────── */
+——————————————— */
 @media print{
 @page{
 size:letter portrait;
@@ -549,7 +549,7 @@ max-width:100% !important;
 padding:0 !important;
 }
 
-/* ── OPS PRINT ── */
+/* – OPS PRINT – */
 body.print-ops #sec-meet,
 body.print-ops #sec-hist{display:none !important}
 body.print-ops #sec-ops{display:block !important}
@@ -694,7 +694,7 @@ padding-bottom:1pt !important;
 body.print-ops #carryNote,
 body.print-ops #savedNote{display:none !important}
 
-/* ── MEETING PRINT ── */
+/* – MEETING PRINT – */
 body.print-meet #sec-ops,
 body.print-meet #sec-hist{display:none !important}
 body.print-meet #sec-meet{display:block !important}
@@ -816,7 +816,7 @@ font-size:7pt !important;
 padding:0 3pt !important;
 }
 
-/* Dark header card in meeting → light for print */
+/* Dark header card in meeting -> light for print */
 body.print-meet #sec-meet > .card:first-child{
 background:#fff !important;
 border:.5pt solid #bbb !important;
@@ -870,12 +870,12 @@ cursor:default !important;
 
   <div class="card">
     <div class="card-hdr">
-      📊 <span id="lbl_0" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Operations Chart</span> — Huey Luey's Acworth | GM: Tyler Hawthorne
+      📊 <span id="lbl_0" contenteditable="true" spellcheck="false" style="outline:none;cursor:text;min-width:10px;display:inline-block" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Weekly Operations Chart</span> - Huey Luey's Acworth | GM: Tyler Hawthorne
       <button id="opsEditBtn" class="btn xs no-print" onclick="toggleOpsEdit()" style="margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff">🔓 Editing: ON</button>
     </div>
     <div class="g3">
       <div class="fg">
-        <div class="fl">Week (Mon–Sun)</div>
+        <div class="fl">Week (Mon-Sun)</div>
         <input type="date" id="weekDate" onchange="onDateChange()"/>
       </div>
       <div class="fg">
@@ -1104,7 +1104,7 @@ cursor:default !important;
 
 <div class="div"></div>
 
-<div id="lbl_33" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar — Cocktail Counts</div>
+<div id="lbl_33" class="sec-title" contenteditable="true" spellcheck="false" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}" onblur="saveLabels()">Beach House Bar - Cocktail Counts</div>
 <div class="g5">
   <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Mai Tais</div><input type="number" id="bhb_mt" oninput="live()"/></div>
   <div class="fg"><div class="fl" contenteditable="true" style="outline:none;cursor:text" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Pina Coladas</div><input type="number" id="bhb_pc" oninput="live()"/></div>
@@ -1376,9 +1376,9 @@ try {
 </script>
 
 <script>
-/* ═══════════════════════════════════════════════
+/* ===============================================
    CORE VARIABLES & HELPERS
-═══════════════════════════════════════════════ */
+=============================================== */
 var TAX_DEFAULT = 14.53;
 var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 var _editMode = false;
@@ -1423,17 +1423,17 @@ function safeHtm(id,v){
   e.innerHTML=v||'-';
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
    BUILD DYNAMIC ELEMENTS
-═══════════════════════════════════════════════ */
+=============================================== */
 function buildAll(){
   // Weather grid
   var h='';
   for(var i=0;i<7;i++){
     h+='<div class="wx-day">'+
       '<div class="wn">'+DAYS[i].slice(0,3).toUpperCase()+'</div>'+
-      '<input type="text" id="wx_icon_'+i+'" value="" style="font-size:14px;text-align:center;padding:1px;border:1px solid #ccc;border-radius:3px;width:100%;margin:2px 0" oninput="live()" placeholder="☀️"/>'+
-      '<input type="text" id="wx_temp_'+i+'" style="font-size:9px;text-align:center;padding:2px 3px;margin-bottom:2px;width:100%" oninput="live()" placeholder="Hi/Lo °F"/>'+
+      '<input type="text" id="wx_icon_'+i+'" value="" style="font-size:14px;text-align:center;padding:1px;border:1px solid #ccc;border-radius:3px;width:100%;margin:2px 0" oninput="live()" placeholder="Sun"/>'+
+      '<input type="text" id="wx_temp_'+i+'" style="font-size:9px;text-align:center;padding:2px 3px;margin-bottom:2px;width:100%" oninput="live()" placeholder="Hi/Lo FF"/>'+
       '<input type="text" id="wx_cond_'+i+'" style="font-size:9px;text-align:center;padding:1px 3px;margin-bottom:2px;color:#555;width:100%" oninput="live()" placeholder="Condition"/>'+
       '<textarea id="wx_itin_'+i+'" oninput="live()" style="font-size:9px;min-height:28px;resize:none;padding:2px 3px;width:100%" placeholder="Notes..."></textarea>'+
 
@@ -1452,9 +1452,9 @@ gi(id).innerHTML=s;
 });
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 REVIEW ROLLUPS
-═══════════════════════════════════════════════ */
+=============================================== */
 function updateReviewRollups(){
 [5,4,3,2,1].forEach(function(l){
 var week=parseFloat(gv(‘rev’+l+’_week’))||0;
@@ -1466,9 +1466,9 @@ localStorage.setItem(‘hl_rev’+l+’_ytd’,total);
 });
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 CUSTOM METRIC BOXES
-═══════════════════════════════════════════════ */
+=============================================== */
 function addCustomMetric(containerId){
 var container=gi(‘opsCustom_’+containerId.replace(‘ops_’,’’));
 if(!container) container=gi(containerId);
@@ -1483,9 +1483,9 @@ var html=’<div class="custom-box">’+
 container.insertAdjacentHTML(‘beforeend’,html);
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 CALCULATIONS
-═══════════════════════════════════════════════ */
+=============================================== */
 function calcDisc(){
 var net=gn(‘disc_total’)-gn(‘disc_ezcater’)-gn(‘disc_rewards’)-gn(‘disc_other’);
 var el=gi(‘disc_net_display’);
@@ -1531,9 +1531,9 @@ calcDisc();
 
 function live(){ mirrorMeeting(); }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 MIRROR TO MEETING TAB
-═══════════════════════════════════════════════ */
+=============================================== */
 function mirrorMeeting(){
 var d=gv(‘weekDate’);
 if(d){
@@ -1632,9 +1632,9 @@ safeTxt(‘m_brunch_burrito’,gv(‘brunch_burrito’)||’-’);
 safeTxt(‘m_brunch_chilaquiles’,gv(‘brunch_chilaquiles’)||’-’);
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 WEEK LABEL
-═══════════════════════════════════════════════ */
+=============================================== */
 function updateLabel(){
 var d=gv(‘weekDate’);
 if(!d){ gi(‘weekLabel’).textContent=’-’; return; }
@@ -1642,12 +1642,12 @@ var dt=new Date(d+‘T12:00:00’);
 var en=new Date(dt);
 en.setDate(dt.getDate()+6);
 var f=function(x){ return x.toLocaleDateString(‘en-US’,{month:‘short’,day:‘numeric’,year:‘numeric’}); };
-gi(‘weekLabel’).textContent=f(dt)+’ — ’+f(en);
+gi(‘weekLabel’).textContent=f(dt)+’ - ’+f(en);
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 DATE CHANGE / AUTO-CARRY
-═══════════════════════════════════════════════ */
+=============================================== */
 async function onDateChange(){
 updateLabel();
 var key=weekKey();
@@ -1699,9 +1699,9 @@ setTimeout(function(){ n.classList.remove(‘show’); },5000);
 }
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 DATA GATHER / RESTORE
-═══════════════════════════════════════════════ */
+=============================================== */
 function gatherData(){
 var d={_v:9,_wd:gv(‘weekDate’),*ts:Date.now()};
 document.querySelectorAll(‘input[id],textarea[id],select[id]’).forEach(function(el){
@@ -1753,9 +1753,9 @@ if(idx.length>104) idx=idx.slice(0,104);
 localStorage.setItem(‘hl_week_index’,JSON.stringify(idx));
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 FIREBASE HELPERS
-═══════════════════════════════════════════════ */
+=============================================== */
 async function fbSaveWeek(key,data){
 if(!window.db) throw new Error(‘Firebase not ready’);
 await db.collection(‘managerMeetings’).doc(key).set({
@@ -1792,9 +1792,9 @@ const doc=snap.docs[0];
 return {key:doc.id,data:doc.data().data||null};
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 SAVE / LOAD / CLEAR
-═══════════════════════════════════════════════ */
+=============================================== */
 async function doSave(){
 var key=weekKey();
 if(!key){ alert(‘Please select a week date first.’); return; }
@@ -1923,9 +1923,9 @@ if(el) el.textContent=’$0.00’;
 mirrorMeeting();
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 EXPORT / IMPORT
-═══════════════════════════════════════════════ */
+=============================================== */
 function doExport(){
 try{
 var raw=localStorage.getItem(‘hl_week_index’);
@@ -2011,9 +2011,9 @@ reader.readAsText(file);
 inp.click();
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 PRINT
-═══════════════════════════════════════════════ */
+=============================================== */
 function doPrint(which){
 mirrorMeeting();
 var origTitle=document.title;
@@ -2036,9 +2036,9 @@ window.addEventListener(‘afterprint’,cleanup);
 setTimeout(function(){ window.print(); },80);
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 TAB SWITCHING
-═══════════════════════════════════════════════ */
+=============================================== */
 function showTab(tab,btn){
 document.querySelectorAll(’.sec’).forEach(function(s){ s.classList.remove(‘active’); });
 document.querySelectorAll(’.tab’).forEach(function(t){ t.classList.remove(‘active’); });
@@ -2051,9 +2051,9 @@ if(tab===‘meet’) mirrorMeeting();
 if(tab===‘hist’) renderHist();
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 EDIT MODE TOGGLES
-═══════════════════════════════════════════════ */
+=============================================== */
 function toggleOpsEdit(){
 _opsLocked=!_opsLocked;
 var btn=gi(‘opsEditBtn’);
@@ -2067,11 +2067,11 @@ el.style.cursor=_opsLocked?‘default’:’’;
 });
 
 if(_opsLocked){
-btn.textContent=‘🔒 Editing: LOCKED’;
+btn.textContent=’[LOCKED] Editing: LOCKED’;
 btn.style.background=‘rgba(183,28,28,.55)’;
 btn.style.borderColor=‘rgba(255,100,100,.4)’;
 } else {
-btn.textContent=‘🔓 Editing: ON’;
+btn.textContent=’[ON] Editing: ON’;
 btn.style.background=‘rgba(255,255,255,.15)’;
 btn.style.borderColor=‘rgba(255,255,255,.3)’;
 }
@@ -2111,9 +2111,9 @@ meet.querySelectorAll('[data-editable]').forEach(function(el){
 }
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 HISTORY
-═══════════════════════════════════════════════ */
+=============================================== */
 async function renderHist(){
 var el=gi(‘histList’);
 
@@ -2144,7 +2144,7 @@ const snap=await db.collection(‘managerMeetings’).orderBy(‘updatedAt’,�
 
     h+='<div class="hi">'+
       '<div><div class="hi-d">Week of '+key.replace('hl_week_','')+'</div>'+
-      '<div class="hi-m">'+sales+(sales&&saved?' · ':'')+saved+'</div></div>'+
+      '<div class="hi-m">'+sales+(sales&&saved?' - ':'')+saved+'</div></div>'+
       '<div style="display:flex;gap:5px">'+
       '<button class="btn xs" onclick="loadHist(\''+key+'\')">Load</button>'+
       '<button class="btn xs dk" onclick="delHist(\''+key+'\')">Delete</button>'+
@@ -2179,7 +2179,7 @@ if(d._ts) saved=‘Saved ‘+new Date(d.*ts).toLocaleDateString(‘en-US’,{mon
 }
 h+=’<div class="hi">’+
 ’<div><div class="hi-d">Week of ’+key.replace(’hl_week*’,’’)+’</div>’+
-‘<div class="hi-m">’+sales+(sales&&saved?’ · ‘:’’)+saved+’</div></div>’+
+‘<div class="hi-m">’+sales+(sales&&saved?’ - ‘:’’)+saved+’</div></div>’+
 ‘<div style="display:flex;gap:5px">’+
 ‘<button class="btn xs" onclick="loadHist(\''+key+'\')">Load</button>’+
 ‘<button class="btn xs dk" onclick="delHist(\''+key+'\')">Delete</button>’+
@@ -2220,9 +2220,9 @@ await renderHist();
 }catch(e){ alert(’Delete failed: ’+e.message); }
 }
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 KEYBOARD SHORTCUT
-═══════════════════════════════════════════════ */
+=============================================== */
 document.addEventListener(‘keydown’,function(e){
 if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()===‘s’){
 e.preventDefault();
@@ -2230,9 +2230,9 @@ doSave();
 }
 });
 
-/* ═══════════════════════════════════════════════
+/* ===============================================
 INIT
-═══════════════════════════════════════════════ */
+=============================================== */
 async function init(){
 buildAll();
 
